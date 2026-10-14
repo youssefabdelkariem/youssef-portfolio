@@ -1,28 +1,25 @@
-# Architecture decision records
+# Architecture decision register
 
-ADRs explain why a durable decision was made, its alternatives and what could change it. They do not replace [requirements](../REQUIREMENTS.md) or grant authorization to deploy/install services.
+This register is the authoritative status index. Review references and corrections are tracked in [M0_REMEDIATION](../reviews/M0_REMEDIATION.md); requirements live in [REQUIREMENTS](../REQUIREMENTS.md).
 
-## Register
-
-| ADR | Title | Status | Review gate |
+| ADR | Decision | Status | Acceptance gate |
 | --- | --- | --- | --- |
-| [0001](0001-hosting.md) | GitHub Pages hosting | Accepted | Existing owner-selected working setup; changes require a new reviewed ADR |
-| [0002](0002-tech-stack.md) | Portfolio stack and rendering | Proposed | M1 comparison, static HTML/build evidence, owner approval |
-| [0003](0003-routing.md) | Static route contract | Proposed | M1 direct-load/refresh/404/SEO tests and owner approval |
-| [0004](0004-media-strategy.md) | Progressive media delivery | Proposed | Asset inventory, mobile tests, service/cost/privacy approval |
-| [0005](0005-ai-collaboration.md) | Shared AI collaboration | Proposed | Named roles, ownership agreement, reviewed trial handoff/integration |
+| [0001](0001-hosting.md) | Retain GitHub Pages hosting | Accepted | Existing owner hosting choice; no pipeline/settings authorization |
+| [0002](0002-tech-stack.md) | Stack and rendering | Proposed | Neutral M1a comparison and owner approval |
+| [0003](0003-routing.md) | Static route contract | Proposed | M1a direct-route/404/metadata evidence and approved slugs |
+| [0004](0004-media-strategy.md) | Media delivery and fidelity | Proposed | M1b actual-asset/accessibility/mobile/cost review |
+| [0005](0005-ai-collaboration.md) | Shared collaboration process | Proposed | Named roles, ownership and reviewed handoff/integration |
+| [0006](0006-build-deployment-preview.md) | Build, deployment and previews | Proposed | M1a pipeline/preview evidence plus separately authorized production transition |
 
-## Status lifecycle
+## Lifecycle
 
-- **Proposed:** candidate under evaluation; cannot be assumed adopted.
-- **Accepted:** stated gate met and owner/reviewer approval recorded. Include date and evidence/approval reference.
-- **Superseded:** replaced by an Accepted ADR; link both directions and preserve history.
-- **Deprecated:** no longer recommended, without necessarily naming a replacement; explain operational impact and migration conditions.
+- **Proposed:** evaluation candidate, not implementation/adoption permission.
+- **Accepted:** stated evidence/gate and owner approval recorded with date/reference.
+- **Superseded:** replaced by an Accepted ADR; link old/new records both ways.
+- **Deprecated:** no longer recommended; explain impact and migration conditions.
 
-Accepted hosting records a decision already made by the owner, not a new M0 infrastructure action. No other ADR is Accepted at M0. Task-specific safeguards in AGENTS.md apply immediately even though the long-term collaboration model is Proposed.
+The user's active-task boundaries apply regardless of proposed long-term process. No other architecture is implicitly Accepted by accepting hosting.
 
-## Creating and changing records
+## Maintenance
 
-Allocate the next unused four-digit number and descriptive kebab-case filename. Use: title; status/date/decision owner; related requirement IDs; context; proposed/accepted decision; alternatives and tradeoffs; consequences/risks; validation and acceptance gate; sources; revisit triggers. Distinguish evidence from assumptions.
-
-Keep editorial clarifications in the existing record. For a changed Accepted decision, add a new ADR and mark the old record Superseded only when replacement is Accepted. Update the register, affected specifications and links in the same reviewed change. Do not rewrite history to imply an earlier approval.
+Allocate the next unused four-digit number and kebab-case filename. Record status/date/owner, requirement/finding references, context, decision/proposal, alternatives/tradeoffs, consequences, evidence/approval gate and revisit triggers. Editorial clarification may update a record; a materially changed Accepted decision needs a replacement ADR. Update this register and affected references together. Preserve history rather than implying retrospective approval.

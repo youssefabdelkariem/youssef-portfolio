@@ -1,52 +1,45 @@
 # Design system direction
 
-Status: **Proposed**. No final identity, fonts, imagery, or interaction design has been approved. This is a testable starting point for FR-06 and QA-01–QA-08 in [requirements](REQUIREMENTS.md), not instructions to implement UI in M0.
+Status: **Proposed**; visual identity awaits M1b owner review. Related: FR-06, QA-01, QA-03, QA-04, QA-13, QA-17. Review findings: I-5, I-6, M-5; full mapping in [remediation](reviews/M0_REMEDIATION.md).
 
-## Visual principles
+## Principles and tokens
 
-Let actual CGI and engineering artifacts carry the visual emphasis. Use calm composition, deliberate spacing, clear typographic hierarchy, and short explanations. Technical sophistication should be visible in evidence and precision. Avoid decorative terminal copy, fabricated telemetry, excessive gradients, or effects that compete with work.
+Let finished CGI and engineering evidence lead. Use calm composition, generous spacing, readable captions and deliberate pacing. Avoid decorative telemetry, scroll hijacking and effects that obscure the work.
 
-## Provisional tokens
-
-| Token | Candidate | Use / validation |
+| Token | Candidate | Use |
 | --- | --- | --- |
-| canvas | `#101216` | Dark background; derived from current test page, not final branding |
-| surface | `#191D24` | Cards/panels; distinguish through spacing and borders too |
+| canvas | `#101216` | Current test-page background; provisional branding |
+| surface | `#191D24` | Panels |
 | text-primary | `#F4F4F5` | Main text |
-| text-secondary | `#A8ADB7` | Supporting text; verify against every actual surface |
-| accent | `#AAC4FF` | Links/focus candidate; test contrast and visibility |
-| border | `#343B47` | Decorative separators; not sufficient alone for focus or control boundaries |
-| space | `4, 8, 12, 16, 24, 32, 48, 64, 96 px` | Consistent rhythm; scale larger gaps down on mobile |
-| radius | `0, 4, 8 px` | Restrained corners; media shape follows actual content |
+| text-secondary | `#A8ADB7` | Supporting text |
+| accent | `#AAC4FF` | Links/highlights |
+| focus-ring | `#AAC4FF`, 3 px outline, 3 px offset | Visible keyboard focus on dark surfaces; add contrasting dark backing on variable imagery/light surfaces |
+| border | `#343B47` | Decorative separators only, never sole focus/control boundary |
+| space | `4, 8, 12, 16, 24, 32, 48, 64, 96 px` | Scale large gaps down on mobile |
+| radius | `0, 4, 8 px` | Restrained corners |
 
-Use CSS custom properties if adopted; Tailwind theme mapping is optional pending ADR 0002. Do not maintain duplicate token systems. Check WCAG contrast in final combinations: normal text 4.5:1, large text 3:1, meaningful UI boundaries/focus 3:1 where applicable. Do not place text directly over uncontrolled video without a tested solid/opaque backing.
+Use one token source; optional Tailwind mapping comes later, outside the stack spike. Check actual text contrast (normal 4.5:1, large 3:1) and meaningful UI/focus contrast (3:1 where applicable). Do not put essential text on uncontrolled film without a tested backing. Focus must remain visible and unobscured on every background; the token alone is not proof of conformance.
 
-## Typography and layout
+## Layout and component contracts
 
-Start with a system sans-serif; a licensed display face can be evaluated at Q06. Body text candidate: 16–18 px, line height 1.5–1.7, readable measure around 65 characters. Fluid headings must wrap without clipping or relying on fixed-height containers. Project captions stay readable on small displays; avoid tiny all-caps metadata as the only explanation.
+Start with a system sans-serif; licence/approve any display face through Q06. Proposed body: 16–18 px, line height 1.5–1.7, measure around 65 characters. Fluid headings wrap without fixed-height clipping. Candidate content maximum is 1200 px with 20–24 px mobile gutters. Check 320, 390, 768, 1024 and 1440 CSS px plus zoom. Images reserve aspect ratio; crop/focal point follows the approved asset.
 
-Proposed content maximum is 1200 px, with 20–24 px mobile gutters and larger desktop margins. Use content-driven breakpoints; verify at 320, 390, 768, 1024 and 1440 CSS px and at zoom. Grids collapse to reading order on mobile. Wide engineering diagrams may use a labelled zoom/download treatment rather than illegible shrinking. Do not assume every render is landscape; crop/focal point needs owner approval.
-
-## Component contracts for later implementation
-
-| Component | Required states and behavior |
+| Component | Required behavior |
 | --- | --- |
-| Header/navigation | Current location, visible focus, keyboard order; menu usable without pointer; no hover-only routes |
-| Project card | Genuine title/type, useful image alt, clear link; no fictional metrics; whole-card interaction avoids nested links |
-| Case-study section | Semantic heading order, readable prose and captions, explicit role/credits |
-| Video | Poster, deliberate play, controls, captions/transcript where needed, error fallback/link; no automatic sound |
-| Breakdown comparison | Label both views; keyboard alternative and static side-by-side fallback if slider used |
-| Contact action | Correct destination and descriptive label; no nonfunctional form or invented address |
-| Optional 3D | Deferred, bounded dimensions, explicit loading/error state, static poster alternative, keyboard equivalent |
+| Navigation | Current location, semantic anchors, visible focus; keyboard/touch menu; no hover-only destinations |
+| Work index/card | Aurelia hierarchy plus other approved CGI/VFX work; descriptive links, captions and no nested controls |
+| Case study | Ordered semantic headings, explicit roles/credits and labelled evidence |
+| Media/hero | Poster-first; deliberate film playback and QA-12 accessibility; optional loop only under QA-17 and QA-07 |
+| Breakdown comparison | Label stages; keyboard control and static side-by-side alternative |
+| Contact | Approved functional destination; buttons only for actions |
+| Optional 3D | Deferred loading, bounded canvas, static alternative and loading/error state |
 
-Use anchors for navigation and buttons for actions. Keep native focus behavior unless improving it with tested equivalents. Never make an entire case study dependent on a canvas.
+## Motion and fidelity
 
-## Motion
+Proposed durations: 120–220 ms for microinteractions, 250–450 ms for orientation transitions. Prefer opacity/transforms and CSS/native APIs. Cross-document View Transitions may progressively enhance ordinary links where supported; navigation must work without them. Reduced motion removes parallax, camera travel and scroll scrubbing. Pause moving content; stop optional rendering when offscreen. No forced audio or essential information solely in animation.
 
-Proposed microinteraction duration: 120–220 ms; restrained section transitions: 250–450 ms. Animate opacity/transforms only when they help orientation. Content must be visible if animation fails. With `prefers-reduced-motion: reduce`, remove parallax, camera travel and scroll scrubbing; provide static content and manual media controls. Never hijack wheel/touch scrolling or hide a required action behind an animation timeline.
+A cinematic hero may move after the poster, but mobile/data-saving/reduced-motion modes retain the still. Delayed autoplay still counts toward the entry transfer budget. GSAP needs a concrete approved sequence and cleanup plan; Three.js/R3F need a justified interaction and measured budget. Colour/rendition decisions follow [ADR 0004](adr/0004-media-strategy.md#fidelity-and-formats).
 
-Use CSS first. GSAP is a candidate only for an approved sequence whose complexity warrants it; see [ADR 0002](adr/0002-tech-stack.md). It must clean up listeners/animations on navigation and honor reduced-motion changes. Do not implement custom cursors or scroll libraries by default.
+## Review gate
 
-## Design review gate
-
-In M1, agree reference imagery and an annotated layout direction, test a representative card, case-study text block, media control and mobile navigation, and record contrast/zoom/reduced-motion findings. Tokens and screens remain Proposed until owner sign-off. See [development plan](DEVELOPMENT_PLAN.md) for scope boundaries.
+M1b reviews references and an annotated layout, representative work cards, case-study typography, media controls and mobile navigation. Record contrast, focus, zoom, motion and fidelity findings. [Requirements](REQUIREMENTS.md) own measurable targets; no design implementation is authorized by this proposal.

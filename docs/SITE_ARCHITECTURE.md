@@ -1,65 +1,64 @@
 # Site architecture
 
-Status: current baseline Confirmed; future architecture **Proposed**. Decisions live in [ADRs](adr/README.md); quality gates live in [requirements](REQUIREMENTS.md).
+Future architecture is **Proposed**; the [ADR register](adr/README.md) owns statuses. Review traceability: C-1, C-2, C-3, I-1, I-2, I-3, M-6, M-7, M-8 in [M0 remediation](reviews/M0_REMEDIATION.md).
 
-## Current and protected
+## Infrastructure evidence
 
-`main` contains a root `index.html`, `CNAME` and README. GitHub Pages serves the root of `main` at the custom domain. No framework, dependency, router, backend, CMS or custom build workflow was found. M0 keeps this intact; documentation branches are not previews. Do not replace `index.html` with a development entry point, change Pages source, or edit DNS in M0.
+| Claim | Evidence / current confidence |
+| --- | --- |
+| Production-branch contents | `origin/main` fetched on 2026-10-15 remains `c882895442ae6721e13bb59600dc8f84915f9eee`; README, HTML and CNAME inspected; no package manifest or custom workflow |
+| Custom-domain file | Repository fact: `CNAME` contains `youssef.studio`; this alone does not prove active Pages settings or DNS |
+| Pages source `main` / root | Observed during the earlier 2026-10-14 browser setup; not reverified in this remediation. Treat as the production-risk assumption until a fresh read-only check before merge |
+| HTTPS/enforcement | Earlier setup recorded valid HTTPS responses and enabled enforcement; not a fresh independent verification or guarantee of current state |
+| Cloudflare DNS/proxy | Earlier setup observed Cloudflare nameservers and changed apex/`www` to DNS-only. Current delegation/proxy/cache behavior is not reverified here; do not assume Cloudflare proxies website traffic |
+| Branch protection / PR requirements | **Unverified**. Neither presence nor absence is established by local Git. Owner must verify and record effective rules and bypasses before merge |
 
-## Proposed rendering and boundaries
+Do not infer account configuration from source files or the reviewer's lack of `gh`. A future check records date, method and result; repository facts, historical observations and current external verification remain distinct.
 
-Favor static, crawlable HTML per public route with narrowly scoped interaction. Shared content should be structured separately from presentation, with asset metadata (rights, variants, alt, dimensions, captions) validated before publication. No runtime backend is needed for the specified portfolio. Contact initially favors an owner-approved link; a form would require a separate service/privacy decision.
+## Pages constraints
 
-Candidate future boundaries (not directories created in M0): content records; reusable semantic UI; layout/tokens; case-study templates; media loaders; optional motion/3D enhancements; tests/build tooling. Case-study data must not import animation libraries. A media failure must not erase the narrative. Use trusted local content, not unsanitized HTML from third parties.
+Primary documentation checked 2026-10-15; recheck before pipeline adoption.
 
-## Technology evaluation
+| Constraint | Architectural consequence / verification |
+| --- | --- |
+| Static hosting; one project site per repository | No runtime server, arbitrary application rewrites or per-branch Pages sites; emit actual route HTML. [Overview](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages) |
+| Branch publishing source is root or `/docs`; changes to the source can publish | A Markdown-only merge can deploy. Custom Actions can publish a selected artifact instead. [Publishing sources](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site) |
+| Published site <= 1 GB; source repository recommended <= 1 GB | Keep master renders/films outside Git; measure delivered artifact size. [Limits](https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits) |
+| Soft bandwidth 100 GB/month; deployment timeout 10 minutes | Model video bandwidth and build time before choosing delivery. [Limits](https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits) |
+| Soft 10 builds/hour; that limit does not apply to custom Actions builds/publishing | Batch work; Actions still has its own applicable quotas. [Limits](https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits) |
+| No documented per-site arbitrary response-header configuration in the Pages interfaces reviewed | Do not assume repo files can set cache/security headers. Use content-hashed immutable asset names; measure actual cache, Brotli/gzip and video Range behavior in M1a where a safe endpoint exists, and again after an authorized deployment |
 
-| Candidate | Value | Cost/risk | Recommendation |
-| --- | --- | --- | --- |
-| Plain HTML/CSS with small JS | Minimal transfer, crawlable, matches current hosting | Repeated layouts/content can drift | Baseline and fallback; credible option for a small site |
-| React | Reusable interactive components and ecosystem | Client JS/hydration cost; a bare SPA does not provide route HTML | Candidate for interactive areas; prove benefit with representative case study |
-| Vite | Fast local builds and static asset bundling | Build output must be deployed; does not itself solve SEO/rendering | Candidate tooling, contingent on HTML generation and reviewed deployment plan |
-| TypeScript | Content/component contracts and refactoring checks | Tooling and type maintenance | Recommend if a JS application/toolchain is adopted; type-check separately |
-| Tailwind CSS | Shared utility vocabulary, generated static CSS | Class-heavy templates and extra build convention | Optional; compare against CSS custom properties/modules before adoption |
-| GSAP | Complex timelines and synchronized animation | Extra JS, lifecycle and accessibility obligations | Defer until a specific sequence needs it; CSS/native APIs first |
-| Three.js | Fine control over real-time 3D | GPU, battery, model/texture transfer, fallback and cleanup complexity | Optional later experiment; rendered CGI is the default showcase |
-| React Three Fiber | React integration for Three.js scenes | Requires React/Three.js and rendering expertise; not inherently a speed fix | Consider only if React and an actual 3D interaction are justified |
-| Static-first generator (e.g. Astro) | Generated route HTML, selective interactive islands | Additional framework/content convention | Compare in M1 with Vite multi-page/prerender approach |
+The default GitHub project URL and custom domain refer to the same published site, not independent previews. A user-site custom domain can also be inherited by project sites unless overridden; a separate repository alone does not guarantee an isolated hostname. [Custom domains](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/about-custom-domains-and-github-pages). Preview isolation and publication controls belong to [ADR 0006](adr/0006-build-deployment-preview.md).
 
-ADR 0002 recommends evaluating React + Vite + TypeScript against a static-first alternative; it does not authorize installing the entire list. No versions are selected in M0. Select compatible maintained versions, runtime and one package manager during an approved M1 scaffold, then pin a lockfile.
+## Neutral stack comparison
+
+M1a compares the same fixture content, interactions and routes in three arms; none is the default winner:
+
+| Arm | Value | Evidence needed |
+| --- | --- | --- |
+| Eleventy/static HTML with small JS | Direct HTML, small runtime, straightforward delivery | Template reuse versus manual duplication; case-study authoring cost |
+| Astro static output with optional islands | Generated route HTML and selective interactivity | Actual hydrated bytes and authoring/build complexity |
+| React + Vite + build-time prerendering | Shared interactive components and optional typed contracts | Named rendering method, route HTML, hydration correctness and total complexity |
+
+See [ADR 0002](adr/0002-tech-stack.md) for the candidate React `prerenderToNodeStream` build-time route renderer and comparison rubric. Vite is build tooling, not automatic prerendering. TypeScript is an optional contract choice; Tailwind, GSAP, Three.js and React Three Fiber remain separately justified later options, not M1a selection requirements. No versions or framework are adopted in M0.
 
 ## Proposed routes and SEO
 
-| URL candidate | Purpose / requirement |
+| Candidate URL | Purpose / traceability |
 | --- | --- |
-| `/` | Intro, selected work and flagship entry (FR-01, FR-02) |
-| `/work/aurelia/` | Flagship case study (FR-02) |
-| `/engineering/` | Mechatronics/CAD selection (FR-03) |
-| `/engineering/<approved-slug>/` | Evidence-backed individual engineering case study (FR-03) |
-| `/bonus/ai-racing/` | Dedicated bonus racing story (FR-04); final title/slug Q08 |
-| `/about/`, `/contact/` | Approved biography and contact path (FR-05) |
+| `/` | Cinematic introduction and selected work; FR-06, QA-17 |
+| `/work/` | Dedicated CGI/VFX index, Aurelia prominent, reel access; FR-01a, FR-01c |
+| `/work/aurelia/` | Flagship CGI case study; FR-02, FR-01b |
+| `/work/<approved-slug>/` | Other evidenced CGI/VFX studies and shot breakdowns; FR-01b |
+| `/engineering/` | Mechatronics/CAD selection; FR-03 |
+| `/engineering/<approved-slug>/` | Individual engineering evidence; FR-03 |
+| `/engineering/ibm-ai-racing/` | Dedicated IBM AI Racing League / TORCS story; FR-04, Q08 |
+| `/about/`, `/contact/` | Separate biography/contact destinations; FR-05a, FR-05b |
 
-Additional CGI case-study slugs require real content. This table defines candidate URLs, not live links. Keep `/` working throughout. Prefer generated `path/index.html` files, trailing-slash canonical URLs and route-specific metadata. A custom `404.html` should explain the error and link home; do not use an opaque 404-to-SPA redirect hack. Hash routing is a fallback option, not the preferred SEO story. See [ADR 0003](adr/0003-routing.md).
+Racing is engineering work with an optional bonus label in navigation; the URL should not encode temporary editorial framing. All slugs await owner review. Keep `/` working. Prefer `route/index.html`, normal links and a real `404.html`; no opaque SPA fallback redirects. Cross-document transitions are optional enhancements. [ADR 0003](adr/0003-routing.md) defines route tests.
 
-GitHub Pages serves static files, without arbitrary server-side rewrite rules or runtime server rendering. Test direct entry, refresh, back/forward, unknown routes and asset paths. Production custom-domain base is `/`; a future independent project-path preview may need `/youssef-portfolio/` or another explicit base. Never change production domain bindings to obtain a preview.
+Production custom-domain base is `/` if the recorded binding remains active. Test nested-path compatibility locally or on an explicitly independent host; a path setting is not a preview environment. Unique metadata, favicon/OG assets, sitemap/canonicals and approved language follow QA-05, QA-14, QA-16 and QA-18. Preview indexing controls are not privacy controls.
 
-Each released page needs meaningful delivered HTML, unique title/description, canonical, social preview, accurate image alt and heading structure; sitemap/robots handling belongs to the eventual build. Do not add schema that invents job titles, organizations or awards.
+## Content and enhancement boundaries
 
-## Media and release boundary
-
-Posters and responsive images precede user-triggered film. Long CGI films/master renders stay out of Git history until a delivery choice is approved; see [ADR 0004](adr/0004-media-strategy.md). Optional WebGL is lazy and recoverable. Enforce the proposed transfer budget before visual effects.
-
-Future build-based deployment will need an explicitly reviewed change from today's branch/root source, or another reviewed artifact-publishing arrangement. Keep domain preservation, least-privilege workflow permissions, trusted dependencies, immutable candidate review, and rollback in that plan. M0 creates no workflows and makes no deployment changes.
-
-## Primary technical references
-
-Reviewed 2026-10-15; documentation can change. These support evaluation, not adoption.
-
-- [React application choices](https://react.dev/learn/creating-a-react-app)
-- [Vite static deployment and base paths](https://vite.dev/guide/static-deploy.html)
-- [TypeScript handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
-- [Tailwind with Vite](https://tailwindcss.com/docs/installation/using-vite)
-- [GSAP media queries and cleanup](https://gsap.com/docs/v3/GSAP/gsap.matchMedia()/)
-- [Three.js documentation](https://threejs.org/docs/)
-- [React Three Fiber performance](https://r3f.docs.pmnd.rs/advanced/scaling-performance)
-- [GitHub Pages custom 404](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-custom-404-page-for-your-github-pages-site)
+Keep structured project evidence separate from templates and optional motion/media loaders. Core narrative and navigation are delivered as HTML; no canvas-only content. No backend is presently required. Responsive images/posters precede films; [ADR 0004](adr/0004-media-strategy.md) governs fidelity and delivery. External forms, analytics or players require a reviewed need/privacy/cost decision. Build output must exclude source-only documentation unless the owner explicitly approves publishing it; see the [production gate](AGENT_WORKFLOW.md#production-and-pr-gate).

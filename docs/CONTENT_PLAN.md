@@ -1,56 +1,56 @@
 # Content and evidence plan
 
-Status: scope Confirmed; inventory readiness Unknown; templates and ordering Proposed. See [requirements](REQUIREMENTS.md) for question owners and [media ADR](adr/0004-media-strategy.md) for delivery decisions.
+Scope is owner-confirmed; inventory readiness is Unknown; editorial templates are Proposed. Related findings: C-2, I-4, I-5, I-6, M-2, M-6, M-7; see [remediation](reviews/M0_REMEDIATION.md).
 
-## Inventory as of M0
+## Inventory
 
-No portfolio assets were supplied or verified in this repository. The only production visual content is a text-only deployment test. A project mentioned by the owner is not automatically ready for publication.
+No portfolio assets have been verified for publication in this repository. A project title is not a completed content packet.
 
-| Content group | Confirmed owner direction | Missing evidence / readiness | Requirement |
-| --- | --- | --- | --- |
-| Aurelia | Flagship CGI smartphone commercial | Film/posters, final title treatment, role, dates, toolchain, process files, credits/rights Unknown | FR-02, Q02 |
-| Other CGI/product/VFX | Showcase renders and compositing breakdowns | Project identities, selected artifacts, actual tools, ownership and captions Unknown | FR-01, Q02 |
-| Mechatronics/CAD | Include engineering projects | Project names, diagrams/CAD views, requirements, individual contribution, test results Unknown | FR-03, Q03 |
-| AI Racing League / TORCS | Dedicated bonus case study | Scope, role, code provenance, simulator details, experiments and reproducible results Unknown | FR-04, Q04 |
-| About | Personal background and interests | Approved biography, portrait permission, public role/location details Unknown | FR-05, Q05 |
-| Contact | A public way to reach the owner | Approved address/social links and preferred call to action Unknown | FR-05, Q05 |
+| Group | Required evidence | Requirements |
+| --- | --- | --- |
+| Work index / reel | Approved selection/order, thumbnails, reel availability and shot credits | FR-01a, FR-01c |
+| Aurelia | Film/stills, individual role, dates, tools actually used, stages and rights | FR-02, FR-01b |
+| Other CGI/VFX | Real project identities, finished shots and breakdown evidence | FR-01b |
+| Engineering/CAD | Problem, constraints, contribution, diagrams and actual tests | FR-03 |
+| IBM AI Racing / TORCS | Program attribution, role, code provenance, environment and supported results | FR-04 |
+| About / Contact | Approved biography, optional portrait rights, public address/links and language | FR-05a, FR-05b, QA-16 |
 
-## Readiness and publication gate
+## Evidence and rights gate
 
-Use these states for each content item: Unknown -> Collected -> Verified -> Owner approved -> Published. Revisions to a Published asset return to review. Track each item in a later content manifest with: stable ID, project, source file/location, owner, individual/team credit, rights/license, public title, caption, alt text or decorative rationale, dimensions/duration, derivative filenames, poster/focal point, transcript/caption needs, byte sizes, approval and evidence source.
+This is the canonical public-claims rule (AGENTS references it): do not invent assets, credits, qualifications, tools, metrics, affiliations or outcomes. Separate individual from team contribution and measured results from goals/simulations. Publish only supported, owner-approved material; otherwise omit the claim or mark the internal item blocked.
 
-Do not commit source paths that disclose private personal folders or confidential client material. Store public derivatives separately from master files. No public sample card may imply a nonexistent project. A withheld item remains absent, rather than appearing as fabricated finished work.
+Readiness: Unknown -> Collected -> Verified -> Owner approved -> Published. A changed published asset returns to review. A later manifest records item/project ID, evidence source, role/credits, rights holder/permission, public title/caption, alt/decorative rationale, language, crop, dimensions/duration, colour/codec, variant filename/bytes, media-accessibility classification and approval. Keep private paths, confidential material and master files outside the public repository.
 
-## Proposed Aurelia narrative
+Q15 must distinguish code/documentation licensing from creative work, music, fonts, footage, models and third-party logos. A public repository is not a blanket licence for every asset. No licence is chosen in M0. Favicon and OG artwork need approval/rights and tested crops too (QA-14, QA-15).
 
-1. Concise project premise and an approved still; film playback is optional to understand the page.
-2. Scope, role, collaborators and credits, clearly distinguishing personal and team contributions.
-3. Selected finished frames with factual captions.
-4. Process: concept, modeling/look development, lighting/rendering, compositing as actually evidenced. Omit stages not performed or not documented.
-5. One or two useful breakdowns with labels, accessible static alternatives and context explaining the decision.
-6. Reflection: what was learned and what would change; metrics only with a traceable source.
+## Work index and reel
 
-This is an editorial outline, not confirmation that every stage or asset exists.
+`/work/` is the primary CGI/VFX portfolio index. Feature Aurelia, then approved projects with clear disciplines/roles and direct case-study links. Filters are optional and must not hide content without JS. Link engineering separately; do not manufacture cards to fill a grid.
 
-## Proposed engineering/CAD template
+An approved reel is a curated overview, not a substitute for case studies. Record duration, shot/timecode credits, responsibilities and links to relevant studies. Provide a poster, explicit play, controls, captions/description deliverables below and a playback failure alternative. If no reel is available, retain useful stills and project links without an invented player. A hero excerpt needs owner-approved crop/edit and the same rights review; automatic delivery follows QA-07 and QA-17.
 
-State the problem and constraints, explain the individual's scope, show design rationale and legible diagrams, describe build/simulation/testing actually performed, and distinguish measured results from predictions. Include units, assumptions, test conditions and limitations. Do not publish a simulation as a validated physical outcome or expose proprietary CAD/IP.
+## CGI/VFX case-study and shot template
 
-## Dedicated bonus racing template
+State the premise, scope, personal/team role and credits. Show the finished shot and label each actual stage (such as plate, render passes or compositing); include timecode/frame context and explain a concrete technical/artistic decision. List tools only when evidenced. Comparisons need keyboard operation or static side-by-side views and explanatory text. Remove confidential plates/interfaces. Do not present stages the owner did not perform.
 
-Use a standalone page, linked as bonus technical work. Explain the IBM AI Racing League/TORCS context with accurate program/project attribution and avoid implying endorsement. Describe the actual environment, observation/action interface, approach, experiments and debugging evidence once supplied. List hardware/software versions and reproducibility instructions only when known. Separate measured runs from goals; lap times, ranks, reliability rates and records need logs, conditions and permission to publish. Do not assume a specific ML algorithm, sensor set, competition result or autonomous-driving capability.
+Aurelia uses this template with a prominent finished-film/still sequence, selected process decisions and reflection. It remains the flagship, while the work index lets other projects stand independently.
 
-## About, navigation and contact
+## Engineering and racing templates
 
-Draft only after the owner's public biography and target audience are clear. Navigation labels can be concise and factual; final role labels, client names, availability and social links require approval. Prefer a verified contact link for a static first release. A form, analytics or embedded player introduces service/privacy decisions and is not part of M0.
+Engineering: problem/constraints -> personal scope -> design rationale/diagrams -> actual build/simulation/test -> results and limitations. Supply units/conditions; distinguish simulated predictions from physical validation.
 
-## Asset preparation checklist for later milestones
+Racing retains a dedicated page, proposed at `/engineering/ibm-ai-racing/`. Explain IBM AI Racing League/TORCS context without implying endorsement, then actual environment, interface, method, experiments and reflection. Publish versions/reproduction steps only when known. Lap times/ranks/reliability claims require logs and conditions; no assumed algorithm, record or autonomous-driving capability. Bonus remains an editorial label, not the route identity.
 
-- Keep originals outside the public repository; document rights and permitted derivatives.
-- Create responsive image variants, preserve intended crop, strip unnecessary metadata, and record alt/caption information.
-- Supply a still/poster and accessible text context for every film; prepare captions/transcripts as the content requires.
-- Export film in practical delivery renditions, measure actual quality and transfer size, and test on mobile before selecting a host.
-- For CAD and code screenshots, retain readable labels, remove confidential details and provide text explanations.
-- Verify every quoted result against evidence and every public destination against an owner-approved URL.
+## Media accessibility policy
 
-M1 should produce an evidence inventory and at least one representative, approved case-study content packet or an explicit blocked-content list. It must not fabricate assets to satisfy a layout.
+For QA-12, classify every film/reel as synchronized audio-video, silent video-only, audio-only, or a documented clearly labelled media alternative for text; do not infer an exemption merely because playback starts muted.
+
+- Prerecorded synchronized audio-video: captions cover speech, speakers and meaningful sounds/music. Supply audio description of important visual information not conveyed by the soundtrack, through integrated narration or an accessible described version. A transcript supplements access; **text alone is not an equivalent substitute for the AA audio-description requirement**.
+- Video-only: supply an equivalent time-based text alternative or audio track conveying the visual information. Audio-only: supply an equivalent transcript. Record any claimed text-alternative exception and its rationale explicitly.
+- Provide discoverable keyboard-accessible controls, readable captions that do not obscure essential imagery, poster/context and a fallback link. Check pause, focus, language and mobile playback. Decorative loops must add no unique information, remain pausable, and fall back to a still under reduced motion/data saving.
+
+Review deliverables and record unmet criteria; do not claim WCAG AA for a page with unresolved applicable media failures. This corrects I-4's suggestion that a transcript alone can satisfy synchronized-video AA. Sources: [captions SC 1.2.2](https://www.w3.org/WAI/WCAG22/Understanding/captions-prerecorded.html), [audio description SC 1.2.5](https://www.w3.org/WAI/WCAG22/Understanding/audio-description-prerecorded.html), [audio/video-only SC 1.2.1](https://www.w3.org/WAI/WCAG22/Understanding/audio-only-and-video-only-prerecorded.html).
+
+## Content gate
+
+M1b delivers a verified manifest, representative Aurelia and VFX shot packets, a reel readiness decision, approved language/contact direction and media/fidelity results, or a precise blocked-content list. M1a uses clearly labelled local fixtures and does not wait for these assets. [DEVELOPMENT_PLAN](DEVELOPMENT_PLAN.md) owns milestone acceptance.

@@ -1,36 +1,29 @@
-# ADR 0002: Portfolio stack and rendering
+# ADR 0002: Stack and rendering comparison
 
-Status: **Proposed**. Recorded: 2026-10-15. Decision owner: owner with technical reviewer; approval pending.
-Related: FR-01–FR-06, QA-02, QA-05–QA-09, Q07, Q10.
+Status: **Proposed**. Updated 2026-10-15. Owner: repository owner with technical reviewer. Related: FR-01a, FR-01b, FR-02, QA-02, QA-05, QA-06, QA-07, Q07; findings I-1, I-10.
 
 ## Context
 
-The current site is plain HTML/CSS with no toolchain. A richer portfolio may benefit from reusable templates and selective interactivity, but must preserve crawlable content, mobile performance and static hosting. The desired aesthetic does not by itself justify a large client application.
+The portfolio is content-led, requires direct case-study URLs and may benefit from selective interaction. Cinematic presentation does not establish a need for a client SPA. The current site remains plain HTML/CSS. **No framework is selected during M0.**
 
-## Proposal
+## Neutral proposal and alternatives
 
-Evaluate React + Vite + TypeScript as a maintainable interaction/component toolchain, contingent on a demonstrated static HTML generation strategy for every public route. Compare it with a static-first generator such as Astro with selective React islands, and plain HTML/CSS with small scripts. Prefer the smallest option that passes the representative content and routing tests. **No final stack winner is selected in M0.**
+Run the same fixture routes/content in these three M1a arms, within the time box in [DEVELOPMENT_PLAN](../DEVELOPMENT_PLAN.md#m1a---technical-architecture-validation-proposed):
 
-If React/Vite is selected, document exactly how route HTML is emitted; a client-only React root is insufficient for the proposed SEO/progressive-content requirement. Vite alone does not make this choice. Choose maintained compatible versions and package manager only during a separately authorized scaffold.
-
-Tailwind is optional, evaluated against CSS custom properties/modules; map one shared token source if adopted. Use CSS/native APIs for basic motion. Add GSAP only for a concrete approved timeline and cleanup/reduced-motion plan. Defer Three.js and React Three Fiber until a user goal requires live 3D and a measured prototype fits budgets. R3F is an integration approach for Three.js, not a substitute for GPU/asset optimization.
-
-## Alternatives and tradeoffs
-
-| Option | Advantages | Costs / rejection condition |
+| Arm | Benefit | Tradeoff to measure |
 | --- | --- | --- |
-| Plain HTML/CSS + small JS | Lowest complexity and transfer; current hosting compatible | Repeated case-study maintenance may become error-prone; retain if site stays small |
-| React/Vite/TypeScript + generated HTML | Component reuse, typed content, rich interaction | Must prove prerender/build approach, accessibility and bundle budget |
-| Static-first generator + islands | Route HTML by default, selective client code | New conventions; evaluate team familiarity and maintenance |
-| Bare client SPA | Straightforward interactive routing | Empty initial route HTML and Pages refresh problems; not recommended for proposed quality requirements |
-| Full-stack runtime framework | Broad capabilities | Server features cannot run on Pages; static export may work but added complexity needs justification |
+| Eleventy/static HTML + small JS | Direct output, modest runtime and easy static delivery | Template/content maintenance versus plain-HTML duplication |
+| Astro static output + selective islands | Generated page HTML and isolated interaction | Hydration payload, framework conventions and contributor effort |
+| React + Vite + build-time route prerendering | Reusable interactive components | Explicit rendering/hydration pipeline, total bytes and maintenance |
 
-## Consequences and risks
+For the React arm, a candidate is a build-only route enumerator using React DOM static `prerenderToNodeStream` to capture complete `route/index.html` files, with compatible client hydration only for interactive regions. Vite's SSR/SSG guidance provides build-time prerendering concepts, but Vite alone does not generate route HTML. Record the actual method and hydration correctness before accepting this arm; a pure `renderToStaticMarkup` output is not hydratable. This describes a candidate, not code to create in M0.
 
-A selected build tool requires a later reviewed publishing change. No M0 dependencies, lockfiles or configuration files are introduced. Optional libraries are not a mandatory shopping list. Typed content does not verify factual claims, and static rendering does not establish accessibility without testing.
+Compare compressed transferred bytes/JS, route HTML/metadata, keyboard/reduced-motion behavior, build complexity and timed steps to add a case study. Use identical fixtures and the reference performance profile. Do not presume Astro or React wins. Reject a bare SPA for the proposed delivered-HTML/direct-route criteria, not for its brand name.
 
-## Acceptance gate
+## Consequences and gate
 
-M1 comparison records one representative home/case-study experiment, build output, direct nested entry, delivered HTML/metadata, actual initial transfer, keyboard/reduced-motion results and maintainer workflow. Select an option with rationale, compatible versions, commands, dependency/license review and a separate deployment plan. Owner review then permits Accepted status. Failure to meet budgets favors simpler output, not automatic exceptions.
+TypeScript may improve content contracts, but is a separate choice supported by the selected toolchain. Tailwind, GSAP, Three.js/R3F are later optional enhancements, not required spike dependencies. Cross-document transitions can enhance ordinary page navigation without requiring a SPA.
 
-Revisit when content scale or a validated interaction changes the tradeoff. Technical references and broader evaluation: [SITE_ARCHITECTURE](../SITE_ARCHITECTURE.md#primary-technical-references).
+M1a records versions, commands, output and comparison evidence; owner/reviewer then approve an option or request more evidence. A chosen build tool still needs ADR 0006's separate publishing gate. Revisit if content scale or a validated interaction changes the tradeoff.
+
+Sources: [Eleventy](https://www.11ty.dev/docs/), [Astro islands](https://docs.astro.build/en/concepts/islands/), [Vite SSR/prerendering](https://vite.dev/guide/ssr.html), [React prerenderToNodeStream](https://react.dev/reference/react-dom/static/prerenderToNodeStream), [React static markup limitation](https://react.dev/reference/react-dom/server/renderToStaticMarkup). Checked 2026-10-15.

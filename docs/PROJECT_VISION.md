@@ -1,36 +1,24 @@
 # Project vision
 
-Status: owner direction recorded; presentation strategy Proposed. Updated: 2026-10-15.
+Status: owner direction Confirmed; presentation strategy Proposed. Updated 2026-10-15.
 
 ## Confirmed direction
 
-Youssef Studio is a premium personal portfolio covering CGI, 3D rendering, VFX, product visualization, compositing breakdowns, mechatronics engineering and CAD. The owner identifies Aurelia, a CGI smartphone commercial, as the flagship project. The IBM AI Racing League / TORCS autonomous racing work needs a dedicated bonus case-study page. About and contact information belong in the eventual site. The intended character is cinematic, refined, modern, and technically sophisticated.
+Youssef Studio connects premium CGI, 3D rendering, VFX, product visualization and compositing breakdowns with mechatronics and CAD. Aurelia is the flagship CGI smartphone commercial. A dedicated IBM AI Racing League / TORCS case study remains in scope, alongside About and Contact. The intended aesthetic is cinematic, refined, modern and technically sophisticated.
 
-These statements establish scope; they do not establish project completion, awards, client work, particular tools, measured performance, or asset availability. Those require evidence under the [content plan](CONTENT_PLAN.md).
+These are scope statements, not evidence of completion, credits or achievements. The [content evidence gate](CONTENT_PLAN.md#evidence-and-rights-gate) governs public claims. Current work authorization lives in the [development plan](DEVELOPMENT_PLAN.md#active-milestone).
 
-## Proposed positioning and visitor journeys
+## Proposed visitor journeys
 
-Primary audience: creative directors, producers and potential CGI/VFX collaborators. Secondary audience: engineering recruiters and technical collaborators. The owner must confirm this priority before information hierarchy is finalized (Q01).
+Creative directors, producers and CGI/VFX collaborators are the proposed primary audience; engineering recruiters and technical collaborators are secondary. Confirm this hierarchy through Q01 in [requirements](REQUIREMENTS.md#open-questions).
 
-1. Arrive on a fast, legible introduction and identify the creator's focus without playing a video.
-2. Discover Aurelia, view selected imagery or a film intentionally, and understand role, decisions and breakdown evidence.
-3. Explore engineering/CAD and the bonus racing case study without losing the creative portfolio's hierarchy.
-4. Reach accurate, owner-approved contact information from any page.
+1. Understand the creator's focus from a fast, readable entry and optional cinematic enhancement.
+2. Browse a dedicated `/work/` VFX/CGI portfolio, find Aurelia, and inspect finished shots, roles and breakdown evidence.
+3. Explore engineering/CAD and the dedicated racing story without weakening the creative hierarchy.
+4. Find an accurate biography and approved contact path from any page.
 
-The portfolio should show judgment and process through real artifacts. A visually ambitious presentation must remain understandable with reduced motion, failed media, touch input, or JavaScript disabled for core content.
+## Success criteria
 
-## Scope boundaries
+Visual quality must support discovery, understanding of individual contribution and credible technical storytelling. Real imagery, precise captions and deliberate pacing take priority over decorative complexity. The narrative must survive reduced motion, media failure and unavailable optional JavaScript.
 
-M0 establishes documentation only. Later candidates include a home/selected-work page, project case studies, an engineering overview, About, and Contact. Exact routes and content model remain Proposed in [site architecture](SITE_ARCHITECTURE.md).
-
-Out of M0: UI, framework installation, dependency changes, portfolio copywriting presented as fact, asset generation, contact forms, analytics, CMS, real-time 3D, hosting migration, and any deployment/DNS changes. No commerce, authentication, dashboard or backend is currently required.
-
-## Success and failure signals
-
-Success means visitors can identify the work, distinguish personal contribution from team contribution, inspect a project, and find contact information. Assess this with a short owner/reviewer walkthrough and the measurable [requirements](REQUIREMENTS.md), not visual polish alone.
-
-Failure includes a blank JavaScript shell, unplayable film as the only project evidence, unsupported claims, scroll hijacking, inaccessible interaction, slow mobile delivery, or a live release that breaks a previously valid URL. Ship static content before decorative complexity.
-
-## Decisions needed
-
-Confirm audience priority, public biography/credits, asset readiness and rights, contact channel, visual references, and whether any interactive 3D adds value beyond rendered footage. The canonical question register is [REQUIREMENTS](REQUIREMENTS.md#open-questions). Proposed choices here must not be treated as final approvals.
+Evaluate success through owner/reviewer walkthroughs and the measurable [requirements](REQUIREMENTS.md), not animation quantity. Failure includes a film as the only evidence, unsupported results, inaccessible controls, scroll hijacking, poor mobile delivery or broken direct URLs. No commerce, authentication or backend is currently required; forms, analytics and live 3D need a separately justified scope.

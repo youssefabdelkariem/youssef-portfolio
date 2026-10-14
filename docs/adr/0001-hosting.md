@@ -1,28 +1,17 @@
 # ADR 0001: Retain GitHub Pages hosting
 
-Status: **Accepted** (existing owner-selected hosting decision recorded 2026-10-15).
-Decision owner: repository owner. Related: OPS-01, M0-02.
+Status: **Accepted**. Existing owner choice recorded 2026-10-15; evidence wording corrected in M0 review remediation. Owner: repository owner. Related: OPS-01, M0-02; findings C-1, I-2, I-3, I-11.
 
-## Context and evidence
+## Context and decision
 
-The owner explicitly states the existing GitHub Pages site is functional and must remain intact. The inspected repository uses `main` / root publication, root HTML and a `CNAME` for `youssef.studio`. The earlier setup established HTTPS enforcement. This ADR records continuity; it does not claim a fresh production audit or authorize changing those settings in M0.
+The owner requires preservation of the functional GitHub Pages site and `youssef.studio`. Retain that host/domain. Repository contents establish the HTML and CNAME baseline, not current account settings; historical Pages/HTTPS/DNS observations and unverified protection state are qualified in [infrastructure evidence](../SITE_ARCHITECTURE.md#infrastructure-evidence).
 
-## Decision
-
-Retain GitHub Pages and the current custom domain. Keep M0 entirely on a documentation branch, with no deployment/DNS changes. Static files are the delivery boundary. A future build pipeline is a separate implementation decision and review gate, not already approved by this ADR.
+Acceptance rests on the explicit owner hosting decision, not an inferred infrastructure audit. It does not accept a framework, pipeline, preview service or settings change. A merge into the recorded publishing source can deploy documentation; the [production gate](../AGENT_WORKFLOW.md#production-and-pr-gate) applies.
 
 ## Alternatives and tradeoffs
 
-- Retain Pages: fits a public static portfolio and the owner's hosting preference; limited to static delivery and requires care with direct routes and built assets.
-- Cloudflare Pages or another static host: offers different preview/build features, but migration adds configuration and domain risk without an M0 requirement.
-- Managed app/server hosting: supports runtime services but adds cost/operations that the current portfolio does not require.
+Retaining Pages matches static delivery and the owner's existing setup. Another static host could offer different previews/build features, but migrating adds domain/configuration risk. Runtime application hosting supports server services that are not currently required and introduces operations/cost.
 
-## Consequences and safeguards
+## Consequences and review
 
-Design for static output and valid real files at public routes. Do not rely on server-side rewrites, runtime APIs or secrets shipped to clients. Maintain a reviewed rollback path for future releases. Keep `CNAME` and custom-domain behavior intact when a later pipeline is approved. Hosting costs/limits must be rechecked if media scale or service use changes; no numerical quota is assumed here.
-
-## Review and revisit
-
-Acceptance justification: existing infrastructure plus the owner's explicit preservation requirement. Revisit if static hosting cannot meet an approved requirement, media delivery exceeds practical limits, or preview/deployment needs justify a separately reviewed migration. Document new evidence and a replacement ADR before migration.
-
-Sources: [GitHub Pages overview](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages), [publishing sources](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
+Emit static files and respect the verified [Pages constraints](../SITE_ARCHITECTURE.md#pages-constraints), including published size and soft bandwidth/build limits. Re-evaluate large-film delivery separately. Build/deployment/preview choices belong to [ADR 0006](0006-build-deployment-preview.md). Revisit hosting only if an approved requirement cannot be met or measured scale justifies migration; record a new reviewed decision before changing production.

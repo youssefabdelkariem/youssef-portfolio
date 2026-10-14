@@ -1,53 +1,45 @@
 # Development plan
 
-Status: M0 authorized; later milestones **Proposed** and independently scoped. No dates, budgets or asset completion are promised. Dependencies and questions are tracked in [requirements](REQUIREMENTS.md).
+## Active milestone
 
-## M0 — documentation foundation
+**M0 review remediation only**, on `docs/m0-foundation`; M1 has not started. This is the single current-state record for agent entry points. Only documentation corrections are authorized: no changes to `main`, production HTML/CNAME, DNS/Pages settings, `.nojekyll`, dependencies, application code, workflows, deployment or merge. Record any later milestone authorization here before its dependent work begins.
 
-Deliver the requested 16 Markdown files on `docs/m0-foundation`, with a reviewable commit history. Inspect the current repository, record the baseline, articulate the vision and candidate architecture, and establish shared agent instructions. Hosting is Accepted; ADRs 0002–0005 remain Proposed.
+M0's initial scope was 15 new Markdown files plus root README (16 files). Remediation adds ADR 0006 and a compact [finding disposition record](reviews/M0_REMEDIATION.md). The [ADR register](adr/README.md) owns statuses; only hosting records an existing Accepted decision. All proposed future work below needs separate owner authorization.
 
-Acceptance: M0-01–M0-04 pass; all relative links/anchors resolve within the documentation set; statuses and IDs agree; public claims are separated from proposals and unknowns; no changes to `index.html`, `CNAME`, dependencies, workflows, settings or DNS; no merge into `main`. Record checks and coverage limits in the handoff, not invented application test results.
+M0 acceptance: M0-01 through M0-04, valid links/anchors/IDs, coherent proposal/evidence labels, a Markdown-only diff, unchanged production base/files and a recorded commit. Final owner/reviewer approval remains distinct from permission to merge: [production/PR gate](AGENT_WORKFLOW.md#production-and-pr-gate). The remediation record identifies findings whose operational closure still requires owner action.
 
-## M1 — architecture and content validation (Proposed)
+## M1a - technical architecture validation (Proposed)
 
-Purpose: remove the highest-risk uncertainties before portfolio implementation. Requires a new owner-approved scope after M0 review. Work on an isolated branch/worktree; production remains unchanged.
+Prerequisites: explicit scope authorization, owner-named reviewer/integrator and exclusive ownership comment (Q11). Uses labelled local fixtures; does not depend on portfolio assets, public copy or Q01–Q06. No production/settings changes.
 
-Scope:
+Time box: proposed maximum two focused engineering days, with a checkpoint after the first; owner approves duration. If unfinished, report evidence/gaps rather than expanding automatically.
 
-1. Resolve Q01–Q09 and Q11–Q12 as far as owner evidence allows; record explicit blockers for missing content. Review Q10 rather than automatically adding 3D.
-2. Gather a verified asset inventory and a representative Aurelia content packet. If real assets are unavailable, use clearly labelled neutral fixtures only in a private/local technical experiment.
-3. Compare a static-first option against React + Vite + TypeScript with generated route HTML. Limit any authorized experiment to one home entry and one nested case-study skeleton. No production UI rollout.
-4. Validate direct route load/refresh, HTML content and metadata, responsive image/poster loading, keyboard/reduced-motion behavior and initial transfer size. Record actual build commands, runtime/package manager, versions and coverage limits if scaffolding is explicitly authorized.
-5. Finalize routing, media delivery, visual direction and an isolated preview/release plan. Owner review precedes changing ADR statuses.
+Scope and acceptance:
 
-Acceptance criteria:
+1. Compare the three ADR 0002 arms on identical home, `/work/` and nested case-study fixtures. Record actual delivered HTML/metadata, initial JS/transfer, keyboard/reduced-motion behavior and time/steps to add a case study. Name the React build-time renderer and hydration plan. Select nothing without evidence and owner review.
+2. Validate direct entry/refresh/back/forward, assets, slash/canonical behavior and real 404 against local static production output. Use a local subpath test only for compatibility, not as a claimed hosted preview. Record Q07/Q08 recommendations.
+3. Resolve the technical Q14 preview/pipeline recommendation in ADR 0006. Local static serving suffices for this spike; Actions artifacts are downloadable output, not live previews. Any hosted preview requires separate authorization and verified domain isolation.
+4. Use YS Mobile v1 from [requirements](REQUIREMENTS.md#reference-performance-protocol); report actual tools/versions and results. A named browser/runtime/package-manager/lockfile is introduced only if that experiment is explicitly authorized. No Tailwind/GSAP/R3F comparison is required.
+5. Specify cache-header, content-hash, compression and video byte-range probes. Run them only against local fixtures or an approved read-only endpoint; distinguish local from production observations. Record `Content-Encoding`, `Vary`, cache headers, `206`/`Content-Range` and seek behavior. No CDN/proxy capability is assumed.
 
-- A comparison report names the selected rendering method, output shape, reasons, rejected alternatives and measured tradeoffs; ADR 0002 can be Accepted only with that evidence and approval.
-- At least `/` and one nested candidate route work by direct static-server entry and refresh, with meaningful HTML and unique metadata. A missing route produces a real accessible 404. ADR 0003 records the reviewed URL contract.
-- An asset manifest records provenance, rights, readiness, sizes and accessibility needs; absent items are explicitly blocked, never fabricated.
-- A representative mobile media test supports ADR 0004's hosting/budget recommendation; costs/privacy requirements are known before provisioning anything.
-- QA-01–QA-11 targets are reviewed; measured results and untested devices are reported separately. Budget failures have an agreed response, not silent exceptions.
-- The Codex/Claude ownership/review model and integrator are agreed, satisfying ADR 0005's gate. No same-file concurrent edits.
-- `main`, live HTML, domain and deployment configuration remain unchanged. Dependencies or scaffold files appear only within an explicitly authorized experiment; no M0 proposal alone authorizes them.
+Gate: reviewed comparison/output and route/preview evidence, Q12 target review, updated Proposed ADRs ready for owner decision. Missing content is not a blocker to M1a. Passing fixtures does not validate final film quality or authorize deploying a pipeline.
 
-Do not call M1 complete if the prototype works but architecture/content approval is missing. Record the dependency and stop the affected stream.
+## M1b - design and content validation (Proposed)
 
-## M2 — static portfolio foundation (Proposed)
+Owner-dependent stream after technical direction is available; gathering evidence may run alongside an authorized M1a without conflicting edits. Resolve Q01–Q06, Q09 and Q15; evaluate Q10 rather than adding WebGL by default.
 
-After M1 decisions are Accepted, implement semantic layouts, approved tokens, navigation, case-study templates and verified content on a feature branch. Establish build/type/lint/check commands appropriate to the selected stack. Add meaningful tests for route generation, navigation and essential content. Provide a production-build preview without rebinding the live domain.
+Acceptance: verified content/rights manifest; Aurelia and representative CGI/VFX breakdown packets; reel availability/credits/accessibility classification; engineering/racing evidence plan; approved biography/contact/language direction; favicon/OG licensing direction; annotated design/reference review including focus and responsive layouts. Run actual footage through the media/fidelity/mobile protocol and choose or explicitly defer hosting/renditions with costs/privacy known. Record blockers when assets/approval are missing. Complete applicable QA-12 through QA-18 checks; no fictional work fills missing content.
 
-Acceptance: approved routes and core content work without decorative JS; QA gates are exercised on representative pages; content and accessibility review passes; build output preserves the custom domain under the approved deployment plan. Review may approve a release separately; completion does not itself authorize deployment.
+M1b cannot be declared complete from fixtures. Architecture/media adoption requires the respective ADR gate and owner approval. Neither M1a nor M1b changes production under this plan.
 
-## M3 — media, motion and technical storytelling (Proposed)
+## M2 - static portfolio implementation (Proposed)
 
-Add approved films, responsive renders, breakdowns, engineering projects and the racing page. Add GSAP or WebGL only if approved needs and measured budgets justify them. Pause/offscreen and fallback behavior must work; static narratives stay complete. Review every claim, credit and asset before publication.
+After the needed architecture, design and content decisions are approved, implement semantic layouts, work index/reel policy, case-study templates and verified content on isolated branches. Establish stack-appropriate build/type/lint/tests and a dependency-free or approved Markdown-link check (M-10). Test combined built output, not only development mode. Acceptance: approved routes/content, quality budgets and accessible fallbacks; protected candidate ready for release review. Completion does not itself authorize deployment.
 
-Acceptance: FR-01–FR-06 have approved evidence and visible journeys; keyboard, touch, reduced motion and media failure all pass; mobile performance is within accepted budgets or approved exceptions; no avoidable heavy transfer at entry.
+## M3 - media and optional enhancements (Proposed)
 
-## M4 — release and post-release verification (Proposed)
+Complete approved films/breakdowns, engineering work and the racing page. Add GSAP/WebGL only for an approved visitor goal with lifecycle/fallback and measured budgets. Acceptance: FR scope fulfilled, QA checks on actual content, content approval and no mobile regressions. A static, high-quality release is acceptable without these optional libraries.
 
-Freeze a reviewed candidate commit, run the full production-build matrix, verify direct URLs/SEO/404/contact/media and record a rollback commit. Obtain explicit release authorization. Only then apply the separately approved deployment procedure. After release, verify HTTPS, domain preservation, redirects, core routes and content. If essential content or navigation fails, restore the known-good release using the approved rollback method; do not change DNS as a reflex.
+## M4 - release (Proposed)
 
-## Task sizing and definition of done
-
-Each task names requirement IDs, base commit, owner, exclusive file scope, acceptance evidence and reviewer. Done means reviewed implementation/documentation, actual checks recorded, affected specs/ADRs updated, no unauthorized scope, and a clean handoff. A milestone advances through its gate; elapsed time or a completed code patch does not substitute for approval.
+Meet ADR 0006 and the production/PR gate, freeze candidate/rollback hashes, obtain explicit release authorization, and use only the approved publishing procedure. Verify actual HTTPS, routes, metadata/media/contact/404, redirects, compression/cache/ranges and exclusion of source-only documentation. Record failures and restore the approved known-good artifact/commit if needed; DNS changes are not a routine rollback.

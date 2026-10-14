@@ -1,32 +1,15 @@
-# ADR 0005: Shared AI collaboration
+# ADR 0005: Shared collaboration process
 
-Status: **Proposed**. Recorded: 2026-10-15. Decision owner: repository owner; approval pending.
-Related: M0-04, OPS-02, Q11.
+Status: **Proposed**. Updated 2026-10-15. Owner: repository owner. Related: M0-04, OPS-02, Q11; findings I-7, I-8, M-2, M-3, M-9.
 
-## Context
+## Context and proposal
 
-Codex and Claude Code will work on the same portfolio. Independent prompts and simultaneous edits can cause inconsistent requirements, overwrite shared files, or integrate individually working changes that fail together. Both tools need one decision history and a clear integration owner. No independent multi-agent review is claimed in M0.
-
-## Proposal
-
-Use `docs/` as the shared specification and `AGENTS.md` as the shared execution policy. Keep `CLAUDE.md` as a thin entry point. Use isolated branches AND worktrees/checkouts, exclusive file ownership, a named reviewer and integrator, and combined integration validation. The exact [AGENT_WORKFLOW](../AGENT_WORKFLOW.md) supplies the handoff fields and gate sequence.
-
-Roles rotate by task; neither assistant can accept its own architectural proposal on behalf of the owner. Record ambiguity rather than duplicating a tool-specific specification. M0 safeguards already apply under the user's task and AGENTS.md even while this durable operating model is Proposed.
+Codex and Claude need one specification and ownership history. Retain this process decision for continuity, but keep operational rules in [AGENTS](../../AGENTS.md) and [AGENT_WORKFLOW](../AGENT_WORKFLOW.md), not duplicated here. The supplied Claude independent review concerns the original M0 hash `f01e9e0`; it is not approval of the corrected candidate or proof of a completed multi-editor integration trial.
 
 ## Alternatives and tradeoffs
 
-- Shared working directory: minimal setup but risky index/file collisions and accidental staging; reject for concurrent editors.
-- Separate branches in one directory with branch switching: serialized use only; not isolation for simultaneous work.
-- Separate worktrees/checkouts: clear ownership and independent diffs; requires explicit base synchronization and integration tests. Recommended.
-- Separate Codex/Claude specifications: initially convenient but diverge; reject as a competing source of truth.
-- One editor plus independent review: lower coordination cost, appropriate for small milestones such as M0; no need to manufacture parallel work.
+A shared writable checkout risks collisions; separate concurrent worktrees isolate files/indexes but need explicit integration checks. Separate tool-specific specifications drift. One editor plus independent review is the simpler default for small tasks; do not manufacture parallel work. Use the shared CLAUDE import and honest agent attribution rather than invented coauthor identities.
 
-## Consequences and constraints
+## Consequences and acceptance gate
 
-Some tasks will be serialized, especially shared schemas, tokens, lockfiles and canonical docs. Integration needs fresh checks against current `main`; passing branches do not guarantee a passing combined build. Only authorized task communication/delegation mechanisms may be used. This ADR grants no persistent credentials, account permissions, external messaging, or automatic production access.
-
-## Acceptance gate
-
-Owner names reviewer/integrator and agrees the ownership convention. Conduct a representative handoff and review, record conflict handling (or how it would be handled if no conflict occurs), then validate the combined branch. Approval can mark this ADR Accepted; until then do not claim the long-term process has been adopted or independently tested.
-
-Revisit if team size, automation permissions, tooling or integration failures warrant a revised process. References: [AGENTS.md](../../AGENTS.md), [CLAUDE.md](../../CLAUDE.md), [development gates](../DEVELOPMENT_PLAN.md).
+Single-writer ownership serializes shared files deliberately. Owner-named reviewer/integrator, an ownership comment and a reviewed handoff/integration example are needed before this long-term model is Accepted. Active user safeguards remain binding without accepting a future process. Revisit if coordination overhead exceeds its benefit or integration failures expose a missing control.
