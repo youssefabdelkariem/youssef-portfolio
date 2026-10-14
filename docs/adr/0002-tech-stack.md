@@ -20,6 +20,10 @@ For the React arm, a candidate is a build-only route enumerator using React DOM 
 
 Compare compressed transferred bytes/JS, route HTML/metadata, keyboard/reduced-motion behavior, build complexity and timed steps to add a case study. Use identical fixtures and the reference performance profile. Do not presume Astro or React wins. Reject a bare SPA for the proposed delivered-HTML/direct-route criteria, not for its brand name.
 
+## M1a evidence and provisional recommendation (2026-10-15)
+
+Fixture prototypes of all three arms are recorded in [M1A_EVALUATION](../reviews/M1A_EVALUATION.md). All emitted correct route HTML, metadata, a real 404 and trailing-slash behaviour. Interactive-page script cost differed: Eleventy 142 B, Astro 0 B external, React + Vite prerender 68,253 B gzip. The provisional recommendation is **Astro static output with islands** (Eleventy as fallback; Three.js, if justified by Q10, only as a lazily loaded island). This is evidence for owner review, not a decision: the status stays **Proposed** and real-content measurements remain an M1b input. The repository carries a provisional implementation on `feat/m1a-site-foundation` under the owner's development authorization; it is reversible and does not accept this ADR.
+
 ## Consequences and gate
 
 TypeScript may improve content contracts, but is a separate choice supported by the selected toolchain. Tailwind, GSAP, Three.js/R3F are later optional enhancements, not required spike dependencies. Cross-document transitions can enhance ordinary page navigation without requiring a SPA.

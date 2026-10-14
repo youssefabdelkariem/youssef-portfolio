@@ -67,11 +67,11 @@ After an authorized deployment, separately measure real response headers/compres
 | Q04 | Racing methods, provenance and supported results? | Owner / M1b | No assumed metrics/algorithms |
 | Q05 | Biography, contact and launch language(s)? | Owner / M1b | No invented addresses or translation promises |
 | Q06 | Approved references, fonts and identity? | Owner / M1b | Provisional tokens/system font |
-| Q07 | Stack and explicit route-HTML generation method? | Technical reviewer + owner / M1a | Neutral ADR 0002 comparison |
+| Q07 | Stack and explicit route-HTML generation method? | Technical reviewer + owner / M1a | Astro provisionally recommended in [M1A_EVALUATION](reviews/M1A_EVALUATION.md); ADR 0002 Proposed, owner decision pending |
 | Q08 | Final slugs and racing hierarchy? | Owner + reviewer / M1a, content confirmation M1b | Prefer `/engineering/ibm-ai-racing/`; bonus is a label |
 | Q09 | Media host, budget, renditions and privacy? | Owner + reviewer / M1b | No service provisioning |
 | Q10 | Any visitor goal requiring WebGL? | Owner / after content proof | Deferred, optional |
-| Q11 | Named reviewer/integrator and exclusive path ownership? | Owner / prerequisite to M1a or concurrent work | Must be recorded before work starts |
+| Q11 | Named reviewer/integrator and exclusive path ownership? | Owner / prerequisite to M1a or concurrent work | Owner authorized Claude Code to develop on an isolated branch (2026-10-15). A separate reviewer/integrator is still unnamed; no merge or release until named |
 | Q12 | QA targets, reference profile and real-device access? | Owner + reviewer / M1a; fidelity M1b | Proposals, not measured results |
 | Q13 | Publishing exposure decision and branch/PR protection? | Owner / before M0 merge | No merge while unresolved; state Unverified |
 | Q14 | Local/hosted preview and future deployment pipeline? | Owner + reviewer / M1a | ADR 0006 Proposed; local output first |

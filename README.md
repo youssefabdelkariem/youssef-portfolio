@@ -19,6 +19,8 @@ Read [AGENTS.md](AGENTS.md) or the Claude [entry point](CLAUDE.md), then consult
 | [Agent workflow](docs/AGENT_WORKFLOW.md) | Ownership, review, integration and production protection |
 | [ADR register](docs/adr/README.md) | Authoritative decision statuses |
 | [M0 remediation](docs/reviews/M0_REMEDIATION.md) | Disposition of Claude's independent review findings |
+| [M1a evaluation](docs/reviews/M1A_EVALUATION.md) | Three-arm stack comparison and provisional recommendation |
+| [Handoff](docs/HANDOFF.md) | Current implementation status, checks and resume steps |
 
 ## Baseline and publication risk
 
@@ -26,4 +28,15 @@ The inspected `origin/main` baseline is `c882895442ae6721e13bb59600dc8f84915f9ee
 
 The previously observed Pages source was `main` / root. **Merging to that publishing source can deploy and expose documentation on the production domain.** Review alone does not suppress publication. `.nojekyll` does not hide Markdown. The owner must resolve the [production and PR gate](docs/AGENT_WORKFLOW.md#production-and-pr-gate) before any merge.
 
-There are no application install/build/test commands yet. The active milestone defines what work is authorized; M1 proposals do not authorize scaffolding. Documentation validation and remaining approval conditions are in the remediation record. No final framework has been chosen.
+## Local development (feature branch only)
+
+The provisional Astro site exists on `feat/m1a-site-foundation`, not on `main`. It is not deployed and no framework is an accepted decision; see [HANDOFF](docs/HANDOFF.md). With Node 22.12 or newer:
+
+```text
+npm ci
+npm run dev        # development server
+npm run verify     # docs check, type check, build, dist check, browser check (needs local Chrome/Edge)
+npm run build && npm run preview   # serve the production build locally
+```
+
+The active milestone defines what work is authorized. Documentation validation and remaining approval conditions are in the remediation record.

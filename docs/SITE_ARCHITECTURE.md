@@ -62,3 +62,17 @@ Production custom-domain base is `/` if the recorded binding remains active. Tes
 ## Content and enhancement boundaries
 
 Keep structured project evidence separate from templates and optional motion/media loaders. Core narrative and navigation are delivered as HTML; no canvas-only content. No backend is presently required. Responsive images/posters precede films; [ADR 0004](adr/0004-media-strategy.md) governs fidelity and delivery. External forms, analytics or players require a reviewed need/privacy/cost decision. Build output must exclude source-only documentation unless the owner explicitly approves publishing it; see the [production gate](AGENT_WORKFLOW.md#production-and-pr-gate).
+
+## Provisional implementation (feature branch, 2026-10-15)
+
+Not deployed and not an accepted decision ([ADR 0002](adr/0002-tech-stack.md) is Proposed). Evidence: [M1A_EVALUATION](reviews/M1A_EVALUATION.md).
+
+| Aspect | State |
+| --- | --- |
+| Stack | Astro 7 static output (`output: 'static'`, `format: 'directory'`, `trailingSlash: 'always'`), TypeScript strict, plain CSS custom properties from [DESIGN_SYSTEM](DESIGN_SYSTEM.md); no UI framework, Tailwind, GSAP or Three.js |
+| Source layout | `src/pages/` routes; `src/layouts/BaseLayout.astro` (metadata, canonical, skip link, nav, reveal script); `src/components/` (`Media`, `ProjectCard`, `SlotCard`, `CaseHero`, `Pending`); `src/data/` typed site and project records with a content-readiness `status`; `src/styles/global.css`; `public/` (favicon, robots) |
+| Routes built | `/`, `/work/`, `/work/aurelia/`, `/engineering/`, `/engineering/ibm-ai-racing/`, `/about/`, `/contact/`, `404.html`; sitemap excludes 404. Slugs remain Proposed (Q08) |
+| JavaScript | One tiny inline reveal observer. Content is visible without JS and with reduced motion. Zero external JS bundles |
+| Motion | CSS only: hero light sweep, reveal fade, CSS cross-document `@view-transition`; all gated by `prefers-reduced-motion` |
+| Future 3D | Add as an Astro island (`client:visible`, dynamic import) on one route only; not implemented, no `three` dependency (Q10) |
+| Publishing | Build output is `dist/`. No workflow, `CNAME` copy or Pages change exists; the Actions/CNAME handling is an [ADR 0006](adr/0006-build-deployment-preview.md) decision. Do not publish the repository root |

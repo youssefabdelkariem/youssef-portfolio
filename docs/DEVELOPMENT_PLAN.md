@@ -2,13 +2,15 @@
 
 ## Active milestone
 
-**M0 review remediation only**, on `docs/m0-foundation`; M1 has not started. This is the single current-state record for agent entry points. Only documentation corrections are authorized: no changes to `main`, production HTML/CNAME, DNS/Pages settings, `.nojekyll`, dependencies, application code, workflows, deployment or merge. Record any later milestone authorization here before its dependent work begins.
+**M1a technical validation plus provisional site foundation**, on `feat/m1a-site-foundation` (worktree from reviewed M0 commit `80af31c`). Owner authorization recorded 2026-10-15: develop the site on an isolated feature branch while Codex is unavailable. Still prohibited without separate authorization: merging to or changing `main`, deploying, DNS or Pages settings, `.nojekyll`, workflows, paid services, accepting any Proposed ADR, and removing the existing production page. The root `index.html` and `CNAME` are unchanged on this branch. Owner-approved M0 documentation remains subject to Q13 before any merge. Current status and resume steps: [HANDOFF](HANDOFF.md).
 
 M0's initial scope was 15 new Markdown files plus root README (16 files). Remediation adds ADR 0006 and a compact [finding disposition record](reviews/M0_REMEDIATION.md). The [ADR register](adr/README.md) owns statuses; only hosting records an existing Accepted decision. All proposed future work below needs separate owner authorization.
 
-M0 acceptance: M0-01 through M0-04, valid links/anchors/IDs, coherent proposal/evidence labels, a Markdown-only diff, unchanged production base/files and a recorded commit. Final owner/reviewer approval remains distinct from permission to merge: [production/PR gate](AGENT_WORKFLOW.md#production-and-pr-gate). The remediation record identifies findings whose operational closure still requires owner action.
+M0 acceptance (for the M0 commit range `f01e9e0`..`80af31c`, not this branch's later commits): M0-01 through M0-04, valid links/anchors/IDs, coherent proposal/evidence labels, a Markdown-only diff, unchanged production base/files and a recorded commit. Final owner/reviewer approval remains distinct from permission to merge: [production/PR gate](AGENT_WORKFLOW.md#production-and-pr-gate). The remediation record identifies findings whose operational closure still requires owner action.
 
-## M1a - technical architecture validation (Proposed)
+## M1a - technical architecture validation (Proposed)
+
+Progress: in progress under the owner's 2026-10-15 development authorization; see Implementation status below. The heading label reflects ADR status, not work state.
 
 Prerequisites: explicit scope authorization, owner-named reviewer/integrator and exclusive ownership comment (Q11). Uses labelled local fixtures; does not depend on portfolio assets, public copy or Q01–Q06. No production/settings changes.
 
@@ -43,3 +45,9 @@ Complete approved films/breakdowns, engineering work and the racing page. Add GS
 ## M4 - release (Proposed)
 
 Meet ADR 0006 and the production/PR gate, freeze candidate/rollback hashes, obtain explicit release authorization, and use only the approved publishing procedure. Verify actual HTTPS, routes, metadata/media/contact/404, redirects, compression/cache/ranges and exclusion of source-only documentation. Record failures and restore the approved known-good artifact/commit if needed; DNS changes are not a routine rollback.
+
+## Implementation status (updated 2026-10-15)
+
+Done on `feat/m1a-site-foundation`: three-arm fixture comparison ([M1A_EVALUATION](reviews/M1A_EVALUATION.md)); provisional Astro static site with routes `/`, `/work/`, `/work/aurelia/`, `/engineering/`, `/engineering/ibm-ai-racing/`, `/about/`, `/contact/` and a real 404; shared layout, media placeholder, project/slot cards, case-study header and placeholder-notice components; sitemap, robots, favicon (provisional); build-output, browser and docs check scripts. Content is labelled placeholder throughout.
+
+Remaining: owner decision on ADR 0002/0003/0006; Q13 and Q11 reviewer/integrator; real content and asset verification (M1b); hero film/poster pipeline and media-accessibility deliverables; design sign-off (Q06); Lighthouse/YS Mobile v1 measurement on representative content; a hosted-preview and deployment decision (ADR 0006); CI for the verify script (M2); optional Three.js island only if Q10 justifies it.
