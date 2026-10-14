@@ -43,3 +43,8 @@ A cinematic hero may move after the poster, but mobile/data-saving/reduced-motio
 ## Review gate
 
 M1b reviews references and an annotated layout, representative work cards, case-study typography, media controls and mobile navigation. Record contrast, focus, zoom, motion and fidelity findings. [Requirements](REQUIREMENTS.md) own measurable targets; no design implementation is authorized by this proposal.
+
+## M1b exploration status (2026-10-15)
+
+The tokens above remain the provisional M1a set and are **not** replaced. Owner direction recorded: cinematic, elegant, distinctive, dark, minimalist, with a typography-first `YOUSSEF.STUDIO` wordmark. Two candidate systems (A: Cinematic Editorial, B: Digital Atelier) with palettes, type, motion and mobile treatments are specified and compared in [M1B_DESIGN_REVIEW](reviews/M1B_DESIGN_REVIEW.md). One will be promoted into this document only after owner selection. Unchanged constraints for either: poster-first heroes, text on solid backing rather than over imagery, reduced-motion parity, visible focus, and no webfont until licensed (Q06).
+

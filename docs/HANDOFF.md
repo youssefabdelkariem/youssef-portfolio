@@ -1,4 +1,4 @@
-# Handoff: provisional site foundation
+# Handoff: site foundation and M1b design exploration
 
 Updated 2026-10-15 by Claude Code (acting lead engineer while Codex is unavailable). Authority: owner instruction recorded in [DEVELOPMENT_PLAN](DEVELOPMENT_PLAN.md#active-milestone). Nothing here is merged, deployed or an accepted decision.
 
@@ -6,7 +6,8 @@ Updated 2026-10-15 by Claude Code (acting lead engineer while Codex is unavailab
 
 | Item | Value |
 | --- | --- |
-| Branch / worktree | `feat/m1a-site-foundation`, worktree `../website-portfolio-m1a` (sibling of the main checkout) |
+| Current branch / worktree | `feat/m1b-design-exploration`, worktree `../website-portfolio-m1b`; based on the M1a head `4cda393` (see the M1b section for its commits) |
+| M1a branch | `feat/m1a-site-foundation`, worktree `../website-portfolio-m1a`, pushed; unchanged by M1b |
 | Base | M0 commit `80af31cd00c73e1f7bf737e15cae6bd731bcfde9` (`docs/m0-foundation`) |
 | Implementation commit | `510e4a4` |
 | Documentation commits | `58275a2` (evaluation, ADR note, handoff) and `7a8f18b` (cleanup); use `git log` for anything newer |
@@ -14,6 +15,17 @@ Updated 2026-10-15 by Claude Code (acting lead engineer while Codex is unavailab
 | Production | `main` still `c882895`; root `index.html` and `CNAME` unchanged; no workflow, Pages or DNS change |
 | ADR statuses | 0001 Accepted; 0002-0006 Proposed (unchanged) |
 | Stack | Astro 7.3.8 static output, TypeScript strict, plain CSS; Node >= 22.12 |
+
+## M1b phases 1-2 (2026-10-15): stopped at the design-selection gate
+
+- **Authorized scope:** content inventory and two design explorations only. No homepage, `/work/` or Aurelia implementation was started.
+- **Deliverables:** [CONTENT_MANIFEST](CONTENT_MANIFEST.md); [M1B_DESIGN_REVIEW](reviews/M1B_DESIGN_REVIEW.md) with screenshots in `docs/design/m1b/`; exploration pages `src/explore/` (`/explore/`, `/explore/a/`, `/explore/b/`).
+- **Isolation:** the exploration routes are injected by `astro.config.mjs` only when `YS_EXPLORE=1`, via `npm run build:explore` into `dist-explore/` (git-ignored). The default build, sitemap and `npm run verify` never include them. Pages are `noindex`, carry a visible "design exploration" notice, and use placeholders only.
+- **Commands:** `npm run build:explore`, `npm run preview:explore` (http://localhost:4322/explore/), `npm run test:explore`, `node scripts/shoot-explore.mjs`.
+- **Verification:** `test:explore` passed three consecutive runs (axe 0 violations at 390/1440 px, no overflow 320-1440 px, reduced motion, no-JS, refresh, no external requests); default `npm run verify` passed. The browser check now waits for finite animations before contrast checks.
+- **Content:** no asset was copied. The local Aurelia folder was listed by type, count and size only; contents were not read. 0 assets are verified; 12 items are missing ([CONTENT_MANIFEST](CONTENT_MANIFEST.md#d-missing-items-and-decisions-blocking-placeholder-replacement)).
+- **Owner decisions recorded:** creative-first audience (Q01), Astro as provisional framework (ADR 0002 stays Proposed), typography-first `YOUSSEF.STUDIO` wordmark (partial Q06).
+- **Next gate:** owner picks direction A, B, a hybrid or a revision, a typography route and hero copy, and supplies manifest items M-01 to M-08. Then phases 3-5 of [M1B_PLAN](M1B_PLAN.md) can start. Exploration pages and scripts should then be removed or archived, and the chosen tokens promoted into [DESIGN_SYSTEM](DESIGN_SYSTEM.md).
 
 ## Architecture and what exists
 

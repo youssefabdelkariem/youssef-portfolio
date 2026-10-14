@@ -61,13 +61,13 @@ After an authorized deployment, separately measure real response headers/compres
 
 | ID | Decision | Owner / gate | Interim position |
 | --- | --- | --- | --- |
-| Q01 | Creative/engineering audience priority? | Owner / M1b | Creative-first hypothesis |
+| Q01 | Creative/engineering audience priority? | Owner / M1b | Answered 2026-10-15: VFX/CGI studios, creative recruiters and clients first; engineering recruiters and collaborators second |
 | Q02 | Publishable Aurelia/reel/VFX assets and credits? | Owner / M1b | Readiness Unknown |
 | Q03 | Engineering/CAD projects and individual roles? | Owner / M1b | No assumed cards |
 | Q04 | Racing methods, provenance and supported results? | Owner / M1b | No assumed metrics/algorithms |
 | Q05 | Biography, contact and launch language(s)? | Owner / M1b | No invented addresses or translation promises |
-| Q06 | Approved references, fonts and identity? | Owner / M1b | Provisional tokens/system font |
-| Q07 | Stack and explicit route-HTML generation method? | Technical reviewer + owner / M1a | Astro provisionally recommended in [M1A_EVALUATION](reviews/M1A_EVALUATION.md); ADR 0002 Proposed, owner decision pending |
+| Q06 | Approved references, fonts and identity? | Owner / M1b | Wordmark direction `YOUSSEF.STUDIO`, typography-first (2026-10-15); direction A/B, fonts and references pending selection in [M1B_DESIGN_REVIEW](reviews/M1B_DESIGN_REVIEW.md) |
+| Q07 | Stack and explicit route-HTML generation method? | Technical reviewer + owner / M1a | Astro provisionally recommended in [M1A_EVALUATION](reviews/M1A_EVALUATION.md); ADR 0002 Proposed. Owner approved Astro as the provisional framework 2026-10-15; formal acceptance still pending real-content evidence |
 | Q08 | Final slugs and racing hierarchy? | Owner + reviewer / M1a, content confirmation M1b | Prefer `/engineering/ibm-ai-racing/`; bonus is a label |
 | Q09 | Media host, budget, renditions and privacy? | Owner + reviewer / M1b | No service provisioning |
 | Q10 | Any visitor goal requiring WebGL? | Owner / after content proof | Deferred, optional |

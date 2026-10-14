@@ -60,3 +60,8 @@ M1b delivers a verified manifest, representative Aurelia and VFX shot packets, a
 The provisional site renders every unverified item as a labelled placeholder (`Pending`, `Media`, `SlotCard` components); `src/data/projects.ts` carries a per-project readiness status, all currently `placeholder`. Public text asserts only owner-stated scope: no tools, role, credits, dates, results, metrics or contact address. The skill chips on About are discipline areas from the owner's scope, not proficiency claims. The racing page has structure for story, methodology, comparison table (no data), footage and source link; no repository URL is shown because none was supplied.
 
 The owner holds a large local Aurelia project folder outside this repository. Nothing from it was read for content or copied; selecting derivatives, rights and credits is an M1b task under the gate above.
+
+## M1b manifest (2026-10-15)
+
+The first content manifest is [CONTENT_MANIFEST](CONTENT_MANIFEST.md): owner decisions, repository-verified facts, local asset candidates grouped by type and size (none reviewed or approved), and twelve missing items (M-01 to M-12). No asset has reached Verified. The readiness gate above is unchanged and still blocks publication.
+

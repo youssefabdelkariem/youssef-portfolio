@@ -1,6 +1,6 @@
 # M1b plan: visual identity, homepage, VFX portfolio, Aurelia
 
-Status: **Proposed. Not started and not authorized.** Prepared 2026-10-15 by Claude Code. It elaborates [M1b in the development plan](DEVELOPMENT_PLAN.md#m1b---design-and-content-validation-proposed); the plan and [requirements](REQUIREMENTS.md) remain authoritative. Starting needs explicit owner authorization recorded in the active-milestone section. Nothing here accepts an ADR.
+Status: **Phases 1-2 authorized and complete (2026-10-15); phases 3-7 Proposed and not authorized.** Results: [CONTENT_MANIFEST](CONTENT_MANIFEST.md), [M1B_DESIGN_REVIEW](reviews/M1B_DESIGN_REVIEW.md). Prepared 2026-10-15 by Claude Code. It elaborates [M1b in the development plan](DEVELOPMENT_PLAN.md#m1b---design-and-content-validation-proposed); the plan and [requirements](REQUIREMENTS.md) remain authoritative. Starting needs explicit owner authorization recorded in the active-milestone section. Nothing here accepts an ADR.
 
 ## Goal and boundaries
 
