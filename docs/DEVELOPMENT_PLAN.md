@@ -2,7 +2,7 @@
 
 ## Active milestone
 
-**M1b phases 1-2 (content inventory and visual exploration)**, on `feat/m1b-design-exploration` (worktree from `4cda393`, the M1a head). Owner authorization recorded 2026-10-15: phase 1 and phase 2 only, then stop for design selection. Owner decisions recorded in [CONTENT_MANIFEST](CONTENT_MANIFEST.md#a-owner-decisions-on-record-2026-10-15): creative-first audience, Astro as provisional framework (ADR 0002 still Proposed), typography-first `YOUSSEF.STUDIO` wordmark, dark cinematic direction. Still prohibited without separate authorization: homepage/`/work/`/Aurelia implementation (phases 3-5), merging to or changing `main`, deploying, DNS or Pages settings, `.nojekyll`, workflows, paid services, accepting any Proposed ADR, and removing the existing production page. The M1a work remains on `feat/m1a-site-foundation`; root `index.html` and `CNAME` are unchanged. Owner-approved M0 documentation remains subject to Q13 before any merge. Status and resume steps: [HANDOFF](HANDOFF.md).
+**M1b phase 3 (homepage only)**, on `feat/m1b-homepage` (worktree from `685dd41`, the M1b exploration head). Owner authorization recorded 2026-10-15: implement the homepage in the hybrid identity (Direction A primary, Direction B technical accents for Engineering/IBM AI Racing) with the headline "Engineering precision. Cinematic imagination.", system fonts, and no new external fonts. Phases 1-2 are complete ([CONTENT_MANIFEST](CONTENT_MANIFEST.md), [M1B_DESIGN_REVIEW](reviews/M1B_DESIGN_REVIEW.md)). Still prohibited without separate authorization: the VFX portfolio and Aurelia case-study implementation, merging to or changing `main`, deploying, DNS or Pages settings, `.nojekyll`, workflows, paid services, accepting any Proposed ADR, and removing the existing production page. Root `index.html` and `CNAME` are unchanged; owner-approved M0 documentation remains subject to Q13 before any merge. Status and resume steps: [HANDOFF](HANDOFF.md).
 
 M0's initial scope was 15 new Markdown files plus root README (16 files). Remediation adds ADR 0006 and a compact [finding disposition record](reviews/M0_REMEDIATION.md). The [ADR register](adr/README.md) owns statuses; only hosting records an existing Accepted decision. All proposed future work below needs separate owner authorization.
 
@@ -57,3 +57,8 @@ Remaining: owner decision on ADR 0002/0003/0006; Q13 and Q11 reviewer/integrator
 ## M1b progress (updated 2026-10-15)
 
 Phase 1 done: [CONTENT_MANIFEST](CONTENT_MANIFEST.md) (6 owner decisions, 4 verified facts, 8 local candidate groups, 12 missing items, 0 verified assets). Phase 2 done: two local-only design explorations (`/explore/a/`, `/explore/b/`, built only by `npm run build:explore`) with screenshots and a comparison in [M1B_DESIGN_REVIEW](reviews/M1B_DESIGN_REVIEW.md). **Stopped at the design-selection gate**: phases 3-5 wait for the owner to choose a direction and typography route and to supply manifest items M-01 to M-08.
+
+## M1b phase 3 progress (updated 2026-10-15)
+
+Homepage implemented on `feat/m1b-homepage`: sitewide hybrid tokens, new header/footer, `Plate` media slot with placeholder and failure fallback, technical engineering teaser, and eight homepage sections. Decision record: [M1B_HOME_DECISION](reviews/M1B_HOME_DECISION.md). Verification results are in [HANDOFF](HANDOFF.md). **Stopped after the homepage**: the VFX portfolio (phase 4) and Aurelia case study (phase 5) wait for owner review of the homepage and the manifest assets M-01 to M-08.
+

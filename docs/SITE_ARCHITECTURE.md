@@ -76,3 +76,8 @@ Not deployed and not an accepted decision ([ADR 0002](adr/0002-tech-stack.md) is
 | Motion | CSS only: hero light sweep, reveal fade, CSS cross-document `@view-transition`; all gated by `prefers-reduced-motion` |
 | Future 3D | Add as an Astro island (`client:visible`, dynamic import) on one route only; not implemented, no `three` dependency (Q10) |
 | Publishing | Build output is `dist/`. No workflow, `CNAME` copy or Pages change exists; the Actions/CNAME handling is an [ADR 0006](adr/0006-build-deployment-preview.md) decision. Do not publish the repository root |
+
+## Homepage implementation (feature branch `feat/m1b-homepage`, 2026-10-15)
+
+Still Proposed and not deployed. `/` now implements the approved hybrid identity ([M1B_HOME_DECISION](reviews/M1B_HOME_DECISION.md)). Reusable pieces: `Header` and `Footer` (shared by every page through `BaseLayout`), `Plate` (real-media slot with placeholder and failure fallback), `TechPlate` (technical SVG accent), tokens in `global.css`, editorial components in `editorial.css`, and media references in `src/data/home.ts`. Other routes keep their M1a content and inherit only tokens, header and footer. JavaScript is still one small inline script (scroll reveal and image-failure fallback); no new dependencies.
+

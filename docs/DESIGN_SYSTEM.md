@@ -1,22 +1,27 @@
 # Design system direction
 
-Status: **Proposed**; visual identity awaits M1b owner review. Related: FR-06, QA-01, QA-03, QA-04, QA-13, QA-17. Review findings: I-5, I-6, M-5; full mapping in [remediation](reviews/M0_REMEDIATION.md).
+Status: **Hybrid identity selected by the owner (2026-10-15); tokens and type remain provisional** pending Q06 (fonts, wordmark letterforms) and real imagery. Related: FR-06, QA-01, QA-03, QA-04, QA-13, QA-17. Review findings: I-5, I-6, M-5; full mapping in [remediation](reviews/M0_REMEDIATION.md).
 
 ## Principles and tokens
 
 Let finished CGI and engineering evidence lead. Use calm composition, generous spacing, readable captions and deliberate pacing. Avoid decorative telemetry, scroll hijacking and effects that obscure the work.
 
-| Token | Candidate | Use |
+| Token | Value | Use |
 | --- | --- | --- |
-| canvas | `#101216` | Current test-page background; provisional branding |
-| surface | `#191D24` | Panels |
-| text-primary | `#F4F4F5` | Main text |
-| text-secondary | `#A8ADB7` | Supporting text |
-| accent | `#AAC4FF` | Links/highlights |
-| focus-ring | `#AAC4FF`, 3 px outline, 3 px offset | Visible keyboard focus on dark surfaces; add contrasting dark backing on variable imagery/light surfaces |
-| border | `#343B47` | Decorative separators only, never sole focus/control boundary |
+| canvas | `#0b0a09` | Page background |
+| surface / surface-2 | `#141210` / `#1b1713` | Panels, placeholder plates |
+| text | `#ebe5da` | Main text (15.8:1 on canvas) |
+| text-2 | `#a39b8d` | Supporting text (about 7:1 on canvas and surface) |
+| accent | `#c9a96e` (hover `#ddc594`) | Links, buttons, kickers (8.8:1 on canvas) |
+| focus | `#c9a96e`, 3 px outline, 3 px offset | Visible keyboard focus; add a dark backing on variable imagery |
+| border | `#2e2924` | Decorative rules only, never the sole control boundary |
+| border-strong | `#7a6e5e` | Control and media boundaries (about 4:1 on canvas, 3.8:1 on surface) |
+| signal | `#ff5a36` | Technical register only (engineering/racing); 6.4:1 on canvas |
+| warn / warn-line | `#e3d29a` / `#8a7a4a` | Placeholder and pending notices |
 | space | `4, 8, 12, 16, 24, 32, 48, 64, 96 px` | Scale large gaps down on mobile |
-| radius | `0, 4, 8 px` | Restrained corners |
+| radius | `2, 4 px` | Restrained corners |
+| font-display / body / mono | Iowan Old Style, Palatino, Georgia / system sans / system monospace | System stacks only; mono is for the technical register |
+| ease / snap | `cubic-bezier(.2,.7,.2,1)` / `cubic-bezier(.2,.8,.2,1)` | Editorial and technical motion curves |
 
 Use one token source; optional Tailwind mapping comes later, outside the stack spike. Check actual text contrast (normal 4.5:1, large 3:1) and meaningful UI/focus contrast (3:1 where applicable). Do not put essential text on uncontrolled film without a tested backing. Focus must remain visible and unobscured on every background; the token alone is not proof of conformance.
 
@@ -47,4 +52,8 @@ M1b reviews references and an annotated layout, representative work cards, case-
 ## M1b exploration status (2026-10-15)
 
 The tokens above remain the provisional M1a set and are **not** replaced. Owner direction recorded: cinematic, elegant, distinctive, dark, minimalist, with a typography-first `YOUSSEF.STUDIO` wordmark. Two candidate systems (A: Cinematic Editorial, B: Digital Atelier) with palettes, type, motion and mobile treatments are specified and compared in [M1B_DESIGN_REVIEW](reviews/M1B_DESIGN_REVIEW.md). One will be promoted into this document only after owner selection. Unchanged constraints for either: poster-first heroes, text on solid backing rather than over imagery, reduced-motion parity, visible focus, and no webfont until licensed (Q06).
+
+## M1b homepage status (2026-10-15)
+
+The hybrid identity is applied as the global tokens above in `src/styles/global.css`, with shared components in `src/styles/editorial.css` and `src/components/` (`Header`, `Footer`, `Plate`, `TechPlate`). Direction A is primary; Direction B's monospace and signal colour appear only in the engineering/racing teaser. Rationale, departures from the explorations and open approvals: [M1B_HOME_DECISION](reviews/M1B_HOME_DECISION.md). Exploration pages remain available locally for reference. Not yet approved: fonts, final wordmark letterforms, real imagery.
 

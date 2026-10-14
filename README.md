@@ -22,6 +22,7 @@ Read [AGENTS.md](AGENTS.md) or the Claude [entry point](CLAUDE.md), then consult
 | [M1a evaluation](docs/reviews/M1A_EVALUATION.md) | Three-arm stack comparison and provisional recommendation |
 | [Content manifest](docs/CONTENT_MANIFEST.md) | Owner decisions, verified facts, local asset candidates, missing items |
 | [M1b design review](docs/reviews/M1B_DESIGN_REVIEW.md) | Two visual directions, comparison and selection gate |
+| [M1b homepage decision](docs/reviews/M1B_HOME_DECISION.md) | Hybrid identity, homepage structure, media-slot contract and open approvals |
 | [M1b plan](docs/M1B_PLAN.md) | Proposed visual identity, homepage, VFX portfolio and Aurelia plan, inputs and preview workflow |
 | [Handoff](docs/HANDOFF.md) | Current implementation status, checks and resume steps |
 

@@ -1,4 +1,4 @@
-# Handoff: site foundation and M1b design exploration
+# Handoff: site foundation, design exploration and homepage
 
 Updated 2026-10-15 by Claude Code (acting lead engineer while Codex is unavailable). Authority: owner instruction recorded in [DEVELOPMENT_PLAN](DEVELOPMENT_PLAN.md#active-milestone). Nothing here is merged, deployed or an accepted decision.
 
@@ -6,7 +6,8 @@ Updated 2026-10-15 by Claude Code (acting lead engineer while Codex is unavailab
 
 | Item | Value |
 | --- | --- |
-| Current branch / worktree | `feat/m1b-design-exploration`, worktree `../website-portfolio-m1b`; based on the M1a head `4cda393` (see the M1b section for its commits) |
+| Current branch / worktree | `feat/m1b-homepage`, worktree `../website-portfolio-m1b-home`; based on `685dd41` (see `git log` for its commits) |
+| M1b exploration branch | `feat/m1b-design-exploration`, worktree `../website-portfolio-m1b`, local only (not pushed) |
 | M1a branch | `feat/m1a-site-foundation`, worktree `../website-portfolio-m1a`, pushed; unchanged by M1b |
 | Base | M0 commit `80af31cd00c73e1f7bf737e15cae6bd731bcfde9` (`docs/m0-foundation`) |
 | Implementation commit | `510e4a4` |
@@ -15,6 +16,26 @@ Updated 2026-10-15 by Claude Code (acting lead engineer while Codex is unavailab
 | Production | `main` still `c882895`; root `index.html` and `CNAME` unchanged; no workflow, Pages or DNS change |
 | ADR statuses | 0001 Accepted; 0002-0006 Proposed (unchanged) |
 | Stack | Astro 7.3.8 static output, TypeScript strict, plain CSS; Node >= 22.12 |
+
+## M1b phase 3: homepage (2026-10-15), stopped for owner review
+
+- **Scope done:** the homepage only, in the owner-selected hybrid identity. The VFX portfolio and Aurelia case study were not implemented; they inherit tokens, header and footer only. Decision record: [M1B_HOME_DECISION](reviews/M1B_HOME_DECISION.md).
+- **Components:** new `Header`, `Footer`, `Plate` (media slot with placeholder and failure fallback), `TechPlate`; modified `BaseLayout`, `global.css` (hybrid tokens), new `editorial.css`, `data/site.ts`, new `data/home.ts`; page `src/pages/index.astro`. New dependencies: none.
+- **Media slot:** set `homeMedia.hero` / `homeMedia.aurelia` in `src/data/home.ts` once an approved derivative exists (manifest M-01, M-02).
+- **Commands:** `npm run verify` (default site); `npm run build:explore` then `npm run test:explore` and `npm run test:media` (explore fixtures, including the missing-image fixture); `node scripts/shoot-home.mjs` for screenshots.
+
+| Check | Result |
+| --- | --- |
+| `npm run verify` | Passed: docs check (24 files), type check 0 errors, build 8 pages, built-output check (home entry 7.1 KB gzip, external JS 0 B), browser check on 7 routes |
+| Browser check detail | axe WCAG 2.x A/AA, 2.2 AA and best-practice at 390 and 1440 px: 0 violations; no overflow at 320/390/768/1024/1440 px; reduced motion: nothing animates and nothing is hidden; JavaScript disabled: content visible; refresh stable; no console errors or external requests |
+| `npm run test:media` | Passed on the explore fixture: a missing image falls back to the labelled placeholder with the plate height intact; a valid image hides the label. Mutation-tested (removing the fallback script makes it fail). Limit: with JavaScript disabled a failed image shows only the browser's alt text |
+| `npm run test:explore` | Passed (both exploration pages and the index still pass) |
+| Lighthouse 13.5 on `/`, local server | Mobile preset, three runs: accessibility, best-practices and SEO 100 each time; performance 93, 86 and 100 (median 93); LCP 0.9-1.0 s, CLS 0; total blocking time varied 0-560 ms between runs on a page with no JavaScript bundle, so the dip looks like measurement noise but was not investigated. Desktop preset: all four categories 100. Transfer size is uncompressed and local, with placeholder content only |
+| Not done | Firefox, Safari, real phones, screen reader, YS Mobile v1 protocol, tests with real media or fonts |
+
+Screenshots: `docs/design/m1b/home-desktop-*.jpg`, `home-tablet-*.jpg`, `home-mobile-*.jpg`, `home-mobile-menu.jpg`.
+
+**Open items for the owner:** real hero still and Aurelia frame (M-01/M-02) and the rest of M-03 to M-08; fonts and wordmark letterforms (Q06); approval of the proposed supporting copy and call to action; a decision on whether to push this branch; ADR statuses unchanged. After homepage sign-off, phase 4 (VFX portfolio) and phase 5 (Aurelia) in [M1B_PLAN](M1B_PLAN.md) need explicit authorization.
 
 ## M1b phases 1-2 (2026-10-15): stopped at the design-selection gate
 

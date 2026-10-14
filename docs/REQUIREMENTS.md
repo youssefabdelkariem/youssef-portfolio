@@ -66,7 +66,7 @@ After an authorized deployment, separately measure real response headers/compres
 | Q03 | Engineering/CAD projects and individual roles? | Owner / M1b | No assumed cards |
 | Q04 | Racing methods, provenance and supported results? | Owner / M1b | No assumed metrics/algorithms |
 | Q05 | Biography, contact and launch language(s)? | Owner / M1b | No invented addresses or translation promises |
-| Q06 | Approved references, fonts and identity? | Owner / M1b | Wordmark direction `YOUSSEF.STUDIO`, typography-first (2026-10-15); direction A/B, fonts and references pending selection in [M1B_DESIGN_REVIEW](reviews/M1B_DESIGN_REVIEW.md) |
+| Q06 | Approved references, fonts and identity? | Owner / M1b | Wordmark direction `YOUSSEF.STUDIO`, typography-first (2026-10-15); hybrid A/B direction selected 2026-10-15 ([M1B_HOME_DECISION](reviews/M1B_HOME_DECISION.md)); fonts, wordmark letterforms and references still pending |
 | Q07 | Stack and explicit route-HTML generation method? | Technical reviewer + owner / M1a | Astro provisionally recommended in [M1A_EVALUATION](reviews/M1A_EVALUATION.md); ADR 0002 Proposed. Owner approved Astro as the provisional framework 2026-10-15; formal acceptance still pending real-content evidence |
 | Q08 | Final slugs and racing hierarchy? | Owner + reviewer / M1a, content confirmation M1b | Prefer `/engineering/ibm-ai-racing/`; bonus is a label |
 | Q09 | Media host, budget, renditions and privacy? | Owner + reviewer / M1b | No service provisioning |

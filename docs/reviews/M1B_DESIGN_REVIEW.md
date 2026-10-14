@@ -112,6 +112,10 @@ Captured from `dist-explore/` at 1440 x 900 and 390 x 844, JPEG, placeholder con
 
 Full-page captures of Direction B show the fixed rail or bottom bar once at its scroll position, which is a screenshot artefact.
 
+## Owner selection (recorded 2026-10-15)
+
+The owner chose a hybrid: Direction A as the primary identity and Direction B's technical elements for Engineering and IBM AI Racing, with the headline "Engineering precision. Cinematic imagination." and system fonts for now. Application and departures are recorded in [M1B_HOME_DECISION](M1B_HOME_DECISION.md). The gate text below is kept as the original record.
+
 ## Owner approval gate
 
 Implementation of the homepage, `/work/` and Aurelia surfaces (M1b phases 3 to 5) will not start until the owner records: (1) the chosen direction (A, B, hybrid or revise); (2) the typography route (approve system stacks for now, or choose licensed webfonts, Q06); (3) confirmation of wordmark letterforms and hero copy; and (4) which of the manifest items M-01 to M-08 can be supplied first. Until then the production-style pages stay as the M1a placeholders.

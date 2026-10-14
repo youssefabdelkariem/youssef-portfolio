@@ -65,3 +65,7 @@ The owner holds a large local Aurelia project folder outside this repository. No
 
 The first content manifest is [CONTENT_MANIFEST](CONTENT_MANIFEST.md): owner decisions, repository-verified facts, local asset candidates grouped by type and size (none reviewed or approved), and twelve missing items (M-01 to M-12). No asset has reached Verified. The readiness gate above is unchanged and still blocks publication.
 
+## Homepage content status (2026-10-15)
+
+The homepage ([M1B_HOME_DECISION](reviews/M1B_HOME_DECISION.md)) contains: the owner's headline; a supporting sentence, discipline notes, and section and call-to-action copy that are proposed and unapproved; placeholder media for the hero and Aurelia (labelled "not approved"); two empty VFX slots; and engineering and IBM AI Racing links with no results. Role and credits show "Pending confirmation". No project, tool, metric, credit or contact detail was invented. Replacing placeholders needs [CONTENT_MANIFEST](CONTENT_MANIFEST.md) items M-01 and M-02 first, then M-03 to M-08 for the case study.
+
