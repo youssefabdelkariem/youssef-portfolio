@@ -12,12 +12,12 @@ const candidates = [process.env.CHROME_PATH, 'C:/Program Files/Google/Chrome/App
 const executablePath = candidates.find((p) => fs.existsSync(p));
 if (!executablePath) { console.error('No Chrome/Edge found; set CHROME_PATH'); process.exit(2); }
 
-const routes = ['/', '/work/', '/work/aurelia/', '/engineering/', '/engineering/ibm-ai-racing/', '/about/', '/contact/'];
+const routes = process.env.YS_ROUTES ? process.env.YS_ROUTES.split(',') : ['/', '/work/', '/work/aurelia/', '/engineering/', '/engineering/ibm-ai-racing/', '/about/', '/contact/'];
 const widths = [320, 390, 768, 1024, 1440];
 const problems = [];
 const fail = (m) => problems.push(m);
 
-const { server, port } = await serve(path.resolve('dist'));
+const { server, port } = await serve(path.resolve(process.env.YS_DIST ?? 'dist'));
 const base = `http://localhost:${port}`;
 const browser = await puppeteer.launch({ executablePath, headless: true });
 
@@ -52,6 +52,8 @@ try {
     // accessibility (axe, WCAG 2.x A/AA tags) at mobile and desktop widths
     for (const w of [390, 1440]) {
       await page.setViewport({ width: w, height: 900 });
+      // let finite entrance animations settle so contrast is measured at rest
+      await page.evaluate(() => Promise.all(document.getAnimations().filter((x) => x.effect?.getComputedTiming().iterations !== Infinity).map((x) => x.finished.catch(() => {}))));
       await page.evaluate(axeSource);
       const result = await page.evaluate(() => axe.run(document, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa', 'best-practice'] } }));
       for (const v of result.violations) fail(`${r} @${w}: axe ${v.id} (${v.impact}) ${v.nodes.length} node(s): ${v.nodes[0].target.join(' ')}`);

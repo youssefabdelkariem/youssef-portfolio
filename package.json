@@ -7,6 +7,9 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "build:explore": "node scripts/build-explore.mjs",
+    "preview:explore": "node scripts/preview-explore.mjs",
+    "test:explore": "node scripts/check-explore.mjs",
     "preview": "astro preview",
     "typecheck": "astro check",
     "test:dist": "node scripts/check-dist.mjs",
