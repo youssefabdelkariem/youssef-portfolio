@@ -1,0 +1,26 @@
+---
+/**
+ * Cinematic media slot. With no `src` it shows a clearly labelled placeholder plate.
+ * With `src` it shows the image (explicit width/height, descriptive alt); if the image
+ * fails to load, a tiny script in BaseLayout marks the plate `data-state="failed"` and the
+ * placeholder underlay (with its label) is shown instead, so layout never collapses.
+ */
+interface Props {
+  label: string;
+  src?: string;
+  alt?: string;
+  width?: number;
+  height?: number;
+  ratio?: string;
+  framed?: boolean;
+  priority?: boolean;
+}
+const { label, src, alt = '', width = 2390, height = 1000, ratio, framed = false, priority = false } = Astro.props;
+const style = ratio ? `--ratio: ${ratio}` : undefined;
+---
+
+<figure class:list={['plate', { framed, 'has-src': !!src }]} style={style} {...(!src ? { role: 'img', 'aria-label': `Placeholder: ${label}. Not an approved asset.` } : {})}>
+  <span class="streak" aria-hidden="true"></span>
+  <p class="tag-label">Placeholder &middot; {label} &middot; not approved</p>
+  {src && <img src={src} alt={alt} width={width} height={height} decoding="async" loading={priority ? 'eager' : 'lazy'} fetchpriority={priority ? 'high' : 'auto'} />}
+</figure>

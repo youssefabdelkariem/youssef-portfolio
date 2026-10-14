@@ -1,36 +1,105 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ProjectCard from '../components/ProjectCard.astro';
+import Plate from '../components/Plate.astro';
+import TechPlate from '../components/TechPlate.astro';
 import { site } from '../data/site';
-import { workProjects, engineeringProjects } from '../data/projects';
-const featured = [...workProjects, ...engineeringProjects];
+import { homeMedia } from '../data/home';
+
+const { hero, aurelia } = homeMedia;
+const disciplines = [
+  ['CGI and 3D rendering', 'Product visualization and cinematic imagery'],
+  ['VFX and compositing', 'Shot breakdowns that show how frames were built'],
+  ['Mechatronics and CAD', 'Engineering projects, presented with evidence'],
+];
 ---
 
 <BaseLayout title={site.name} description={site.description}>
   <section class="hero" aria-labelledby="hero-title">
-    <div class="sweep" aria-hidden="true"></div>
-    <div class="wrap">
-      <p class="eyebrow">CGI &middot; VFX &middot; Mechatronics &middot; CAD</p>
-      <h1 id="hero-title">Cinematic CGI. Precise engineering.</h1>
-      <p class="lede">{site.description}</p>
+    <Plate label="Hero still" priority {...(hero ? { src: hero.src, alt: hero.alt, width: hero.width, height: hero.height } : {})} />
+    <div class="hero-copy">
+      <p class="eyebrow">CGI &middot; 3D rendering &middot; VFX &middot; Engineering</p>
+      <h1 id="hero-title"><span>Engineering precision.</span> <span><em>Cinematic imagination.</em></span></h1>
+      <p class="lede">A portfolio of CGI, 3D rendering and VFX work, grounded in mechatronics engineering and CAD.</p>
       <div class="actions">
         <a class="btn" href="/work/aurelia/">View Aurelia</a>
         <a class="btn ghost" href="/work/">VFX Portfolio</a>
-        <a class="btn ghost" href="/engineering/">Engineering</a>
       </div>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="featured">
+  <section class="section divided" aria-labelledby="intro-title">
+    <div class="wrap intro reveal">
+      <h2 id="intro-title">Cinematic images, built with engineering discipline.</h2>
+      <ul>
+        {disciplines.map(([name, note]) => <li><strong>{name}</strong><span>{note}</span></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section divided" aria-labelledby="featured-title">
+    <div class="wrap featured">
+      <div class="reveal">
+        <Plate label="Aurelia" framed {...(aurelia ? { src: aurelia.src, alt: aurelia.alt, width: aurelia.width, height: aurelia.height } : {})} />
+      </div>
+      <div class="reveal">
+        <p class="eyebrow">Featured project</p>
+        <h2 id="featured-title">Aurelia</h2>
+        <p>A CGI smartphone commercial and the flagship of this portfolio. The full case study is in preparation.</p>
+        <dl>
+          <div><dt>Type</dt><dd>CGI smartphone commercial</dd></div>
+          <div><dt>Role</dt><dd>Pending confirmation</dd></div>
+          <div><dt>Credits</dt><dd>Pending confirmation</dd></div>
+        </dl>
+        <a class="btn" href="/work/aurelia/">View case study</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section divided" aria-labelledby="work-title">
     <div class="wrap">
-      <div class="section-head">
-        <h2 id="featured">Featured work</h2>
-        <a href="/work/">All CGI &amp; VFX work</a>
+      <div class="section-head reveal">
+        <h2 id="work-title">Selected VFX work</h2>
+        <a href="/work/">VFX Portfolio</a>
       </div>
-      <div class="grid">
-        {featured.map((p) => <ProjectCard project={p} />)}
+      <div class="slots">
+        <figure class="slotframe reveal">
+          <div class="box" role="img" aria-label="Empty project slot, CGI">Project slot &middot; none verified yet</div>
+          <figcaption><span class="n">01</span><span class="t">CGI</span><span class="m">Appears here when the work is verified and approved.</span></figcaption>
+        </figure>
+        <figure class="slotframe reveal">
+          <div class="box" role="img" aria-label="Empty project slot, compositing">Project slot &middot; none verified yet</div>
+          <figcaption><span class="n">02</span><span class="t">Compositing and breakdowns</span><span class="m">Appears here when the work is verified and approved.</span></figcaption>
+        </figure>
       </div>
-      <p class="notice reveal"><strong>Content status.</strong> Imagery, credits and results are not yet verified for publication. Cards show labelled placeholders; nothing here is a claim of completed work beyond the owner-stated project descriptions.</p>
+      <p class="slots-note">No further projects are shown until their material and credits are confirmed.</p>
+    </div>
+  </section>
+
+  <section class="section tech" aria-labelledby="eng-title">
+    <div class="wrap tech-grid">
+      <div class="reveal">
+        <p class="eyebrow">Engineering</p>
+        <h2 id="eng-title">Engineering and autonomous racing</h2>
+        <p class="lede">Mechatronics, CAD and the IBM AI Racing League / TORCS controller project, presented as technical case studies.</p>
+        <ol class="idx">
+          <li><span class="n">01</span><a href="/engineering/">Engineering</a><span class="d">Mechatronics and CAD</span></li>
+          <li><span class="n">02</span><a href="/engineering/ibm-ai-racing/">IBM AI Racing League / TORCS</a><span class="d">Autonomous racing &middot; case study in preparation</span></li>
+        </ol>
+      </div>
+      <div class="reveal">
+        <TechPlate caption={'Placeholder plate · not approved'} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta-band" aria-labelledby="cta-title">
+    <div class="wrap reveal">
+      <h2 id="cta-title">Let&rsquo;s talk about your project.</h2>
+      <p>Get in touch about collaborations or projects, or read more about the studio.</p>
+      <div class="actions">
+        <a class="btn" href="/contact/">Contact</a>
+        <a class="btn ghost" href="/about/">About</a>
+      </div>
     </div>
   </section>
 </BaseLayout>

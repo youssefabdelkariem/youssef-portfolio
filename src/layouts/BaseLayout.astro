@@ -1,6 +1,9 @@
 ---
 import '../styles/global.css';
-import { site, nav } from '../data/site';
+import '../styles/editorial.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
 
 interface Props {
   title: string;
@@ -11,8 +14,6 @@ interface Props {
 const { title, description, noindex = false } = Astro.props;
 const fullTitle = title === site.name ? title : `${title} | ${site.name}`;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
-const path = Astro.url.pathname;
-const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
 ---
 
 <!doctype html>
@@ -24,7 +25,7 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <meta name="theme-color" content="#101216" />
+    <meta name="theme-color" content="#0b0a09" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={fullTitle} />
@@ -36,37 +37,27 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
-    <header class="site-header">
-      <div class="wrap">
-        <a class="brand" href="/">{site.name}</a>
-        <nav aria-label="Primary">
-          <ul class="nav">
-            {nav.map((item) => (
-              <li>
-                <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </div>
-    </header>
+    <Header />
     <main id="main" tabindex="-1">
       <slot />
     </main>
-    <footer class="site-footer">
-      <div class="wrap">
-        <span>&copy; {site.name}. Content on this site is provisional until owner-approved.</span>
-        <a href="/contact/">Contact</a>
-      </div>
-    </footer>
+    <Footer />
     <script is:inline>
       (function () {
+        // Scroll reveal: purely progressive; content is visible without this script.
         var els = document.querySelectorAll('.reveal');
-        if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
-        var io = new IntersectionObserver(function (entries) {
-          entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
-        }, { rootMargin: '0px 0px -8% 0px' });
-        els.forEach(function (e) { io.observe(e); });
+        if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); }
+        else {
+          var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+          }, { rootMargin: '0px 0px -8% 0px' });
+          els.forEach(function (e) { io.observe(e); });
+        }
+        // Media fallback: if a plate image fails, show the labelled placeholder instead.
+        document.querySelectorAll('.plate img').forEach(function (img) {
+          function fail() { img.parentElement.setAttribute('data-state', 'failed'); }
+          if (img.complete && img.naturalWidth === 0) fail(); else img.addEventListener('error', fail);
+        });
       })();
     </script>
   </body>

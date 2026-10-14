@@ -10,6 +10,7 @@ const exploreRoutes = {
       injectRoute({ pattern: '/explore', entrypoint: './src/explore/index.astro' });
       injectRoute({ pattern: '/explore/a', entrypoint: './src/explore/a/index.astro' });
       injectRoute({ pattern: '/explore/b', entrypoint: './src/explore/b/index.astro' });
+      injectRoute({ pattern: '/explore/media-fallback', entrypoint: './src/explore/media-fallback.astro' });
     },
   },
 };

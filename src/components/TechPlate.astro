@@ -1,0 +1,18 @@
+---
+/** Line-drawn technical plate (Direction B accent). Decorative placeholder; carries no data. */
+interface Props { caption: string }
+const { caption } = Astro.props;
+---
+
+<figure class="techplate">
+  <svg viewBox="0 0 400 300" role="img" aria-label="Placeholder technical drawing: wireframe cube with dimension lines. Not an approved asset.">
+    <g fill="none" stroke="currentColor" stroke-width="1">
+      <path d="M200 60 L310 120 L310 220 L200 280 L90 220 L90 120 Z" />
+      <path d="M200 60 L200 160 M200 160 L310 220 M200 160 L90 220" />
+      <path class="dim" d="M70 120 V220 M64 120 H76 M64 220 H76" />
+      <path class="dim" d="M90 300 H310 M90 294 V306 M310 294 V306" />
+    </g>
+    <path d="M6 20 V6 H20 M380 6 H394 V20 M394 280 V294 H380 M20 294 H6 V280" fill="none" stroke="currentColor" stroke-width="1.5" />
+  </svg>
+  <figcaption>{caption}</figcaption>
+</figure>

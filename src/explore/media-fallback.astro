@@ -1,0 +1,15 @@
+---
+/** Test fixture (local explore build only): one plate with a missing image, one with a valid image. */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Plate from '../components/Plate.astro';
+---
+
+<BaseLayout title="Media fallback fixture" description="Local test fixture for missing-media fallback." noindex>
+  <div class="wrap section">
+    <h1>Media fallback fixture</h1>
+    <h2>Missing image</h2>
+    <Plate label="Missing fixture" src="/this-image-does-not-exist.jpg" alt="Fixture image that fails to load" width={2390} height={1000} />
+    <h2>Valid image</h2>
+    <Plate label="Valid fixture" src="/favicon.svg" alt="Fixture icon" width={64} height={64} />
+  </div>
+</BaseLayout>
