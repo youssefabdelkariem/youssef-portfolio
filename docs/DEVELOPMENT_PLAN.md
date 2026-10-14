@@ -48,6 +48,8 @@ Meet ADR 0006 and the production/PR gate, freeze candidate/rollback hashes, obta
 
 ## Implementation status (updated 2026-10-15)
 
+M1a technical work is complete on `feat/m1a-site-foundation` (pushed to origin, head `38283a1` at push time) and awaits owner review of ADRs 0002, 0003 and 0006, Q11 and Q13. No ADR was accepted. The next stage is M1b, detailed in [M1B_PLAN](M1B_PLAN.md); it is Proposed, not started and not authorized.
+
 Done on `feat/m1a-site-foundation`: three-arm fixture comparison ([M1A_EVALUATION](reviews/M1A_EVALUATION.md)); provisional Astro static site with routes `/`, `/work/`, `/work/aurelia/`, `/engineering/`, `/engineering/ibm-ai-racing/`, `/about/`, `/contact/` and a real 404; shared layout, media placeholder, project/slot cards, case-study header and placeholder-notice components; sitemap, robots, favicon (provisional); build-output, browser and docs check scripts. Content is labelled placeholder throughout.
 
 Remaining: owner decision on ADR 0002/0003/0006; Q13 and Q11 reviewer/integrator; real content and asset verification (M1b); hero film/poster pipeline and media-accessibility deliverables; design sign-off (Q06); Lighthouse/YS Mobile v1 measurement on representative content; a hosted-preview and deployment decision (ADR 0006); CI for the verify script (M2); optional Three.js island only if Q10 justifies it.

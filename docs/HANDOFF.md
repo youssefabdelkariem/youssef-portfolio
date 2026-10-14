@@ -10,6 +10,7 @@ Updated 2026-10-15 by Claude Code (acting lead engineer while Codex is unavailab
 | Base | M0 commit `80af31cd00c73e1f7bf737e15cae6bd731bcfde9` (`docs/m0-foundation`) |
 | Implementation commit | `510e4a4` |
 | Documentation commits | `58275a2` (evaluation, ADR note, handoff) and `7a8f18b` (cleanup); use `git log` for anything newer |
+| Remote | pushed to `origin/feat/m1a-site-foundation` (not merged; no pull request opened) |
 | Production | `main` still `c882895`; root `index.html` and `CNAME` unchanged; no workflow, Pages or DNS change |
 | ADR statuses | 0001 Accepted; 0002-0006 Proposed (unchanged) |
 | Stack | Astro 7.3.8 static output, TypeScript strict, plain CSS; Node >= 22.12 |
@@ -55,6 +56,8 @@ Checks were mutation-tested (injected missing alt, low contrast, 2000 px element
 - Git identity is not configured on this machine; commits used the existing author identity through environment variables, without changing git config.
 
 ## Next recommended tasks
+
+M1b is planned in [M1B_PLAN](M1B_PLAN.md) (not started): owner inputs, phases and a non-production preview workflow.
 
 1. Owner: review/decide ADR 0002, 0003, 0006; resolve Q11 and Q13.
 2. Owner: choose the Aurelia stills/film derivatives and credits to publish (rights, role, tools) and the racing evidence/repository link; then fill `src/data` and replace `Media` placeholders (poster-first, explicit-play video, captions and audio description per QA-12).

@@ -20,6 +20,7 @@ Read [AGENTS.md](AGENTS.md) or the Claude [entry point](CLAUDE.md), then consult
 | [ADR register](docs/adr/README.md) | Authoritative decision statuses |
 | [M0 remediation](docs/reviews/M0_REMEDIATION.md) | Disposition of Claude's independent review findings |
 | [M1a evaluation](docs/reviews/M1A_EVALUATION.md) | Three-arm stack comparison and provisional recommendation |
+| [M1b plan](docs/M1B_PLAN.md) | Proposed visual identity, homepage, VFX portfolio and Aurelia plan, inputs and preview workflow |
 | [Handoff](docs/HANDOFF.md) | Current implementation status, checks and resume steps |
 
 ## Baseline and publication risk
