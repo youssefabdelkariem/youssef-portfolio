@@ -8,9 +8,9 @@ M0's initial scope was 15 new Markdown files plus root README (16 files). Remedi
 
 M0 acceptance (for the M0 commit range `f01e9e0`..`80af31c`, not this branch's later commits): M0-01 through M0-04, valid links/anchors/IDs, coherent proposal/evidence labels, a Markdown-only diff, unchanged production base/files and a recorded commit. Final owner/reviewer approval remains distinct from permission to merge: [production/PR gate](AGENT_WORKFLOW.md#production-and-pr-gate). The remediation record identifies findings whose operational closure still requires owner action.
 
-## M1a - technical architecture validation (Proposed)
+## M1a - technical architecture validation (Proposed)
 
-Progress: in progress under the owner's 2026-10-15 development authorization; see Implementation status below. The heading label reflects ADR status, not work state.
+Progress: in progress under the owner's 2026-10-15 development authorization; see Implementation status below. The heading label reflects ADR status, not work state.
 
 Prerequisites: explicit scope authorization, owner-named reviewer/integrator and exclusive ownership comment (Q11). Uses labelled local fixtures; does not depend on portfolio assets, public copy or Q01–Q06. No production/settings changes.
 
