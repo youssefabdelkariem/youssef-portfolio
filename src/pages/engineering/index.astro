@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import SlotCard from '../../components/SlotCard.astro';
+import { engineeringProjects, engineeringCategories } from '../../data/projects';
+---
+
+<BaseLayout title="Engineering" description="Mechatronics, CAD, robotics, programming and simulation projects, including the IBM AI Racing League / TORCS case study.">
+  <div class="wrap page-title">
+    <p class="eyebrow">Engineering</p>
+    <h1>Mechatronics, CAD and autonomy</h1>
+    <p class="lede">Engineering work presented with problem, constraints, individual contribution, tests and limits. Projects appear only with supporting evidence.</p>
+  </div>
+
+  <section class="section" style="padding-top:0" aria-labelledby="projects">
+    <div class="wrap">
+      <h2 id="projects">Projects</h2>
+      <div class="grid">
+        {engineeringProjects.map((p) => <ProjectCard project={p} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0" aria-labelledby="templates">
+    <div class="wrap">
+      <h2 id="templates">Project template categories</h2>
+      <p class="lede">Reusable layouts for future projects. These are empty slots, not completed work.</p>
+      <div class="grid">
+        {engineeringCategories.map((c) => <SlotCard title={c.name} note={c.note} />)}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

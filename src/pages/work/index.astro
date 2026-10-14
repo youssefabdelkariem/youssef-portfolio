@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import SlotCard from '../../components/SlotCard.astro';
+import { workProjects, workSlots, type Discipline } from '../../data/projects';
+
+const groups: { discipline: Discipline; intro: string }[] = [
+  { discipline: 'CGI', intro: '3D rendering, product visualization and CGI film work.' },
+  { discipline: 'Compositing', intro: 'Compositing work and shot breakdowns showing how finished frames were assembled.' },
+];
+---
+
+<BaseLayout title="VFX Portfolio" description="CGI, 3D rendering and compositing work, led by the Aurelia smartphone commercial.">
+  <div class="wrap page-title">
+    <p class="eyebrow">VFX Portfolio</p>
+    <h1>CGI and compositing</h1>
+    <p class="lede">A dedicated index of CGI and VFX work. Aurelia leads; further projects appear only once verified.</p>
+  </div>
+  {groups.map((g) => {
+    const items = workProjects.filter((p) => p.discipline === g.discipline);
+    const slots = workSlots.filter((s) => s.discipline === g.discipline);
+    return (
+      <section class="section" aria-labelledby={`g-${g.discipline}`} style="padding-top: 0">
+        <div class="wrap">
+          <div class="section-head">
+            <h2 id={`g-${g.discipline}`}>{g.discipline}</h2>
+            <p style="margin:0">{g.intro}</p>
+          </div>
+          <div class="grid">
+            {items.map((p) => <ProjectCard project={p} />)}
+            {slots.map((s) => <SlotCard title={s.note} note="Appears here when real work is verified" />)}
+          </div>
+        </div>
+      </section>
+    );
+  })}
+  <div class="wrap section" style="padding-top:0">
+    <p class="notice"><strong>Showreel.</strong> No reel is published. Per FR-01c a reel appears only when approved footage, shot credits and accessible alternatives exist.</p>
+  </div>
+</BaseLayout>

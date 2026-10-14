@@ -1,0 +1,73 @@
+---
+import '../styles/global.css';
+import { site, nav } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Mark the page `noindex` (e.g. 404). */
+  noindex?: boolean;
+}
+const { title, description, noindex = false } = Astro.props;
+const fullTitle = title === site.name ? title : `${title} | ${site.name}`;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const path = Astro.url.pathname;
+const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#101216" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    {noindex && <meta name="robots" content="noindex" />}
+    <script is:inline>document.documentElement.classList.add('js');</script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href="/">{site.name}</a>
+        <nav aria-label="Primary">
+          <ul class="nav">
+            {nav.map((item) => (
+              <li>
+                <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">
+        <span>&copy; {site.name}. Content on this site is provisional until owner-approved.</span>
+        <a href="/contact/">Contact</a>
+      </div>
+    </footer>
+    <script is:inline>
+      (function () {
+        var els = document.querySelectorAll('.reveal');
+        if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+        }, { rootMargin: '0px 0px -8% 0px' });
+        els.forEach(function (e) { io.observe(e); });
+      })();
+    </script>
+  </body>
+</html>

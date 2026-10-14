@@ -1,0 +1,27 @@
+{
+  "name": "youssef-studio",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Youssef Studio portfolio (provisional Astro implementation; see docs/adr/0002-tech-stack.md)",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "typecheck": "astro check",
+    "test:dist": "node scripts/check-dist.mjs",
+    "test:browser": "node scripts/check-browser.mjs",
+    "check:docs": "node scripts/check-docs.mjs",
+    "verify": "npm run check:docs && npm run typecheck && npm run build && npm run test:dist && npm run test:browser"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^7.3.8"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "axe-core": "^4.14.0",
+    "puppeteer-core": "^25.14.0",
+    "typescript": "^6.0.3"
+  }
+}

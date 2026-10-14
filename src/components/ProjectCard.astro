@@ -1,0 +1,19 @@
+---
+import Media from './Media.astro';
+import type { Project } from '../data/projects';
+interface Props { project: Project }
+const { project } = Astro.props;
+---
+
+<article class="card reveal">
+  <Media label={`${project.title} (media pending)`} />
+  <div class="body">
+    <div class="meta">
+      <span class="tag">{project.discipline}</span>
+      {project.flagship && <span class="tag">Flagship</span>}
+      {project.status === 'placeholder' && <span class="tag pending">Content pending</span>}
+    </div>
+    <h3><a href={project.href}>{project.title}</a></h3>
+    <p>{project.summary}</p>
+  </div>
+</article>

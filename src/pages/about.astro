@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Pending from '../components/Pending.astro';
+
+// Discipline areas come from owner-stated scope (PROJECT_VISION). Specific tools/skills await owner confirmation.
+const skills = [
+  { name: 'CGI and VFX', items: ['3D rendering', 'Product visualization', 'Compositing', 'Shot breakdowns'] },
+  { name: 'Engineering', items: ['Mechatronics', 'CAD'] },
+  { name: 'Autonomy and software', items: ['Autonomous racing controllers (TORCS)'] },
+];
+---
+
+<BaseLayout title="About" description="About Youssef Studio: disciplines across CGI, VFX and mechatronics engineering.">
+  <div class="wrap page-title">
+    <p class="eyebrow">About</p>
+    <h1>Where cinema meets engineering</h1>
+    <p class="lede">Youssef Studio connects cinematic CGI and VFX with mechatronics and CAD engineering work.</p>
+  </div>
+
+  <section class="section" style="padding-top:0" aria-labelledby="bio">
+    <div class="wrap cols">
+      <div>
+        <h2 id="bio">Biography</h2>
+        <Pending what="Biography pending.">Add the owner-approved biography, public role and location, and portrait only with permission (Q05).</Pending>
+      </div>
+      <div>
+        <h2 id="skills">Skill categories</h2>
+        <p>Discipline areas from the owner's stated scope. Specific software and proficiency levels are pending confirmation and are intentionally not listed.</p>
+        {skills.map((g) => (
+          <div style="margin-bottom:1.5rem">
+            <h3>{g.name}</h3>
+            <ul class="chips">{g.items.map((i) => <li>{i}</li>)}</ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import CaseHero from '../../../components/CaseHero.astro';
+import Media from '../../../components/Media.astro';
+import Pending from '../../../components/Pending.astro';
+
+const shots = [
+  { id: 'shot-01', title: 'Breakdown slot 1' },
+  { id: 'shot-02', title: 'Breakdown slot 2' },
+];
+const stages = [
+  ['Concept and direction', 'Confirm whether and how this stage was performed before publishing.'],
+  ['Modelling and look development', 'Confirm tools and individual scope; omit if not evidenced.'],
+  ['Lighting and rendering', 'Confirm renderer, passes and render settings only from project files.'],
+  ['Compositing and finishing', 'Confirm compositing steps and final grade from project files.'],
+];
+---
+
+<BaseLayout title="Aurelia" description="Case study structure for Aurelia, a CGI smartphone commercial. Media and credits pending verification.">
+  <CaseHero
+    eyebrow="VFX Portfolio / CGI"
+    title="Aurelia"
+    lede="A CGI smartphone commercial, designated by the owner as the flagship project. This page is the case-study template; every specific below awaits verification."
+    facts={[
+      { label: 'Type', value: 'CGI smartphone commercial' },
+      { label: 'Role', value: 'Pending owner confirmation' },
+      { label: 'Credits', value: 'Pending owner confirmation' },
+      { label: 'Tools', value: 'Pending verification' },
+    ]}
+  />
+
+  <section class="wrap" aria-labelledby="film">
+    <h2 id="film" class="eyebrow">Film</h2>
+    <Media standalone label="Aurelia hero film or still" note="Placeholder: poster-first. Film plays only on request, with captions and audio description per QA-12." />
+    <Pending what="Hero media pending.">Final film, poster, captions and an audio-description deliverable are required before a player is added.</Pending>
+  </section>
+
+  <section class="section" aria-labelledby="overview">
+    <div class="wrap cols">
+      <div>
+        <h2 id="overview">Project overview</h2>
+        <p>Premise, brief and intent will be written from owner-approved material. No scope, client or outcome is asserted here.</p>
+      </div>
+      <div>
+        <Pending what="Overview text pending.">Add premise, personal versus team contribution and the creative objective.</Pending>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0" aria-labelledby="breakdowns">
+    <div class="wrap">
+      <h2 id="breakdowns">Shot breakdowns</h2>
+      <p class="lede">Each breakdown shows the finished frame and the labelled stages actually used, with a static side-by-side alternative.</p>
+      <div class="cols">
+        {shots.map((s) => (
+          <figure class="reveal" id={s.id} style="margin:0">
+            <Media standalone label={s.title} note="Placeholder: finished frame and stage comparison pending" />
+            <figcaption class="lede" style="font-size:0.9375rem;margin-top:0.75rem">Caption, frame/timecode and the technical decision explained go here once verified.</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0" aria-labelledby="workflow">
+    <div class="wrap">
+      <h2 id="workflow">Production workflow</h2>
+      <Pending what="Candidate stages only.">Keep, edit or delete each stage so the list reflects only work that was performed and can be evidenced.</Pending>
+      <ol class="steps">
+        {stages.map(([name, note]) => (
+          <li><div><h3>{name}</h3><p>{note}</p></div></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+</BaseLayout>

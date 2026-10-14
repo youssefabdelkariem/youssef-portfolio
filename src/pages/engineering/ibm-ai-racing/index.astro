@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import CaseHero from '../../../components/CaseHero.astro';
+import Media from '../../../components/Media.astro';
+import Pending from '../../../components/Pending.astro';
+
+const rows = ['Baseline controller', 'Revised controller'];
+---
+
+<BaseLayout title="IBM AI Racing League / TORCS" description="Case study structure for an IBM AI Racing League / TORCS autonomous racing controller project. Methods, results and footage pending verification.">
+  <CaseHero
+    eyebrow="Engineering / Autonomous racing"
+    title="IBM AI Racing League / TORCS"
+    lede="A dedicated case study on developing an autonomous racing controller. This page is a template; no method, result or ranking is claimed until evidence is supplied."
+    facts={[
+      { label: 'Context', value: 'IBM AI Racing League / TORCS (owner-described)' },
+      { label: 'Role', value: 'Pending owner confirmation' },
+      { label: 'Dates', value: 'Pending' },
+      { label: 'Endorsement', value: 'None implied' },
+    ]}
+  />
+
+  <section class="section" style="padding-top:0" aria-labelledby="story">
+    <div class="wrap cols">
+      <div>
+        <h2 id="story">Controller development story</h2>
+        <p>The narrative of how the controller evolved: problem, first approach, failures, changes and what was learned.</p>
+      </div>
+      <Pending what="Narrative pending.">Describe the actual environment, observation and action interface, and iterations, using only documented work. Do not assume a specific algorithm or sensor set.</Pending>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0" aria-labelledby="method">
+    <div class="wrap">
+      <h2 id="method">Technical methodology</h2>
+      <Pending what="Methodology pending.">Record simulator and software versions, controller structure, training or tuning approach, evaluation conditions and reproduction steps only when known.</Pending>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0" aria-labelledby="comparison">
+    <div class="wrap">
+      <h2 id="comparison">Performance comparison</h2>
+      <Pending what="No results recorded.">Lap times, ranks and reliability figures require logs, test conditions and permission to publish. Rows below are structure only.</Pending>
+      <div class="table-wrap" role="region" aria-labelledby="cmp-cap" tabindex="0">
+        <table>
+          <caption id="cmp-cap">Controller comparison (structure only, no data)</caption>
+          <thead><tr><th scope="col">Controller</th><th scope="col">Track / scenario</th><th scope="col">Metric and units</th><th scope="col">Result</th><th scope="col">Evidence</th></tr></thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr><th scope="row">{r}</th><td>Pending</td><td>Pending</td><td>Pending</td><td>Pending</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0" aria-labelledby="footage">
+    <div class="wrap">
+      <h2 id="footage">Demonstration footage</h2>
+      <Media standalone label="Verified demonstration footage" note="Placeholder: poster-first video with captions and transcript, added once verified" />
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0" aria-labelledby="source">
+    <div class="wrap">
+      <h2 id="source">Source code</h2>
+      <Pending what="Repository link pending.">Add the verified public GitHub repository URL, licence and code-provenance notes. No link is shown until the owner supplies it.</Pending>
+    </div>
+  </section>
+</BaseLayout>

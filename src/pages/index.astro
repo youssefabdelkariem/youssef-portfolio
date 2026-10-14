@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { site } from '../data/site';
+import { workProjects, engineeringProjects } from '../data/projects';
+const featured = [...workProjects, ...engineeringProjects];
+---
+
+<BaseLayout title={site.name} description={site.description}>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="sweep" aria-hidden="true"></div>
+    <div class="wrap">
+      <p class="eyebrow">CGI &middot; VFX &middot; Mechatronics &middot; CAD</p>
+      <h1 id="hero-title">Cinematic CGI. Precise engineering.</h1>
+      <p class="lede">{site.description}</p>
+      <div class="actions">
+        <a class="btn" href="/work/aurelia/">View Aurelia</a>
+        <a class="btn ghost" href="/work/">VFX Portfolio</a>
+        <a class="btn ghost" href="/engineering/">Engineering</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="featured">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="featured">Featured work</h2>
+        <a href="/work/">All CGI &amp; VFX work</a>
+      </div>
+      <div class="grid">
+        {featured.map((p) => <ProjectCard project={p} />)}
+      </div>
+      <p class="notice reveal"><strong>Content status.</strong> Imagery, credits and results are not yet verified for publication. Cards show labelled placeholders; nothing here is a claim of completed work beyond the owner-stated project descriptions.</p>
+    </div>
+  </section>
+</BaseLayout>
