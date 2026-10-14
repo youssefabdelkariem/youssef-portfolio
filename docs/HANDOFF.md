@@ -9,7 +9,7 @@ Updated 2026-10-15 by Claude Code (acting lead engineer while Codex is unavailab
 | Branch / worktree | `feat/m1a-site-foundation`, worktree `../website-portfolio-m1a` (sibling of the main checkout) |
 | Base | M0 commit `80af31cd00c73e1f7bf737e15cae6bd731bcfde9` (`docs/m0-foundation`) |
 | Implementation commit | `510e4a4` |
-| Documentation commit | see `git log -3` on the branch; the newest commit is the handoff |
+| Documentation commits | `58275a2` (evaluation, ADR note, handoff) and `7a8f18b` (cleanup); use `git log` for anything newer |
 | Production | `main` still `c882895`; root `index.html` and `CNAME` unchanged; no workflow, Pages or DNS change |
 | ADR statuses | 0001 Accepted; 0002-0006 Proposed (unchanged) |
 | Stack | Astro 7.3.8 static output, TypeScript strict, plain CSS; Node >= 22.12 |
