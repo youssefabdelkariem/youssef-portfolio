@@ -1,13 +1,11 @@
 // Verifies the plate media contract on the local explore build: a failing image falls back to the
 // labelled placeholder with the layout intact; a loading image hides the placeholder label.
 import path from 'node:path';
-import puppeteer from 'puppeteer-core';
 import { serve } from './lib/serve.mjs';
-import { findBrowser } from './lib/browser.mjs';
+import { launchBrowser } from './lib/browser.mjs';
 
-const exe = findBrowser();
 const { server, port } = await serve(path.resolve('dist-explore'));
-const browser = await puppeteer.launch({ executablePath: exe, headless: true });
+const browser = await launchBrowser();
 const problems = [];
 try {
   for (const w of [390, 1440]) {

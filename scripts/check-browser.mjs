@@ -3,13 +3,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
-import puppeteer from 'puppeteer-core';
 import { serve } from './lib/serve.mjs';
-import { findBrowser } from './lib/browser.mjs';
+import { launchBrowser } from './lib/browser.mjs';
 
 const require = createRequire(import.meta.url);
 const axeSource = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
-const executablePath = findBrowser();
 
 const routes = process.env.YS_ROUTES ? process.env.YS_ROUTES.split(',') : ['/', '/work/', '/work/aurelia/', '/engineering/', '/engineering/ibm-ai-racing/', '/about/', '/contact/'];
 const widths = [320, 390, 768, 1024, 1440];
@@ -18,7 +16,7 @@ const fail = (m) => problems.push(m);
 
 const { server, port } = await serve(path.resolve(process.env.YS_DIST ?? 'dist'));
 const base = `http://localhost:${port}`;
-const browser = await puppeteer.launch({ executablePath, headless: true });
+const browser = await launchBrowser();
 
 try {
   // status / redirect behaviour

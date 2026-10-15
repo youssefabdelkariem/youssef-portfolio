@@ -74,3 +74,7 @@ Done: read-only asset discovery and a 29-frame contact sheet; colour-pipeline va
 
 Four-way hero comparison done and recorded in [M1B_HERO_SELECTION](reviews/M1B_HERO_SELECTION.md): recommendation is to keep the Shot 002 macro lens as the desktop hero and use Shot 003 frame 1 (or Shot 002 frame 72) as the phone crop; no whole-device frame fits the wide desktop hero. Read-only check found newer composites for Shots 003 and 004 but none for Shots 001 and 005. **Stopped at the media-selection approval gate:** no site change, no derivatives committed, originals untouched.
 
+## M1b final Aurelia media approval (updated 2026-10-15)
+
+The owner approved the hero selection: Shot 002 frame 1 on desktop, Shot 003 frame 1 on phones (homepage only; the case study keeps Shot 002 frame 1), the whole-phone Shot 002 frame 72 as featured plate, and the existing selected renders and five-stage viewer. The 40 approved derivatives (11 sets, 1.9 MB, largest 130 KB) are committed under `public/media/aurelia/`. Stills from Shots 001 and 005 stay labelled as non-final. Record: [CONTENT_MANIFEST](CONTENT_MANIFEST.md) section H. Not merged, not deployed, not published as a film.
+

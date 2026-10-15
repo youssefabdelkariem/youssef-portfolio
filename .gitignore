@@ -4,7 +4,4 @@ dist/
 *.log
 dist-explore/
 dist-v*/
-
-# Aurelia derivatives are kept local until the owner approves the selection (see docs/CONTENT_MANIFEST.md)
-public/media/
 __pycache__/

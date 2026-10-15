@@ -3,16 +3,15 @@
 // and image transfer per page is reported. Without derivatives: pages must render labelled placeholders only.
 import fs from 'node:fs';
 import path from 'node:path';
-import puppeteer from 'puppeteer-core';
 import { serve } from './lib/serve.mjs';
-import { findBrowser } from './lib/browser.mjs';
+import { launchBrowser } from './lib/browser.mjs';
 
 const dist = path.resolve('dist');
 const hasMedia = fs.existsSync(path.join(dist, 'media/aurelia/manifest.json'));
 const problems = [];
 const rows = [];
 const { server, port } = await serve(dist);
-const browser = await puppeteer.launch({ executablePath: findBrowser(), headless: true });
+const browser = await launchBrowser();
 
 const settle = (page) => page.evaluate(async () => {
   for (let y = 0; y < document.body.scrollHeight; y += 600) { window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 40)); }
@@ -69,6 +68,26 @@ try {
       if (info.overflow > 0) problems.push(`${route} @${w}: horizontal overflow ${info.overflow}px`);
       for (const m of issues) problems.push(`${route} @${w}: ${m}`);
       await page.close();
+    }
+  }
+
+  // responsive hero selection at the art-direction breakpoint (560 px): phones get the 4:5 crop, wider screens the wide crop
+  if (hasMedia) {
+    const expect = [
+      ['/', 390, 'hero-home-m-'], ['/', 560, 'hero-home-m-'], ['/', 561, 'hero-'], ['/', 1440, 'hero-'],
+      ['/work/aurelia/', 390, 'hero-m-'], ['/work/aurelia/', 560, 'hero-m-'], ['/work/aurelia/', 561, 'hero-'], ['/work/aurelia/', 1440, 'hero-'],
+    ];
+    for (const [route, w, prefix] of expect) {
+      const pg = await browser.newPage();
+      await pg.setViewport({ width: w, height: 900 });
+      await pg.goto(`http://localhost:${port}${route}`, { waitUntil: 'networkidle0' });
+      await pg.waitForFunction(() => { const i = document.querySelector('.hero .plate img'); return i && i.complete && i.naturalWidth > 0; }, { timeout: 8000 }).catch(() => {});
+      await new Promise((r) => setTimeout(r, 300));
+      const got = await pg.evaluate(() => { const i = document.querySelector('.hero .plate img'); return { src: i.currentSrc.split('/').pop(), ok: i.complete && i.naturalWidth > 0, ratio: getComputedStyle(document.querySelector('.hero .plate')).aspectRatio }; });
+      const exact = prefix === 'hero-' ? /^hero-\d+\.avif$/.test(got.src) : got.src.startsWith(prefix) && got.src.endsWith('.avif');
+      rows.push(`hero source ${route} @${w}: ${got.src} (${got.ratio})`);
+      if (!got.ok || !exact) problems.push(`hero source ${route} @${w}: expected ${prefix}*.avif, got ${got.src}`);
+      await pg.close();
     }
   }
 

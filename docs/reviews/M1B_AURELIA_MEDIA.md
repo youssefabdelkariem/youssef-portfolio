@@ -1,6 +1,6 @@
 # Aurelia media: discovery, selection, colour and derivatives
 
-Date: 2026-10-15. Prepared by Claude Code under the owner's authorization to inspect the local Aurelia renders and make derivatives. **Nothing described here is published or committed as an image.** The derivatives sit in a git-ignored folder (`public/media/`) and in a working directory outside the repository; the selection is provisional and needs the owner's confirmation. Related: [CONTENT_MANIFEST](../CONTENT_MANIFEST.md), [ADR 0004](../adr/0004-media-strategy.md), FR-01a, FR-01b, FR-02, QA-08, QA-12, QA-13.
+Date: 2026-10-15. Prepared by Claude Code under the owner's authorization to inspect the local Aurelia renders and make derivatives. **The selection was approved by the owner on 2026-10-15 and the derivatives listed in [CONTENT_MANIFEST](../CONTENT_MANIFEST.md) section H are committed** (about 1.9 MB). Masters, EXRs and project files are not in the repository. Related: [M1B_HERO_SELECTION](M1B_HERO_SELECTION.md), [ADR 0004](../adr/0004-media-strategy.md), FR-01a, FR-01b, FR-02, QA-08, QA-12, QA-13.
 
 ## Source protection
 
@@ -44,6 +44,7 @@ Contact sheet: 29 candidate frames from all five shots (frame, source file and l
 | Set | Source shot and frame | Source type | Crop | AVIF sizes | JPEG fallback |
 | --- | --- | --- | --- | --- | --- |
 | `hero` | Shot 002, frame 1 | Final composite (project 16-bit still) | 2.39:1 around the lens, centre 52% / 50% | 1440 px: 42 KB, 2160 px: 74 KB, 2880 px: 112 KB | 1440 px: 58 KB |
+| `hero-home-m` | Shot 003, frame 1 | Final composite (AgX display transform only, no grade) | 4:5, centred | 600 px: 26 KB, 900 px: 41 KB, 1200 px: 65 KB | 900 px: 44 KB |
 | `hero-m` | Shot 002, frame 1 | Final composite | 4:5 around the lens | 600 px: 42 KB, 900 px: 63 KB, 1200 px: 96 KB | 900 px: 85 KB |
 | `phone` | Shot 002, frame 72 | Final composite | Full frame 16:9 | 960: 17 KB, 1440: 30 KB, 2160: 54 KB | 1440: 44 KB |
 | `lenses` | Shot 002, frame 36 | Final composite | Full frame 16:9 | 960: 31 KB, 1440: 49 KB, 2160: 77 KB | 1440: 61 KB |
@@ -79,9 +80,6 @@ The frames are dark with long smooth gradients, the worst case for banding. Test
 
 All delivered variants are at most 130 KB, well under the 250 KB goal, without lowering quality to get there. **WebP was left out on purpose:** at sizes comparable to AVIF it shows blocking in the dark gradients, and at settings that avoid it it is larger than the JPEG fallback. All browsers in the QA-10 list support AVIF, so the ladder is AVIF, then JPEG. WebP can be added if the owner wants it (the tool supports it).
 
-## Open questions for the owner
+## Decisions recorded (2026-10-15)
 
-1. Confirm or change the selection (hero, four renders, five pass stages), or choose from the contact sheet.
-2. Are shots 001, 003, 004 and 005 final? Shot 003 appears to be getting a composite now; the shot 001 and 005 stills could then be replaced by composited frames.
-3. May the "Shot 002, frame N" and render-metadata facts (samples, renderer, frame counts, object and material names) be published?
-4. Approve committing the chosen derivatives (about 1.8 MB) to the repository. Until then they stay local and the site shows placeholders in a clean checkout.
+Approved by the owner: desktop homepage hero Shot 002 frame 1; phone homepage hero Shot 003 frame 1; featured whole-phone plate Shot 002 frame 72; case-study hero Shot 002 frame 1; the four selected renders and all five render-pass stages unchanged; no pull-back render; no WebP. Shot 001 and Shot 005 stills stay labelled "render, display transform only". Still open: role, credits, brief, film, music and captions; the published technical facts remain read from the render files and project notes.

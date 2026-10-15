@@ -4,14 +4,12 @@
 //     with the image load delayed so any layout shift would show.
 import fs from 'node:fs';
 import path from 'node:path';
-import puppeteer from 'puppeteer-core';
 import { serve } from './lib/serve.mjs';
-import { findBrowser } from './lib/browser.mjs';
+import { launchBrowser } from './lib/browser.mjs';
 
-const exe = findBrowser();
 const prod = await serve(path.resolve('dist'));
 const exp = fs.existsSync('dist-explore') ? await serve(path.resolve('dist-explore')) : null;
-const browser = await puppeteer.launch({ executablePath: exe, headless: true });
+const browser = await launchBrowser();
 const problems = [];
 const rows = [];
 const settle = (page) => page.evaluate(() => Promise.all(document.getAnimations().filter((x) => x.effect?.getComputedTiming().iterations !== Infinity).map((x) => x.finished.catch(() => {}))));

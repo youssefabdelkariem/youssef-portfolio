@@ -79,7 +79,7 @@ The owner authorized inspecting the local renders. Full method, source inventory
 | C-11 | Shot 002 final composite stills (frames 1, 36, 72, 16-bit) | Collected, derivatives made | Hero, camera-module and phone stills |
 | C-12 | Display-transformed renders from Shots 001 and 005 | Collected, derivatives made | No composite or grade; status of those shots unconfirmed |
 | C-13 | Shot 002 render passes (noisy, glossy, transmission, normals) | Collected, derivatives made | Genuine passes from the EXR, shown as a breakdown |
-| C-14 | Web derivatives (36 files, 1.79 MB) | Collected | In a git-ignored folder; not committed. Awaiting owner approval of the selection |
+| C-14 | Web derivatives (40 files, 11 sets, 1.9 MB) | Owner approved 2026-10-15 | Committed under `public/media/aurelia/` with `manifest.json` (master file names and SHA-256, crops, sizes, PSNR) |
 
 Facts read from the render files and project notes (not yet owner-confirmed): renderer and version, frame size, frame rate, samples per shot, passes, display transform, Shot 002 compositing steps, scene lighting and material names. These appear on the case-study draft.
 
@@ -94,4 +94,22 @@ Progress on missing items: M-01 (hero still and frames) has a provisional select
 | C-15 | Shot 003 final composite (comp script and master) | Collected; first frame used as a hero candidate, derivatives local only |
 | C-16 | Shot 004 final composite (comp, report, master) | Collected; not used yet |
 | C-17 | Shot 006 Blender file, Screen Animation project | Located by name only; not opened |
+
+## H. Approved Aurelia media (2026-10-15)
+
+Approved by the owner on 2026-10-15. Pipeline: read-only EXR or project still, converted with Blender 5.2.2 AgX Base for an sRGB display (validated to within 2 of 65,535 levels of the project's own output), 16-bit master, linear-light resize, dither, AVIF (quality 94, `tune=iq`, 4:4:4) plus a JPEG fallback. No WebP. Originals untouched. Masters stay outside the repository; `manifest.json` records each master's file name and SHA-256.
+
+| Slot | Set | Source shot and frame | Label shown on the site | Approval |
+| --- | --- | --- | --- | --- |
+| Hero, desktop (home and case study) | `hero` | Shot 002, frame 1 | Final composite | Approved |
+| Hero, 560 px and below, homepage | `hero-home-m` | Shot 003, frame 1 | Final composite (AgX display transform only, no grade) | Approved |
+| Hero, 560 px and below, case study | `hero-m` | Shot 002, frame 1 | Final composite | Approved (retained) |
+| Featured plate, film slot, work index | `phone` | Shot 002, frame 72 | Final composite | Approved |
+| Selected render 1 | `lenses` | Shot 002, frame 36 | Final composite | Approved (retained) |
+| Selected render 2 | `phone` | Shot 002, frame 72 | Final composite | Approved (retained) |
+| Selected render 3 | `wordmark` | Shot 001, frame 210 | Render, display transform only (not a final composite) | Approved (retained) |
+| Selected render 4 | `port` | Shot 005, frame 0 | Render, display transform only (not a final composite) | Approved (retained) |
+| Render passes: undenoised, glossy, transmission, normals | `pass-noisy`, `pass-glossy`, `pass-transmission`, `pass-normal` | Shot 002, frame 36 (EXR passes) | Passes from the render file | Approved (retained, all five stages) |
+
+Not yet approved or supplied: role, credits, collaborators, the brief, the finished commercial, music, captions and audio description. The pages show "pending confirmation" for those and make no role or credit claim. Facts on the case study (renderer, resolution, samples, passes, object and material names, Shot 002 compositing steps) come from the render files and project notes and are published as part of this approval.
 

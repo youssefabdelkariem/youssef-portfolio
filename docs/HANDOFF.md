@@ -19,6 +19,18 @@ Updated 2026-10-15 by Claude Code (acting lead engineer while Codex is unavailab
 | ADR statuses | 0001 Accepted; 0002-0006 Proposed (unchanged) |
 | Stack | Astro 7.3.8 static output, TypeScript strict, plain CSS; Node >= 22.12 |
 
+## Final Aurelia image approval (2026-10-15)
+
+- **Approved by the owner:** homepage hero Shot 002 frame 1 (desktop) and Shot 003 frame 1 (phones, 560 px and below); featured plate Shot 002 frame 72; case-study hero Shot 002 frame 1; selected renders and all five render-pass stages unchanged; no pull-back render; no WebP. Record: [CONTENT_MANIFEST](CONTENT_MANIFEST.md) section H, [M1B_HERO_SELECTION](reviews/M1B_HERO_SELECTION.md).
+- **Implemented:** new derivative set `hero-home-m` (Shot 003 frame 1, 4:5), `src/data/home.ts` uses it for the homepage phone crop (case study still uses `hero-m`), `scripts/check-aurelia.mjs` checks the hero source at 390, 560, 561 and 1440 px, the approved derivatives are tracked in Git, the browser launcher falls back to starting Edge directly when puppeteer's launch fails.
+- **Labels:** Shot 001 and Shot 005 stills remain "render, display transform only". Shot 003 is called a final composite because its comp applies only the display transform.
+- **Not claimed:** role, credits, brief, music, film. They read "pending confirmation".
+- **Final Lighthouse 13.5 (Edge 155, local server, real media, mobile preset unless noted):** Home with the phone hero, 3 runs: performance 100, 100, 100, LCP 1.73 s, TBT 0 to 18 ms, CLS 0, 144 KB. Home desktop preset: 100, LCP 0.39 s. VFX Portfolio: 100, LCP 1.36 s. Aurelia case study: 99, LCP 1.96 s, TBT 92 ms, 225 KB. Accessibility, best practices and SEO 100 on every run. Lab figures, simulated throttling; one run each for desktop, Aurelia and VFX Portfolio.
+
+### Workspace incident to know about (2026-10-15)
+
+After the folders were consolidated, **Google Drive for desktop** re-created four duplicate copies of the old worktree folders next to the workspace (`website-portfolio-m1b*`). I verified they were identical to the real worktrees and deleted them; Drive then started deleting files in the real worktrees (tracked docs in `m1b-design-exploration` and `current-development`, plus `node_modules`, `dist` and `.astro`). I stopped the Drive client, restored every tracked file with `git restore`, and rebuilt `node_modules` with `npm ci`. Nothing committed was lost. Open points for the owner: the Drive client is stopped (restart it deliberately), and the workspace sits inside a Drive-synced Documents folder, so moves, renames and deletes there can be replayed by Drive. Safer: exclude this workspace from Drive sync, or keep it outside Documents. `worktrees/m1b-design-exploration` still needs `npm ci` if its dependencies are wanted. Never delete a duplicate-looking folder without checking whether a sync client mirrors it.
+
 ## Hero media selection (2026-10-15), stopped at the approval gate
 
 - **Task:** compare three whole-device frames against the Shot 002 macro lens for the homepage hero, using final composites where available, and check read-only for newer composites of Shots 001 and 005.
@@ -60,7 +72,7 @@ Rules for people and agents:
 - The `worktrees/`, `local-assets/` and `previews/` folders are excluded from the main checkout through the local-only `.git/info/exclude`, so the root stays clean. Never run `git clean -ffdx` (or any forced clean that removes ignored files) in the root: it can delete worktrees and local assets.
 - Move or rename a worktree only with `git worktree move`, never with a file manager or `mv`. Add new ones with `git worktree add worktrees/<name> <branch>`.
 - The root folder cannot be renamed or moved while an editor or terminal has it open; a repository move needs `git worktree repair` afterwards.
-- Aurelia derivatives in `worktrees/current-development/public/media/` stay git-ignored until the owner approves them.
+- The approved Aurelia derivatives are committed in `worktrees/current-development/public/media/aurelia/`. Only owner-approved sets may be added there.
 
 Verification after the move (2026-10-15): all five worktrees and the main checkout report the same branches and commits as before, all 13 refs identical, `git fsck --full` reports no errors (only unreachable objects), file counts and `node_modules` unchanged in every worktree, `npm ci` and `npm run verify` pass in `worktrees/current-development`, and the built site previews locally. A bundle of all branches was taken first (`local-assets/backups`).
 
@@ -68,7 +80,7 @@ Verification after the move (2026-10-15): all five worktrees and the main checko
 
 - **Owner authorization:** inspect the local Aurelia renders read-only, make derivatives in a working directory, adopt Instrument Serif after licence verification, build `/work/` and `/work/aurelia/`. Not authorized: merge, deploy, DNS, Pages, altering originals, committing the selected images.
 - **Source protection:** originals untouched. A name, size and modified-time snapshot of 1,609 files (258.9 GiB, both drives) before and after shows 0 changed and 0 removed; 1 file was added by the owner's own Nuke session (`Compositing/shot 003/.nk`). Details in [M1B_AURELIA_MEDIA](reviews/M1B_AURELIA_MEDIA.md).
-- **Media policy:** derivatives (36 files, 1.79 MB, largest 130 KB) live in `public/media/aurelia/`, which is **git-ignored**, and in a working directory outside the repo. A clean checkout builds and passes `npm run verify` with labelled placeholders. To see the real images on a machine that has them: `node scripts/aurelia/sync-media.mjs <derivatives dir>`. Masters, EXRs, Blender and Nuke files never enter the repo. Screenshots that contain the renders are not committed either.
+- **Media policy (updated 2026-10-15):** the owner-approved derivatives (40 files, 11 sets, 1.9 MB, largest 130 KB) are committed in `public/media/aurelia/` with `manifest.json`. Masters, EXRs, Blender and Nuke files and review screenshots that show unapproved renders never enter the repo. If a file is missing, pages fall back to labelled placeholders. To regenerate: `scripts/aurelia/make-derivatives.py` from masters, then `node scripts/aurelia/sync-media.mjs <dir>`.
 - **Typography:** Instrument Serif (OFL 1.1, verified from the designers' repository and Google Fonts) self-hosted in `public/fonts/` with `OFL.txt`, for `h1` and `h2` only, with a metric-matched fallback ([M1B_FONT_EVALUATION](reviews/M1B_FONT_EVALUATION.md#decision-and-licence-verification-2026-10-15)).
 - **Pages:** `/work/` (featured Aurelia, project cards, CGI and Compositing groups, honest slots) and `/work/aurelia/` (hero, introduction, film slot that says playback is unpublished, four selected renders, lighting and materials, a five-stage render-pass viewer with a static table, rendering and compositing workflow, technical details and shot table, credits placeholder). The homepage hero and featured plate now use the real derivatives when present.
 - **New or changed:** `src/data/media.ts` (manifest lookup, `Pic`), `Plate` (takes a `Pic`), `BreakdownViewer`, `ProjectCard`, `projects.ts`, `home.ts`, `scripts/aurelia/*`, `scripts/check-aurelia.mjs`, `scripts/shoot-pages.mjs`, `scripts/lib/*`. No new npm dependencies; the derivative tool needs Python with numpy, opencv-python-headless and Pillow (AVIF).

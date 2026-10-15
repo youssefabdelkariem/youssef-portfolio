@@ -70,6 +70,40 @@
    }
   },
   {
+   "id": "hero-home-m",
+   "master": "s003_f0001_agx_srgb16.png",
+   "crop": {
+    "aspect": [
+     4,
+     5
+    ],
+    "center": [
+     0.5,
+     0.5
+    ]
+   },
+   "widths": [
+    600,
+    900,
+    1200
+   ],
+   "dither": true,
+   "formats": {
+    "avif": {
+     "quality": 94,
+     "advanced": {
+      "tune": "iq"
+     }
+    },
+    "jpg": {
+     "quality": 92,
+     "only_widths": [
+      900
+     ]
+    }
+   }
+  },
+  {
    "id": "phone",
    "master": "s002_f0072_final_comp_srgb16.png",
    "widths": [

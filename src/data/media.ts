@@ -1,8 +1,8 @@
 /**
  * Responsive media lookup. Derivatives are produced by scripts/aurelia/make-derivatives.py and live in
- * public/media/aurelia/ together with a manifest.json. That folder is git-ignored until the owner approves
- * the selection, so a clean checkout has no media: every lookup returns null and pages render labelled
- * placeholders instead. When the files are present the same code renders responsive images.
+ * public/media/aurelia/ together with a manifest.json. Only owner-approved derivatives are committed there
+ * (see docs/CONTENT_MANIFEST.md). If the folder or an entry is missing, every lookup returns null and pages render
+ * labelled placeholders instead, so the site builds either way.
  */
 import fs from 'node:fs';
 import path from 'node:path';

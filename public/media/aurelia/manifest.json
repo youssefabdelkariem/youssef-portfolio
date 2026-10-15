@@ -1,0 +1,480 @@
+{
+ "tool": "make-derivatives.py",
+ "outputs": [
+  {
+   "id": "hero",
+   "master": "s002_f0001_final_comp_srgb16.png",
+   "master_sha256": "c308c825c8d326b7e168c5fd6a4e3dc2e7ca4af1912efdc37cc918de05ede57d",
+   "crop": {
+    "aspect": [
+     2880,
+     1206
+    ],
+    "center": [
+     0.52,
+     0.5
+    ]
+   },
+   "variants": [
+    {
+     "file": "hero-1440.avif",
+     "format": "avif",
+     "width": 1440,
+     "height": 603,
+     "bytes": 42761,
+     "psnr_db": 51.33,
+     "quality": 94
+    },
+    {
+     "file": "hero-1440.jpg",
+     "format": "jpg",
+     "width": 1440,
+     "height": 603,
+     "bytes": 59003,
+     "psnr_db": 50.92,
+     "quality": 92
+    },
+    {
+     "file": "hero-2160.avif",
+     "format": "avif",
+     "width": 2160,
+     "height": 904,
+     "bytes": 75302,
+     "psnr_db": 51.54,
+     "quality": 94
+    },
+    {
+     "file": "hero-2880.avif",
+     "format": "avif",
+     "width": 2880,
+     "height": 1206,
+     "bytes": 114505,
+     "psnr_db": 51.66,
+     "quality": 94
+    }
+   ]
+  },
+  {
+   "id": "hero-m",
+   "master": "s002_f0001_final_comp_srgb16.png",
+   "master_sha256": "c308c825c8d326b7e168c5fd6a4e3dc2e7ca4af1912efdc37cc918de05ede57d",
+   "crop": {
+    "aspect": [
+     4,
+     5
+    ],
+    "center": [
+     0.52,
+     0.5
+    ]
+   },
+   "variants": [
+    {
+     "file": "hero-m-600.avif",
+     "format": "avif",
+     "width": 600,
+     "height": 750,
+     "bytes": 42808,
+     "psnr_db": 51.06,
+     "quality": 94
+    },
+    {
+     "file": "hero-m-900.avif",
+     "format": "avif",
+     "width": 900,
+     "height": 1125,
+     "bytes": 64325,
+     "psnr_db": 51.57,
+     "quality": 94
+    },
+    {
+     "file": "hero-m-900.jpg",
+     "format": "jpg",
+     "width": 900,
+     "height": 1125,
+     "bytes": 86850,
+     "psnr_db": 50.91,
+     "quality": 92
+    },
+    {
+     "file": "hero-m-1200.avif",
+     "format": "avif",
+     "width": 1200,
+     "height": 1500,
+     "bytes": 98736,
+     "psnr_db": 51.76,
+     "quality": 94
+    }
+   ]
+  },
+  {
+   "id": "phone",
+   "master": "s002_f0072_final_comp_srgb16.png",
+   "master_sha256": "481d041931646bbf2e32407714ff3f9ab7b300c4e441f078c62d46c618ead404",
+   "crop": null,
+   "variants": [
+    {
+     "file": "phone-960.avif",
+     "format": "avif",
+     "width": 960,
+     "height": 540,
+     "bytes": 17053,
+     "psnr_db": 52.8,
+     "quality": 94
+    },
+    {
+     "file": "phone-1440.avif",
+     "format": "avif",
+     "width": 1440,
+     "height": 810,
+     "bytes": 30480,
+     "psnr_db": 52.88,
+     "quality": 94
+    },
+    {
+     "file": "phone-1440.jpg",
+     "format": "jpg",
+     "width": 1440,
+     "height": 810,
+     "bytes": 44687,
+     "psnr_db": 51.51,
+     "quality": 92
+    },
+    {
+     "file": "phone-2160.avif",
+     "format": "avif",
+     "width": 2160,
+     "height": 1215,
+     "bytes": 55488,
+     "psnr_db": 52.96,
+     "quality": 94
+    }
+   ]
+  },
+  {
+   "id": "lenses",
+   "master": "s002_f0036_final_comp_srgb16.png",
+   "master_sha256": "4bcdbe20b48d5d6c70b51a69ce000669d927602df8af0980dcfe6cd6d6b02aed",
+   "crop": null,
+   "variants": [
+    {
+     "file": "lenses-960.avif",
+     "format": "avif",
+     "width": 960,
+     "height": 540,
+     "bytes": 31650,
+     "psnr_db": 50.65,
+     "quality": 94
+    },
+    {
+     "file": "lenses-1440.avif",
+     "format": "avif",
+     "width": 1440,
+     "height": 810,
+     "bytes": 50122,
+     "psnr_db": 50.87,
+     "quality": 94
+    },
+    {
+     "file": "lenses-1440.jpg",
+     "format": "jpg",
+     "width": 1440,
+     "height": 810,
+     "bytes": 62148,
+     "psnr_db": 49.56,
+     "quality": 92
+    },
+    {
+     "file": "lenses-2160.avif",
+     "format": "avif",
+     "width": 2160,
+     "height": 1215,
+     "bytes": 79342,
+     "psnr_db": 51.01,
+     "quality": 94
+    }
+   ]
+  },
+  {
+   "id": "wordmark",
+   "master": "s001_f0210_agx_srgb16.png",
+   "master_sha256": "0a2d68be0c68f8097f60c534dc69752a051ddacb3a7c3f440b46cb4e6b70a1b7",
+   "crop": null,
+   "variants": [
+    {
+     "file": "wordmark-960.avif",
+     "format": "avif",
+     "width": 960,
+     "height": 540,
+     "bytes": 26130,
+     "psnr_db": 50.58,
+     "quality": 94
+    },
+    {
+     "file": "wordmark-1440.avif",
+     "format": "avif",
+     "width": 1440,
+     "height": 810,
+     "bytes": 51001,
+     "psnr_db": 50.78,
+     "quality": 94
+    },
+    {
+     "file": "wordmark-1440.jpg",
+     "format": "jpg",
+     "width": 1440,
+     "height": 810,
+     "bytes": 60880,
+     "psnr_db": 50.2,
+     "quality": 92
+    },
+    {
+     "file": "wordmark-2160.avif",
+     "format": "avif",
+     "width": 2160,
+     "height": 1215,
+     "bytes": 89817,
+     "psnr_db": 51.14,
+     "quality": 94
+    }
+   ]
+  },
+  {
+   "id": "port",
+   "master": "s005_f0000_agx_srgb16.png",
+   "master_sha256": "c7c26c4a0711c177f045ca2ae6e5f407d378485653920b4932db7b71c9eada07",
+   "crop": null,
+   "variants": [
+    {
+     "file": "port-960.avif",
+     "format": "avif",
+     "width": 960,
+     "height": 540,
+     "bytes": 16162,
+     "psnr_db": 55.95,
+     "quality": 94
+    },
+    {
+     "file": "port-1440.avif",
+     "format": "avif",
+     "width": 1440,
+     "height": 810,
+     "bytes": 28710,
+     "psnr_db": 56.2,
+     "quality": 94
+    },
+    {
+     "file": "port-1440.jpg",
+     "format": "jpg",
+     "width": 1440,
+     "height": 810,
+     "bytes": 48802,
+     "psnr_db": 54.4,
+     "quality": 92
+    },
+    {
+     "file": "port-2160.avif",
+     "format": "avif",
+     "width": 2160,
+     "height": 1215,
+     "bytes": 50726,
+     "psnr_db": 56.44,
+     "quality": 94
+    }
+   ]
+  },
+  {
+   "id": "pass-noisy",
+   "master": "s002_f0036_pass_noisy_agx_srgb16.png",
+   "master_sha256": "08d6c55e59fe116f7d84eb3a2ec35077fb41cb4988939d877d388ec84898b216",
+   "crop": null,
+   "variants": [
+    {
+     "file": "pass-noisy-960.avif",
+     "format": "avif",
+     "width": 960,
+     "height": 540,
+     "bytes": 37644,
+     "psnr_db": 50.11,
+     "quality": 94
+    },
+    {
+     "file": "pass-noisy-960.jpg",
+     "format": "jpg",
+     "width": 960,
+     "height": 540,
+     "bytes": 35645,
+     "psnr_db": 48.16,
+     "quality": 92
+    },
+    {
+     "file": "pass-noisy-1440.avif",
+     "format": "avif",
+     "width": 1440,
+     "height": 810,
+     "bytes": 72817,
+     "psnr_db": 49.99,
+     "quality": 94
+    }
+   ]
+  },
+  {
+   "id": "pass-glossy",
+   "master": "s002_f0036_pass_glossy_agx_srgb16.png",
+   "master_sha256": "6612bb0fe3ae5946973f907dec87fb838ee418a82bfe958becae95522986ccbf",
+   "crop": null,
+   "variants": [
+    {
+     "file": "pass-glossy-960.avif",
+     "format": "avif",
+     "width": 960,
+     "height": 540,
+     "bytes": 56843,
+     "psnr_db": 50.44,
+     "quality": 94
+    },
+    {
+     "file": "pass-glossy-960.jpg",
+     "format": "jpg",
+     "width": 960,
+     "height": 540,
+     "bytes": 42886,
+     "psnr_db": 47.18,
+     "quality": 92
+    },
+    {
+     "file": "pass-glossy-1440.avif",
+     "format": "avif",
+     "width": 1440,
+     "height": 810,
+     "bytes": 133372,
+     "psnr_db": 50.2,
+     "quality": 94
+    }
+   ]
+  },
+  {
+   "id": "pass-transmission",
+   "master": "s002_f0036_pass_transmission_agx_srgb16.png",
+   "master_sha256": "dfa437f81d36784fdb08b1bec4cb4ae640edb60ec23c98e31c805ccc737a9f26",
+   "crop": null,
+   "variants": [
+    {
+     "file": "pass-transmission-960.avif",
+     "format": "avif",
+     "width": 960,
+     "height": 540,
+     "bytes": 14505,
+     "psnr_db": 59.26,
+     "quality": 94
+    },
+    {
+     "file": "pass-transmission-960.jpg",
+     "format": "jpg",
+     "width": 960,
+     "height": 540,
+     "bytes": 23035,
+     "psnr_db": 51.69,
+     "quality": 92
+    },
+    {
+     "file": "pass-transmission-1440.avif",
+     "format": "avif",
+     "width": 1440,
+     "height": 810,
+     "bytes": 26265,
+     "psnr_db": 59.74,
+     "quality": 94
+    }
+   ]
+  },
+  {
+   "id": "pass-normal",
+   "master": "s002_f0036_pass_normal_data16.png",
+   "master_sha256": "99e46bf5bd9ba4f0bc1db990781b2b89c0d8f9a4f113aad27037e1d7ac2cdb98",
+   "crop": null,
+   "variants": [
+    {
+     "file": "pass-normal-960.avif",
+     "format": "avif",
+     "width": 960,
+     "height": 540,
+     "bytes": 24904,
+     "psnr_db": 51.99,
+     "quality": 94
+    },
+    {
+     "file": "pass-normal-960.jpg",
+     "format": "jpg",
+     "width": 960,
+     "height": 540,
+     "bytes": 36326,
+     "psnr_db": 47.34,
+     "quality": 92
+    },
+    {
+     "file": "pass-normal-1440.avif",
+     "format": "avif",
+     "width": 1440,
+     "height": 810,
+     "bytes": 41332,
+     "psnr_db": 52.62,
+     "quality": 94
+    }
+   ]
+  },
+  {
+   "id": "hero-home-m",
+   "master": "s003_f0001_agx_srgb16.png",
+   "master_sha256": "ff858f7332529060e1e5c59ba562f537f1602a6d8a8f3b31c02b47bf292a1978",
+   "crop": {
+    "aspect": [
+     4,
+     5
+    ],
+    "center": [
+     0.5,
+     0.5
+    ]
+   },
+   "variants": [
+    {
+     "file": "hero-home-m-600.avif",
+     "format": "avif",
+     "width": 600,
+     "height": 750,
+     "bytes": 26890,
+     "psnr_db": 52.1,
+     "quality": 94
+    },
+    {
+     "file": "hero-home-m-900.avif",
+     "format": "avif",
+     "width": 900,
+     "height": 1125,
+     "bytes": 42012,
+     "psnr_db": 52.49,
+     "quality": 94
+    },
+    {
+     "file": "hero-home-m-900.jpg",
+     "format": "jpg",
+     "width": 900,
+     "height": 1125,
+     "bytes": 45356,
+     "psnr_db": 50.99,
+     "quality": 92
+    },
+    {
+     "file": "hero-home-m-1200.avif",
+     "format": "avif",
+     "width": 1200,
+     "height": 1500,
+     "bytes": 66859,
+     "psnr_db": 52.61,
+     "quality": 94
+    }
+   ]
+  }
+ ]
+}

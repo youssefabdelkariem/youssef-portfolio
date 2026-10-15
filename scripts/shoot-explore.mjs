@@ -1,15 +1,13 @@
 // Captures desktop/mobile screenshots of the exploration pages from dist-explore/ into docs/design/m1b/.
 import fs from 'node:fs';
 import path from 'node:path';
-import puppeteer from 'puppeteer-core';
 import { serve } from './lib/serve.mjs';
-import { findBrowser } from './lib/browser.mjs';
+import { launchBrowser } from './lib/browser.mjs';
 
 const out = path.resolve('docs/design/m1b');
 fs.mkdirSync(out, { recursive: true });
-const exe = findBrowser();
 const { server, port } = await serve(path.resolve('dist-explore'));
-const browser = await puppeteer.launch({ executablePath: exe, headless: true });
+const browser = await launchBrowser();
 const shots = [
   ['a', 'desktop', 1440, 900],
   ['a', 'mobile', 390, 844],

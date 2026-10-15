@@ -1,6 +1,6 @@
 # Aurelia hero selection: four-way comparison
 
-Date: 2026-10-15. Prepared by Claude Code at the owner's request. Status: **recommendation only; nothing was switched or committed.** The site still uses the Shot 002 macro lens everywhere, no image derivative was added to Git, and the candidate files live in `local-assets/` and `previews/` (outside the repository). Related: [M1B_AURELIA_MEDIA](M1B_AURELIA_MEDIA.md), [CONTENT_MANIFEST](../CONTENT_MANIFEST.md), QA-08, QA-12, QA-13.
+Date: 2026-10-15. Prepared by Claude Code at the owner's request. Status: **approved by the owner on 2026-10-15 as recommended** (desktop A, phone C); the recommendation text below is kept as written. Before the approval nothing was switched or committed. The site still uses the Shot 002 macro lens everywhere, no image derivative was added to Git, and the candidate files live in `local-assets/` and `previews/` (outside the repository). Related: [M1B_AURELIA_MEDIA](M1B_AURELIA_MEDIA.md), [CONTENT_MANIFEST](../CONTENT_MANIFEST.md), QA-08, QA-12, QA-13.
 
 Originals were read-only throughout: EXRs, Blender and Nuke files and composites were opened for reading or listed by name only. Candidate frames were converted with the project's colour pipeline (Blender AgX Base, sRGB), validated earlier to within 2 of 65,535 levels of the project's own output.
 
