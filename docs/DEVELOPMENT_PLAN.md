@@ -70,3 +70,7 @@ Done: mobile headline typography and breaks; refined system typography; font can
 
 Done: read-only asset discovery and a 29-frame contact sheet; colour-pipeline validation (Blender AgX reproduces the project's output to within 2 of 65,535 levels); a provisional selection with 36 derivatives (1.79 MB, largest 130 KB) kept out of Git; Instrument Serif verified and adopted for h1 and h2; `/work/` and `/work/aurelia/` implemented with a render-pass viewer; `test:aurelia` added to `npm run verify`. Record: [M1B_AURELIA_MEDIA](reviews/M1B_AURELIA_MEDIA.md). **Awaiting the owner:** confirm the selection and whether shots 001, 003, 004 and 005 are final, approve committing the derivatives, confirm the facts published on the case study, and supply role, credits, brief and the film. Source protection verified (0 originals changed). Not published, not merged.
 
+## M1b hero media selection (updated 2026-10-15)
+
+Four-way hero comparison done and recorded in [M1B_HERO_SELECTION](reviews/M1B_HERO_SELECTION.md): recommendation is to keep the Shot 002 macro lens as the desktop hero and use Shot 003 frame 1 (or Shot 002 frame 72) as the phone crop; no whole-device frame fits the wide desktop hero. Read-only check found newer composites for Shots 003 and 004 but none for Shots 001 and 005. **Stopped at the media-selection approval gate:** no site change, no derivatives committed, originals untouched.
+

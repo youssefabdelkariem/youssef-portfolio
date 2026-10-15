@@ -19,6 +19,14 @@ Updated 2026-10-15 by Claude Code (acting lead engineer while Codex is unavailab
 | ADR statuses | 0001 Accepted; 0002-0006 Proposed (unchanged) |
 | Stack | Astro 7.3.8 static output, TypeScript strict, plain CSS; Node >= 22.12 |
 
+## Hero media selection (2026-10-15), stopped at the approval gate
+
+- **Task:** compare three whole-device frames against the Shot 002 macro lens for the homepage hero, using final composites where available, and check read-only for newer composites of Shots 001 and 005.
+- **Result:** [M1B_HERO_SELECTION](reviews/M1B_HERO_SELECTION.md). Keep the macro lens for desktop; propose Shot 003 frame 1 (fallback Shot 002 frame 72) as the phone crop; reject Shot 005 frame 160. No whole-device frame fits the 2.4 to 3.4:1 desktop hero box.
+- **Newer composites:** Shot 003 and Shot 004 have finished comps (15 Oct); Shot 001 and Shot 005 have none, so their stills stay labelled "render, display transform only".
+- **Nothing changed in the site.** Candidate derivatives and review images are in `local-assets/aurelia-web-derivatives/hero-candidates/` and `previews/aurelia/hero-candidates/` (not committed). The local `public/media` set is unchanged. Originals untouched.
+- **To apply the owner's choice:** copy the chosen `hero-m-*` files from `local-assets/aurelia-web-derivatives/hero-candidates/<letter>/` over the ones in `public/media/aurelia/` (and add the new frame to `scripts/aurelia/derivatives.spec.json`), run `npm run verify`, update the manifest, and commit derivatives only after the owner approves the full set.
+
 ## Workspace organization (2026-10-15)
 
 All Youssef Studio development folders now live under one workspace root, the `website portfolio` folder (the main checkout of the repository, on `docs/m0-foundation`). Paths below are relative to that root; machine-specific absolute paths are deliberately not recorded here.

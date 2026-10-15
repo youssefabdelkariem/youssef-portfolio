@@ -85,3 +85,13 @@ Facts read from the render files and project notes (not yet owner-confirmed): re
 
 Progress on missing items: M-01 (hero still and frames) has a provisional selection awaiting confirmation; M-07 (breakdown set) has a render-pass breakdown; M-02 to M-06, M-08 are unchanged (role, credits, tools confirmation, film, captions, rights). The Aurelia page shows "pending confirmation" wherever the owner's input is required.
 
+## G. Hero selection and newer composites (2026-10-15 update)
+
+[M1B_HERO_SELECTION](reviews/M1B_HERO_SELECTION.md) compares four hero candidates (Shot 002 frame 1 macro lens, Shot 002 frame 72, Shot 003 frame 1, Shot 005 frame 160) in the real homepage at desktop and phone sizes and recommends keeping the macro lens for desktop and Shot 003 frame 1 as the phone crop. Nothing was switched or committed. Read-only check of the project folder: new finished composites exist for **Shot 003** (final comp script and 4K ProRes master, 15 Oct) and **Shot 004** (final comp with report and master, 15 Oct); **none exists for Shot 001 or Shot 005**, whose stills therefore stay labelled "render, display transform only". A Shot 006 Blender file and an After Effects "Screen Animation" project also appeared; neither was opened and no renders for Shot 006 were found.
+
+| ID | Item | State |
+| --- | --- | --- |
+| C-15 | Shot 003 final composite (comp script and master) | Collected; first frame used as a hero candidate, derivatives local only |
+| C-16 | Shot 004 final composite (comp, report, master) | Collected; not used yet |
+| C-17 | Shot 006 Blender file, Screen Animation project | Located by name only; not opened |
+
