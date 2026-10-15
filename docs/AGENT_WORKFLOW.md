@@ -15,7 +15,7 @@ Inspect status and `git worktree list`, preserve local/user changes, then fetch 
 ```powershell
 git fetch origin
 git rev-parse origin/main
-git worktree add -b feat/case-study-spike "../website-portfolio-spike" origin/main
+git worktree add -b feat/case-study-spike "worktrees/case-study-spike" origin/main
 ```
 
 Do not run an example blindly: use a new branch/path, check existence/ownership, and record the base hash. When explicitly continuing unmerged documentation work, use the reviewed M0 hash or `origin/docs/m0-foundation` as the base instead of `origin/main`; record that dependency. The same branch cannot normally be checked out in two worktrees. If the existing branch is already checked out here, work here sequentially or create a separately named review branch from its exact hash. Never detach/reset another editor's working tree. [Git worktree reference](https://git-scm.com/docs/git-worktree).

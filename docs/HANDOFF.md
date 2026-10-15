@@ -6,11 +6,11 @@ Updated 2026-10-15 by Claude Code (acting lead engineer while Codex is unavailab
 
 | Item | Value |
 | --- | --- |
-| Current branch / worktree | `feat/m1b-aurelia-portfolio`, worktree `../website-portfolio-m1b-aurelia`; based on `86799d0` (the pushed homepage refinement head); local only, not pushed |
+| Current branch / worktree | `feat/m1b-aurelia-portfolio`, worktree `worktrees/current-development`; based on `86799d0` (the pushed homepage refinement head); local only, not pushed |
 | Refinement branch | `feat/m1b-homepage-refine`, pushed to origin at `86799d0` (owner-authorized 2026-10-15) |
-| Homepage branch | `feat/m1b-homepage`, worktree `../website-portfolio-m1b-home`; pushed to origin at `40939c6` |
-| M1b exploration branch | `feat/m1b-design-exploration`, worktree `../website-portfolio-m1b`; pushed to origin at `685dd41` (owner-authorized 2026-10-15, no force) |
-| M1a branch | `feat/m1a-site-foundation`, worktree `../website-portfolio-m1a`, pushed; unchanged by M1b |
+| Homepage branch | `feat/m1b-homepage`, worktree `worktrees/m1b-homepage`; pushed to origin at `40939c6` |
+| M1b exploration branch | `feat/m1b-design-exploration`, worktree `worktrees/m1b-design-exploration`; pushed to origin at `685dd41` (owner-authorized 2026-10-15, no force) |
+| M1a branch | `feat/m1a-site-foundation`, worktree `worktrees/m1a-site-foundation`, pushed; unchanged by M1b |
 | Base | M0 commit `80af31cd00c73e1f7bf737e15cae6bd731bcfde9` (`docs/m0-foundation`) |
 | Implementation commit | `510e4a4` |
 | Documentation commits | `58275a2` (evaluation, ADR note, handoff) and `7a8f18b` (cleanup); use `git log` for anything newer |
@@ -18,6 +18,43 @@ Updated 2026-10-15 by Claude Code (acting lead engineer while Codex is unavailab
 | Production | `main` still `c882895`; root `index.html` and `CNAME` unchanged; no workflow, Pages or DNS change |
 | ADR statuses | 0001 Accepted; 0002-0006 Proposed (unchanged) |
 | Stack | Astro 7.3.8 static output, TypeScript strict, plain CSS; Node >= 22.12 |
+
+## Workspace organization (2026-10-15)
+
+All Youssef Studio development folders now live under one workspace root, the `website portfolio` folder (the main checkout of the repository, on `docs/m0-foundation`). Paths below are relative to that root; machine-specific absolute paths are deliberately not recorded here.
+
+| Folder | Contents | Branch |
+| --- | --- | --- |
+| `.` (root) | Main checkout; the shared Git directory (`.git`) for every worktree | `docs/m0-foundation` |
+| `worktrees/current-development` | **Active development worktree** (VFX portfolio, Aurelia case study, media pipeline). Open this one | `feat/m1b-aurelia-portfolio` |
+| `worktrees/m1b-homepage-refine` | Homepage refinement, pushed | `feat/m1b-homepage-refine` |
+| `worktrees/m1b-homepage` | Homepage implementation, pushed | `feat/m1b-homepage` |
+| `worktrees/m1b-design-exploration` | Design directions A and B, pushed | `feat/m1b-design-exploration` |
+| `worktrees/m1a-site-foundation` | Astro foundation and M1a evaluation, pushed | `feat/m1a-site-foundation` |
+| `local-assets/aurelia-web-derivatives` | Local-only masters (16-bit PNG), derivative working files and notes. Never committed | n/a |
+| `local-assets/backups` | A Git bundle of every branch taken before the reorganization, and the pre-move ref inventory | n/a |
+| `previews/aurelia` | Review screenshots and the candidate contact sheet that show unapproved renders. Never committed | n/a |
+
+Not inside the workspace, by design: the original Aurelia project folder (Blender, Nuke, EXR, composites) next to the workspace, and the render drive. They stay read-only.
+
+Commands (run from the workspace root; replace the folder to switch branch context):
+
+```text
+git worktree list
+cd worktrees/current-development
+npm ci            # only if node_modules is missing
+npm run verify
+npm run build && npm run preview
+```
+
+Rules for people and agents:
+
+- The `worktrees/`, `local-assets/` and `previews/` folders are excluded from the main checkout through the local-only `.git/info/exclude`, so the root stays clean. Never run `git clean -ffdx` (or any forced clean that removes ignored files) in the root: it can delete worktrees and local assets.
+- Move or rename a worktree only with `git worktree move`, never with a file manager or `mv`. Add new ones with `git worktree add worktrees/<name> <branch>`.
+- The root folder cannot be renamed or moved while an editor or terminal has it open; a repository move needs `git worktree repair` afterwards.
+- Aurelia derivatives in `worktrees/current-development/public/media/` stay git-ignored until the owner approves them.
+
+Verification after the move (2026-10-15): all five worktrees and the main checkout report the same branches and commits as before, all 13 refs identical, `git fsck --full` reports no errors (only unreachable objects), file counts and `node_modules` unchanged in every worktree, `npm ci` and `npm run verify` pass in `worktrees/current-development`, and the built site previews locally. A bundle of all branches was taken first (`local-assets/backups`).
 
 ## Aurelia assets, typography, VFX portfolio and case study (2026-10-15), stopped for owner review
 
@@ -129,7 +166,7 @@ Rationale and measurements: [M1A_EVALUATION](reviews/M1A_EVALUATION.md); layout 
 ## Local preview
 
 ```text
-cd ../website-portfolio-m1a      # the worktree
+cd worktrees/m1a-site-foundation      # a worktree, relative to the workspace root
 npm ci
 npm run dev                      # development
 npm run build && npm run preview # production build served locally
