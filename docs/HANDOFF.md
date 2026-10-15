@@ -6,7 +6,8 @@ Updated 2026-10-15 by Claude Code (acting lead engineer while Codex is unavailab
 
 | Item | Value |
 | --- | --- |
-| Current branch / worktree | `feat/m1b-homepage`, worktree `../website-portfolio-m1b-home`; based on `685dd41`; pushed to origin at `354cead` (owner-authorized, no force); later commits are docs-only, see `git log` |
+| Current branch / worktree | `feat/m1b-homepage-refine`, worktree `../website-portfolio-m1b-refine`; based on `40939c6` (the pushed homepage head); local only until the owner asks for a push |
+| Homepage branch | `feat/m1b-homepage`, worktree `../website-portfolio-m1b-home`; pushed to origin at `40939c6` |
 | M1b exploration branch | `feat/m1b-design-exploration`, worktree `../website-portfolio-m1b`; pushed to origin at `685dd41` (owner-authorized 2026-10-15, no force) |
 | M1a branch | `feat/m1a-site-foundation`, worktree `../website-portfolio-m1a`, pushed; unchanged by M1b |
 | Base | M0 commit `80af31cd00c73e1f7bf737e15cae6bd731bcfde9` (`docs/m0-foundation`) |
@@ -16,6 +17,27 @@ Updated 2026-10-15 by Claude Code (acting lead engineer while Codex is unavailab
 | Production | `main` still `c882895`; root `index.html` and `CNAME` unchanged; no workflow, Pages or DNS change |
 | ADR statuses | 0001 Accepted; 0002-0006 Proposed (unchanged) |
 | Stack | Astro 7.3.8 static output, TypeScript strict, plain CSS; Node >= 22.12 |
+
+## Homepage refinement round (2026-10-15), stopped for owner review
+
+- **Owner verdict:** homepage visual identity approved with refinements (Direction A-led hybrid; palette and left-aligned wordmark preserved). Record and evidence: [M1B_HOME_DECISION](reviews/M1B_HOME_DECISION.md#visual-approval-and-refinements-2026-10-15). The VFX portfolio and Aurelia pages were not started.
+- **Changes:** one-line-per-sentence mobile headline; refined system typography; new Featured Aurelia and Selected VFX layouts (slots still labelled); hero box sized by CSS with focal point, `srcset` and art-directed `mobileSrc`; transform-based hero opening (replaces `clip-path`); font evaluation without adding fonts ([M1B_FONT_EVALUATION](reviews/M1B_FONT_EVALUATION.md)); shared browser finder `scripts/lib/browser.mjs`; new `npm run test:home`; fix for the image-failure fallback (it must target the plate, not `<picture>`).
+- **Environment change:** Google Chrome was no longer installed on the machine part-way through this work. Scripts now fall back to Microsoft Edge (Chromium 155); Lighthouse needs `CHROME_PATH` set to the browser, as its `--chrome-path` flag is not honoured. Set `CHROME_PATH` for any other browser location.
+- **Image artwork guide:** desktop 2880 x 1206 (2.39:1) with the subject inside the central 70% of the height, optional 1200 x 1500 mobile crop, at most 250 KB per variant; set via `src/data/home.ts`.
+
+| Check | Result |
+| --- | --- |
+| `npm run verify` | Passed: docs check (26 files), type check 0 errors and 0 hints, build 8 pages, built-output check (home entry 7.6 KB gzip, 0 B external JavaScript), browser check on 7 routes (axe 0 violations at 390 and 1440 px, no overflow at 320, 390, 768, 1024 and 1440 px, reduced motion, JavaScript off, refresh, no console errors or external requests) |
+| `npm run test:home` | Passed. Headline is one line per sentence at 320, 360, 390, 430, 560, 768, 1024 and 1440 px (28 px at 320 up to 92 px at 1440), no overflow. Hero with synthetic art and a 1.2 s delayed image: 0.0 px layout shift at 320x640, 390x844, 560x900, 768x1024, 1024x768, 1440x900, 1920x1080 and 2560x1080; the central 70% band stays visible (70% to 100%); correct desktop or mobile source chosen |
+| `npm run test:media`, `npm run test:explore` | Passed |
+| Production build excludes exploration routes | Verified: no `dist/explore/`, no `explore` entry in the sitemap, no built HTML mentioning `explore` |
+| Controlled mobile Lighthouse, 3 runs (Edge 155, LH 13.5) | Performance 100, 100, 100; accessibility, best-practices, SEO 100; FCP and LCP 0.90 s; TBT 0 ms; CLS 0; host benchmark 2,920-3,461 |
+| Animation A/B (16 runs, clip-path versus transform) | No measurable difference; earlier 83-100 variance did not reproduce. Transform version kept. Details and caveats in the decision record |
+| Not done | Firefox, Safari, real phones, screen reader, YS Mobile v1 protocol, testing with real artwork or licensed fonts |
+
+Screenshots: `docs/design/m1b/home-*.jpg` (after) and `docs/design/m1b/before/` (previous round); font comparison: `docs/design/m1b/font-candidates.jpg`.
+
+**Open items for the owner:** display-font decision (Q06), real hero and Aurelia images (manifest M-01, M-02), approval of the supporting copy, whether to push `feat/m1b-homepage-refine`, and authorization before phases 4 and 5. ADR statuses are unchanged.
 
 ## M1b phase 3: homepage (2026-10-15), stopped for owner review
 

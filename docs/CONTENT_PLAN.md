@@ -69,3 +69,7 @@ The first content manifest is [CONTENT_MANIFEST](CONTENT_MANIFEST.md): owner dec
 
 The homepage ([M1B_HOME_DECISION](reviews/M1B_HOME_DECISION.md)) contains: the owner's headline; a supporting sentence, discipline notes, and section and call-to-action copy that are proposed and unapproved; placeholder media for the hero and Aurelia (labelled "not approved"); two empty VFX slots; and engineering and IBM AI Racing links with no results. Role and credits show "Pending confirmation". No project, tool, metric, credit or contact detail was invented. Replacing placeholders needs [CONTENT_MANIFEST](CONTENT_MANIFEST.md) items M-01 and M-02 first, then M-03 to M-08 for the case study.
 
+## Hero artwork specification (2026-10-15)
+
+When items M-01 and M-02 in [CONTENT_MANIFEST](CONTENT_MANIFEST.md) are met, supply: a desktop master of 2880 x 1206 (2.39:1) with the subject inside the central 70% of the height; an optional 1200 x 1500 (4:5) phone crop; a focal point if the subject is off-centre; descriptive alt text; and AVIF or WebP plus a JPEG fallback, at most 250 KB per variant. They are placed through `src/data/home.ts`, and no layout work is then needed. Until then the slots stay labelled placeholders.
+

@@ -57,3 +57,7 @@ The tokens above remain the provisional M1a set and are **not** replaced. Owner 
 
 The hybrid identity is applied as the global tokens above in `src/styles/global.css`, with shared components in `src/styles/editorial.css` and `src/components/` (`Header`, `Footer`, `Plate`, `TechPlate`). Direction A is primary; Direction B's monospace and signal colour appear only in the engineering/racing teaser. Rationale, departures from the explorations and open approvals: [M1B_HOME_DECISION](reviews/M1B_HOME_DECISION.md). Exploration pages remain available locally for reference. Not yet approved: fonts, final wordmark letterforms, real imagery.
 
+## Homepage refinements (2026-10-15)
+
+Palette, wordmark and tokens are unchanged. Typography keeps the system stacks, with `font-kerning`, `font-optical-sizing: auto`, `text-wrap: balance` for headings and `text-wrap: pretty` for body text. Display-font candidates (Instrument Serif, Newsreader; both OFL) are evaluated in [M1B_FONT_EVALUATION](reviews/M1B_FONT_EVALUATION.md) and not adopted. The hero opening animation now uses transform-only letterbox bars instead of an animated `clip-path`. The hero artwork contract (sizes, focal point, mobile crop, safe area) and the measurements behind it are in [M1B_HOME_DECISION](reviews/M1B_HOME_DECISION.md#visual-approval-and-refinements-2026-10-15).
+
