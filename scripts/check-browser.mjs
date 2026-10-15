@@ -5,12 +5,11 @@ import path from 'node:path';
 import { createRequire } from 'node:module';
 import puppeteer from 'puppeteer-core';
 import { serve } from './lib/serve.mjs';
+import { findBrowser } from './lib/browser.mjs';
 
 const require = createRequire(import.meta.url);
 const axeSource = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
-const candidates = [process.env.CHROME_PATH, 'C:/Program Files/Google/Chrome/Application/chrome.exe', 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe', '/usr/bin/google-chrome', '/usr/bin/chromium'].filter(Boolean);
-const executablePath = candidates.find((p) => fs.existsSync(p));
-if (!executablePath) { console.error('No Chrome/Edge found; set CHROME_PATH'); process.exit(2); }
+const executablePath = findBrowser();
 
 const routes = process.env.YS_ROUTES ? process.env.YS_ROUTES.split(',') : ['/', '/work/', '/work/aurelia/', '/engineering/', '/engineering/ibm-ai-racing/', '/about/', '/contact/'];
 const widths = [320, 390, 768, 1024, 1440];

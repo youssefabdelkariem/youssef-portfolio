@@ -1,9 +1,10 @@
 ---
 /**
  * Cinematic media slot. With no `src` it shows a clearly labelled placeholder plate.
- * With `src` it shows the image (explicit width/height, descriptive alt); if the image
- * fails to load, a tiny script in BaseLayout marks the plate `data-state="failed"` and the
- * placeholder underlay (with its label) is shown instead, so layout never collapses.
+ * With `src` it shows the image inside a box whose size is fixed by CSS, so loading it never
+ * shifts layout. `focal` sets object-position for cover cropping; `mobileSrc` is an optional
+ * art-directed crop used at 560 px and below. If the image fails to load, a small script in
+ * BaseLayout marks the plate `data-state="failed"` and the labelled placeholder returns.
  */
 interface Props {
   label: string;
@@ -11,16 +12,33 @@ interface Props {
   alt?: string;
   width?: number;
   height?: number;
-  ratio?: string;
+  /** Optional art-directed crop for narrow screens (recommended 4:5). */
+  mobileSrc?: string;
+  mobileWidth?: number;
+  mobileHeight?: number;
+  /** Focal point as CSS object-position, e.g. "50% 40%". */
+  focal?: string;
+  srcset?: string;
+  sizes?: string;
   framed?: boolean;
   priority?: boolean;
+  /** Letterbox opening animation (compositor-only; hero use). */
+  gate?: boolean;
 }
-const { label, src, alt = '', width = 2390, height = 1000, ratio, framed = false, priority = false } = Astro.props;
-const style = ratio ? `--ratio: ${ratio}` : undefined;
+const { label, src, alt = '', width = 2390, height = 1000, mobileSrc, mobileWidth = 1200, mobileHeight = 1500, focal = '50% 50%', srcset, sizes, framed = false, priority = false, gate = false } = Astro.props;
+const loading = priority ? 'eager' : 'lazy';
+const fetchpriority = priority ? 'high' : 'auto';
 ---
 
-<figure class:list={['plate', { framed, 'has-src': !!src }]} style={style} {...(!src ? { role: 'img', 'aria-label': `Placeholder: ${label}. Not an approved asset.` } : {})}>
+<figure class:list={['plate', { framed, 'has-src': !!src, 'has-mobile': !!(src && mobileSrc) }]} style={`--focal: ${focal}`} {...(!src ? { role: 'img', 'aria-label': `Placeholder: ${label}. Not an approved asset.` } : {})}>
   <span class="streak" aria-hidden="true"></span>
+  {gate && <span class="gate gate-top" aria-hidden="true"></span>}
+  {gate && <span class="gate gate-bottom" aria-hidden="true"></span>}
   <p class="tag-label">Placeholder &middot; {label} &middot; not approved</p>
-  {src && <img src={src} alt={alt} width={width} height={height} decoding="async" loading={priority ? 'eager' : 'lazy'} fetchpriority={priority ? 'high' : 'auto'} />}
+  {src && (
+    <picture>
+      {mobileSrc && <source media="(max-width: 560px)" srcset={mobileSrc} width={mobileWidth} height={mobileHeight} />}
+      <img src={src} srcset={srcset} sizes={sizes} alt={alt} width={width} height={height} decoding="async" loading={loading} fetchpriority={fetchpriority} />
+    </picture>
+  )}
 </figure>

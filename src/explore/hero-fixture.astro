@@ -1,0 +1,16 @@
+---
+/** Test fixture (local explore build only): the homepage hero with synthetic art, desktop and 4:5 mobile. */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Plate from '../components/Plate.astro';
+---
+
+<BaseLayout title="Hero fixture" description="Local test fixture for hero cropping and layout stability." noindex>
+  <section class="hero" aria-labelledby="hero-title">
+    <Plate label="Hero fixture" priority gate src="/explore-fixtures/hero-desktop.svg" mobileSrc="/explore-fixtures/hero-mobile.svg" alt="Synthetic hero fixture with a marked safe area" width={2390} height={1000} />
+    <div class="hero-copy">
+      <p class="eyebrow">Fixture</p>
+      <h1 id="hero-title"><span>Engineering precision.</span> <span><em>Cinematic imagination.</em></span></h1>
+      <p class="lede">Layout fixture for measuring crop and stability.</p>
+    </div>
+  </section>
+</BaseLayout>

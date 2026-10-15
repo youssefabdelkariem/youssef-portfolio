@@ -55,7 +55,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
         }
         // Media fallback: if a plate image fails, show the labelled placeholder instead.
         document.querySelectorAll('.plate img').forEach(function (img) {
-          function fail() { img.parentElement.setAttribute('data-state', 'failed'); }
+          function fail() { img.closest('.plate').setAttribute('data-state', 'failed'); }
           if (img.complete && img.naturalWidth === 0) fail(); else img.addEventListener('error', fail);
         });
       })();

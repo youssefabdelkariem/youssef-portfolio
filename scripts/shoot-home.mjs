@@ -3,10 +3,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 import puppeteer from 'puppeteer-core';
 import { serve } from './lib/serve.mjs';
+import { findBrowser } from './lib/browser.mjs';
 
 const out = path.resolve('docs/design/m1b');
 fs.mkdirSync(out, { recursive: true });
-const exe = [process.env.CHROME_PATH, 'C:/Program Files/Google/Chrome/Application/chrome.exe'].filter(Boolean).find((p) => fs.existsSync(p));
+const exe = findBrowser();
 const { server, port } = await serve(path.resolve('dist'));
 const browser = await puppeteer.launch({ executablePath: exe, headless: true });
 const sizes = [['desktop', 1440, 900], ['tablet', 768, 1024], ['mobile', 390, 844]];

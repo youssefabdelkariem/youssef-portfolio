@@ -15,7 +15,7 @@ const disciplines = [
 
 <BaseLayout title={site.name} description={site.description}>
   <section class="hero" aria-labelledby="hero-title">
-    <Plate label="Hero still" priority {...(hero ? { src: hero.src, alt: hero.alt, width: hero.width, height: hero.height } : {})} />
+    <Plate label="Hero still" priority gate {...(hero ?? {})} />
     <div class="hero-copy">
       <p class="eyebrow">CGI &middot; 3D rendering &middot; VFX &middot; Engineering</p>
       <h1 id="hero-title"><span>Engineering precision.</span> <span><em>Cinematic imagination.</em></span></h1>
@@ -37,20 +37,24 @@ const disciplines = [
   </section>
 
   <section class="section divided" aria-labelledby="featured-title">
-    <div class="wrap featured">
+    <div class="wrap">
       <div class="reveal">
-        <Plate label="Aurelia" framed {...(aurelia ? { src: aurelia.src, alt: aurelia.alt, width: aurelia.width, height: aurelia.height } : {})} />
+        <Plate label="Aurelia" framed {...(aurelia ?? {})} />
       </div>
-      <div class="reveal">
-        <p class="eyebrow">Featured project</p>
-        <h2 id="featured-title">Aurelia</h2>
-        <p>A CGI smartphone commercial and the flagship of this portfolio. The full case study is in preparation.</p>
+      <div class="featured-body reveal">
+        <div>
+          <p class="eyebrow">Featured project</p>
+          <h2 id="featured-title">Aurelia</h2>
+        </div>
+        <div>
+          <p>A CGI smartphone commercial and the flagship of this portfolio. The full case study is in preparation.</p>
+          <a class="btn" href="/work/aurelia/">View case study</a>
+        </div>
         <dl>
           <div><dt>Type</dt><dd>CGI smartphone commercial</dd></div>
           <div><dt>Role</dt><dd>Pending confirmation</dd></div>
           <div><dt>Credits</dt><dd>Pending confirmation</dd></div>
         </dl>
-        <a class="btn" href="/work/aurelia/">View case study</a>
       </div>
     </div>
   </section>
@@ -62,12 +66,12 @@ const disciplines = [
         <a href="/work/">VFX Portfolio</a>
       </div>
       <div class="slots">
-        <figure class="slotframe reveal">
-          <div class="box" role="img" aria-label="Empty project slot, CGI">Project slot &middot; none verified yet</div>
+        <figure class="slotframe wide reveal">
+          <div class="box" role="img" aria-label="Empty project slot, CGI. Nothing verified yet.">Project slot &middot; none verified yet</div>
           <figcaption><span class="n">01</span><span class="t">CGI</span><span class="m">Appears here when the work is verified and approved.</span></figcaption>
         </figure>
-        <figure class="slotframe reveal">
-          <div class="box" role="img" aria-label="Empty project slot, compositing">Project slot &middot; none verified yet</div>
+        <figure class="slotframe tall reveal">
+          <div class="box" role="img" aria-label="Empty project slot, compositing. Nothing verified yet.">Project slot &middot; none verified yet</div>
           <figcaption><span class="n">02</span><span class="t">Compositing and breakdowns</span><span class="m">Appears here when the work is verified and approved.</span></figcaption>
         </figure>
       </div>
@@ -87,7 +91,7 @@ const disciplines = [
         </ol>
       </div>
       <div class="reveal">
-        <TechPlate caption={'Placeholder plate · not approved'} />
+        <TechPlate caption={'Placeholder plate \u00b7 not approved'} />
       </div>
     </div>
   </section>
