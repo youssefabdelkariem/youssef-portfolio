@@ -1,6 +1,6 @@
 # M1b plan: visual identity, homepage, VFX portfolio, Aurelia
 
-Status: **Phases 1-3 authorized and complete (2026-10-15); phases 4-7 Proposed and not authorized.** Homepage: [M1B_HOME_DECISION](reviews/M1B_HOME_DECISION.md). Results: [CONTENT_MANIFEST](CONTENT_MANIFEST.md), [M1B_DESIGN_REVIEW](reviews/M1B_DESIGN_REVIEW.md). Prepared 2026-10-15 by Claude Code. It elaborates [M1b in the development plan](DEVELOPMENT_PLAN.md#m1b---design-and-content-validation-proposed); the plan and [requirements](REQUIREMENTS.md) remain authoritative. Starting needs explicit owner authorization recorded in the active-milestone section. Nothing here accepts an ADR.
+Status: **Phases 1-5 authorized and implemented as drafts (2026-10-15), pending owner review of the selection and content; phases 6-7 (full verification with approved media, release review) remain Proposed.** Homepage: [M1B_HOME_DECISION](reviews/M1B_HOME_DECISION.md). Results: [CONTENT_MANIFEST](CONTENT_MANIFEST.md), [M1B_DESIGN_REVIEW](reviews/M1B_DESIGN_REVIEW.md). Prepared 2026-10-15 by Claude Code. It elaborates [M1b in the development plan](DEVELOPMENT_PLAN.md#m1b---design-and-content-validation-proposed); the plan and [requirements](REQUIREMENTS.md) remain authoritative. Starting needs explicit owner authorization recorded in the active-milestone section. Nothing here accepts an ADR.
 
 ## Goal and boundaries
 

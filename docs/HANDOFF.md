@@ -1,4 +1,4 @@
-# Handoff: site foundation, design exploration and homepage
+# Handoff: site foundation, homepage and Aurelia portfolio
 
 Updated 2026-10-15 by Claude Code (acting lead engineer while Codex is unavailable). Authority: owner instruction recorded in [DEVELOPMENT_PLAN](DEVELOPMENT_PLAN.md#active-milestone). Nothing here is merged, deployed or an accepted decision.
 
@@ -6,7 +6,8 @@ Updated 2026-10-15 by Claude Code (acting lead engineer while Codex is unavailab
 
 | Item | Value |
 | --- | --- |
-| Current branch / worktree | `feat/m1b-homepage-refine`, worktree `../website-portfolio-m1b-refine`; based on `40939c6` (the pushed homepage head); local only until the owner asks for a push |
+| Current branch / worktree | `feat/m1b-aurelia-portfolio`, worktree `../website-portfolio-m1b-aurelia`; based on `86799d0` (the pushed homepage refinement head); local only, not pushed |
+| Refinement branch | `feat/m1b-homepage-refine`, pushed to origin at `86799d0` (owner-authorized 2026-10-15) |
 | Homepage branch | `feat/m1b-homepage`, worktree `../website-portfolio-m1b-home`; pushed to origin at `40939c6` |
 | M1b exploration branch | `feat/m1b-design-exploration`, worktree `../website-portfolio-m1b`; pushed to origin at `685dd41` (owner-authorized 2026-10-15, no force) |
 | M1a branch | `feat/m1a-site-foundation`, worktree `../website-portfolio-m1a`, pushed; unchanged by M1b |
@@ -17,6 +18,28 @@ Updated 2026-10-15 by Claude Code (acting lead engineer while Codex is unavailab
 | Production | `main` still `c882895`; root `index.html` and `CNAME` unchanged; no workflow, Pages or DNS change |
 | ADR statuses | 0001 Accepted; 0002-0006 Proposed (unchanged) |
 | Stack | Astro 7.3.8 static output, TypeScript strict, plain CSS; Node >= 22.12 |
+
+## Aurelia assets, typography, VFX portfolio and case study (2026-10-15), stopped for owner review
+
+- **Owner authorization:** inspect the local Aurelia renders read-only, make derivatives in a working directory, adopt Instrument Serif after licence verification, build `/work/` and `/work/aurelia/`. Not authorized: merge, deploy, DNS, Pages, altering originals, committing the selected images.
+- **Source protection:** originals untouched. A name, size and modified-time snapshot of 1,609 files (258.9 GiB, both drives) before and after shows 0 changed and 0 removed; 1 file was added by the owner's own Nuke session (`Compositing/shot 003/.nk`). Details in [M1B_AURELIA_MEDIA](reviews/M1B_AURELIA_MEDIA.md).
+- **Media policy:** derivatives (36 files, 1.79 MB, largest 130 KB) live in `public/media/aurelia/`, which is **git-ignored**, and in a working directory outside the repo. A clean checkout builds and passes `npm run verify` with labelled placeholders. To see the real images on a machine that has them: `node scripts/aurelia/sync-media.mjs <derivatives dir>`. Masters, EXRs, Blender and Nuke files never enter the repo. Screenshots that contain the renders are not committed either.
+- **Typography:** Instrument Serif (OFL 1.1, verified from the designers' repository and Google Fonts) self-hosted in `public/fonts/` with `OFL.txt`, for `h1` and `h2` only, with a metric-matched fallback ([M1B_FONT_EVALUATION](reviews/M1B_FONT_EVALUATION.md#decision-and-licence-verification-2026-10-15)).
+- **Pages:** `/work/` (featured Aurelia, project cards, CGI and Compositing groups, honest slots) and `/work/aurelia/` (hero, introduction, film slot that says playback is unpublished, four selected renders, lighting and materials, a five-stage render-pass viewer with a static table, rendering and compositing workflow, technical details and shot table, credits placeholder). The homepage hero and featured plate now use the real derivatives when present.
+- **New or changed:** `src/data/media.ts` (manifest lookup, `Pic`), `Plate` (takes a `Pic`), `BreakdownViewer`, `ProjectCard`, `projects.ts`, `home.ts`, `scripts/aurelia/*`, `scripts/check-aurelia.mjs`, `scripts/shoot-pages.mjs`, `scripts/lib/*`. No new npm dependencies; the derivative tool needs Python with numpy, opencv-python-headless and Pillow (AVIF).
+
+| Check | Result |
+| --- | --- |
+| `npm run verify` (with derivatives) | Passed: docs check (28 files), type check 0 errors and 0 hints, build 8 pages, built-output check, browser check on 7 routes (axe 0 violations at 390 and 1440 px, no overflow at 320 to 1440 px, reduced motion, JavaScript off, refresh, no console errors or external requests), `test:aurelia` |
+| Same checks without derivatives (placeholder mode) | Passed (derivatives moved aside, rebuilt, restored) |
+| `npm run test:aurelia` | Passed: every visible image decodes as AVIF at 1440 and 390 px, none fell back to a placeholder, no horizontal overflow, the five-stage viewer works from the keyboard (ArrowRight steps through all stages and each stage image loads) and its static table lists all five; largest derivative 130 KB, none over 250 KB; image bytes: hero 58 to 72 KB, case-study page 131 KB (phone) to 209 KB (desktop) with every image loaded |
+| `npm run test:home` and the explore tests | Re-run after the font and media changes; results in the closing summary and below |
+| Lighthouse 13.5 mobile (Edge 155), 3 runs each, real media | Home: performance 99, 100, 100, LCP 1.88 s, TBT 0, CLS 0, 166 KB. VFX Portfolio: 100 in all, LCP 1.36 s, 104 KB. Aurelia: 98 to 99 in all, LCP 2.03 to 2.11 s (after dropping an unused italic font preload; 2.20 to 2.26 s before), CLS 0, 225 KB. Accessibility, best practices and SEO 100 on every run. Lab figures with throttled 1.6 Mbps; the 2.5 s LCP target holds with about 0.4 s margin on the case study |
+| Not done | Firefox, Safari, real phones, screen reader, YS Mobile v1 protocol, real film playback, Chrome (not installed here; Edge used) |
+
+**Open items for the owner:** confirm the selection (hero, four renders, five pass stages) or choose from the contact sheet; say which shots are final (Shot 003 appears to be getting a composite now); approve the facts shown on the case study; approve committing the derivatives (about 1.8 MB); supply role, credits, brief, music and the film with captions and audio description; decide on WebP (omitted on quality grounds) and on pushing this branch. ADR statuses are unchanged.
+
+**Codex resumption:** read AGENTS.md, this file, [M1B_AURELIA_MEDIA](reviews/M1B_AURELIA_MEDIA.md) and [CONTENT_MANIFEST](CONTENT_MANIFEST.md); `npm ci`; run `npm run verify` and compare with the table. To get the images locally, ask the owner for the derivatives folder or regenerate with `scripts/aurelia/make-derivatives.py` from masters (never from EXRs inside the repo). Do not commit anything under `public/media/` until the owner approves; when approved, remove the `.gitignore` entry, commit the derivatives and the manifest, and re-run all checks. Keep source files read-only.
 
 ## Homepage refinement round (2026-10-15), stopped for owner review
 

@@ -61,3 +61,8 @@ The hybrid identity is applied as the global tokens above in `src/styles/global.
 
 Palette, wordmark and tokens are unchanged. Typography keeps the system stacks, with `font-kerning`, `font-optical-sizing: auto`, `text-wrap: balance` for headings and `text-wrap: pretty` for body text. Display-font candidates (Instrument Serif, Newsreader; both OFL) are evaluated in [M1B_FONT_EVALUATION](reviews/M1B_FONT_EVALUATION.md) and not adopted. The hero opening animation now uses transform-only letterbox bars instead of an animated `clip-path`. The hero artwork contract (sizes, focal point, mobile crop, safe area) and the measurements behind it are in [M1B_HOME_DECISION](reviews/M1B_HOME_DECISION.md#visual-approval-and-refinements-2026-10-15).
 
+## Typography and portfolio components (2026-10-15)
+
+Display face: **Instrument Serif** (OFL 1.1, self-hosted, verified; see [M1B_FONT_EVALUATION](reviews/M1B_FONT_EVALUATION.md#decision-and-licence-verification-2026-10-15)) for `h1` and `h2` through the `--font-headline` token, with a metric-matched fallback. Navigation, body, labels, `h3` and metadata keep the system faces. Headline sizes were retuned for the narrower face (`h1` 2.75 to 6.5 rem, `h2` 2.25 to 4 rem; homepage hero 1.75 rem on phones to 7.5 rem).
+
+New components: `Plate` (now takes a responsive `Pic` from `src/data/media.ts`: AVIF with JPEG fallback, optional phone crop at 560 px, focal point, placeholder and failure fallback), `BreakdownViewer` (native radio group with a static table alternative), and the case-study layouts (`.work-feature`, `.shots`, `.filmslot`, `.steps`, specification tables). Media-backed images keep the placeholder contract: a clean checkout without derivatives renders labelled placeholders.

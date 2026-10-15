@@ -39,3 +39,16 @@ Files were downloaded to a scratch folder outside the repository only to render 
 ## Recommendation (for the owner to accept or reject)
 
 Keep the system stacks for now, as decided. If the owner wants a more distinctive identity, adopt **Instrument Serif for headings only** (h1 and h2) and keep the system sans for body text. Newsreader is the safer choice if consistent rendering matters more than distinctiveness. To proceed the owner records: the chosen family (or none), then a follow-up change adds the self-hosted files, `@font-face` with fallback metrics, a preload, and a re-run of `npm run verify`, `npm run test:home` and the Lighthouse protocol.
+
+## Decision and licence verification (2026-10-15)
+
+The owner authorized evaluating Instrument Serif as the display font and using it for selected headings once its licence is verified from an authoritative source. Verification, read on 2026-10-15:
+
+- The designers' repository (`Instrument/instrument-serif`) ships `OFL.txt` stating "Copyright 2022 The Instrument Serif Project Authors" under the SIL Open Font License 1.1, and GitHub's licence API reports SPDX `OFL-1.1` for the repository.
+- The Google Fonts repository's `ofl/instrumentserif/OFL.txt` is byte-identical to the designers' file (matching MD5), and its metadata lists licence "OFL".
+- The licence text declares no Reserved Font Name. The font files' own name table repeats the copyright and licence.
+- OFL 1.1 permits embedding, use on a website and redistribution with the licence included. The font may not be sold on its own, and the licence and copyright must travel with it. Unmodified files are used, so no renaming is involved.
+
+Applied: the two official WOFF2 files from the designers' repository (`fonts/webfonts`), unmodified, are self-hosted in `public/fonts/` with `OFL.txt` (SHA-256 of Regular `ca21b99b...4322`, Italic `4f7aacc1...c294`, 27,440 and 28,096 bytes). They are used for `h1` and `h2` only; navigation, body text, labels, card titles (`h3`) and metadata stay in the system faces. A metric-matched fallback (`size-adjust: 76%`, ascent 130%, descent 41%, computed from the font's hhea metrics and average advance widths against Palatino Linotype and Georgia) limits layout shift while the font loads. Regular is preloaded on every page, italic only on the homepage. Newsreader was not adopted.
+
+Not verified: rendering on macOS, iOS and Android; the fallback metrics were calibrated on Windows system serifs.

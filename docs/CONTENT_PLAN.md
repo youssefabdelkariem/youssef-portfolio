@@ -73,3 +73,6 @@ The homepage ([M1B_HOME_DECISION](reviews/M1B_HOME_DECISION.md)) contains: the o
 
 When items M-01 and M-02 in [CONTENT_MANIFEST](CONTENT_MANIFEST.md) are met, supply: a desktop master of 2880 x 1206 (2.39:1) with the subject inside the central 70% of the height; an optional 1200 x 1500 (4:5) phone crop; a focal point if the subject is off-centre; descriptive alt text; and AVIF or WebP plus a JPEG fallback, at most 250 KB per variant. They are placed through `src/data/home.ts`, and no layout work is then needed. Until then the slots stay labelled placeholders.
 
+## Aurelia and VFX portfolio content status (2026-10-15)
+
+`/work/` and `/work/aurelia/` now carry draft content built only from evidence in the render files and project notes: five stills, a five-stage render-pass breakdown (Shot 002, frame 36), the rendering and compositing workflow, specifications and shot table, lighting and material notes from the scene's Cryptomatte manifests, and a film slot that states playback is not published. Role, credits, collaborators, music and the brief remain "Pending confirmation", and no achievement or client claim is made. Selection and provenance: [M1B_AURELIA_MEDIA](reviews/M1B_AURELIA_MEDIA.md); items awaiting the owner: [CONTENT_MANIFEST](CONTENT_MANIFEST.md#f-aurelia-render-archive-and-derivatives-2026-10-15-update).

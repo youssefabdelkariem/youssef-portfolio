@@ -68,3 +68,20 @@ No local material exists yet for the IBM AI Racing project, engineering/CAD proj
 | Missing items | 12 (M-01 to M-12) |
 
 Until M-01 to M-08 are resolved, the Aurelia and `/work/` surfaces remain placeholders.
+
+## F. Aurelia render archive and derivatives (2026-10-15 update)
+
+The owner authorized inspecting the local renders. Full method, source inventory and provenance: [M1B_AURELIA_MEDIA](reviews/M1B_AURELIA_MEDIA.md). Originals were read-only and are unchanged (snapshot comparison: 0 files changed or removed).
+
+| ID | Item | State | Notes |
+| --- | --- | --- | --- |
+| C-10 | Render archive: five shots (250, 72, 72, 72 and 228 UHD EXR frames, about 246 GB) | Collected | Blender 5.2.2 LTS / Cycles, scene-linear Rec.709. Final status confirmed only for the Shot 002 composite |
+| C-11 | Shot 002 final composite stills (frames 1, 36, 72, 16-bit) | Collected, derivatives made | Hero, camera-module and phone stills |
+| C-12 | Display-transformed renders from Shots 001 and 005 | Collected, derivatives made | No composite or grade; status of those shots unconfirmed |
+| C-13 | Shot 002 render passes (noisy, glossy, transmission, normals) | Collected, derivatives made | Genuine passes from the EXR, shown as a breakdown |
+| C-14 | Web derivatives (36 files, 1.79 MB) | Collected | In a git-ignored folder; not committed. Awaiting owner approval of the selection |
+
+Facts read from the render files and project notes (not yet owner-confirmed): renderer and version, frame size, frame rate, samples per shot, passes, display transform, Shot 002 compositing steps, scene lighting and material names. These appear on the case-study draft.
+
+Progress on missing items: M-01 (hero still and frames) has a provisional selection awaiting confirmation; M-07 (breakdown set) has a render-pass breakdown; M-02 to M-06, M-08 are unchanged (role, credits, tools confirmation, film, captions, rights). The Aurelia page shows "pending confirmation" wherever the owner's input is required.
+
