@@ -1,7 +1,10 @@
 /**
  * Project records. `status` mirrors the CONTENT_PLAN readiness gate:
- * 'placeholder' = no verified asset or claim yet. Nothing here is a verified credit or result.
+ * 'placeholder' = no verified asset or claim yet; 'collected' = assets located and derivatives made, awaiting
+ * the owner's approval. Nothing here is a verified credit or result.
  */
+import { picture, type Pic } from './media';
+
 export type Discipline = 'CGI' | 'Compositing' | 'Engineering';
 export type Status = 'placeholder' | 'collected' | 'verified' | 'approved';
 
@@ -13,7 +16,11 @@ export interface Project {
   summary: string;
   status: Status;
   flagship?: boolean;
+  /** Responsive picture, or null when no approved derivative exists (a labelled placeholder renders). */
+  pic: Pic | null;
 }
+
+export const aureliaPic = picture('lenses', 'Back of the Aurelia One phone showing two camera lenses ringed in polished metal on a near-black body.', '(min-width: 900px) 33vw, 100vw');
 
 export const workProjects: Project[] = [
   {
@@ -21,9 +28,10 @@ export const workProjects: Project[] = [
     title: 'Aurelia',
     discipline: 'CGI',
     href: '/work/aurelia/',
-    summary: 'Owner-designated flagship: a CGI smartphone commercial. Case study structure ready; media, role and credits pending verification.',
-    status: 'placeholder',
+    summary: 'A CGI smartphone commercial for the Aurelia One. Selected renders, a render-pass breakdown and technical notes from the project files.',
+    status: 'collected',
     flagship: true,
+    pic: aureliaPic,
   },
 ];
 
@@ -35,6 +43,7 @@ export const engineeringProjects: Project[] = [
     href: '/engineering/ibm-ai-racing/',
     summary: 'Autonomous racing controller project. Dedicated case study with structure for methodology, comparison, footage and source; evidence pending.',
     status: 'placeholder',
+    pic: null,
   },
 ];
 

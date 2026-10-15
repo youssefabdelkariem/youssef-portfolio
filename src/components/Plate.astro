@@ -1,44 +1,47 @@
 ---
 /**
- * Cinematic media slot. With no `src` it shows a clearly labelled placeholder plate.
- * With `src` it shows the image inside a box whose size is fixed by CSS, so loading it never
- * shifts layout. `focal` sets object-position for cover cropping; `mobileSrc` is an optional
- * art-directed crop used at 560 px and below. If the image fails to load, a small script in
- * BaseLayout marks the plate `data-state="failed"` and the labelled placeholder returns.
+ * Cinematic media slot. With no picture it shows a clearly labelled placeholder plate. With a picture
+ * (see src/data/media.ts) it renders responsive AVIF with a JPEG fallback inside a box sized by CSS, so
+ * loading never shifts layout. `focal` sets object-position for cover cropping. If the image fails to
+ * load, a small script in BaseLayout marks the plate `data-state="failed"` and the labelled placeholder
+ * returns.
  */
+import type { Pic } from '../data/media';
+
 interface Props {
   label: string;
-  src?: string;
-  alt?: string;
-  width?: number;
-  height?: number;
-  /** Optional art-directed crop for narrow screens (recommended 4:5). */
-  mobileSrc?: string;
-  mobileWidth?: number;
-  mobileHeight?: number;
+  pic?: Pic | null;
+  /** CSS aspect-ratio, e.g. "16 / 9". Default is set by the stylesheet (2.39:1). */
+  ratio?: string;
   /** Focal point as CSS object-position, e.g. "50% 40%". */
   focal?: string;
-  srcset?: string;
-  sizes?: string;
   framed?: boolean;
   priority?: boolean;
   /** Letterbox opening animation (compositor-only; hero use). */
   gate?: boolean;
+  /** Plain image for fixtures and tests. */
+  src?: string;
+  alt?: string;
+  width?: number;
+  height?: number;
 }
-const { label, src, alt = '', width = 2390, height = 1000, mobileSrc, mobileWidth = 1200, mobileHeight = 1500, focal = '50% 50%', srcset, sizes, framed = false, priority = false, gate = false } = Astro.props;
+const { label, pic: picProp, ratio, focal = '50% 50%', framed = false, priority = false, gate = false, src, alt = '', width = 2390, height = 1000 } = Astro.props;
+const pic = picProp ?? (src ? { id: 'inline', alt, src, width, height, sources: [], large: src, largeBytes: 0 } : null);
 const loading = priority ? 'eager' : 'lazy';
 const fetchpriority = priority ? 'high' : 'auto';
+const style = `--focal: ${focal}${ratio ? `; --ratio: ${ratio}` : ''}`;
+const hasMobile = !!pic?.sources.some((s) => s.media);
 ---
 
-<figure class:list={['plate', { framed, 'has-src': !!src, 'has-mobile': !!(src && mobileSrc) }]} style={`--focal: ${focal}`} {...(!src ? { role: 'img', 'aria-label': `Placeholder: ${label}. Not an approved asset.` } : {})}>
+<figure class:list={['plate', { framed, 'has-src': !!pic, 'has-mobile': hasMobile }]} style={style} {...(!pic ? { role: 'img', 'aria-label': `Placeholder: ${label}. Not an approved asset.` } : {})}>
   <span class="streak" aria-hidden="true"></span>
   {gate && <span class="gate gate-top" aria-hidden="true"></span>}
   {gate && <span class="gate gate-bottom" aria-hidden="true"></span>}
   <p class="tag-label">Placeholder &middot; {label} &middot; not approved</p>
-  {src && (
+  {pic && (
     <picture>
-      {mobileSrc && <source media="(max-width: 560px)" srcset={mobileSrc} width={mobileWidth} height={mobileHeight} />}
-      <img src={src} srcset={srcset} sizes={sizes} alt={alt} width={width} height={height} decoding="async" loading={loading} fetchpriority={fetchpriority} />
+      {pic.sources.map((s) => <source type={s.type} srcset={s.srcset} sizes={s.sizes} media={s.media} />)}
+      <img src={pic.src} alt={pic.alt} width={pic.width} height={pic.height} decoding="async" loading={loading} fetchpriority={fetchpriority} />
     </picture>
   )}
 </figure>

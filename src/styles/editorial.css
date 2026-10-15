@@ -54,9 +54,9 @@
 /* hero box is sized by CSS only (never by the image), so real media cannot shift layout; cover-crops with a focal point */
 .hero .plate { aspect-ratio: auto; height: max(clamp(24rem, 56svh, 42rem), 100vw / 3.4); }
 .hero-copy { max-width: var(--max); margin: clamp(var(--s-6), 5vw, var(--s-8)) auto 0; padding-inline: var(--gutter); }
-.hero-copy h1 { font-size: clamp(2.5rem, 6.6vw, 5.75rem); line-height: 1.02; letter-spacing: -0.028em; max-width: 24ch; margin-bottom: var(--s-5); }
+.hero-copy h1 { font-size: clamp(2.75rem, 8.6vw, 7.5rem); line-height: 0.98; letter-spacing: -0.005em; max-width: 24ch; margin-bottom: var(--s-5); }
 .hero-copy h1 span { display: block; }
-.hero-copy h1 em { color: var(--accent); font-style: italic; letter-spacing: -0.015em; }
+.hero-copy h1 em { color: var(--accent); font-style: italic; letter-spacing: 0; }
 .hero-copy .lede { margin-bottom: var(--s-6); }
 
 /* home: sections */
@@ -118,7 +118,7 @@
   .nav-menu { display: block; }
   .hero .plate { height: auto; aspect-ratio: 3 / 2; max-height: 60svh; }
   .hero-copy { margin-top: var(--s-6); }
-  .hero-copy h1 { font-size: clamp(1.75rem, 8vw, 3.75rem); max-width: none; }
+  .hero-copy h1 { font-size: clamp(1.75rem, 9.2vw, 5.5rem); max-width: none; }
   .hero-copy .lede { margin-bottom: var(--s-5); }
   .intro, .tech-grid, .featured-body { grid-template-columns: 1fr; }
   .featured-body dl { border-left: 0; padding-left: 0; border-top: 1px solid var(--border-strong); padding-top: var(--s-4); }
@@ -153,4 +153,53 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .nav-links a, .idx li::before { transition: none; }
+}
+
+/* ---- VFX portfolio and case study ---- */
+.work-feature { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--s-6) clamp(var(--s-6), 4vw, var(--s-8)); align-items: center; }
+.work-feature h2 { margin-bottom: var(--s-4); }
+.work-feature p { color: var(--text-2); }
+.case-top .hero-copy h1 { max-width: none; }
+.case-top .facts { margin-top: var(--s-6); }
+.filmslot { display: grid; gap: var(--s-4); max-width: 1100px; }
+.film-note { margin: 0; color: var(--text-2); font-size: 0.9688rem; max-width: 70ch; }
+.film-note strong { color: var(--text); }
+.shots { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-7) var(--s-6); }
+.shot { margin: 0; display: grid; gap: var(--s-3); align-content: start; min-width: 0; }
+.shot figcaption { display: grid; gap: 4px; font-size: 0.9375rem; color: var(--text-2); }
+.shot figcaption strong { color: var(--text); font: 400 1.5rem/1.15 var(--font-display); }
+.shot figcaption .where { font: 600 0.6875rem/1.3 var(--font-body); letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); }
+.shot figcaption a { justify-self: start; font-size: 0.875rem; }
+
+/* render-pass viewer: native radio group, no JavaScript */
+.viewer { display: grid; gap: var(--s-4); max-width: 1100px; margin-bottom: var(--s-6); }
+.vw-radio { position: absolute; opacity: 0; pointer-events: none; }
+.vw-tabs { display: flex; flex-wrap: wrap; gap: var(--s-2); border: 0; margin: 0; padding: 0; min-width: 0; }
+.vw-tabs legend { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.vw-tabs label { min-height: 44px; display: inline-flex; align-items: center; padding: 0.55rem 1rem; border: 1px solid var(--border-strong); border-radius: var(--r-1); font: 600 0.75rem/1.2 var(--font-body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-2); cursor: pointer; transition: color 160ms var(--ease), background-color 160ms var(--ease), border-color 160ms var(--ease); }
+.vw-tabs label:hover { color: var(--text); border-color: var(--accent); }
+.vw-radio:focus-visible ~ .vw-tabs label { outline: 2px solid var(--focus); outline-offset: 2px; }
+.vw-panel { display: none; }
+.vw-panel p { margin: var(--s-3) 0 0; color: var(--text-2); font-size: 0.9688rem; max-width: 70ch; }
+.vw-radio[id$='-comp']:checked ~ .vw-panels .vw-comp { display: block; }
+.vw-radio[id$='-comp']:checked ~ .vw-tabs label[for$='-comp'] { color: var(--canvas); background: var(--accent); border-color: var(--accent); }
+.vw-radio[id$='-noisy']:checked ~ .vw-panels .vw-noisy { display: block; }
+.vw-radio[id$='-noisy']:checked ~ .vw-tabs label[for$='-noisy'] { color: var(--canvas); background: var(--accent); border-color: var(--accent); }
+.vw-radio[id$='-glossy']:checked ~ .vw-panels .vw-glossy { display: block; }
+.vw-radio[id$='-glossy']:checked ~ .vw-tabs label[for$='-glossy'] { color: var(--canvas); background: var(--accent); border-color: var(--accent); }
+.vw-radio[id$='-transmission']:checked ~ .vw-panels .vw-transmission { display: block; }
+.vw-radio[id$='-transmission']:checked ~ .vw-tabs label[for$='-transmission'] { color: var(--canvas); background: var(--accent); border-color: var(--accent); }
+.vw-radio[id$='-normal']:checked ~ .vw-panels .vw-normal { display: block; }
+.vw-radio[id$='-normal']:checked ~ .vw-tabs label[for$='-normal'] { color: var(--canvas); background: var(--accent); border-color: var(--accent); }
+
+@media (max-width: 860px) {
+  .work-feature { grid-template-columns: 1fr; }
+  .shots { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .vw-panel { animation: vw-in 180ms linear; }
+  @keyframes vw-in { from { opacity: 0; } to { opacity: 1; } }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vw-tabs label { transition: none; }
 }

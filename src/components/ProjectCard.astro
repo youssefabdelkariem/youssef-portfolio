@@ -1,17 +1,18 @@
 ---
-import Media from './Media.astro';
+import Plate from './Plate.astro';
 import type { Project } from '../data/projects';
 interface Props { project: Project }
 const { project } = Astro.props;
 ---
 
 <article class="card reveal">
-  <Media label={`${project.title} (media pending)`} />
+  <Plate label={`${project.title} (media pending)`} pic={project.pic} ratio="16 / 10" />
   <div class="body">
     <div class="meta">
       <span class="tag">{project.discipline}</span>
       {project.flagship && <span class="tag">Flagship</span>}
       {project.status === 'placeholder' && <span class="tag pending">Content pending</span>}
+      {project.status === 'collected' && <span class="tag pending">Draft, pending approval</span>}
     </div>
     <h3><a href={project.href}>{project.title}</a></h3>
     <p>{project.summary}</p>

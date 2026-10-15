@@ -13,9 +13,9 @@ const disciplines = [
 ];
 ---
 
-<BaseLayout title={site.name} description={site.description}>
+<BaseLayout title={site.name} description={site.description} preloadItalic>
   <section class="hero" aria-labelledby="hero-title">
-    <Plate label="Hero still" priority gate {...(hero ?? {})} />
+    <Plate label="Hero still" priority gate pic={hero} focal="52% 50%" />
     <div class="hero-copy">
       <p class="eyebrow">CGI &middot; 3D rendering &middot; VFX &middot; Engineering</p>
       <h1 id="hero-title"><span>Engineering precision.</span> <span><em>Cinematic imagination.</em></span></h1>
@@ -39,7 +39,7 @@ const disciplines = [
   <section class="section divided" aria-labelledby="featured-title">
     <div class="wrap">
       <div class="reveal">
-        <Plate label="Aurelia" framed {...(aurelia ?? {})} />
+        <Plate label="Aurelia" framed ratio="16 / 9" pic={aurelia} />
       </div>
       <div class="featured-body reveal">
         <div>

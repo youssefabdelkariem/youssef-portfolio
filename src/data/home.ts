@@ -1,28 +1,15 @@
 /**
- * Homepage media slots. `null` renders a labelled placeholder. To publish real media, set a
- * verified, owner-approved derivative here (see docs/CONTENT_MANIFEST.md items M-01/M-02).
+ * Homepage media. Each entry is null (a labelled placeholder renders) until the derivatives exist in
+ * public/media/aurelia/ (see src/data/media.ts and docs/CONTENT_MANIFEST.md). Selection is provisional and
+ * needs the owner's approval before any image is committed.
  *
- * Hero artwork guide (see docs/reviews/M1B_HOME_DECISION.md):
- *  - desktop master 2880 x 1206 (2.39:1), keep the subject inside the central 70% vertically and
- *    set `focal` if it is off-centre; the box crops top and bottom on wide or short windows;
- *  - optional `mobileSrc` crop at 1200 x 1500 (4:5) used at 560 px and below; without it phones
- *    show a centred 3:2 crop of the desktop image;
- *  - poster budget: at most 250 KB per variant (QA-08), AVIF or WebP with a JPEG fallback.
+ * Artwork guide for replacements: desktop master 2880 x 1206 (2.39:1) with the subject inside the central
+ * 70% vertically; optional 1200 x 1500 (4:5) phone crop used at 560 px and below; at most 250 KB per
+ * delivered variant unless visible banding or loss requires more (QA-08, QA-13).
  */
-export interface MediaRef {
-  src: string;
-  alt: string;
-  width: number;
-  height: number;
-  mobileSrc?: string;
-  mobileWidth?: number;
-  mobileHeight?: number;
-  focal?: string;
-  srcset?: string;
-  sizes?: string;
-}
+import { artDirected, picture, type Pic } from './media';
 
-export const homeMedia: { hero: MediaRef | null; aurelia: MediaRef | null } = {
-  hero: null,
-  aurelia: null,
+export const homeMedia: { hero: Pic | null; aurelia: Pic | null } = {
+  hero: artDirected('hero', 'hero-m', 'Extreme close-up of a smartphone camera lens in a dark studio, with violet and blue reflections in the glass and a bright softbox reflected near the top.'),
+  aurelia: picture('phone', 'The back of the Aurelia One smartphone floating in a dark studio, showing two camera lenses and the engraved AURELIA ONE mark.', '(min-width: 1200px) 1200px, 100vw'),
 };

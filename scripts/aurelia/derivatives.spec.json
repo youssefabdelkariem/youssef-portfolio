@@ -1,0 +1,261 @@
+{
+ "_comment": "Derivative spec. Masters are 16-bit sRGB display-referred PNGs kept outside the repository.",
+ "outputs": [
+  {
+   "id": "hero",
+   "master": "s002_f0001_final_comp_srgb16.png",
+   "widths": [
+    1440,
+    2160,
+    2880
+   ],
+   "dither": true,
+   "formats": {
+    "avif": {
+     "quality": 94,
+     "advanced": {
+      "tune": "iq"
+     }
+    },
+    "jpg": {
+     "quality": 92,
+     "only_widths": [
+      1440
+     ]
+    }
+   },
+   "crop": {
+    "aspect": [
+     2880,
+     1206
+    ],
+    "center": [
+     0.52,
+     0.5
+    ]
+   }
+  },
+  {
+   "id": "hero-m",
+   "master": "s002_f0001_final_comp_srgb16.png",
+   "widths": [
+    600,
+    900,
+    1200
+   ],
+   "dither": true,
+   "formats": {
+    "avif": {
+     "quality": 94,
+     "advanced": {
+      "tune": "iq"
+     }
+    },
+    "jpg": {
+     "quality": 92,
+     "only_widths": [
+      900
+     ]
+    }
+   },
+   "crop": {
+    "aspect": [
+     4,
+     5
+    ],
+    "center": [
+     0.52,
+     0.5
+    ]
+   }
+  },
+  {
+   "id": "phone",
+   "master": "s002_f0072_final_comp_srgb16.png",
+   "widths": [
+    960,
+    1440,
+    2160
+   ],
+   "dither": true,
+   "formats": {
+    "avif": {
+     "quality": 94,
+     "advanced": {
+      "tune": "iq"
+     }
+    },
+    "jpg": {
+     "quality": 92,
+     "only_widths": [
+      1440
+     ]
+    }
+   }
+  },
+  {
+   "id": "lenses",
+   "master": "s002_f0036_final_comp_srgb16.png",
+   "widths": [
+    960,
+    1440,
+    2160
+   ],
+   "dither": true,
+   "formats": {
+    "avif": {
+     "quality": 94,
+     "advanced": {
+      "tune": "iq"
+     }
+    },
+    "jpg": {
+     "quality": 92,
+     "only_widths": [
+      1440
+     ]
+    }
+   }
+  },
+  {
+   "id": "wordmark",
+   "master": "s001_f0210_agx_srgb16.png",
+   "widths": [
+    960,
+    1440,
+    2160
+   ],
+   "dither": true,
+   "formats": {
+    "avif": {
+     "quality": 94,
+     "advanced": {
+      "tune": "iq"
+     }
+    },
+    "jpg": {
+     "quality": 92,
+     "only_widths": [
+      1440
+     ]
+    }
+   }
+  },
+  {
+   "id": "port",
+   "master": "s005_f0000_agx_srgb16.png",
+   "widths": [
+    960,
+    1440,
+    2160
+   ],
+   "dither": true,
+   "formats": {
+    "avif": {
+     "quality": 94,
+     "advanced": {
+      "tune": "iq"
+     }
+    },
+    "jpg": {
+     "quality": 92,
+     "only_widths": [
+      1440
+     ]
+    }
+   }
+  },
+  {
+   "id": "pass-noisy",
+   "master": "s002_f0036_pass_noisy_agx_srgb16.png",
+   "widths": [
+    960,
+    1440
+   ],
+   "dither": true,
+   "formats": {
+    "avif": {
+     "quality": 94,
+     "advanced": {
+      "tune": "iq"
+     }
+    },
+    "jpg": {
+     "quality": 92,
+     "only_widths": [
+      960
+     ]
+    }
+   }
+  },
+  {
+   "id": "pass-glossy",
+   "master": "s002_f0036_pass_glossy_agx_srgb16.png",
+   "widths": [
+    960,
+    1440
+   ],
+   "dither": true,
+   "formats": {
+    "avif": {
+     "quality": 94,
+     "advanced": {
+      "tune": "iq"
+     }
+    },
+    "jpg": {
+     "quality": 92,
+     "only_widths": [
+      960
+     ]
+    }
+   }
+  },
+  {
+   "id": "pass-transmission",
+   "master": "s002_f0036_pass_transmission_agx_srgb16.png",
+   "widths": [
+    960,
+    1440
+   ],
+   "dither": true,
+   "formats": {
+    "avif": {
+     "quality": 94,
+     "advanced": {
+      "tune": "iq"
+     }
+    },
+    "jpg": {
+     "quality": 92,
+     "only_widths": [
+      960
+     ]
+    }
+   }
+  },
+  {
+   "id": "pass-normal",
+   "master": "s002_f0036_pass_normal_data16.png",
+   "widths": [
+    960,
+    1440
+   ],
+   "dither": true,
+   "formats": {
+    "avif": {
+     "quality": 94,
+     "advanced": {
+      "tune": "iq"
+     }
+    },
+    "jpg": {
+     "quality": 92,
+     "only_widths": [
+      960
+     ]
+    }
+   }
+  }
+ ]
+}

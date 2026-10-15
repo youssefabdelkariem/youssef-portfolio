@@ -3,6 +3,15 @@
  * and B (technical accents only), per the owner's 2026-10-15 selection. Tokens remain provisional
  * (system fonts, no approved logo). See docs/DESIGN_SYSTEM.md and docs/reviews/M1B_HOME_DECISION.md.
  */
+/*
+ * Display face for h1 and h2 only: Instrument Serif (SIL OFL 1.1), self-hosted from public/fonts with
+ * its licence. The fallback face is metric-matched to the system serif (size-adjust and overrides
+ * computed from the font's hhea metrics and average advance widths) so a late swap does not shift layout.
+ */
+@font-face { font-family: 'Instrument Serif'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/InstrumentSerif-Regular.woff2') format('woff2'); }
+@font-face { font-family: 'Instrument Serif'; font-style: italic; font-weight: 400; font-display: swap; src: url('/fonts/InstrumentSerif-Italic.woff2') format('woff2'); }
+@font-face { font-family: 'Instrument Serif Fallback'; src: local('Palatino Linotype'), local('Palatino'), local('Book Antiqua'), local('Georgia'); size-adjust: 76%; ascent-override: 130%; descent-override: 41%; line-gap-override: 0%; }
+
 :root {
   /* colour */
   --canvas: #0b0a09;
@@ -26,6 +35,7 @@
   /* type (system stacks only; Q06 open) */
   --font-body: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --font-display: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
+  --font-headline: 'Instrument Serif', 'Instrument Serif Fallback', var(--font-display);
   --font-mono: ui-monospace, 'Cascadia Mono', 'SF Mono', Menlo, Consolas, monospace;
   /* motion */
   --ease: cubic-bezier(.2, .7, .2, 1);
@@ -39,9 +49,10 @@ main { flex: 1; }
 main:focus { outline: none; }
 img, svg, video { max-width: 100%; display: block; }
 h1, h2, h3 { font-family: var(--font-display); font-weight: 400; font-optical-sizing: auto; font-variant-ligatures: common-ligatures; line-height: 1.06; letter-spacing: -0.02em; margin: 0 0 var(--s-4); text-wrap: balance; }
-h1 { font-size: clamp(2.5rem, 8vw, 5.75rem); letter-spacing: -0.03em; }
-h2 { font-size: clamp(1.875rem, 4.4vw, 3.25rem); }
+h1 { font-size: clamp(2.75rem, 9vw, 6.5rem); }
+h2 { font-size: clamp(2.25rem, 5.4vw, 4rem); }
 h3 { font-size: clamp(1.25rem, 2.4vw, 1.625rem); }
+h1, h2 { font-family: var(--font-headline); letter-spacing: -0.005em; line-height: 1; }
 p { margin: 0 0 var(--s-4); max-width: 65ch; text-wrap: pretty; }
 a { color: var(--accent); text-underline-offset: 0.22em; text-decoration-color: rgb(201 169 110 / .6); }
 a:hover { color: var(--accent-hover); text-decoration-color: currentColor; }
