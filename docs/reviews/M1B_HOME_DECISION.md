@@ -37,3 +37,8 @@ Departures from the explored pages, with reasons:
 - Final font route and wordmark letterforms (Q06); the current serif and system sans resolve differently by operating system.
 - The Home hero copy is the owner's headline; the supporting sentence and the section copy are proposed and unapproved.
 - Whether "Let's talk about your project." is an acceptable call to action before a real contact destination exists (Q05).
+
+## Owner decisions after the first review (2026-10-15)
+
+Approved: the left-aligned wordmark. Kept provisionally: system fonts and the current call-to-action copy. Authorized: pushing the homepage and exploration branches (done). **The homepage visual design is not yet approved**; the screenshot set for review is [HOME_REVIEW](../design/m1b/HOME_REVIEW.md). No redesign was made in response to these decisions.
+

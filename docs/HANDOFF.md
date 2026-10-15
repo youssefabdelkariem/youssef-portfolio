@@ -6,8 +6,8 @@ Updated 2026-10-15 by Claude Code (acting lead engineer while Codex is unavailab
 
 | Item | Value |
 | --- | --- |
-| Current branch / worktree | `feat/m1b-homepage`, worktree `../website-portfolio-m1b-home`; based on `685dd41` (see `git log` for its commits) |
-| M1b exploration branch | `feat/m1b-design-exploration`, worktree `../website-portfolio-m1b`, local only (not pushed) |
+| Current branch / worktree | `feat/m1b-homepage`, worktree `../website-portfolio-m1b-home`; based on `685dd41`; pushed to origin at `354cead` (owner-authorized, no force); later commits are docs-only, see `git log` |
+| M1b exploration branch | `feat/m1b-design-exploration`, worktree `../website-portfolio-m1b`; pushed to origin at `685dd41` (owner-authorized 2026-10-15, no force) |
 | M1a branch | `feat/m1a-site-foundation`, worktree `../website-portfolio-m1a`, pushed; unchanged by M1b |
 | Base | M0 commit `80af31cd00c73e1f7bf737e15cae6bd731bcfde9` (`docs/m0-foundation`) |
 | Implementation commit | `510e4a4` |
@@ -34,6 +34,30 @@ Updated 2026-10-15 by Claude Code (acting lead engineer while Codex is unavailab
 | Not done | Firefox, Safari, real phones, screen reader, YS Mobile v1 protocol, tests with real media or fonts |
 
 Screenshots: `docs/design/m1b/home-desktop-*.jpg`, `home-tablet-*.jpg`, `home-mobile-*.jpg`, `home-mobile-menu.jpg`.
+
+### Owner decisions on record (2026-10-15, homepage review)
+
+- Approved: the left-aligned `YOUSSEF.STUDIO` wordmark. Provisional: system fonts; the current call-to-action copy.
+- Authorized: pushing `feat/m1b-homepage` and `feat/m1b-design-exploration` (done, no force). Not authorized: merging to `main`, deploying, or any Pages/DNS change.
+- **The homepage visual design is not yet approved.** Next step is the owner's visual review of the screenshot set ([HOME_REVIEW](design/m1b/HOME_REVIEW.md)); the VFX portfolio and Aurelia case study have not been started.
+
+### Controlled mobile Lighthouse, 3 runs plus a diagnostic (2026-10-15)
+
+Production build of `/` (placeholder content), served locally; Lighthouse 13.5, mobile preset with simulated throttling (Moto G Power profile, 4x CPU, 150 ms RTT, 1.6 Mbps), headless Chrome, runs sequential with 8 s pauses. Not fully controlled: other Node processes were running on the machine, and Lighthouse's host benchmark index differed between runs.
+
+| Run | Performance | FCP / LCP | TBT | CLS | Host benchmark |
+| --- | --- | --- | --- | --- | --- |
+| 1 | 92 | 0.90 s / 0.93 s | 360 ms | 0 | 1444 |
+| 2 | 83 | 0.90 s / 1.02 s | 697 ms | 0.0004 | 3392 |
+| 3 | 100 | 0.90 s / 0.90 s | 0 ms | 0 | 3562 |
+
+Accessibility, best-practices and SEO scored 100 in all three. LCP is stable (0.90-1.02 s) and CLS is about 0. **Variance is in total blocking time (0-697 ms) and so in the performance score (83-100)**, on a page with no JavaScript bundle. Long tasks (60-416 ms) appeared during the first 2.3 s in runs 1 and 2 and almost none in run 3. Run 1 coincided with a slow host benchmark; run 2 did not, so host load alone does not explain it.
+
+Diagnostic (same setup, `--force-prefers-reduced-motion`, 3 runs): performance 100, 100, 100; TBT 0 ms each; one 125-156 ms task per run; host benchmark 3540-3748 (stable). With only 3 runs per condition and a confounded host, this suggests but does not prove that the entrance animations cause the long tasks, most plausibly the animated `clip-path` on the large hero plate (it repaints on the main thread). **No change was made** (no redesign requested). If the owner approves the look, a candidate fix is to open the hero with an opacity or transform animation instead of `clip-path`, then re-measure. These are lab results on placeholder content, not field data, and LCP will change with a real hero image.
+
+### Production build excludes exploration routes (verified 2026-10-15)
+
+After `npm run build` on `feat/m1b-homepage`: no `dist/explore/` directory, no `explore` entry in `sitemap-0.xml`, and no built HTML file mentioning `explore`. The routes exist only under `npm run build:explore` (`dist-explore/`).
 
 **Open items for the owner:** real hero still and Aurelia frame (M-01/M-02) and the rest of M-03 to M-08; fonts and wordmark letterforms (Q06); approval of the proposed supporting copy and call to action; a decision on whether to push this branch; ADR statuses unchanged. After homepage sign-off, phase 4 (VFX portfolio) and phase 5 (Aurelia) in [M1B_PLAN](M1B_PLAN.md) need explicit authorization.
 
