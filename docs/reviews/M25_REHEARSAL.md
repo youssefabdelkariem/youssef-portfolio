@@ -4,7 +4,7 @@ Date: 2026-10-16. Prepared by Claude Code on `chore/m2-pages-actions` (local; no
 
 ## Verdict
 
-**The GitHub-hosted rehearsal was not performed, so the milestone is not complete.** There is no authenticated GitHub access in this environment (no token, no `gh`, no stored API credential was used), and creating a scratch repository needs your approval and has a side effect that must be decided first (section 3). Everything that can be proven without GitHub passed. For the prepared system the verdict is **PASS WITH CONDITIONS**: the conditions are the GitHub-hosted rehearsal, verified Pages and protection settings, and the owner approvals listed below. Local results are not evidence of a successful GitHub-hosted deployment and are not presented as such.
+**Partially complete.** The deployment and rollback were **not** rehearsed on GitHub (no scratch repository exists; private-repository Pages could not be checked without authentication, and a public one needs separate approval). What is now proven on GitHub-hosted infrastructure is the build side: the CI workflow ran on a GitHub-hosted `ubuntu-24.04` runner and the full `npm run verify` passed (section 3a). The prepared system remains **PASS WITH CONDITIONS**; the conditions are the Pages deployment and rollback rehearsal, the source-transition test, verified Pages and protection settings, and the owner approvals below. Local results are not evidence of a successful GitHub-hosted Pages deployment and are not presented as such.
 
 ## 1. Repository and workflow inspection
 
@@ -48,11 +48,28 @@ No authenticated access, so settings that need it are **unverified**. What publi
 
 What you should check (Settings in `youssef-portfolio`): Pages (Build and deployment source, Custom domain, Enforce HTTPS, Domain verification); Rules, Rulesets and Branches (protection for `main`); Actions, General (actions permissions, workflow permissions: set read-only, fork pull-request approval); Environments, `github-pages` (deployment branches, required reviewers); Secrets and variables (none should be needed). A screenshot or pasted values of these screens is enough for me to complete this section.
 
+## 3a. GitHub-hosted CI run (2026-10-16, after the owner approved the push)
+
+Pushed without force: `chore/m2-pages-actions` at `9553361e46d27da4e51f382fdc1b7f372a5ceea4` and `rollback/placeholder` at `c882895` (the live placeholder; `main` is still `c882895`).
+
+| Item | Observation |
+| --- | --- |
+| Runs triggered by the two pushes | Exactly one: `CI`, event `push`, branch `chore/m2-pages-actions`, run 38923066056. The `rollback/placeholder` push triggered nothing (its tip has no workflow files) |
+| Run URL | https://github.com/youssefabdelkariem/youssef-portfolio/actions/runs/38923066056 |
+| Conclusion | **success**, attempt 1, job `verify` 1 min 24 s (15:20:07 to 15:21:31 UTC) |
+| Runner | GitHub-hosted, label `ubuntu-24.04`, runner group "GitHub Actions" |
+| Steps | checkout, setup-node (Node 22, npm cache), `npm ci`, `npm run verify`, upload artifact: all success |
+| `npm run verify` on the runner | Docs check, typecheck, build, built-output check, artifact allowlist, browser and axe on 6 routes, Aurelia, racing, keyboard audit and the two-build reproducibility check passed. The browser tests used the runner's installed Chrome through the `CI=1` no-sandbox launch path, which was untested before this run |
+| Artifact | `site-dist`, 2.29 MB, retained 7 days; the allowlist check ran inside `verify` on the same `dist` |
+| Warnings | One annotation: the pinned action versions target Node.js 20, which GitHub is deprecating, and were forced to Node 24 (`checkout`, `setup-node`, `upload-artifact`). Not a failure. Newer majors exist (`checkout` and `setup-node` v7, `upload-artifact` v7, `upload-pages-artifact` v5, `deploy-pages` v5); bump them together, with the deploy actions, during the Pages rehearsal rather than piecemeal, and re-run |
+| Deployment and permissions | The CI job has `contents: read` only. No deployment was created (the deployment list still shows only `c882895` on `main`), no environment was requested, and `Deploy site` is not registered: GitHub lists a workflow only once it exists on the default branch or has run. Its first real execution will therefore be the merge, which is why the rehearsal matters |
+| Not available | Run logs and the artifact download need authentication, so the runner's Chrome version and the artifact contents were not inspected here. To inspect: download `site-dist` from the run page, unzip it, and run `DIST=<folder> node scripts/check-artifact.mjs` |
+
 ## 3. Scratch-repository rehearsal
 
 **Not executed.** Needed from you before it can run:
 
-- **Approval, name and visibility.** Suggested name `youssef-pages-rehearsal`. I could not tell from here whether your account can use Pages on a private repository (it usually needs a paid plan).
+- **Approval, name and visibility.** Requested: a **private** repository named `youssef-pages-rehearsal` under your account, created by you (or by me once authenticated), deleted after the rehearsal. Private-repository Pages could not be verified without authentication; it normally needs GitHub Pro, Team or Enterprise (a student plan may include it). To check: Settings, Billing and plans shows your plan, or create the private repository, open Settings, Pages, and see whether a source can be chosen or whether it asks you to upgrade or make the repository public. If it asks, stop: a public repository needs your separate approval and the exposure decision below.
 - **Decision on exposure.** On a public scratch repository the synthetic, noindex site would appear at `https://yousseff.me/youssef-pages-rehearsal/` because of the user-site domain. That is another of your domains, not `youssef.studio`, but it is a live site. Alternatives: a private repository if Pages allows it, a separate throwaway account, or running the build and artifact steps only.
 - **Authentication** to create it and push (I can prepare the commands; I did not run them). Exact steps are in [scripts/rehearsal/README.md](../../scripts/rehearsal/README.md).
 
@@ -128,7 +145,7 @@ Asset specification (needs the owner's approval before anything is committed; no
 | Page-specific cards (optional) | Aurelia: approved hero crop; racing: the telemetry trace on dark, not the video cover (rights open) |
 | Theme colour | Keep `#0b0a09` |
 
-Owner approval needed for every image above and for the final favicon concept.
+On 2026-10-16 the owner approved these specifications **as design direction only**: no asset has been created or committed, and each final image still needs approval.
 
 ## 7. Owner approval checklist
 
@@ -162,8 +179,7 @@ Manual checklist for the owner or a tester: (1) iPhone Safari: load every route,
 
 ## 9. Remaining decisions and next steps
 
-1. Decide the scratch-repository route (section 3) and approve its name and visibility; provide authentication or run the commands in the kit README.
-2. Run the rehearsal, including the source-transition test, and send me the run URLs.
-3. Provide screenshots or values for the settings in section 2.
-4. Approve and supply (or design) the launch assets; approve the owner checklist items.
-5. After the rehearsal: update the runbook with observed behaviour, decide the cutover variant, name the approver, then request a separate, explicit production authorisation.
+1. Check private-repository Pages (section 3), create the private scratch repository and tell me, or approve another route. Then I run the kit: branch-source start, switch to Actions, deploy, smoke, rollback by `ref`.
+2. Send screenshots or values for the settings in section 2 (Pages, Rules, Actions permissions, `github-pages` environment).
+3. Approve the launch assets once drawn, and the owner checklist items.
+4. After the rehearsal: bump the actions together, update the runbook with observed behaviour, decide the cutover variant, name the approver, then request a separate, explicit production authorisation.

@@ -45,7 +45,7 @@ Files prepared (not active on `main`, not run on GitHub):
 | Repository permissions | Workflows default to no permissions. Build job `contents: read`; deploy job `pages: write` and `id-token: write` only. PRs from forks get no secrets and cannot deploy |
 | Branch protection | **None today** (public data: `protected: false`, no rulesets). Recommended ruleset on `main`: require a pull request, require the `CI / verify` check, block force-push and deletion, require review |
 | Environment | In Settings, Environments, `github-pages`: deployment branches `main` only; optionally a required reviewer (the owner) so every deployment needs an approval click |
-| Actions policy | Allow GitHub-authored actions only; keep pinned SHAs and update deliberately |
+| Actions policy | Allow GitHub-authored actions only; keep pinned SHAs and update deliberately. The first CI run warned that the pinned versions target Node.js 20; update `checkout`, `setup-node`, `upload-artifact`, `upload-pages-artifact` and `deploy-pages` together during the rehearsal |
 | Rollback | See section 5 |
 | Production verification | `check-live` in the workflow (after deploy) and by hand; plus a manual visual pass and Lighthouse on the live URL, which cannot be done before deployment |
 
@@ -79,5 +79,5 @@ Note that the `ref` rollback only works for commits that contain the Astro build
 
 Tested: full `npm run verify` with `CI=1` (no-sandbox launch path), artifact allowlist with injected bad files, `check-live` against a Pages-like local server and read-only against production (it fails today, as expected), YAML parse of both workflows. **Not tested:** the workflows on GitHub-hosted runners (Chrome path and sandbox on `ubuntu-24.04`), the deploy action, environment rules, the Pages source switch, domain persistence, branch protection. These need a rehearsal repository or the owner's settings access.
 
-M2.5 added: byte-identical double builds, a local scratch-repository run of the whole pipeline including two deployments and a rollback by rebuilding the earlier commit, and Edge and Firefox checks of the rebased site under a sub-path. Still **not** tested: any GitHub-hosted run, the Pages source transition and what stays live during it, domain persistence, environment rules and branch protection.
+M2.5 added: byte-identical double builds, a local scratch-repository run of the whole pipeline including two deployments and a rollback by rebuilding the earlier commit, and Edge and Firefox checks of the rebased site under a sub-path. A GitHub-hosted CI run of the whole `verify` suite (including the browser tests on `ubuntu-24.04` with the no-sandbox path) passed on 2026-10-16 ([run](https://github.com/youssefabdelkariem/youssef-portfolio/actions/runs/38923066056)); it showed that pushing the branch triggers `CI` only. Still **not** tested: the Pages deployment on GitHub, the Pages source transition and what stays live during it, domain persistence, environment rules and branch protection.
 
