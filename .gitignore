@@ -5,3 +5,5 @@ dist/
 dist-explore/
 dist-v*/
 __pycache__/
+.rehearsal-dist/
+.repro-*/

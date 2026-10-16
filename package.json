@@ -18,11 +18,12 @@
     "test:dist": "node scripts/check-dist.mjs",
     "test:browser": "node scripts/check-browser.mjs",
     "check:docs": "node scripts/check-docs.mjs",
-    "verify": "npm run check:docs && npm run typecheck && npm run build && npm run test:dist && npm run test:artifact && npm run test:browser && npm run test:aurelia && npm run test:racing && npm run test:a11y",
+    "verify": "npm run check:docs && npm run typecheck && npm run build && npm run test:dist && npm run test:artifact && npm run test:browser && npm run test:aurelia && npm run test:racing && npm run test:a11y && npm run test:repro",
     "test:racing": "node scripts/check-racing.mjs",
     "test:a11y": "node scripts/check-a11y.mjs",
     "test:artifact": "node scripts/check-artifact.mjs",
-    "test:live": "node scripts/check-live.mjs"
+    "test:live": "node scripts/check-live.mjs",
+    "test:repro": "node scripts/check-reproducible.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

@@ -1,6 +1,6 @@
 # Deployment readiness and runbook (proposal)
 
-Prepared 2026-10-16 on `chore/m2-pages-actions` for [ADR 0006](adr/0006-build-deployment-preview.md), which **stays Proposed** until the owner approves this architecture. Nothing here was run against production. Related: OPS-01, OPS-02, QA-02, QA-09, QA-18, Q13, Q14. Execution rules: [production and PR gate](AGENT_WORKFLOW.md#production-and-pr-gate).
+Prepared 2026-10-16 and revised after the M2.5 review ([M25_REHEARSAL](reviews/M25_REHEARSAL.md)) on `chore/m2-pages-actions` for [ADR 0006](adr/0006-build-deployment-preview.md), which **stays Proposed** until the owner approves this architecture. Nothing here was run against production. Related: OPS-01, OPS-02, QA-02, QA-09, QA-18, Q13, Q14. Execution rules: [production and PR gate](AGENT_WORKFLOW.md#production-and-pr-gate).
 
 ## 1. Current production (probed read-only 2026-10-16)
 
@@ -29,6 +29,8 @@ Files prepared (not active on `main`, not run on GitHub):
 | `scripts/prune-dist.mjs` (runs in `npm run build`) | Removes `media/aurelia/manifest.json` (master file names and hashes) from the artifact |
 | `scripts/check-live.mjs` (`npm run test:live`) | Read-only production smoke test: routes 200, titles, compression, `/work` redirect, real 404, robots, sitemap, files that must not be served, `http` to `https` |
 | `public/CNAME` | Puts `youssef.studio` in the artifact. Harmless today; not relied on (see section 3) |
+| `scripts/check-reproducible.mjs` (`npm run test:repro`) | Two consecutive builds must be byte-identical |
+| `scripts/rehearsal/` | Kit for a scratch-repository rehearsal: synthetic scratch repo generator, sub-path transform, Pages emulator, functional checks, rehearsal workflow. See its README |
 
 ## 3. Requirements and findings
 
@@ -41,7 +43,7 @@ Files prepared (not active on `main`, not run on GitHub):
 | Build artifact | 59 files, 2.3 MB (limit 1 GB). Only HTML, hashed CSS, fonts, AVIF/JPEG, sitemap, robots, `CNAME`, favicon |
 | Excluding docs and source | Structural: only `dist/` is uploaded. Raw files stay readable on the public GitHub repository, as before |
 | Repository permissions | Workflows default to no permissions. Build job `contents: read`; deploy job `pages: write` and `id-token: write` only. PRs from forks get no secrets and cannot deploy |
-| Branch protection | **Unverified.** Recommended ruleset on `main`: require a pull request, require the `CI / verify` check, block force-push and deletion, require review |
+| Branch protection | **None today** (public data: `protected: false`, no rulesets). Recommended ruleset on `main`: require a pull request, require the `CI / verify` check, block force-push and deletion, require review |
 | Environment | In Settings, Environments, `github-pages`: deployment branches `main` only; optionally a required reviewer (the owner) so every deployment needs an approval click |
 | Actions policy | Allow GitHub-authored actions only; keep pinned SHAs and update deliberately |
 | Rollback | See section 5 |
@@ -49,15 +51,15 @@ Files prepared (not active on `main`, not run on GitHub):
 
 ## 4. Cutover sequence (owner decisions marked)
 
-Do not merge before step 4. Under the current branch source, merging site files to `main` could publish repository files and leave the placeholder live.
+The full, revised procedure with downtime assessment is in [M25_REHEARSAL, section 5](reviews/M25_REHEARSAL.md#5-production-architecture-review-and-cutover-proposal). In short:
 
-1. **(Owner)** Rehearse on a scratch repository first: same workflow, no custom domain, Pages source "GitHub Actions". This confirms the permissions, the environment rule, the artifact and that switching the source keeps the previous site up until the first deployment (documented behaviour is unverified here). Not done: creating a repository needs the owner.
-2. **(Owner)** Create the `main` ruleset and restrict the `github-pages` environment to `main`.
-3. **(Owner)** Record the known-good commit `c882895` and create a rollback branch from it: `git branch rollback/placeholder c882895` then push it. It holds only `index.html`, `CNAME` and README, so serving it exposes nothing else. (A local branch of that name can be prepared; pushing is the owner's call.)
-4. **(Owner)** Open a pull request to `main`; `ci.yml` must pass; review the artifact (`site-dist`) from the run.
-5. **(Owner)** In Settings, Pages, set Source to "GitHub Actions"; confirm the custom domain and Enforce HTTPS are unchanged.
-6. **(Owner authorisation)** Merge. `pages.yml` builds, verifies, deploys and smoke-tests. Watch the run; approve the environment prompt if configured.
-7. Verify live: `npm run test:live`, then the manual checklist below.
+0. **(Owner)** Rehearse on GitHub in a scratch repository, including what the site serves when the Pages source changes from a branch to GitHub Actions. Not done yet; it decides between the two transition variants.
+1. Preflight on the release commit: `npm run verify`, `test:repro`, `test:artifact`; record the digest and the known-good commit `c882895`.
+2. **(Owner)** Approval checkpoint: approver, release commit, rollback decision maker; push `rollback/placeholder`.
+3. **(Owner)** Ruleset on `main` (pull request, `CI / verify`, no force-push or deletion); restrict the `github-pages` environment to `main`.
+4. **(Owner)** Switch the Pages source to GitHub Actions at the point the rehearsal showed to be safe, keeping the custom domain and Enforce HTTPS. **Never merge source to `main` while the source is still a branch.**
+5. **(Owner authorisation)** Merge the reviewed pull request; `pages.yml` builds, verifies, deploys and smoke-tests.
+6. Verify live (`npm run test:live`, manual pass, Lighthouse on the live URL, domain, HTTPS, `www`).
 
 ## 5. Rollback
 
@@ -73,6 +75,9 @@ Note that the `ref` rollback only works for commits that contain the Astro build
 
 `node scripts/check-live.mjs` (routes, 404, redirects, robots, sitemap, hidden files); open every route at 390 and 1440 px; confirm hero images are AVIF and load; confirm `https://youssef.studio/work` redirects; confirm the certificate and Enforce HTTPS; run Lighthouse mobile on the live URL three times; compare `dist` file list with the live sitemap; submit the sitemap only after owner approval.
 
-## 7. What was tested locally and what was not
+## 7. What was tested locally and what was not (updated after M2.5)
 
 Tested: full `npm run verify` with `CI=1` (no-sandbox launch path), artifact allowlist with injected bad files, `check-live` against a Pages-like local server and read-only against production (it fails today, as expected), YAML parse of both workflows. **Not tested:** the workflows on GitHub-hosted runners (Chrome path and sandbox on `ubuntu-24.04`), the deploy action, environment rules, the Pages source switch, domain persistence, branch protection. These need a rehearsal repository or the owner's settings access.
+
+M2.5 added: byte-identical double builds, a local scratch-repository run of the whole pipeline including two deployments and a rollback by rebuilding the earlier commit, and Edge and Firefox checks of the rebased site under a sub-path. Still **not** tested: any GitHub-hosted run, the Pages source transition and what stays live during it, domain persistence, environment rules and branch protection.
+

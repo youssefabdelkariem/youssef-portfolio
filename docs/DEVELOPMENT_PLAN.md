@@ -94,3 +94,7 @@ Public pages now show only verified, completed projects: placeholders, planned a
 
 Site-wide audit completed and fixes applied ([M2_SITE_AUDIT](reviews/M2_SITE_AUDIT.md)). A build-artifact GitHub Pages deployment was prepared and tested locally on `chore/m2-pages-actions` without touching production; ADR 0006 stays Proposed. Remaining before any release: owner approvals, social-card and icon assets, rehearsal and approval of the deployment architecture, verified Pages and branch-protection settings, accepted or resolved ADRs, and the untested browsers and screen readers. Not merged, not deployed.
 
+## M2.5 deployment rehearsal (2026-10-16)
+
+Prepared and locally tested; **the GitHub-hosted rehearsal was not performed** (no authenticated access; scratch-repository approval, visibility and exposure under the user-site domain are owner decisions). Deployment branch `chore/m2-pages-actions` gained a reproducibility check, a rehearsal kit, optional launch-asset metadata and shorter descriptions. Findings: `main` is unprotected, the project is deployed from a branch today, and a project-site URL would be served under `yousseff.me`. Report: [M25_REHEARSAL](reviews/M25_REHEARSAL.md). ADRs unchanged; not merged, not deployed.
+

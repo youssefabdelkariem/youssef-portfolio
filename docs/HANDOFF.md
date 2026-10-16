@@ -19,6 +19,14 @@ Updated 2026-10-15 by Claude Code (acting lead engineer while Codex is unavailab
 | ADR statuses | 0001 Accepted; 0002-0006 Proposed (unchanged) |
 | Stack | Astro 7.3.8 static output, TypeScript strict, plain CSS; Node >= 22.12 |
 
+## M2.5 deployment rehearsal (2026-10-16)
+
+- **Status:** local preparation done; **no GitHub-hosted rehearsal yet**. Read [M25_REHEARSAL](reviews/M25_REHEARSAL.md) first, then [DEPLOYMENT_RUNBOOK](DEPLOYMENT_RUNBOOK.md) and `scripts/rehearsal/README.md`.
+- **Branch:** `chore/m2-pages-actions` (local; not pushed because pushing runs `ci.yml`, which is safe but should be approved). It also holds `rollback/placeholder` (local) for the emergency path.
+- **Facts established from public data:** Pages is deployed from branch `main` by the dynamic workflow; `main` has no protection or rulesets; the user site `youssefabdelkariem.github.io` uses `yousseff.me`, so a project-site rehearsal would appear at `yousseff.me/<repo>/`; `www.youssef.studio` is a CNAME to the user site.
+- **New:** `npm run test:repro`, optional `og-image.png`, `icon-192.png` and `apple-touch-icon.png` support in `BaseLayout` (tags appear only when the owner-approved file exists), shorter engineering descriptions, rehearsal kit, scratch repository at `C:\Dev\Website Portfolio\rehearsal\youssef-pages-rehearsal` (local only, synthetic media).
+- **Next for Codex or the owner:** get the scratch repository approved and run it, send the run URLs, verify Pages and protection settings, supply launch assets, then refine the cutover and request production authorisation. Do not push `chore/m2-pages-actions` to `main`, change Pages settings, merge or deploy.
+
 ## M2 site audit and launch preparation (2026-10-16)
 
 - **Report:** [M2_SITE_AUDIT](reviews/M2_SITE_AUDIT.md): findings, fixes, accessibility and performance evidence, ADR readiness, launch blockers.
