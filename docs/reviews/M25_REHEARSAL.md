@@ -17,7 +17,7 @@ State: `feat/m1b-engineering-racing` at `072ee22` (pushed), `chore/m2-pages-acti
 | Permissions | Workflow default `{}`; build `contents: read`; deploy `pages: write` and `id-token: write`; smoke `contents: read`. `persist-credentials: false` on every checkout |
 | Actions | Only GitHub-owned actions, pinned to commit SHAs (`checkout` v4, `setup-node` v4, `upload-pages-artifact` v3, `deploy-pages` v4, `upload-artifact` v4) |
 | Artifact construction | Only `dist/` is uploaded. `check-artifact` allowlist (negative-tested), prune step removes the media manifest, `CNAME` included from `public/` |
-| Reproducibility | New `npm run test:repro`: two consecutive builds give byte-identical output. Artifact digest `b26fedde...ae1fa5` for 59 files (local, committed tree, see also the clean-clone result below) |
+| Reproducibility | New `npm run test:repro`: two consecutive builds give byte-identical output. Artifact digest `b26fedde...ae1fa5` for 59 files (local, committed tree). A fresh clone of the committed branch with a fresh `npm ci` produced the same digest |
 | Environment | The workflow uses the existing `github-pages` environment |
 
 Risks found before the rehearsal (ordered):
