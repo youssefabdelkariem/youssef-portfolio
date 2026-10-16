@@ -81,7 +81,7 @@ Edge 155 runs the whole suite. Firefox 158 smoke test (puppeteer WebDriver BiDi)
 | 0003 routing | Proposed | Direct routes, trailing-slash redirect, real 404 and metadata verified locally and by `check-live` design | Ready once the owner approves the slugs; production behaviour verified only after deployment |
 | 0004 media | Proposed | AVIF q94 with JPEG fallback on approved assets, largest file 130 KB, WebP rejected on evidence, mobile hero 26 to 65 KB, fidelity checks in the media report | Ready for owner acceptance for stills; film delivery is undecided because no film is published |
 | 0005 collaboration | Proposed | Process followed in practice | Blocked: no named reviewer or integrator (Q11) |
-| 0006 build and deployment | Proposed | `chore/m2-pages-actions` with workflows, artifact allowlist and runbook, tested locally | Needs a rehearsal on a non-production repository and the owner's approval; see `docs/DEPLOYMENT_RUNBOOK.md` on that branch |
+| 0006 build and deployment | Proposed | `chore/m2-pages-actions` with workflows, artifact allowlist and runbook, tested locally | Needs a rehearsal on a non-production repository and the owner's approval; see [DEPLOYMENT_RUNBOOK](../DEPLOYMENT_RUNBOOK.md) on that branch |
 
 ## Launch blockers
 

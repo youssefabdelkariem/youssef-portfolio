@@ -7,7 +7,8 @@ import { serve } from './lib/serve.mjs';
 import { launchBrowser } from './lib/browser.mjs';
 
 const dist = path.resolve('dist');
-const hasMedia = fs.existsSync(path.join(dist, 'media/aurelia/manifest.json'));
+const manifestFile = path.resolve('public/media/aurelia/manifest.json'); // build input; pruned from dist
+const hasMedia = fs.existsSync(manifestFile) && fs.existsSync(path.join(dist, 'media/aurelia'));
 const problems = [];
 const rows = [];
 const { server, port } = await serve(dist);
@@ -21,7 +22,7 @@ const settle = (page) => page.evaluate(async () => {
 });
 
 try {
-  const manifest = hasMedia ? JSON.parse(fs.readFileSync(path.join(dist, 'media/aurelia/manifest.json'), 'utf8')) : null;
+  const manifest = hasMedia ? JSON.parse(fs.readFileSync(manifestFile, 'utf8')) : null;
   if (manifest) {
     const big = manifest.outputs.flatMap((o) => o.variants).filter((v) => v.bytes > 250 * 1024);
     rows.push(`derivatives: ${manifest.outputs.length} sets, ${manifest.outputs.flatMap((o) => o.variants).length} files, largest ${Math.round(Math.max(...manifest.outputs.flatMap((o) => o.variants).map((v) => v.bytes)) / 1024)} KB, over 250 KB: ${big.length}`);
