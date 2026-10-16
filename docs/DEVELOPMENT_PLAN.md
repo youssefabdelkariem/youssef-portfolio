@@ -82,3 +82,7 @@ The owner approved the hero selection: Shot 002 frame 1 on desktop, Shot 003 fra
 
 `/engineering/` and `/engineering/ibm-ai-racing/` are implemented on `feat/m1b-engineering-racing` (local, not pushed) after the workspace was moved out of Google Drive. Facts were read from the owner's racing repository and project history; the page is pending owner approval. Record: [M1B_ENGINEERING_RACING](reviews/M1B_ENGINEERING_RACING.md). Pushed to `origin/feat/m1b-engineering-racing` on 2026-10-16 at the owner's request; follow-up: provisional role wording, stored video cover, performance investigation. Not merged, not deployed.
 
+## Verified work only (2026-10-16)
+
+Public pages now show only verified, completed projects: placeholders, planned and reserved entries were removed (engineering gallery, homepage and `/work/` slots, Aurelia film block, placeholder plate). IBM AI Racing is the featured engineering project. Rule and enforcement: [CONTENT_PLAN](CONTENT_PLAN.md#verified-work-only-2026-10-16). Not merged, not deployed.
+

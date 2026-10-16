@@ -56,6 +56,9 @@ for (const r of [...routes, '/404.html']) {
   // in-page anchors resolve
   for (const m of html.matchAll(/href="#([^"]+)"/g)) if (!html.includes(`id="${m[1]}"`)) fail(`${r}: missing anchor #${m[1]}`);
   if (/<img(?![^>]*\balt=)/.test(html)) fail(`${r}: img without alt`);
+  // Verified work only: no planned, coming-soon or empty-slot project placeholders on any public page.
+  const text = html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, '').replace(/<[^>]+>/g, ' ');
+  for (const bad of [/coming soon/i, /planned,? not built/i, /\bempty slot\b/i, /project slot/i, /none verified yet/i, /appears here when/i, /reserved,? no project/i, /robotic arm/i, /not published yet/i]) if (bad.test(text)) fail(`${r}: placeholder wording ${bad}`);
 }
 for (const f of fs.readdirSync(path.join(dist, '_astro'), { recursive: true })) {
   const p = path.join(dist, '_astro', f);

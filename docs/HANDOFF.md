@@ -27,6 +27,10 @@ Updated 2026-10-15 by Claude Code (acting lead engineer while Codex is unavailab
 - **Untested:** Firefox, Safari, iOS, Android, real screen readers. Outbound links were checked for reachability by hand, not in CI.
 - **Codex:** resume on this branch, run `npm ci && npm run verify`, keep racing facts in `src/data/racing.ts` tied to the evidence table, and add nothing to the racing page that is not in a retained result file. Never present the video cover's drawn figures as data.
 
+### Verified work only (2026-10-16)
+
+Owner decision applied across the public site: only verified, completed projects are shown. Removed: the planned robotic arm, the reserved CAD slot and the engineering gallery; the empty project slots on the homepage and `/work/`; the Aurelia "playback not published yet" block; the placeholder technical plate on the homepage (now a real telemetry trace). `/engineering/` is a single-featured-project page; `/work/` shows Aurelia with a linked contents list. `check-dist` now fails on placeholder wording on any public page, and `check-racing` asserts one featured engineering project and working contents links. Remaining notices are for missing facts about finished work: About biography, Contact destination, Aurelia brief, role and credits. Unused components (`Media`, `ProjectCard`, `SlotCard`, `TechPlate`, `CaseHero`) were left in place because file deletion was not authorised in this session; delete them on approval.
+
 ### Workspace safety status (2026-10-16)
 
 - **Active workspace:** `C:\Dev\Website Portfolio`, outside Google Drive and OneDrive. No Drive log mentions it and the folder carries no sync markers. OneDrive is not running; its folder is not an ancestor of `C:\Dev`.

@@ -74,17 +74,6 @@
 .featured-body dl { margin: 0; display: grid; gap: var(--s-3); border-left: 1px solid var(--border-strong); padding-left: var(--s-5); }
 .featured-body dt { font: 600 0.6875rem/1 var(--font-body); letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-2); }
 .featured-body dd { margin: 4px 0 0; }
-.slots { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--s-6) clamp(var(--s-5), 3vw, var(--s-7)); align-items: start; }
-.slotframe { margin: 0; }
-.slotframe.wide { grid-column: 1 / span 7; }
-.slotframe.tall { grid-column: 8 / span 5; margin-top: clamp(0px, 6vw, 5rem); }
-.slotframe .box { aspect-ratio: 16 / 10; display: grid; place-items: center; text-align: center; padding: var(--s-4); border: 1px dashed var(--border-strong); border-radius: var(--r-2); color: var(--text-2); font: 500 0.6875rem/1.4 var(--font-body); letter-spacing: 0.12em; text-transform: uppercase; }
-.slotframe.tall .box { aspect-ratio: 4 / 5; }
-.slotframe figcaption { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; padding-top: 14px; }
-.slotframe .n { font: italic 400 1.125rem/1 var(--font-display); color: var(--accent); }
-.slotframe .t { font: 400 1.5rem/1.1 var(--font-display); }
-.slotframe .m { flex-basis: 100%; color: var(--text-2); font-size: 0.875rem; }
-.slots-note { margin: var(--s-5) 0 0; color: var(--text-2); font-size: 0.9375rem; }
 
 /* technical register (Direction B accents): engineering and racing teaser only */
 .tech { background: var(--surface); border-block: 1px solid var(--border); }
@@ -100,10 +89,17 @@
 .idx a { font: 400 clamp(1.25rem, 2.6vw, 1.75rem)/1.2 var(--font-display); color: var(--text); text-decoration: none; }
 .idx a::after { content: ''; position: absolute; inset: 0; }
 .idx .d { grid-column: 2; font: 500 0.75rem/1.4 var(--font-mono); letter-spacing: 0.04em; color: var(--text-2); text-transform: uppercase; }
-.techplate { margin: 0; color: var(--text-2); }
-.techplate svg { width: 100%; height: auto; border: 1px solid var(--border-strong); background: repeating-linear-gradient(0deg, transparent 0 23px, #1b1713 23px 24px), repeating-linear-gradient(90deg, transparent 0 23px, #1b1713 23px 24px), var(--canvas); }
-.techplate .dim { stroke: var(--signal); }
-.techplate figcaption { margin-top: var(--s-2); font: 500 0.6875rem/1.4 var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; }
+
+.slots-note { margin: var(--s-5) 0 0; color: var(--text-2); font-size: 0.9375rem; }
+
+/* VFX index: contents of the case study */
+.inside { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border-strong); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(var(--s-5), 5vw, var(--s-8)); }
+.inside li { display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); gap: var(--s-3); padding: var(--s-4) 0; border-bottom: 1px solid var(--border-strong); }
+.inside .n { font: italic 400 1.125rem/1.4 var(--font-display); color: var(--accent); }
+.inside a { font: 400 1.375rem/1.25 var(--font-display); color: var(--text); text-decoration: none; }
+.inside a:hover, .inside a:focus-visible { color: var(--accent); }
+.inside p { margin: var(--s-1) 0 0; color: var(--text-2); font-size: 0.9375rem; }
+@media (max-width: 860px) { .inside { grid-template-columns: 1fr; } }
 
 /* call to action */
 .cta-band { text-align: center; }
@@ -122,10 +118,7 @@
   .hero-copy .lede { margin-bottom: var(--s-5); }
   .intro, .tech-grid, .featured-body { grid-template-columns: 1fr; }
   .featured-body dl { border-left: 0; padding-left: 0; border-top: 1px solid var(--border-strong); padding-top: var(--s-4); }
-  .slots { grid-template-columns: 1fr; }
-  .slotframe.wide, .slotframe.tall { grid-column: 1; margin-top: 0; }
-  .slotframe.tall .box { aspect-ratio: 16 / 10; }
-  .site-footer .wrap { grid-template-columns: 1fr 1fr; }
+        .site-footer .wrap { grid-template-columns: 1fr 1fr; }
   .site-footer .wrap > div:first-child { grid-column: 1 / -1; }
 }
 
@@ -203,3 +196,11 @@
 @media (prefers-reduced-motion: reduce) {
   .vw-tabs label { transition: none; }
 }
+
+/* compact telemetry trace on the home page (same data as the engineering page) */
+.spark { margin: 0; display: grid; gap: var(--s-2); }
+.spark svg { width: 100%; height: auto; border: 1px solid var(--border-strong); background: var(--canvas); }
+.spark .base { stroke: var(--border-strong); stroke-width: 1; }
+.spark .area { fill: rgb(255 90 54 / .12); }
+.spark .trace { fill: none; stroke: var(--signal); stroke-width: 1.5; stroke-linejoin: round; }
+.spark figcaption { font: 500 0.6875rem/1.4 var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-2); }

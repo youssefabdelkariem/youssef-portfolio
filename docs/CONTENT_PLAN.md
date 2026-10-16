@@ -57,7 +57,7 @@ M1b delivers a verified manifest, representative Aurelia and VFX shot packets, a
 
 ## Implementation status of placeholders (2026-10-15)
 
-The provisional site renders every unverified item as a labelled placeholder (`Pending`, `Media`, `SlotCard` components); `src/data/projects.ts` carries a per-project readiness status, all currently `placeholder`. Public text asserts only owner-stated scope: no tools, role, credits, dates, results, metrics or contact address. The skill chips on About are discipline areas from the owner's scope, not proficiency claims. The racing page has structure for story, methodology, comparison table (no data), footage and source link; no repository URL is shown because none was supplied.
+Superseded for projects by [Verified work only](#verified-work-only-2026-10-16): unverified projects are no longer shown at all. `Pending` notices remain only for missing owner-supplied facts (About biography, contact destination, Aurelia brief and credits). Public text asserts only owner-stated scope and evidence-backed facts. The skill chips on About are discipline areas from the owner's scope, not proficiency claims.
 
 The owner holds a large local Aurelia project folder outside this repository. Nothing from it was read for content or copied; selecting derivatives, rights and credits is an M1b task under the gate above.
 
@@ -80,4 +80,8 @@ When items M-01 and M-02 in [CONTENT_MANIFEST](CONTENT_MANIFEST.md) are met, sup
 ## Engineering and racing content (2026-10-16)
 
 Racing facts on the page come from the owner's racing repository and project history, read read-only and pinned to a public commit; the evidence table is in [M1B_ENGINEERING_RACING](reviews/M1B_ENGINEERING_RACING.md). Engineering entries other than racing are labelled planned or reserved and carry no result, image or claim. The page states AI-assisted development and makes no placement, award, endorsement or rule-compliance claim. Role wording stays pending.
+
+## Verified work only (2026-10-16)
+
+Owner decision: the public site presents **only verified, completed work as portfolio projects**. No planned, "coming soon", reserved or empty-slot project appears on any public page. Today that is Aurelia (VFX Portfolio) and the IBM AI Racing League / TORCS controller (Engineering, the featured and only engineering project). The planned robotic arm and the reserved CAD slot were removed; the homepage and `/work/` empty slots, the Aurelia "film not published yet" block and the placeholder technical plate were removed with them. A project returns to the site only after its evidence passes the [gate](#evidence-and-rights-gate) and the owner approves it. `scripts/check-dist.mjs` fails the build if placeholder wording (coming soon, planned, empty slot, reserved, robotic arm and similar) appears on any public page. Not covered by the rule: notices for missing facts about a finished project (role, credits, biography, contact), which stay until the owner supplies them.
 

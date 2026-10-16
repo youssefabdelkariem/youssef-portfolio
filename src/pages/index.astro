@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Plate from '../components/Plate.astro';
-import TechPlate from '../components/TechPlate.astro';
+import LapSparkline from '../components/LapSparkline.astro';
 import { site } from '../data/site';
 import { homeMedia } from '../data/home';
 
@@ -59,39 +59,19 @@ const disciplines = [
     </div>
   </section>
 
-  <section class="section divided" aria-labelledby="work-title">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <h2 id="work-title">Selected VFX work</h2>
-        <a href="/work/">VFX Portfolio</a>
-      </div>
-      <div class="slots">
-        <figure class="slotframe wide reveal">
-          <div class="box" role="img" aria-label="Empty project slot, CGI. Nothing verified yet.">Project slot &middot; none verified yet</div>
-          <figcaption><span class="n">01</span><span class="t">CGI</span><span class="m">Appears here when the work is verified and approved.</span></figcaption>
-        </figure>
-        <figure class="slotframe tall reveal">
-          <div class="box" role="img" aria-label="Empty project slot, compositing. Nothing verified yet.">Project slot &middot; none verified yet</div>
-          <figcaption><span class="n">02</span><span class="t">Compositing and breakdowns</span><span class="m">Appears here when the work is verified and approved.</span></figcaption>
-        </figure>
-      </div>
-      <p class="slots-note">No further projects are shown until their material and credits are confirmed.</p>
-    </div>
-  </section>
-
   <section class="section tech" aria-labelledby="eng-title">
     <div class="wrap tech-grid">
       <div class="reveal">
         <p class="eyebrow">Engineering</p>
         <h2 id="eng-title">Engineering and autonomous racing</h2>
-        <p class="lede">The IBM AI Racing League / TORCS controller case study, with mechatronics and CAD projects added as they are verified.</p>
+        <p class="lede">The IBM AI Racing League / TORCS controller: a validated 66.284-second lap, measured telemetry and a full technical case study.</p>
         <ol class="idx">
-          <li><span class="n">01</span><a href="/engineering/">Engineering</a><span class="d">Mechatronics and CAD</span></li>
+          <li><span class="n">01</span><a href="/engineering/">Engineering</a><span class="d">Projects with evidence</span></li>
           <li><span class="n">02</span><a href="/engineering/ibm-ai-racing/">IBM AI Racing League / TORCS</a><span class="d">Autonomous racing &middot; validated 66.284 s lap</span></li>
         </ol>
       </div>
       <div class="reveal">
-        <TechPlate caption={'Placeholder plate \u00b7 not approved'} />
+        <LapSparkline />
       </div>
     </div>
   </section>

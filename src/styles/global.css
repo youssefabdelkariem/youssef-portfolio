@@ -81,8 +81,6 @@ a:hover { color: var(--accent-hover); text-decoration-color: currentColor; }
 .card h3 a { color: var(--text); text-decoration: none; }
 .card h3 a::after { content: ''; position: absolute; inset: 0; }
 .card p { color: var(--text-2); margin: 0; font-size: 0.9688rem; }
-.card.slot { border-style: dashed; background: transparent; }
-.card.slot:hover { border-color: var(--border-strong); }
 .meta { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-bottom: var(--s-1); }
 .tag { font-size: 0.8125rem; padding: 0.15rem 0.6rem; border: 1px solid var(--border-strong); border-radius: 999px; color: var(--text-2); }
 .tag.pending { border-color: var(--warn-line); color: var(--warn); }

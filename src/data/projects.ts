@@ -1,7 +1,6 @@
 /**
- * Project records. `status` mirrors the CONTENT_PLAN readiness gate:
- * 'placeholder' = no verified asset or claim yet; 'collected' = assets located and derivatives made, awaiting
- * the owner's approval. Nothing here is a verified credit or result.
+ * Project records. Only verified, completed work is listed (CONTENT_PLAN, "Verified work only"). `status` mirrors the
+ * readiness gate: 'collected' = assets located and derivatives made, awaiting the owner's approval.
  */
 import { picture, type Pic } from './media';
 
@@ -34,28 +33,3 @@ export const workProjects: Project[] = [
     pic: aureliaPic,
   },
 ];
-
-export const engineeringProjects: Project[] = [
-  {
-    slug: 'ibm-ai-racing',
-    title: 'IBM AI Racing League / TORCS',
-    discipline: 'Engineering',
-    href: '/engineering/ibm-ai-racing/',
-    summary: 'An autonomous Python racing controller for TORCS with a validated 66.284 s Corkscrew lap and zero damage. Method, development history, tests and source are in the case study.',
-    status: 'verified',
-    pic: null,
-  },
-];
-
-/** Empty slots shown on index pages so the layout is testable without inventing projects. */
-export const workSlots: { discipline: Discipline; note: string }[] = [
-  { discipline: 'CGI', note: 'Additional CGI / product-visualization project slot' },
-  { discipline: 'Compositing', note: 'Compositing / shot-breakdown project slot' },
-];
-
-export const engineeringCategories = [
-  { name: 'CAD', note: 'Mechanical design, assemblies and drawings' },
-  { name: 'Robotics / mechatronics', note: 'Electromechanical systems and control' },
-  { name: 'Programming', note: 'Software and tooling projects' },
-  { name: 'Simulation', note: 'Simulated systems with stated assumptions' },
-] as const;

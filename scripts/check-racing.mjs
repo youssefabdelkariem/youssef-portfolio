@@ -1,5 +1,5 @@
 // Content and rendering checks for /engineering/ and /engineering/ibm-ai-racing/ (FR-03, FR-04, Q03, Q04).
-// Guards the evidence rules: verified figures present, no placement/award language, planned work not shown as finished,
+// Guards the evidence rules: verified figures present, no placement/award language, no planned or reserved project entries,
 // chart drawn from the recorded data, outbound links limited to the two verified destinations.
 import fs from 'node:fs';
 import path from 'node:path';
@@ -61,10 +61,15 @@ try {
 
   // ---- engineering index rules
   const eng = await text('/engineering/');
-  for (const must of ['Planned, not built', 'Reserved, no project yet', 'Robotic arm', '66.284']) if (!eng.includes(must)) fail(`engineering page missing "${must}"`);
-  if (/robotic arm[^.]*\b(completed|finished|built and tested)\b/i.test(eng)) fail('robotic arm described as finished');
-  const entries = await page.evaluate(() => document.querySelectorAll('.entry').length);
-  if (entries !== 3) fail(`engineering entries ${entries}, expected 3`);
+  for (const must of ['IBM AI Racing League / TORCS controller', '66.284', 'What the case study covers', 'Verified tools']) if (!eng.includes(must)) fail(`engineering page missing "${must}"`);
+  const idx = await page.evaluate(() => ({ features: document.querySelectorAll('article.feature').length, contents: [...document.querySelectorAll('.contents a')].map((a) => a.getAttribute('href')), spark: !!document.querySelector('.spark .trace'), entries: document.querySelectorAll('.entry').length }));
+  if (idx.features !== 1) fail(`engineering page should have exactly one featured project, found ${idx.features}`);
+  if (idx.entries) fail('engineering page still has gallery entries');
+  if (!idx.spark) fail('engineering page lost the telemetry trace');
+  if (idx.contents.length !== 11) fail(`case-study contents links ${idx.contents.length}, expected 11`);
+  // every contents link must resolve to a heading id on the case-study page
+  await page.goto(base + '/engineering/ibm-ai-racing/', { waitUntil: 'networkidle0' });
+  for (const href of idx.contents) { const id = href.split('#')[1]; if (!(await page.$(`#${id}`))) fail(`contents link ${href} has no target`); }
   await page.close();
 } finally { await browser.close(); server.close(); }
 if (problems.length) { console.error('FAIL\n' + problems.map((p) => ' - ' + p).join('\n')); process.exit(1); }

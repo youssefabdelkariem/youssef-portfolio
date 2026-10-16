@@ -8,7 +8,6 @@ import { artDirected, picture } from '../../../data/media';
 // Media is looked up at build time. Without the local derivatives every slot renders a labelled placeholder.
 const hero = artDirected('hero', 'hero-m', 'Extreme close-up of a smartphone camera lens in a dark studio, with violet and blue reflections in the glass and a bright softbox reflected near the top.');
 const sizes = '(min-width: 900px) 50vw, 100vw';
-const film = picture('phone', 'The back of the Aurelia One smartphone floating in a dark studio, showing two camera lenses and the engraved AURELIA ONE mark.', '(min-width: 1200px) 1100px, 100vw');
 
 const renders = [
   { id: 'lenses', label: 'Camera module', where: 'Shot 002, frame 36', how: 'Final composite', alt: 'Back of the Aurelia One phone showing two camera lenses ringed in polished metal on a near-black body, with a soft grey studio background.',
@@ -86,16 +85,6 @@ const flow = [
       </div>
       <div class="reveal">
         <Pending what="Project brief pending.">The intent of the film, the owner's role and the team are added once confirmed. Nothing is claimed here beyond what the files show.</Pending>
-      </div>
-    </div>
-  </section>
-
-  <section class="section divided" aria-labelledby="film-title">
-    <div class="wrap">
-      <h2 id="film-title" class="reveal">The film</h2>
-      <div class="filmslot reveal">
-        <Plate label="Commercial playback" pic={film} ratio="16 / 9" framed />
-        <p class="film-note"><strong>Playback not published yet.</strong> The finished commercial is shown here once it is approved for release, with captions and an audio description or a text alternative.</p>
       </div>
     </div>
   </section>

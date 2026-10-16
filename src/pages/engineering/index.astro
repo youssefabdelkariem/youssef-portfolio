@@ -1,26 +1,22 @@
 ---
 import '../../styles/engineering.css';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import LapSparkline from '../../components/LapSparkline.astro';
 import { best, repo } from '../../data/racing';
-import { engineeringEntries, disciplines, verifiedTools } from '../../data/engineering';
+import { caseContents, demonstrates, verifiedTools } from '../../data/engineering';
 
 const fmtTime = (n: number) => n.toFixed(3);
-const status = {
-  verified: { chip: 'ok', label: 'Evidence checked' },
-  planned: { chip: 'plan', label: 'Planned, not built' },
-  empty: { chip: 'empty', label: 'Reserved, no project yet' },
-} as const;
 ---
 
-<BaseLayout title="Engineering" description="Mechatronics, CAD, programming and autonomous-systems work with evidence: the IBM AI Racing League / TORCS controller case study, plus planned and reserved projects clearly labelled as such.">
+<BaseLayout title="Engineering" description="Engineering work with evidence: the IBM AI Racing League / TORCS autonomous racing controller, with a validated 66.284-second lap, a measured telemetry trace and a full technical case study.">
   <section class="eng-hero" aria-labelledby="eng-title">
     <div class="grid-lines" aria-hidden="true"></div>
     <div class="wrap">
       <p class="t-eyebrow">Engineering</p>
-      <h1 id="eng-title">Mechatronics, code and <em>autonomous</em> systems</h1>
-      <p class="lede">Engineering work presented with the problem, the method, the tests and the limits. A project appears here only when there is evidence behind it; everything else is labelled planned or reserved.</p>
+      <h1 id="eng-title">Code, simulation and <em>autonomous</em> systems</h1>
+      <p class="lede">Engineering work presented with the problem, the method, the tests and the limits. Every figure on these pages comes from a retained result file or a public repository.</p>
       <ul class="quick" role="list">
-        <li><a class="btn" href="/engineering/ibm-ai-racing/">Racing case study</a></li>
+        <li><a class="btn" href="/engineering/ibm-ai-racing/">Read the case study</a></li>
         <li><a class="btn ghost" href="/work/">VFX Portfolio</a></li>
         <li><a class="btn ghost" href="/about/">About</a></li>
       </ul>
@@ -30,12 +26,11 @@ const status = {
   <section class="tsection" aria-labelledby="featured">
     <div class="wrap">
       <p class="sec-label reveal"><span>01</span><span>Featured project</span></p>
-      <h2 id="featured" class="visually-hidden">Featured technical project</h2>
-      <article class="feature reveal">
-        <div>
+      <article class="feature solo reveal">
+        <div class="solo-copy">
           <p class="t-eyebrow" style="margin-bottom: 0">Autonomous systems &middot; Simulation &middot; Programming</p>
-          <h3><a href="/engineering/ibm-ai-racing/">IBM AI Racing League / TORCS controller</a></h3>
-          <p>A Python controller that drives a TORCS race car around the Corkscrew circuit with no human input. It plans a racing line and a speed profile from the track geometry, follows them with feedback, and was tuned against the simulator's own lap time.</p>
+          <h2 id="featured"><a href="/engineering/ibm-ai-racing/">IBM AI Racing League / TORCS controller</a></h2>
+          <p>A Python controller that drives a TORCS race car around the Corkscrew circuit with no human input. It plans a racing line and a speed profile from the track geometry, follows them with feedback, and was tuned against the simulator&rsquo;s own lap time, from a first completed lap of 279.22 s to a validated {fmtTime(best.seconds)} s.</p>
           <p class="more">Read the case study &rarr;</p>
         </div>
         <dl class="keyfigs">
@@ -44,44 +39,34 @@ const status = {
           <div><dt>Native runs</dt><dd>5/5<small>identical result</small></dd></div>
           <div><dt>Source</dt><dd>Public<small>repo commit {repo.commit}</small></dd></div>
         </dl>
+        <div class="solo-trace"><LapSparkline /></div>
       </article>
     </div>
   </section>
 
-  <section class="tsection" aria-labelledby="gallery">
-    <div class="wrap">
-      <p class="sec-label reveal"><span>02</span><span>Project gallery</span></p>
-      <h2 id="gallery" class="reveal">Projects</h2>
-      <ol class="entries reveal">
-        {engineeringEntries.map((e, i) => (
-          <li class={`entry ${e.status === 'verified' ? '' : 'is-draft'}`}>
-            <span class="n">{String(i + 1).padStart(2, '0')}</span>
-            <div>
-              <div class="tags">
-                <span class={`chip ${status[e.status].chip}`}>{status[e.status].label}</span>
-                {e.disciplines.map((d) => <span class="chip">{d}</span>)}
-              </div>
-              <h3>{e.href ? <a href={e.href}>{e.title}</a> : e.title}</h3>
-              <p>{e.summary}</p>
-            </div>
-            <dl>
-              {e.facts.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
-            </dl>
-          </li>
+  <section class="tsection" aria-labelledby="inside">
+    <div class="wrap split">
+      <div class="lead reveal">
+        <p class="sec-label"><span>02</span><span>Inside the case study</span></p>
+        <h2 id="inside">What the case study covers</h2>
+        <p class="lede" style="font-size: 1rem">Eleven sections, from the challenge to the lessons, with measured telemetry, architecture, test runs and a link to the source.</p>
+      </div>
+      <ol class="contents reveal">
+        {caseContents.map(([id, label], i) => (
+          <li><span class="n">{String(i + 1).padStart(2, '0')}</span><a href={`/engineering/ibm-ai-racing/#${id}`}>{label}</a></li>
         ))}
       </ol>
     </div>
   </section>
 
-  <section class="tsection" aria-labelledby="disc">
+  <section class="tsection" aria-labelledby="demo">
     <div class="wrap">
-      <p class="sec-label reveal"><span>03</span><span>Technical disciplines</span></p>
-      <h2 id="disc" class="reveal">What the evidence covers</h2>
-      <div class="prose reveal"><p>Disciplines are listed with what this site can currently back up. An empty entry is not a hidden project; it means nothing has been verified yet.</p></div>
+      <p class="sec-label reveal"><span>03</span><span>What it demonstrates</span></p>
+      <h2 id="demo" class="reveal">Disciplines in the evidence</h2>
       <ul class="disc reveal">
-        {disciplines.map((d) => (
-          <li class={d.evidenced ? '' : 'none'}>
-            <span class={`chip ${d.evidenced ? 'ok' : 'empty'}`}>{d.evidenced ? 'Evidenced' : 'Not yet evidenced'}</span>
+        {demonstrates.map((d) => (
+          <li>
+            <span class="chip ok">Evidenced</span>
             <h3>{d.name}</h3>
             <p>{d.note}</p>
           </li>
@@ -94,7 +79,7 @@ const status = {
     <div class="wrap">
       <p class="sec-label reveal"><span>04</span><span>Software and tools</span></p>
       <h2 id="tools" class="reveal">Verified tools</h2>
-      <div class="prose reveal"><p>Only tools that appear in the racing project's files are listed. Anything else is left out until it can be shown.</p></div>
+      <div class="prose reveal"><p>Only tools that appear in the project&rsquo;s files are listed.</p></div>
       <div class="table-wrap reveal" role="region" aria-labelledby="tools-cap" tabindex="0">
         <table class="tooltable">
           <caption id="tools-cap">Tools and where they are evidenced</caption>

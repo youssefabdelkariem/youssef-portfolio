@@ -121,8 +121,7 @@ Not yet approved or supplied: role, credits, collaborators, the brief, the finis
 | Public repository link and YouTube link | URLs verified; channel ownership unconfirmed | HTTP check and platform metadata |
 | Development history 279.22 s to 66.284 s (13 rows) | Verified; two rows are on a tuned car file and labelled | Project history reports and retained result files |
 | Speed telemetry chart (314 samples) | Verified, already public | `evidence/lap_speed_profile.json` |
-| Robotic arm | Planned, not built; no evidence | Owner statement |
-| CAD project | Reserved slot, no evidence | None |
+| Robotic arm, CAD slot | Removed from the public site 2026-10-16 (verified work only); return only with completed, evidenced work | Owner decision |
 | Role | Provisional wording shown (independent developer with AI-assisted tools); pending owner approval | Owner decision 2026-10-16 |
 | Video cover image (stored, 640 and 960 px) | Used on owner's instruction; artwork is stylised, not footage; rights and drawn figures unverified | `public/media/racing/`, source `i.ytimg.com/vi/lp-c8A3NIJI/maxresdefault.jpg` |
 | Contest result, track-access eligibility, code licence | Pending owner; no claim made, no licence added | See report |

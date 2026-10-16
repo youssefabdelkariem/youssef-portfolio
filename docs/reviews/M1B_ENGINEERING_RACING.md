@@ -6,7 +6,7 @@ Date: 2026-10-16. Prepared by Claude Code on `feat/m1b-engineering-racing` (base
 
 | Route | Content |
 | --- | --- |
-| `/engineering/` | Intro, featured project, numbered project gallery (one verified, one planned, one reserved), technical disciplines with evidence status, verified tools, navigation to VFX and About |
+| `/engineering/` | Intro, one featured project with a telemetry trace, linked contents of the case study, disciplines the evidence supports, verified tools, navigation to VFX and About (revised 2026-10-16: planned and reserved entries removed) |
 | `/engineering/ibm-ai-racing/` | Eleven-part case study: hero and key figures, overview, environment, architecture diagram, steering, speed and braking with a measured speed chart, seven development stages, lap-time ladder, testing table, demonstration link, source link and disclosures, lessons |
 
 Code: `src/data/racing.ts` (verified facts), `src/data/racing-speed-profile.json` (telemetry), `src/data/engineering.ts`, components `SpeedChart`, `LapLadder`, `Architecture`, stylesheet `src/styles/engineering.css`, check `scripts/check-racing.mjs` (`npm run test:racing`, part of `npm run verify`). `scripts/check-dist.mjs` now allows exactly two outbound links with `rel="noopener"`. No new dependency, no JavaScript bundle, no external request.
@@ -72,7 +72,7 @@ The shared browser launcher now also stops any browser still using its temporary
 2. Confirm rights to the video cover artwork and decide whether the stylised cover should stay on the page.
 3. Resolve and record the track-XML runtime-access eligibility question with the organisers before promoting the page (compliance stays unverified).
 4. Racing code licence: none added, as instructed; the page says the repository has none.
-5. Robotic arm stays Planned; provide any CAD project for the reserved slot.
+5. Robotic arm and CAD slot were removed on 2026-10-16 (verified work only); send completed, evidenced projects to add.
 6. Approve the derived telemetry JSON living in this repository (it is already public in the racing repository).
 7. Old workspace copy: see the retirement checklist in the [handoff](../HANDOFF.md#engineering-and-ibm-racing-2026-10-16).
 
