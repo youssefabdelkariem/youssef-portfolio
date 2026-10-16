@@ -1,0 +1,89 @@
+---
+/**
+ * Poster-first film presentation for the Aurelia case study. Nothing is requested from any third party until the visitor presses
+ * play: the poster is a local image, the player (a <video> or a privacy-enhanced embed) is created on click, and without JavaScript the
+ * external watch link is the way to play. Only rendered when src/data/aurelia-film.json holds an approved film. Its CSS is inline in the rendered output (not imported) so that a dormant film leaves no trace in the page.
+ */
+import { picture } from '../data/media';
+import type { Film } from '../data/aurelia-film';
+
+interface Props { film: Film }
+const { film } = Astro.props;
+const pic = picture(film.posterId, film.posterAlt, '(min-width: 1200px) 1100px, 100vw');
+if (!pic) throw new Error(`Film poster derivative "${film.posterId}" is missing from public/media/aurelia/manifest.json; a film without an approved poster must not be published`);
+const host = film.playback.kind === 'youtube' ? 'YouTube' : film.playback.kind === 'vimeo' ? 'Vimeo' : new URL(film.externalUrl).hostname;
+const ld = {
+  '@context': 'https://schema.org', '@type': 'VideoObject', name: film.title, description: film.description, duration: film.duration,
+  uploadDate: film.uploadDate, thumbnailUrl: new URL(pic.large, Astro.site).href, contentUrl: film.playback.kind === 'file' ? new URL(film.playback.sources[0].src, Astro.site).href : undefined, embedUrl: film.playback.kind === 'file' ? undefined : film.externalUrl,
+};
+const embed = film.playback.kind === 'youtube' ? `https://www.youtube-nocookie.com/embed/${film.playback.id}?autoplay=1&rel=0&playsinline=1` : film.playback.kind === 'vimeo' ? `https://player.vimeo.com/video/${film.playback.id}?autoplay=1&dnt=1` : '';
+const data = { kind: film.playback.kind, embed, title: film.title, poster: pic.src, sources: film.playback.kind === 'file' ? film.playback.sources : [], captions: film.playback.kind === 'file' ? film.playback.captions ?? [] : [] };
+---
+
+<section class="section divided film-section" id="film" aria-labelledby="film-title">
+  <div class="wrap">
+    <h2 id="film-title" class="reveal">Watch the film</h2>
+    <div class="film reveal" style={`--ratio: ${film.width} / ${film.height}`}>
+      <div class="film-stage" data-film={JSON.stringify(data)}>
+        <picture>
+          {pic.sources.map((s) => <source type={s.type} srcset={s.srcset} sizes={s.sizes} />)}
+          <img src={pic.src} alt={film.posterAlt} width={pic.width} height={pic.height} loading="lazy" decoding="async" />
+        </picture>
+        <button type="button" class="film-play" hidden aria-label={`Play the film: ${film.title}`}><span aria-hidden="true"></span></button>
+      </div>
+      <p class="film-meta">{film.description}</p>
+      <p class="film-links">
+        <a href={film.externalUrl} rel="noopener noreferrer" target="_blank">Watch on {host}<span class="visually-hidden"> (opens in a new tab)</span></a>
+        {film.transcriptUrl && <a href={film.transcriptUrl}>Transcript</a>}
+      </p>
+      <details class="film-alt">
+        <summary>Text description of the film</summary>
+        <p>{film.accessibilityNote}</p>
+      </details>
+    </div>
+    <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+  </div>
+</section>
+
+<style is:inline>
+.film { max-width: 1100px; display: grid; gap: var(--s-4); }
+.film-stage { position: relative; aspect-ratio: var(--ratio, 16 / 9); background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--r-2); overflow: hidden; }
+.film-stage img, .film-stage .film-player { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; object-fit: cover; background: #000; }
+.film-play { position: absolute; left: 50%; top: 50%; width: 5rem; height: 5rem; margin: -2.5rem 0 0 -2.5rem; border-radius: 50%; border: 2px solid var(--text); background: rgb(11 10 9 / .72); cursor: pointer; transition: background-color 200ms var(--ease), transform 200ms var(--ease); }
+.film-play[hidden] { display: none; }
+.film-play:hover, .film-play:focus-visible { background: var(--accent); }
+.film-play span { position: absolute; left: 1.95rem; top: 1.45rem; border-style: solid; border-width: 1.05rem 0 1.05rem 1.6rem; border-color: transparent transparent transparent var(--text); }
+.film-play:hover span, .film-play:focus-visible span { border-left-color: var(--canvas); }
+.film-meta { margin: 0; color: var(--text-2); max-width: 70ch; }
+.film-links { margin: 0; display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-5); font-size: 0.9375rem; }
+.film-links a { display: inline-flex; align-items: center; min-height: 44px; }
+.film-alt summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; color: var(--text-2); font-size: 0.9375rem; }
+.film-alt p { margin: var(--s-2) 0 0; color: var(--text-2); max-width: 70ch; font-size: 0.9688rem; }
+@media (prefers-reduced-motion: reduce) { .film-play { transition: none; } }
+</style>
+
+<script is:inline>
+  (function () {
+    var stage = document.querySelector('.film-stage[data-film]');
+    if (!stage) return;
+    var d = JSON.parse(stage.getAttribute('data-film'));
+    var btn = stage.querySelector('.film-play');
+    btn.hidden = false;
+    btn.addEventListener('click', function () {
+      var el;
+      if (d.kind === 'file') {
+        el = document.createElement('video');
+        el.controls = true; el.autoplay = true; el.playsInline = true; el.preload = 'auto'; el.poster = d.poster;
+        el.setAttribute('aria-label', d.title);
+        d.sources.forEach(function (s) { var so = document.createElement('source'); so.src = s.src; so.type = s.type; el.appendChild(so); });
+        d.captions.forEach(function (c) { var t = document.createElement('track'); t.kind = 'captions'; t.src = c.src; t.srclang = c.srclang; t.label = c.label; if (c.default) t.default = true; el.appendChild(t); });
+      } else {
+        el = document.createElement('iframe');
+        el.src = d.embed; el.title = d.title; el.allow = 'autoplay; fullscreen; picture-in-picture'; el.allowFullscreen = true; el.referrerPolicy = 'strict-origin-when-cross-origin';
+      }
+      el.className = 'film-player';
+      stage.replaceChildren(el);
+      el.focus();
+    });
+  })();
+</script>

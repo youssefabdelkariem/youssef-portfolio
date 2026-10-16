@@ -7,6 +7,8 @@ const dist = path.resolve('dist');
 const routes = ['/', '/work/', '/work/aurelia/', '/engineering/', '/engineering/ibm-ai-racing/', '/about/'];
 // Outbound links the owner has verified (QA-11: plain links, nothing loaded from them).
 const outbound = new Set(['https://github.com/youssefabdelkariem/IBM-AI-Racing-League', 'https://youtu.be/lp-c8A3NIJI']);
+const filmCfg = JSON.parse(fs.readFileSync('src/data/aurelia-film.json', 'utf8'));
+if (filmCfg.film?.externalUrl) outbound.add(filmCfg.film.externalUrl);
 const problems = [];
 const fail = (m) => problems.push(m);
 const fileFor = (r) => path.join(dist, r.endsWith('/') ? r + 'index.html' : r);
@@ -59,7 +61,7 @@ for (const r of [...routes, '/404.html']) {
   if (/<img(?![^>]*\balt=)/.test(html)) fail(`${r}: img without alt`);
   // Verified work only: no planned, coming-soon or empty-slot project placeholders on any public page.
   const text = html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, '').replace(/<[^>]+>/g, ' ');
-  for (const bad of [/coming soon/i, /planned,? not built/i, /\bempty slot\b/i, /project slot/i, /none verified yet/i, /appears here when/i, /reserved,? no project/i, /robotic arm/i, /not published yet/i, /pending confirmation/i, /biography pending/i, /credits pending/i, /in preparation/i, /placeholder/i, /not approved/i, /pending owner approval/i, /provisional/i, /role wording/i]) if (bad.test(text)) fail(`${r}: placeholder wording ${bad}`);
+  for (const bad of [/coming soon/i, /planned,? not built/i, /\bempty slot\b/i, /project slot/i, /none verified yet/i, /appears here when/i, /reserved,? no project/i, /robotic arm/i, /not published yet/i, /pending confirmation/i, /biography pending/i, /credits pending/i, /in preparation/i, /placeholder/i, /not approved/i, /pending owner approval/i, /provisional/i, /role wording/i, /\bEUI\b/, /egypt university/i, /universit/i, /informatics/i]) if (bad.test(text)) fail(`${r}: placeholder wording ${bad}`);
 }
 for (const f of fs.readdirSync(path.join(dist, '_astro'), { recursive: true })) {
   const p = path.join(dist, '_astro', f);

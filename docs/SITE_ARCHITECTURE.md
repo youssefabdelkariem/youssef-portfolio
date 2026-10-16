@@ -48,6 +48,7 @@ See [ADR 0002](adr/0002-tech-stack.md) for the candidate React `prerenderToNodeS
 | --- | --- |
 | `/` | Cinematic introduction and selected work; FR-06, QA-17 |
 | `/work/` | Dedicated CGI/VFX index, Aurelia prominent, reel access; FR-01a, FR-01c |
+| `/work/aurelia/walkthrough/` | **Not built.** Internal draft route injected only when `src/data/walkthrough-publication.json` is approved (or in a local `build:preview`); excluded from `dist/`, the sitemap, navigation and page text until then; FR-01b |
 | `/work/aurelia/` | Flagship CGI case study; FR-02, FR-01b |
 | `/work/<approved-slug>/` | Other evidenced CGI/VFX studies and shot breakdowns; FR-01b |
 | `/engineering/` | Engineering index with one featured project (IBM AI Racing, with a telemetry trace and key figures), a linked contents list of its case study, the disciplines the evidence supports and verified tools; FR-03. Verified work only. Implemented |
@@ -85,3 +86,8 @@ Still Proposed and not deployed. `/` now implements the approved hybrid identity
 ## Media and portfolio pages (feature branch `feat/m1b-aurelia-portfolio`, 2026-10-15)
 
 Still Proposed and not deployed. `/work/` and `/work/aurelia/` are implemented. Derivatives are looked up at build time from `public/media/aurelia/manifest.json` by `src/data/media.ts`, and the owner-approved set is committed there. If the folder or an entry is missing, every picture is null and pages render labelled placeholders, so the site builds and passes `npm run verify` either way. Tooling: `scripts/aurelia/` (derivative pipeline, sync). Checks: `npm run test:aurelia` verifies AVIF decoding, the hero source at the 560 px breakpoint, the render-pass viewer from the keyboard, and the placeholder-only mode.
+
+## M3 additions (2026-10-16)
+
+`FilmPlayer` (dormant, `src/data/aurelia-film.json`), `src/walkthrough/` with `walkthrough.json` and the publication gate, `aurelia-passes.ts` shared by the case study and the walkthrough, `LapSparkline`. New checks: `test:publication`, `test:film`. Optional launch assets (`og-image.png`, `icon-192.png`, `apple-touch-icon.png`) are emitted as tags only when the approved file exists in `public/`.
+

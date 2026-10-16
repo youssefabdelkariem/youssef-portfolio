@@ -145,3 +145,12 @@ These were visible as "pending" notices on the site until 2026-10-16. They are t
 | Racing video cover rights, rule-compliance question, code licence | `/engineering/ibm-ai-racing/` | See [M1B_ENGINEERING_RACING](reviews/M1B_ENGINEERING_RACING.md) | Q04, Q15 |
 | Launch language, OG image, site licence | whole site | Decisions | Q05, Q15, QA-14, QA-16 |
 
+## K. Dormant Aurelia content and launch assets (2026-10-16)
+
+| Item | State | Needed from the owner | Where |
+| --- | --- | --- | --- |
+| Finished commercial | Component ready, `film: null`, dormant | Final film (1080p MP4 or platform URL), approved poster frame, title, description, text description, transcript or audio description, captions where needed, approver and date | [AURELIA_PUBLICATION](AURELIA_PUBLICATION.md) |
+| Walkthrough `/work/aurelia/walkthrough/` | Internal draft, 7 of 13 sections written from verified facts, publication off | Explanations for overview, planning, camera, After Effects and Premiere Pro finishing (nothing claimed until confirmed), challenges and results; approved diagrams and comparisons; final approval | `src/data/walkthrough.json` |
+| Social card, favicon, touch and PNG icons | Three directions previewed locally, direction A recommended | Choice of direction and approval of the final assets | `scripts/branding/make-previews.mjs`, M3 report |
+| Institutional references | Excluded from public pages by policy and by a build check | Written change of the instruction if ever wanted | CONTENT_PLAN |
+

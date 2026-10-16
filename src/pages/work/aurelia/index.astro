@@ -3,6 +3,10 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Plate from '../../../components/Plate.astro';
 import BreakdownViewer from '../../../components/BreakdownViewer.astro';
 import { artDirected, picture } from '../../../data/media';
+import { passes } from '../../../data/aurelia-passes';
+import FilmPlayer from '../../../components/FilmPlayer.astro';
+import { film } from '../../../data/aurelia-film';
+import { published as walkthroughPublished } from '../../../data/walkthrough';
 
 // Media is looked up at build time. Without the local derivatives every slot renders a labelled placeholder.
 const hero = artDirected('hero', 'hero-m', 'Extreme close-up of a smartphone camera lens in a dark studio, with violet and blue reflections in the glass and a bright softbox reflected near the top.');
@@ -19,18 +23,7 @@ const renders = [
     note: 'Speaker holes and the USB-C opening on a bright metal edge. This still has no compositing or grade.' },
 ].map((r) => ({ ...r, pic: picture(r.id, r.alt, sizes) }));
 
-const passes = [
-  { id: 'comp', label: 'Final composite', pic: picture('lenses', 'Final composite of the camera module, shot 002 frame 36.', '(min-width: 900px) 70vw, 100vw'),
-    caption: 'The composited frame: the denoised beauty with a local gain on the engraved lettering, a highlight roll-off and the AgX display transform.' },
-  { id: 'noisy', label: 'Undenoised render', pic: picture('pass-noisy', 'The same frame before denoising, through the same display transform.', '(min-width: 900px) 70vw, 100vw'),
-    caption: 'The Cycles "Noisy Image" pass at 512 samples, before denoising, shown through the same display transform.' },
-  { id: 'glossy', label: 'Glossy', pic: picture('pass-glossy', 'Glossy lighting pass: the phone body and lens rings lit, the background black.', '(min-width: 900px) 70vw, 100vw'),
-    caption: 'Direct plus indirect glossy lighting. It shows where the lens rings, bevels and glass catch the studio lights.' },
-  { id: 'transmission', label: 'Transmission', pic: picture('pass-transmission', 'Transmission lighting pass: light passing through the lens glass.', '(min-width: 900px) 70vw, 100vw'),
-    caption: 'Direct plus indirect transmission: light that passes through the lens glass and the flash window.' },
-  { id: 'normal', label: 'Surface normals', pic: picture('pass-normal', 'Surface normal pass mapped to colour, showing the orientation of the body and lenses.', '(min-width: 900px) 70vw, 100vw'),
-    caption: 'The normal pass mapped to colour. It records the orientation of every surface and is a data pass, not a colour-managed image.' },
-];
+
 
 const specs = [
   ['Renderer', 'Cycles, in Blender 5.2.2 LTS (from the EXR metadata)'],
@@ -71,8 +64,16 @@ const flow = [
         <div><dt>Format</dt><dd>3840 x 2160, 24 fps</dd></div>
         <div><dt>Built with</dt><dd>Blender (Cycles), Nuke</dd></div>
       </dl>
+      {(film || walkthroughPublished) && (
+        <div class="actions" style="margin-top: var(--s-5)">
+          {film && <a class="btn" href="#film">Watch the film</a>}
+          {walkthroughPublished && <a class={film ? 'btn ghost' : 'btn'} href="/work/aurelia/walkthrough/">Explore the process</a>}
+        </div>
+      )}
     </div>
   </section>
+
+  {film && <FilmPlayer film={film} />}
 
   <section class="section divided" aria-labelledby="intro">
     <div class="wrap">

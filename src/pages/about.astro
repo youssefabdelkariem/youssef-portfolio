@@ -1,11 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-// Discipline areas are the owner's stated scope (PROJECT_VISION). They are areas of work, not proficiency claims.
+// Discipline areas are the owner's stated scope (PROJECT_VISION). Mechatronics and CAD are areas of study and skill, not completed projects.
 const areas = [
   { name: 'CGI and VFX', items: ['3D rendering', 'Product visualization', 'Compositing', 'Shot breakdowns'] },
-  { name: 'Engineering', items: ['Mechatronics', 'CAD'] },
-  { name: 'Autonomy and software', items: ['Autonomous racing controllers (TORCS)'] },
+  { name: 'Engineering: areas of study and skill', items: ['Mechatronics', 'CAD'] },
+  { name: 'Autonomy and software', items: ['Autonomous racing controller for TORCS'] },
 ];
 ---
 
@@ -19,7 +19,7 @@ const areas = [
   <section class="section" style="padding-top:0" aria-labelledby="areas">
     <div class="wrap cols">
       <div>
-        <h2 id="areas">Areas of work</h2>
+        <h2 id="areas">Disciplines</h2>
         {areas.map((g) => (
           <div style="margin-bottom:1.5rem">
             <h3>{g.name}</h3>

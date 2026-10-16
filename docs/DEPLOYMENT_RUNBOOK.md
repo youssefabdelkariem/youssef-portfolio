@@ -92,3 +92,7 @@ M2.5 added: byte-identical double builds, a local scratch-repository run of the 
 
 Trailing-slash 301 for directory routes, custom 404 with status 404, correct MIME types for HTML, CSS, WOFF2, AVIF, JPEG and SVG, gzip for text, `Cache-Control: max-age=600`, no directory listings, and none of the files outside the artifact reachable. About two minutes from push to the new version being live. Because production has its own custom domain, expect these on `youssef.studio` too; `check-live` verifies them after the real deployment. Differences to expect: no path prefix, `CNAME`, a sitemap and `robots.txt`.
 
+## 9. Final integration and cutover plan (M3)
+
+The ordered procedure is section 4 and [M25_REHEARSAL, section 5](reviews/M25_REHEARSAL.md#5-production-architecture-review-and-cutover-proposal); the M3 readiness review ([M3_LAUNCH_READINESS](reviews/M3_LAUNCH_READINESS.md)) adds the release checklist and ADR recommendations. Integration baseline for the release pull request: `chore/m2-pages-actions` plus the approved `feat/m3-launch-readiness`, merged only after the Pages source is GitHub Actions. New guards in the pipeline: `check-publication` (unpublished walkthrough and film excluded), the artifact allowlist (walkthrough paths and film files rejected until approved), `check-live` (walkthrough URL must return 404 until published) and the university and placeholder wording bans in `check-dist`.
+

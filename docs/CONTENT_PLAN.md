@@ -89,3 +89,11 @@ Owner decision: the public site presents **only verified, completed work as port
 
 Owner decision: public pages state only verified facts. The "pending confirmation" and "placeholder" notices on About, Contact and Aurelia were removed without replacement text. About is limited to the owner's confirmed scope. The Contact page was removed because no verified, owner-approved contact destination exists (no email, form or profile link is invented); it returns when one is supplied. The outstanding facts and approvals are tracked in [CONTENT_MANIFEST](CONTENT_MANIFEST.md#j-outstanding-facts-and-approvals-not-shown-publicly), not on the site. `scripts/check-dist.mjs` fails on "pending confirmation", "biography pending", "credits pending" and "in preparation". The racing page's approval-status labels were removed on 2026-10-16 (M2 audit); its role row states only what the repository README says, and the owner's provisional "independent developer" wording is held in [CONTENT_MANIFEST](CONTENT_MANIFEST.md#j-outstanding-facts-and-approvals-not-shown-publicly) until approved.
 
+## No institutional references in public case studies (2026-10-16)
+
+Owner instruction: no public case study mentions or implies a university, institution or assignment. The racing page's context row was removed, and `check-dist` fails on "EUI", "Egypt University", "university" and "informatics" on any public page. Case studies describe technical objectives, decisions, methods and results. Provenance that is accurate but not for publication (such as the programme context in the racing repository README) stays in internal documentation. Mechatronics and CAD appear on About as areas of study and skill, never as completed projects.
+
+## Dormant content: the film and the walkthrough (2026-10-16)
+
+The finished Aurelia commercial and the walkthrough are prepared but not public: no section, link, sitemap entry, metadata or placeholder text exists until the owner approves them. Procedure and gates: [AURELIA_PUBLICATION](AURELIA_PUBLICATION.md).
+

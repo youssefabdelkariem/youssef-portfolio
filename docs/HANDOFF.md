@@ -19,6 +19,15 @@ Updated 2026-10-15 by Claude Code (acting lead engineer while Codex is unavailab
 | ADR statuses | 0001 Accepted; 0002-0006 Proposed (unchanged) |
 | Stack | Astro 7.3.8 static output, TypeScript strict, plain CSS; Node >= 22.12 |
 
+## M3 launch readiness (2026-10-16)
+
+- **Branch:** `feat/m3-launch-readiness` in `worktrees/m3-launch`, based on `chore/m2-pages-actions` (`a9c4b65`); local, not pushed. Read [M3_LAUNCH_READINESS](reviews/M3_LAUNCH_READINESS.md) and [AURELIA_PUBLICATION](AURELIA_PUBLICATION.md).
+- **Policy changes:** no institutional references in public case studies (enforced by `check-dist`); About calls Mechatronics and CAD areas of study and skill; no planned or pending content; no contact method.
+- **Dormant by design:** the film component (`aurelia-film.json` is `{ "film": null }`) and the walkthrough (`walkthrough-publication.json` is `published: false`). Do not add public links, nav entries, sitemap entries or "coming soon" text for either; turn them on only with the owner's approval and the procedure in AURELIA_PUBLICATION. `npm run test:publication` and `npm run test:film` guard this.
+- **Branding:** three directions previewed in `previews/m3-branding` (local); direction A recommended; no asset committed.
+- **Verification:** `CI=1 npm run verify` passes; Edge and Firefox rehearsal checks pass; Lighthouse 100 on all routes (one 99). Safari, iOS, Android and screen readers untested.
+- **Codex review focus:** the publication gates, the film component's no-third-party-before-play behaviour, the walkthrough facts against their sources, the university ban, and the cutover ordering. Do not merge, change Pages settings or accept ADRs without the owner.
+
 ## M2.5 deployment rehearsal (2026-10-16)
 
 - **Status:** the Pages deployment and rollback were rehearsed on GitHub in the private scratch repository `youssef-pages-rehearsal` (seven deployments, two repeatable revert rollbacks, deployed-site checks in Edge; run IDs in [M25_REHEARSAL, section 3b](reviews/M25_REHEARSAL.md#3b-github-pages-deployment-and-rollback-rehearsal-2026-10-16)). Not yet done: rollback by `workflow_dispatch` with `ref` (owner click), the Pages source transition test, Firefox against the live URL, verified production settings.

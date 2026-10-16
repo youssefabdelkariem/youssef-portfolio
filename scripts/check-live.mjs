@@ -22,7 +22,7 @@ const robots = await fetch(base + '/robots.txt'); if (robots.status !== 200) fai
 const sm = await fetch(base + '/sitemap-0.xml'); const smText = await sm.text();
 if (sm.status !== 200 || !smText.includes('https://youssef.studio/engineering/ibm-ai-racing/')) fail('sitemap');
 if (smText.includes('/404')) fail('sitemap lists 404');
-for (const gone of ['/contact/', '/docs/', '/src/', '/README.md', '/AGENTS.md', '/CLAUDE.md', '/package.json', '/media/aurelia/manifest.json']) { const g = await fetch(base + gone); if (g.status !== 404) fail(`${gone} should not be served (status ${g.status})`); }
+for (const gone of ['/contact/', '/docs/', '/src/', '/README.md', '/AGENTS.md', '/CLAUDE.md', '/package.json', '/media/aurelia/manifest.json', '/work/aurelia/walkthrough/']) { const g = await fetch(base + gone); if (g.status !== 404) fail(`${gone} should not be served (status ${g.status})`); }
 if (base.startsWith('https://')) {
   const http = await fetch(base.replace('https://', 'http://') + '/', { redirect: 'manual' });
   if (![301, 308].includes(http.status) || !(http.headers.get('location') ?? '').startsWith('https://')) fail(`http does not redirect to https (${http.status})`);

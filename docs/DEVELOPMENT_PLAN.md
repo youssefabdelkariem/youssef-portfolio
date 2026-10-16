@@ -98,3 +98,7 @@ Site-wide audit completed and fixes applied ([M2_SITE_AUDIT](reviews/M2_SITE_AUD
 
 Prepared and locally tested; the deployment branch and the rollback branch were pushed on 2026-10-16 and a GitHub-hosted `CI` run of the full verification suite passed. The Pages deployment and rollback were then rehearsed in the owner's private scratch repository (seven deployments, two repeatable rollbacks, Node 24 action pins); the source transition, the dispatch-by-ref rollback and production settings remain open. Deployment branch `chore/m2-pages-actions` gained a reproducibility check, a rehearsal kit, optional launch-asset metadata and shorter descriptions. Findings: `main` is unprotected, the project is deployed from a branch today, and a project-site URL would be served under `yousseff.me`. Report: [M25_REHEARSAL](reviews/M25_REHEARSAL.md). ADRs unchanged; not merged, not deployed.
 
+## M3 final branding, content and Aurelia expansion (2026-10-16)
+
+`feat/m3-launch-readiness` (local, based on `chore/m2-pages-actions`): university references removed and banned from public pages, About reworded, a dormant poster-first film component, an internal draft Aurelia walkthrough behind a publication gate with tests proving its exclusion, three branding directions (A recommended, previews only), final readiness review. Verdict READY WITH CONDITIONS; report: [M3_LAUNCH_READINESS](reviews/M3_LAUNCH_READINESS.md), procedure: [AURELIA_PUBLICATION](AURELIA_PUBLICATION.md). Not merged, not deployed, not pushed.
+
