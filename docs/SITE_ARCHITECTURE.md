@@ -50,9 +50,9 @@ See [ADR 0002](adr/0002-tech-stack.md) for the candidate React `prerenderToNodeS
 | `/work/` | Dedicated CGI/VFX index, Aurelia prominent, reel access; FR-01a, FR-01c |
 | `/work/aurelia/` | Flagship CGI case study; FR-02, FR-01b |
 | `/work/<approved-slug>/` | Other evidenced CGI/VFX studies and shot breakdowns; FR-01b |
-| `/engineering/` | Mechatronics/CAD selection; FR-03 |
+| `/engineering/` | Engineering index: featured project, numbered gallery (verified, planned and reserved entries), disciplines, verified tools; FR-03. Implemented |
 | `/engineering/<approved-slug>/` | Individual engineering evidence; FR-03 |
-| `/engineering/ibm-ai-racing/` | Dedicated IBM AI Racing League / TORCS story; FR-04, Q08 |
+| `/engineering/ibm-ai-racing/` | Dedicated IBM AI Racing League / TORCS case study with a measured speed chart, lap ladder and run table drawn at build time from `src/data/racing*`; FR-04, Q08. Implemented, pending owner approval. Two verified outbound links (GitHub, YouTube), no embeds |
 | `/about/`, `/contact/` | Separate biography/contact destinations; FR-05a, FR-05b |
 
 Racing is engineering work with an optional bonus label in navigation; the URL should not encode temporary editorial framing. All slugs await owner review. Keep `/` working. Prefer `route/index.html`, normal links and a real `404.html`; no opaque SPA fallback redirects. Cross-document transitions are optional enhancements. [ADR 0003](adr/0003-routing.md) defines route tests.

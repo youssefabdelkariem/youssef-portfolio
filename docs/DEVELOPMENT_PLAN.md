@@ -78,3 +78,7 @@ Four-way hero comparison done and recorded in [M1B_HERO_SELECTION](reviews/M1B_H
 
 The owner approved the hero selection: Shot 002 frame 1 on desktop, Shot 003 frame 1 on phones (homepage only; the case study keeps Shot 002 frame 1), the whole-phone Shot 002 frame 72 as featured plate, and the existing selected renders and five-stage viewer. The 40 approved derivatives (11 sets, 1.9 MB, largest 130 KB) are committed under `public/media/aurelia/`. Stills from Shots 001 and 005 stay labelled as non-final. Record: [CONTENT_MANIFEST](CONTENT_MANIFEST.md) section H. Not merged, not deployed, not published as a film.
 
+## M1b engineering and racing (updated 2026-10-16)
+
+`/engineering/` and `/engineering/ibm-ai-racing/` are implemented on `feat/m1b-engineering-racing` (local, not pushed) after the workspace was moved out of Google Drive. Facts were read from the owner's racing repository and project history; the page is pending owner approval. Record: [M1B_ENGINEERING_RACING](reviews/M1B_ENGINEERING_RACING.md). Not merged, not deployed.
+

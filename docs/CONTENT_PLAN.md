@@ -76,3 +76,8 @@ When items M-01 and M-02 in [CONTENT_MANIFEST](CONTENT_MANIFEST.md) are met, sup
 ## Aurelia and VFX portfolio content status (2026-10-15)
 
 `/work/` and `/work/aurelia/` now carry draft content built only from evidence in the render files and project notes: five stills, a five-stage render-pass breakdown (Shot 002, frame 36), the rendering and compositing workflow, specifications and shot table, lighting and material notes from the scene's Cryptomatte manifests, and a film slot that states playback is not published. Role, credits, collaborators, music and the brief remain "Pending confirmation", and no achievement or client claim is made. Selection and provenance: [M1B_AURELIA_MEDIA](reviews/M1B_AURELIA_MEDIA.md); items awaiting the owner: [CONTENT_MANIFEST](CONTENT_MANIFEST.md#f-aurelia-render-archive-and-derivatives-2026-10-15-update).
+
+## Engineering and racing content (2026-10-16)
+
+Racing facts on the page come from the owner's racing repository and project history, read read-only and pinned to a public commit; the evidence table is in [M1B_ENGINEERING_RACING](reviews/M1B_ENGINEERING_RACING.md). Engineering entries other than racing are labelled planned or reserved and carry no result, image or claim. The page states AI-assisted development and makes no placement, award, endorsement or rule-compliance claim. Role wording stays pending.
+

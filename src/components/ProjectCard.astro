@@ -13,6 +13,7 @@ const { project } = Astro.props;
       {project.flagship && <span class="tag">Flagship</span>}
       {project.status === 'placeholder' && <span class="tag pending">Content pending</span>}
       {project.status === 'collected' && <span class="tag pending">Draft, pending approval</span>}
+      {project.status === 'verified' && <span class="tag pending">Evidence checked, pending approval</span>}
     </div>
     <h3><a href={project.href}>{project.title}</a></h3>
     <p>{project.summary}</p>

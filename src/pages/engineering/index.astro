@@ -1,33 +1,120 @@
 ---
+import '../../styles/engineering.css';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ProjectCard from '../../components/ProjectCard.astro';
-import SlotCard from '../../components/SlotCard.astro';
-import { engineeringProjects, engineeringCategories } from '../../data/projects';
+import { best, repo } from '../../data/racing';
+import { engineeringEntries, disciplines, verifiedTools } from '../../data/engineering';
+
+const fmtTime = (n: number) => n.toFixed(3);
+const status = {
+  verified: { chip: 'ok', label: 'Evidence checked' },
+  planned: { chip: 'plan', label: 'Planned, not built' },
+  empty: { chip: 'empty', label: 'Reserved, no project yet' },
+} as const;
 ---
 
-<BaseLayout title="Engineering" description="Mechatronics, CAD, robotics, programming and simulation projects, including the IBM AI Racing League / TORCS case study.">
-  <div class="wrap page-title">
-    <p class="eyebrow">Engineering</p>
-    <h1>Mechatronics, CAD and autonomy</h1>
-    <p class="lede">Engineering work presented with problem, constraints, individual contribution, tests and limits. Projects appear only with supporting evidence.</p>
-  </div>
-
-  <section class="section" style="padding-top:0" aria-labelledby="projects">
+<BaseLayout title="Engineering" description="Mechatronics, CAD, programming and autonomous-systems work with evidence: the IBM AI Racing League / TORCS controller case study, plus planned and reserved projects clearly labelled as such.">
+  <section class="eng-hero" aria-labelledby="eng-title">
+    <div class="grid-lines" aria-hidden="true"></div>
     <div class="wrap">
-      <h2 id="projects">Projects</h2>
-      <div class="grid">
-        {engineeringProjects.map((p) => <ProjectCard project={p} />)}
+      <p class="t-eyebrow">Engineering</p>
+      <h1 id="eng-title">Mechatronics, code and <em>autonomous</em> systems</h1>
+      <p class="lede">Engineering work presented with the problem, the method, the tests and the limits. A project appears here only when there is evidence behind it; everything else is labelled planned or reserved.</p>
+      <ul class="quick" role="list">
+        <li><a class="btn" href="/engineering/ibm-ai-racing/">Racing case study</a></li>
+        <li><a class="btn ghost" href="/work/">VFX Portfolio</a></li>
+        <li><a class="btn ghost" href="/about/">About</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="tsection" aria-labelledby="featured">
+    <div class="wrap">
+      <p class="sec-label reveal"><span>01</span><span>Featured project</span></p>
+      <h2 id="featured" class="visually-hidden">Featured technical project</h2>
+      <article class="feature reveal">
+        <div>
+          <p class="t-eyebrow" style="margin-bottom: 0">Autonomous systems &middot; Simulation &middot; Programming</p>
+          <h3><a href="/engineering/ibm-ai-racing/">IBM AI Racing League / TORCS controller</a></h3>
+          <p>A Python controller that drives a TORCS race car around the Corkscrew circuit with no human input. It plans a racing line and a speed profile from the track geometry, follows them with feedback, and was tuned against the simulator's own lap time.</p>
+          <p class="more">Read the case study &rarr;</p>
+        </div>
+        <dl class="keyfigs">
+          <div><dt>Best lap</dt><dd>{fmtTime(best.seconds)}<small>s, validated</small></dd></div>
+          <div><dt>Damage</dt><dd>0<small>every counted run</small></dd></div>
+          <div><dt>Native runs</dt><dd>5/5<small>identical result</small></dd></div>
+          <div><dt>Source</dt><dd>Public<small>repo commit {repo.commit}</small></dd></div>
+        </dl>
+      </article>
+    </div>
+  </section>
+
+  <section class="tsection" aria-labelledby="gallery">
+    <div class="wrap">
+      <p class="sec-label reveal"><span>02</span><span>Project gallery</span></p>
+      <h2 id="gallery" class="reveal">Projects</h2>
+      <ol class="entries reveal">
+        {engineeringEntries.map((e, i) => (
+          <li class={`entry ${e.status === 'verified' ? '' : 'is-draft'}`}>
+            <span class="n">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <div class="tags">
+                <span class={`chip ${status[e.status].chip}`}>{status[e.status].label}</span>
+                {e.disciplines.map((d) => <span class="chip">{d}</span>)}
+              </div>
+              <h3>{e.href ? <a href={e.href}>{e.title}</a> : e.title}</h3>
+              <p>{e.summary}</p>
+            </div>
+            <dl>
+              {e.facts.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
+            </dl>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="tsection" aria-labelledby="disc">
+    <div class="wrap">
+      <p class="sec-label reveal"><span>03</span><span>Technical disciplines</span></p>
+      <h2 id="disc" class="reveal">What the evidence covers</h2>
+      <div class="prose reveal"><p>Disciplines are listed with what this site can currently back up. An empty entry is not a hidden project; it means nothing has been verified yet.</p></div>
+      <ul class="disc reveal">
+        {disciplines.map((d) => (
+          <li class={d.evidenced ? '' : 'none'}>
+            <span class={`chip ${d.evidenced ? 'ok' : 'empty'}`}>{d.evidenced ? 'Evidenced' : 'Not yet evidenced'}</span>
+            <h3>{d.name}</h3>
+            <p>{d.note}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="tsection" aria-labelledby="tools">
+    <div class="wrap">
+      <p class="sec-label reveal"><span>04</span><span>Software and tools</span></p>
+      <h2 id="tools" class="reveal">Verified tools</h2>
+      <div class="prose reveal"><p>Only tools that appear in the racing project's files are listed. Anything else is left out until it can be shown.</p></div>
+      <div class="table-wrap reveal" role="region" aria-labelledby="tools-cap" tabindex="0">
+        <table class="tooltable">
+          <caption id="tools-cap">Tools and where they are evidenced</caption>
+          <thead><tr><th scope="col">Tool</th><th scope="col">Used for</th><th scope="col">Evidence</th></tr></thead>
+          <tbody>
+            {verifiedTools.map((t) => <tr><th scope="row">{t.name}</th><td>{t.use}</td><td>{t.evidence}</td></tr>)}
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
 
-  <section class="section" style="padding-top:0" aria-labelledby="templates">
+  <section class="tsection" aria-labelledby="next">
     <div class="wrap">
-      <h2 id="templates">Project template categories</h2>
-      <p class="lede">Reusable layouts for future projects. These are empty slots, not completed work.</p>
-      <div class="grid">
-        {engineeringCategories.map((c) => <SlotCard title={c.name} note={c.note} />)}
-      </div>
+      <h2 id="next" class="reveal">Keep exploring</h2>
+      <nav class="next-band reveal" aria-label="Related pages">
+        <a href="/engineering/ibm-ai-racing/"><span class="k">Case study</span><span class="v">IBM AI Racing League / TORCS</span></a>
+        <a href="/work/"><span class="k">Section</span><span class="v">VFX Portfolio</span></a>
+        <a href="/about/"><span class="k">Page</span><span class="v">About</span></a>
+      </nav>
     </div>
   </section>
 </BaseLayout>

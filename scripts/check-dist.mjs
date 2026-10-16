@@ -5,6 +5,8 @@ import zlib from 'node:zlib';
 
 const dist = path.resolve('dist');
 const routes = ['/', '/work/', '/work/aurelia/', '/engineering/', '/engineering/ibm-ai-racing/', '/about/', '/contact/'];
+// Outbound links the owner has verified (QA-11: plain links, nothing loaded from them).
+const outbound = new Set(['https://github.com/youssefabdelkariem/IBM-AI-Racing-League', 'https://youtu.be/lp-c8A3NIJI']);
 const problems = [];
 const fail = (m) => problems.push(m);
 const fileFor = (r) => path.join(dist, r.endsWith('/') ? r + 'index.html' : r);
@@ -38,7 +40,14 @@ for (const r of [...routes, '/404.html']) {
   // internal links and assets resolve
   for (const m of html.matchAll(/(?:href|src)="([^"#]+)(#[^"]*)?"/g)) {
     const u = m[1];
-    if (/^https?:\/\//.test(u)) { if (!u.startsWith('https://youssef.studio')) fail(`${r}: external reference ${u}`); continue; }
+    if (/^https?:\/\//.test(u)) {
+      // Plain outbound links to owner-verified destinations are allowed (never src, never scripts or styles).
+      if (u.startsWith('https://youssef.studio')) continue;
+      if (!outbound.has(u)) { fail(`${r}: external reference ${u}`); continue; }
+      const tag = [...html.matchAll(/<a\s[^>]*>/g)].map((t) => t[0]).find((t) => t.includes(`href="${u}"`)) ?? '';
+      if (m[0].startsWith('src') || !/rel="[^"]*noopener[^"]*"/.test(tag)) fail(`${r}: outbound link ${u} must be an <a> with rel="noopener"`);
+      continue;
+    }
     if (u.startsWith('mailto:')) continue;
     if (!u.startsWith('/')) { fail(`${r}: relative URL ${u} (use root-absolute)`); continue; }
     const target = path.join(dist, u.endsWith('/') ? u + 'index.html' : u);

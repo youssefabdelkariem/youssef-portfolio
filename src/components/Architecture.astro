@@ -1,0 +1,45 @@
+---
+/** Conceptual block diagram of the controller. Drawn from the repository's code and README; carries no measured data. */
+---
+
+<figure class="arch">
+  <div class="lane">
+    <span class="t-label">Before the race, once</span>
+    <ol>
+      <li><strong>Track XML</strong>Stock Corkscrew file, read-only</li>
+      <li><strong>Geometry model</strong>Straights and arcs integrated exactly; the lap closes at 360.00&deg;</li>
+      <li><strong>Racing line</strong>Minimum-curvature path inside the road, with tuned offsets in chosen windows</li>
+      <li><strong>Speed plan</strong>Target speed along the line from a friction model with load transfer, downforce and banking</li>
+      <li class="store"><strong>Stored arrays</strong><span class="num">plan_y2_4.npz</span>, <span class="num">line_4.4.npz</span>: nothing is optimised during the race</li>
+    </ol>
+  </div>
+  <div class="lane">
+    <span class="t-label">Every simulator step, 50 per second</span>
+    <div class="loop">
+      <div>
+        <p class="loop-h">Sensors in</p>
+        <ul>
+          <li>Distance from start, track position, heading angle</li>
+          <li>Speed (forward and sideways), wheel spin, engine rpm</li>
+          <li>Lap clock</li>
+        </ul>
+      </div>
+      <div class="bridge" aria-hidden="true">Controller<br />&rarr;</div>
+      <div>
+        <p class="loop-h">Commands out</p>
+        <ul>
+          <li>Steering</li>
+          <li>Throttle and brake</li>
+          <li>Gear and clutch</li>
+        </ul>
+      </div>
+    </div>
+    <ol class="after-loop">
+      <li><strong>Steering</strong>Curvature command from the planned path plus error feedback</li>
+      <li><strong>Speed and braking</strong>Plan target, live curvature limit, braking from required deceleration</li>
+      <li><strong>Traction and ABS</strong>Rear slip limit, front slip brake relief</li>
+      <li><strong>Gearbox and launch</strong>Lowest gear under the rev limit; standing-start clutch</li>
+    </ol>
+  </div>
+  <figcaption id="arch-cap" class="arch-note">Conceptual diagram, from the repository code and README. The simulator link is the SCR server on UDP port 3001.</figcaption>
+</figure>

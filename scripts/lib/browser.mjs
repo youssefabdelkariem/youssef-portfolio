@@ -29,7 +29,7 @@ export function findBrowser() {
 export async function launchBrowser() {
   const executablePath = findBrowser();
   try {
-    return await puppeteer.launch({ executablePath, headless: true });
+    return await puppeteer.launch({ executablePath, headless: true, timeout: 20000 });
   } catch {
     const port = 9400 + Math.floor(Math.random() * 400);
     const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'ys-browser-'));

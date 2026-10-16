@@ -54,7 +54,7 @@ No local material exists yet for the IBM AI Racing project, engineering/CAD proj
 | M-08 | Rights check on reference imagery inside boards, blueprints, or any third-party assets | Any process visual | Clear or exclude |
 | M-09 | Other CGI/VFX projects, if any, with the same evidence; showreel yes/no | `/work/` | List or say none |
 | M-10 | Approved font choice or webfont licence; wordmark letterforms; hero copy | Identity | Select a direction (see [design review](reviews/M1B_DESIGN_REVIEW.md)) |
-| M-11 | Racing evidence: role, methodology, results with logs, demo footage, repository URL | `/engineering/ibm-ai-racing/` | Later; outside this M1b scope |
+| M-11 | Racing evidence: role, methodology, results with logs, demo footage, repository URL | `/engineering/ibm-ai-racing/` | Evidence located and checked 2026-10-16 ([M1B_ENGINEERING_RACING](reviews/M1B_ENGINEERING_RACING.md)); role wording, footage approval and eligibility still open |
 | M-12 | Biography, contact destination, launch language, OG image, code/asset licence | About, Contact, release | Later (Q05, Q15, QA-14) |
 
 ## E. Readiness summary
@@ -112,4 +112,16 @@ Approved by the owner on 2026-10-15. Pipeline: read-only EXR or project still, c
 | Render passes: undenoised, glossy, transmission, normals | `pass-noisy`, `pass-glossy`, `pass-transmission`, `pass-normal` | Shot 002, frame 36 (EXR passes) | Passes from the render file | Approved (retained, all five stages) |
 
 Not yet approved or supplied: role, credits, collaborators, the brief, the finished commercial, music, captions and audio description. The pages show "pending confirmation" for those and make no role or credit claim. Facts on the case study (renderer, resolution, samples, passes, object and material names, Shot 002 compositing steps) come from the render files and project notes and are published as part of this approval.
+
+## I. Engineering and racing (2026-10-16)
+
+| Item | Status | Evidence |
+| --- | --- | --- |
+| Best validated lap 66.284 s, damage 0, five native runs | Verified, pending owner approval | Official result files, public repository at `8658c1b` |
+| Public repository link and YouTube link | URLs verified; channel ownership unconfirmed | HTTP check and platform metadata |
+| Development history 279.22 s to 66.284 s (13 rows) | Verified; two rows are on a tuned car file and labelled | Project history reports and retained result files |
+| Speed telemetry chart (314 samples) | Verified, already public | `evidence/lap_speed_profile.json` |
+| Robotic arm | Planned, not built; no evidence | Owner statement |
+| CAD project | Reserved slot, no evidence | None |
+| Role, contest result, footage still, track-access eligibility, code licence | Pending owner | See report |
 

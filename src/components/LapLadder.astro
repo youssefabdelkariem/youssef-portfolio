@@ -1,0 +1,38 @@
+---
+/** Official lap time at each development stage, as a list of bars scaled to the slowest lap. Data: src/data/racing.ts. */
+import { ladder } from '../data/racing';
+
+const max = Math.max(...ladder.map((r) => r.seconds));
+const where = {
+  'repo-xml': 'Result file in the repository',
+  'repo-readme': 'Repository README table',
+  screenshot: 'TORCS results screenshot, project history',
+  'history-note': 'Project history report',
+  'local-xml': 'Result file in the local project folder (not published)',
+} as const;
+const fmt = (n: number) => n.toFixed(n >= 100 ? 2 : 3);
+---
+
+<ol class="ladder reveal" aria-label="Development stages with the official lap time of each, in seconds">
+  {ladder.map((r, i) => (
+    <li class={`rung ${r.setup === 'modified' ? 'mod' : ''} ${r.final ? 'final' : ''}`}>
+      <span class="i">{String(i + 1).padStart(2, '0')}</span>
+      <div class="what">
+        <strong>{r.label}</strong>
+        <span class="d">{r.detail}</span>
+        <div class="chips-row">
+          <span class="chip">{r.when} 2026</span>
+          {r.setup === 'modified' && <span class="chip plan">Tuned car file</span>}
+          <span class="chip">{where[r.evidence]}</span>
+        </div>
+      </div>
+      <span class="sec"><span class="visually-hidden">Official lap time </span>{fmt(r.seconds)} s</span>
+      <span class="bar" aria-hidden="true"><i style={`--w:${((r.seconds / max) * 100).toFixed(2)}%`}></i></span>
+    </li>
+  ))}
+</ol>
+<ul class="legend" aria-label="Legend">
+  <li><i></i> Unmodified car files, 100 L fuel</li>
+  <li><i class="m"></i> Tuned car file (5 L fuel, wings, ride height): not comparable</li>
+  <li><i class="f"></i> Final validated lap</li>
+</ul>

@@ -19,6 +19,16 @@ Updated 2026-10-15 by Claude Code (acting lead engineer while Codex is unavailab
 | ADR statuses | 0001 Accepted; 0002-0006 Proposed (unchanged) |
 | Stack | Astro 7.3.8 static output, TypeScript strict, plain CSS; Node >= 22.12 |
 
+## Engineering and IBM racing (2026-10-16)
+
+- **Branch:** `feat/m1b-engineering-racing` in `worktrees/engineering-racing`, based on `e7ac8cf` (the pushed Aurelia head). Local only; not pushed, merged or deployed. Report: [M1B_ENGINEERING_RACING](reviews/M1B_ENGINEERING_RACING.md).
+- **Workspace moved:** the workspace now lives at `C:\Dev\Website Portfolio`, outside Google Drive (which synchronised the old Documents location). It was copied with robocopy (60,183 files, 0 failures), then `git worktree repair` fixed the links. `git fsck` is clean, all six existing worktrees report the same branches and commits, the remote is unchanged, and `npm ci` and verification pass. The old copy under `Documents\Projects\website portfolio` is **untouched and still inside the Drive sync scope**; Drive is still stopped. Delete or archive the old copy only after you approve, and do not restart Drive before that. One repair was needed: Drive had removed the `.git` file of `worktrees/m1b-design-exploration` (its branch equals origin); it was recreated in the new copy and 24 deleted tracked files were restored with `git restore`. The pre-move inventory is in `local-assets/notes/workspace-migration-2026-10-16.txt`.
+- **Built:** `/engineering/` and `/engineering/ibm-ai-racing/` (see the report). New check `npm run test:racing`, included in `npm run verify`.
+- **Verification (local, Edge 155):** `npm run verify` passes (docs, typecheck 0 errors, build 8 pages, built output, browser and axe on 7 routes at 5 widths, Aurelia, racing). `test:home` and `test:media` pass. Lighthouse 13.5 mobile on a local production build: racing page 89 (cold first run, FCP 2.8 s), 99 and 99 with LCP about 1.8 s and CLS 0; desktop preset 100; engineering index 94 and 95 (TBT about 240 ms, LCP 1.6 to 1.8 s); accessibility, best practices and SEO 100 in every run. The first-run dip and the engineering TBT were not investigated.
+- **Untested:** Firefox, Safari, iOS, Android and real screen readers. Outbound links were checked for reachability by hand, not in CI.
+- **Open owner decisions:** listed in the report, notably track-XML access eligibility, role wording and the code licence.
+- **Codex:** resume on this branch, run `npm ci && npm run verify`, keep racing facts in `src/data/racing.ts` tied to the evidence table, and add nothing to the racing page that is not in a retained result file.
+
 ## Final Aurelia image approval (2026-10-15)
 
 - **Approved by the owner:** homepage hero Shot 002 frame 1 (desktop) and Shot 003 frame 1 (phones, 560 px and below); featured plate Shot 002 frame 72; case-study hero Shot 002 frame 1; selected renders and all five render-pass stages unchanged; no pull-back render; no WebP. Record: [CONTENT_MANIFEST](CONTENT_MANIFEST.md) section H, [M1B_HERO_SELECTION](reviews/M1B_HERO_SELECTION.md).
@@ -39,7 +49,9 @@ After the folders were consolidated, **Google Drive for desktop** re-created fou
 - **Nothing changed in the site.** Candidate derivatives and review images are in `local-assets/aurelia-web-derivatives/hero-candidates/` and `previews/aurelia/hero-candidates/` (not committed). The local `public/media` set is unchanged. Originals untouched.
 - **To apply the owner's choice:** copy the chosen `hero-m-*` files from `local-assets/aurelia-web-derivatives/hero-candidates/<letter>/` over the ones in `public/media/aurelia/` (and add the new frame to `scripts/aurelia/derivatives.spec.json`), run `npm run verify`, update the manifest, and commit derivatives only after the owner approves the full set.
 
-## Workspace organization (2026-10-15)
+## Workspace organization (2026-10-15, moved 2026-10-16)
+
+**Current location: `C:\\Dev\\Website Portfolio`**, same layout as below plus `worktrees/engineering-racing`. The old Documents path is retired.
 
 All Youssef Studio development folders now live under one workspace root, the `website portfolio` folder (the main checkout of the repository, on `docs/m0-foundation`). Paths below are relative to that root; machine-specific absolute paths are deliberately not recorded here.
 

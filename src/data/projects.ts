@@ -41,8 +41,8 @@ export const engineeringProjects: Project[] = [
     title: 'IBM AI Racing League / TORCS',
     discipline: 'Engineering',
     href: '/engineering/ibm-ai-racing/',
-    summary: 'Autonomous racing controller project. Dedicated case study with structure for methodology, comparison, footage and source; evidence pending.',
-    status: 'placeholder',
+    summary: 'An autonomous Python racing controller for TORCS with a validated 66.284 s Corkscrew lap and zero damage. Method, development history, tests and source are in the case study.',
+    status: 'verified',
     pic: null,
   },
 ];
