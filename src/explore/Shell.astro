@@ -1,0 +1,45 @@
+---
+/**
+ * Document shell for design-exploration pages. These pages exist only in the local
+ * `build:explore` output, are noindex, and contain placeholder content only.
+ */
+interface Props {
+  title: string;
+  description: string;
+  themeColor: string;
+  rootClass: string;
+}
+const { title, description, themeColor, rootClass } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class={rootClass}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content={themeColor} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <style is:global>
+      .skip { position: absolute; left: 12px; top: -64px; z-index: 1000; padding: 10px 14px; background: #fff; color: #000 !important; font: 600 14px/1.2 system-ui, sans-serif; border-radius: 4px; }
+      .skip:focus { top: 12px; }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <slot />
+    <script is:inline>
+      (function () {
+        var els = document.querySelectorAll('.reveal');
+        if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+        }, { rootMargin: '0px 0px -8% 0px' });
+        els.forEach(function (e) { io.observe(e); });
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Plate from '../../components/Plate.astro';
+import { picture } from '../../data/media';
+
+const featuredPic = picture('phone', 'The back of the Aurelia One smartphone floating in a dark studio, showing two camera lenses and the engraved AURELIA ONE mark.', '(min-width: 900px) 58vw, 100vw');
+
+// Anchors on the case study page (ids must exist there; check-dist verifies in-page anchors on its own page only).
+const inside = [
+  ['intro', 'Introduction', 'What the commercial is and how the shots run.'],
+  ['renders', 'Selected renders', 'Four frames, each labelled as a final composite or a render with the display transform only.'],
+  ['look', 'Lighting and materials', 'How the studio, metal and glass read in the frame.'],
+  ['passes-title', 'Render passes', 'The same frame as undenoised render, glossy, transmission and normals.'],
+  ['workflow', 'Rendering and compositing', 'From Cycles to the multilayer EXR, the composite and the display transform.'],
+  ['tech', 'Technical details', 'Specifications read from the render metadata and project notes.'],
+];
+---
+
+<BaseLayout title="VFX Portfolio" description="CGI, 3D rendering and compositing work, led by Aurelia, a CGI smartphone commercial.">
+  <div class="wrap page-title">
+    <p class="eyebrow">VFX Portfolio</p>
+    <h1>CGI and compositing</h1>
+    <p class="lede">Aurelia, a CGI smartphone commercial, with selected renders, a render-pass breakdown and the technical notes behind it.</p>
+  </div>
+
+  <section class="section" style="padding-top:0" aria-labelledby="featured-work">
+    <div class="wrap work-feature">
+      <div class="reveal">
+        <Plate label="Aurelia" pic={featuredPic} ratio="16 / 9" framed />
+      </div>
+      <div class="reveal">
+        <p class="eyebrow">Featured project</p>
+        <h2 id="featured-work">Aurelia</h2>
+        <p>A CGI smartphone commercial for the Aurelia One. The case study covers selected renders, the lighting and materials, a render-pass breakdown and the rendering and compositing workflow.</p>
+        <ul class="chips" aria-label="Disciplines">
+          <li>CGI</li><li>3D rendering</li><li>Compositing</li>
+        </ul>
+        <div class="actions" style="margin-top:1.5rem">
+          <a class="btn" href="/work/aurelia/">View case study</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section divided" style="padding-block:clamp(2.5rem,6vw,5rem)" aria-labelledby="inside-title">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2 id="inside-title">Inside the case study</h2>
+        <p style="margin:0">Six sections, each linked below.</p>
+      </div>
+      <ol class="inside reveal">
+        {inside.map(([id, title, note], i) => (
+          <li><span class="n">{String(i + 1).padStart(2, '0')}</span><div><a href={`/work/aurelia/#${id}`}>{title}</a><p>{note}</p></div></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+</BaseLayout>

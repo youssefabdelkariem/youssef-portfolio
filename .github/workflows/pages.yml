@@ -1,0 +1,93 @@
+# Build-artifact-only deployment to GitHub Pages (ADR 0006, Proposed). Not active until the owner changes the Pages
+# source to "GitHub Actions" and merges this file to main; see docs/DEPLOYMENT_RUNBOOK.md. The build job publishes
+# only dist/ (checked by scripts/check-artifact.mjs); source, docs and instruction files never leave the repository.
+name: Deploy site
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Commit SHA (7 to 40 hex characters) already on main to build and deploy (use the known-good hash to roll back)
+        required: false
+        type: string
+permissions: {}
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  resolve:
+    # Runs on the commit that carries this workflow (the tip of main), never on the requested commit. The request must be a
+    # commit SHA that exists and is already in main's history; branches, tags and arbitrary text are rejected.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    outputs:
+      sha: ${{ steps.resolve.outputs.sha }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - id: resolve
+        env:
+          REF: ${{ inputs.ref }}
+          EVENT_SHA: ${{ github.sha }}
+        run: node scripts/resolve-deploy-ref.mjs
+  build:
+    needs: resolve
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    env:
+      CI: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.resolve.outputs.sha }}
+          persist-credentials: false
+      - name: Confirm the checked-out commit is the resolved commit
+        run: test "$(git rev-parse HEAD)" = "${{ needs.resolve.outputs.sha }}"
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run verify
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
+        with:
+          path: dist
+          retention-days: 30
+  deploy:
+    needs: [resolve, build]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+  smoke:
+    needs: deploy
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: 22
+      - name: Production smoke test (read-only requests)
+        run: node scripts/check-live.mjs https://youssef.studio

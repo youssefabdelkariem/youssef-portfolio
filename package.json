@@ -1,0 +1,43 @@
+{
+  "name": "youssef-studio",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Youssef Studio portfolio (provisional Astro implementation; see docs/adr/0002-tech-stack.md)",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build && node scripts/prune-dist.mjs",
+    "build:explore": "node scripts/build-explore.mjs",
+    "preview:explore": "node scripts/preview-explore.mjs",
+    "test:explore": "node scripts/check-explore.mjs",
+    "test:media": "node scripts/check-media-fallback.mjs",
+    "test:home": "node scripts/check-home.mjs",
+    "test:aurelia": "node scripts/check-aurelia.mjs",
+    "preview": "astro preview",
+    "typecheck": "astro check",
+    "test:dist": "node scripts/check-dist.mjs",
+    "test:browser": "node scripts/check-browser.mjs",
+    "check:docs": "node scripts/check-docs.mjs",
+    "verify": "npm run check:docs && npm run typecheck && npm run build && npm run test:dist && npm run test:artifact && npm run test:branding && npm run test:resolve && npm run test:browser && npm run test:aurelia && npm run test:racing && npm run test:publication && npm run test:film && npm run test:a11y && npm run test:repro",
+    "test:racing": "node scripts/check-racing.mjs",
+    "test:a11y": "node scripts/check-a11y.mjs",
+    "test:artifact": "node scripts/check-artifact.mjs",
+    "test:live": "node scripts/check-live.mjs",
+    "test:repro": "node scripts/check-reproducible.mjs",
+    "test:resolve": "node scripts/check-resolve-ref.mjs",
+    "build:preview": "node scripts/build-preview.mjs",
+    "test:publication": "node scripts/check-publication.mjs",
+    "test:branding": "node scripts/check-branding.mjs",
+    "test:film": "node scripts/check-film.mjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^7.3.8"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "axe-core": "^4.14.0",
+    "puppeteer-core": "^25.14.0",
+    "typescript": "^6.0.3"
+  }
+}

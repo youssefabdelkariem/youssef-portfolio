@@ -1,0 +1,316 @@
+---
+import '../../../styles/engineering.css';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Architecture from '../../../components/Architecture.astro';
+import SpeedChart from '../../../components/SpeedChart.astro';
+import LapLadder from '../../../components/LapLadder.astro';
+import { repo, video, best, runs, optimisation, landmarks, speedStats } from '../../../data/racing';
+
+const fmtTime = (n: number) => n.toFixed(3);
+const fmt = (n: number) => n.toLocaleString('en-US');
+const first = 279.22;
+---
+
+<BaseLayout title="IBM AI Racing League / TORCS" description="An autonomous Python racing controller for TORCS: a validated 66.284-second Corkscrew lap with zero damage, with its method, tests and limits.">
+  <section class="race-hero" aria-labelledby="race-title">
+    <svg class="race-lines" viewBox="0 0 1200 600" preserveAspectRatio="xMaxYMin slice" aria-hidden="true" focusable="false">
+      <path pathLength="1" d="M520 -20 C 700 60 640 220 820 250 S 1040 140 1240 260" />
+      <path pathLength="1" class="l-signal" d="M560 -20 C 745 70 690 245 850 280 S 1060 175 1240 295" />
+      <path pathLength="1" d="M480 -20 C 655 50 590 195 790 220 S 1020 105 1240 225" />
+    </svg>
+    <div class="wrap">
+      <p class="t-eyebrow">Engineering / Autonomous racing</p>
+      <h1 id="race-title">Autonomous racing on the <em>Corkscrew</em> circuit</h1>
+      <p class="lede">A Python controller that drives a TORCS race car around one standing-start lap with no human input, built for the IBM AI Racing League. This page follows it from a first completed lap of {first} seconds to a validated {fmtTime(best.seconds)}.</p>
+      <dl class="race-stats">
+        <div><dt>Best validated lap</dt><dd class="sig">{fmtTime(best.seconds)}<small>seconds, official TORCS result</small></dd></div>
+        <div><dt>Damage</dt><dd>0<small>in every counted run</small></dd></div>
+        <div><dt>Native runs</dt><dd>5 / 5<small>all 66.284 s, no timeouts</small></dd></div>
+        <div><dt>Faster than the first lap</dt><dd>4.2&times;<small>{first} s to {fmtTime(best.seconds)} s, unmodified car. The first lap was a deliberately slow driver</small></dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="tsection" aria-labelledby="overview">
+    <div class="wrap split">
+      <div class="lead reveal">
+        <p class="sec-label"><span>01</span><span>Overview</span></p>
+        <h2 id="overview">One lap, no damage, as fast as the simulator allows</h2>
+      </div>
+      <div class="reveal">
+        <div class="prose">
+          <p>The challenge was to drive one standing-start lap of the Corkscrew circuit in the TORCS simulator, in the league's stock <span class="num">car1-ow1</span>, with zero damage, using only a program that reads the car's sensors and sends back steering, throttle, brake and gear commands.</p>
+          <p>The controller is <strong>deterministic and model-based</strong>. It is not a trained neural network. It plans a racing line and a speed profile from the track geometry before the race, then follows them with feedback every simulator step.</p>
+        </div>
+        <ul class="ticks" aria-label="Project facts">
+          <li><span>Simulator</span><span>TORCS, native Windows build (<span class="num">wtorcs.exe</span>) with the SCR server</span></li>
+          <li><span>Language</span><span>Python (3.9.13 in the validation runs), NumPy</span></li>
+          <li><span>Circuit</span><span>Corkscrew, {best.lapLength} km, one lap from a standing start</span></li>
+          <li><span>Car</span><span>Stock <span class="num">car1-ow1</span>, 100 L fuel, normal damage</span></li>
+          <li><span>Development</span><span>Developed and maintained by @youssefabdelkariem with AI-assisted engineering tools, as the repository README states</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="tsection" aria-labelledby="env">
+    <div class="wrap split">
+      <div class="lead reveal">
+        <p class="sec-label"><span>02</span><span>Environment</span></p>
+        <h2 id="env">Simulator and development setup</h2>
+      </div>
+      <div class="reveal prose">
+        <p>TORCS talks to a client program over UDP on port 3001 through the SCR server plugin. Each step the server sends the car's sensors and waits for the client's reply. The lap in this project took {fmt(best.steps)} steps, about {best.hz} per second.</p>
+        <p>The first task was getting a lap to complete at all. On 9 October the supplied example clients were run unchanged and neither finished the lap. A deliberately slow validation driver (30 to 60 km/h) then completed it in 4:39.22 with no damage, which proved the Windows TORCS, Python and SCR chain worked.</p>
+        <p>The final entry point is the supplied starter client loop, unmodified, calling the project's driver. No TORCS asset is redistributed; the controller reads the track file from the user's own TORCS install.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="tsection" aria-labelledby="arch">
+    <div class="wrap">
+      <p class="sec-label reveal"><span>03</span><span>Architecture</span></p>
+      <h2 id="arch" class="reveal">Autonomous controller architecture</h2>
+      <div class="prose reveal">
+        <p>The work is split in two. Before the race, the track geometry becomes a racing line and a speed plan stored as arrays. During the race, a feedback controller follows them. Nothing is searched or trained while the car is moving.</p>
+      </div>
+      <div class="reveal"><Architecture /></div>
+    </div>
+  </section>
+
+  <section class="tsection" aria-labelledby="steer">
+    <div class="wrap split">
+      <div class="lead reveal">
+        <p class="sec-label"><span>04</span><span>Steering</span></p>
+        <h2 id="steer">Following the line</h2>
+      </div>
+      <div class="reveal prose">
+        <p>Steering is a <strong>curvature command</strong>: the curvature of the planned path a short distance ahead, plus feedback on lateral and heading error. Read from <span class="num">controller_c3.py</span>, the pieces are:</p>
+        <ul class="ticks plain">
+          <li><strong>Look-ahead feed-forward.</strong> Curvature of the planned path at a distance proportional to speed, so the car turns in early enough for its steering delay.</li>
+          <li><strong>Error feedback.</strong> Gains on lateral and heading error from pole placement, with a small integral term on the difference between commanded and measured curvature.</li>
+          <li><strong>Understeer feed-forward.</strong> A table of extra steering that grows as the demanded lateral acceleration nears the tyre limit.</li>
+          <li><strong>Sideslip counter-steer and spin recovery.</strong> Steer toward the velocity vector when the car slides; blend fully into recovery if the slide grows.</li>
+          <li><strong>Rate limit.</strong> Steering moves by at most 0.20 of full lock per step.</li>
+          <li><strong>Exact road heading.</strong> In the minimum-time corner windows the error terms use the true road heading and an identified steering response delay.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="tsection" aria-labelledby="speed">
+    <div class="wrap">
+      <p class="sec-label reveal"><span>05</span><span>Speed and braking</span></p>
+      <h2 id="speed" class="reveal">Speed control and braking strategy</h2>
+      <div class="split">
+        <div class="reveal prose">
+          <p>The speed plan comes from a point-mass friction model with axle load transfer, aerodynamic downforce, banking and a braking table. At run time the target speed is the plan a short distance ahead, limited again by the curvature being demanded right now.</p>
+        </div>
+        <div class="reveal prose">
+          <ul class="ticks plain">
+            <li><strong>Braking</strong> comes from the deceleration needed to reach the target speed, with a short brake lead so the pedal acts before the plan's corner.</li>
+            <li><strong>Traction control.</strong> A rear over-speed limit that shrinks with lateral load and grows with speed.</li>
+            <li><strong>ABS.</strong> Front slip above 0.12 reduces the brake pedal.</li>
+            <li><strong>Gearbox.</strong> The lowest gear that stays under the rev limit, with a dwell time and an up and down rev window.</li>
+            <li><strong>Launch.</strong> A small clutch command on the grid and a larger traction allowance until 163 km/h, choosing gear from driven-wheel speed.</li>
+          </ul>
+        </div>
+      </div>
+      <h3 class="reveal" style="margin-top: var(--s-7)">What the lap looks like</h3>
+      <SpeedChart />
+      <div class="lm table-wrap reveal" role="region" aria-labelledby="lm-cap" tabindex="0">
+        <table>
+          <caption id="lm-cap">Points read from the telemetry in the chart (nearest recorded sample)</caption>
+          <thead><tr><th scope="col">Point</th><th scope="col">Distance (m)</th><th scope="col">Speed (km/h)</th><th scope="col">Note</th></tr></thead>
+          <tbody>
+            {landmarks.map((k) => <tr><th scope="row">{k.label}</th><td class="num">{fmt(Math.round(k.d))}</td><td class="num">{k.v.toFixed(1)}</td><td>{k.note}</td></tr>)}
+          </tbody>
+        </table>
+      </div>
+      <p class="reveal" style="margin-top: var(--s-4); color: var(--text-2); max-width: 68ch">Mean speed over the lap is about {Math.round(speedStats.mean)} km/h ({best.lapLength} km in {fmtTime(best.seconds)} s; computed here from those two numbers).</p>
+    </div>
+  </section>
+
+  <section class="tsection" aria-labelledby="iter">
+    <div class="wrap split">
+      <div class="lead reveal">
+        <p class="sec-label"><span>06</span><span>Iterations</span></p>
+        <h2 id="iter">Seven stages of controller development</h2>
+        <p class="lede" style="font-size: 1rem">Lap times are official TORCS results. Each stage names the AI-assisted tool the project history credits.</p>
+      </div>
+      <ol class="iter reveal">
+        <li><div>
+          <span class="when">9 Oct &middot; setup</span>
+          <h3>Make a lap complete</h3>
+          <p>Native Windows TORCS, SCR and Python 3.9 working end to end. A conservative driver finishes the lap.</p>
+          <p class="res">279.22 s, damage 0</p>
+        </div></li>
+        <li><div>
+          <span class="when">9&ndash;10 Oct &middot; IBM Bob</span>
+          <h3>Speed-limited controllers, V2 to V3.4</h3>
+          <p>Steering, corner speed, braking, traction, gear selection and recovery, under an 80 and then a 100 km/h ceiling. Reliability work included 17 controlled fault tests. Anti-hunting logic cut gear changes from 148 to 43 in one comparison. In V3.4, a predictive-braking change at the chicane reduced peak steering in that window by 41% but made the lap 0.96 s slower; it is recorded as a trade-off, not a win, and V3.4 is not part of the final controller.</p>
+          <p class="res">207.14 s &rarr; 186.56 s &rarr; 185.11 to 186.10 s</p>
+        </div></li>
+        <li><div>
+          <span class="when">10&ndash;11 Oct &middot; Codex</span>
+          <h3>Model-based line and speed plan, on a tuned car file</h3>
+          <p>The ceiling gave way to track geometry, a planned line and a planned speed profile. These laps used a changed car file (5 L fuel, wing angles, ride height), so they are not comparable with the rest. The best, 67.064 s, could not be reproduced in later sessions and is kept as one measured lap.</p>
+          <p class="res">89.386 s &rarr; 67.064 s</p>
+        </div></li>
+        <li><div>
+          <span class="when">13 Oct &middot; Claude Code</span>
+          <h3>A new controller for the unmodified car</h3>
+          <p>A minimum-curvature line, a friction-circle speed plan and a path-following steering law, then sideslip counter-steer, spin recovery, slip-aware traction control and a lowest-gear rule.</p>
+          <p class="res">82.888 s &rarr; 74.750 s &rarr; 68.846 s</p>
+        </div></li>
+        <li><div>
+          <span class="when">13&ndash;14 Oct</span>
+          <h3>Hairpin and corner-exit work</h3>
+          <p>Local plans for the hairpin and the corner exits, each checked with repeat official runs.</p>
+          <p class="res">66.986 s &rarr; 66.906 s</p>
+        </div></li>
+        <li><div>
+          <span class="when">14 Oct</span>
+          <h3>Simulator-in-the-loop optimisation</h3>
+          <p>Because TORCS is deterministic when the client answers every step on time, one real lap is an exact measurement. A CMA-ES search per corner window, over 10 variables (6 line offsets and 4 speed targets), ranked every candidate by the official lap time and rejected any with damage, a timeout or too much sideslip.</p>
+          <p class="res">66.906 s &rarr; 66.284 s</p>
+        </div></li>
+        <li><div>
+          <span class="when">14 Oct &middot; packaging</span>
+          <h3>Portable package and validation</h3>
+          <p>A single entry point through the unmodified starter client, checksums for every controller file, a one-command validation script, and a fresh-clone check outside the original project.</p>
+        </div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="tsection" aria-labelledby="perf">
+    <div class="wrap">
+      <p class="sec-label reveal"><span>07</span><span>Performance</span></p>
+      <h2 id="perf" class="reveal">How the lap time came down</h2>
+      <div class="prose reveal">
+        <p>Each row is an official TORCS lap time with one completed lap and zero damage. Bars are scaled to the slowest lap. The two hatched rows used a tuned car file and should not be compared with the others.</p>
+      </div>
+      <LapLadder />
+      <h3 class="reveal" style="margin-top: var(--s-7)">The last 0.6 seconds</h3>
+      <div class="table-wrap reveal" role="region" aria-labelledby="opt-cap" tabindex="0">
+        <table class="opt">
+          <caption id="opt-cap">Cumulative effect of each optimisation step on the stock car (repository README)</caption>
+          <thead><tr><th scope="col">Step</th><th scope="col">Official lap (s)</th><th scope="col">Change (s)</th></tr></thead>
+          <tbody>
+            {optimisation.map((o, i) => <tr><th scope="row">{o.step}</th><td class="num">{o.seconds.toFixed(3)}</td><td class="num delta">{i === 0 ? '—' : (o.seconds - optimisation[i - 1].seconds).toFixed(3)}</td></tr>)}
+          </tbody>
+        </table>
+      </div>
+      <p class="reveal" style="margin-top: var(--s-4); color: var(--text-2); max-width: 68ch">The README also records what did not work: the hairpin window gave no feasible improvement because every faster candidate exceeded the sideslip limit, and planner-only changes (speed windows, a rebuilt line and speed window, a lateral-law swap at 1,528 m) were slower in the simulator and were rejected.</p>
+    </div>
+  </section>
+
+  <section class="tsection" aria-labelledby="test">
+    <div class="wrap">
+      <p class="sec-label reveal"><span>08</span><span>Testing</span></p>
+      <h2 id="test" class="reveal">Testing and reliability</h2>
+      <div class="split">
+        <div class="reveal prose">
+          <p>Five consecutive native Windows runs of the final files all finished in exactly {fmtTime(best.seconds)} s with no damage and no server timeouts. The result files for each run, the simulator log and the client log are published in the repository.</p>
+          <p>A fresh copy outside the original project was run three times. Two attempts gave {fmtTime(best.seconds)} s. The first took 67.058 s because the server timed out once while the PC was busy, and the validation rules do not count a run with any timeout as a reproduction.</p>
+          <div class="callout">
+            <span class="t-label">Limits</span>
+            <p><strong>Native Windows only.</strong> Results are from the TORCS build supplied with the league and were not reproduced in the Linux container.</p>
+            <p><strong>Tuned to one track.</strong> The plan arrays are specific to Corkscrew. This is not a general driver.</p>
+            <p><strong>Stock files must match.</strong> Lap times are exact only when the car, track and race files match the published reference hashes.</p>
+          </div>
+        </div>
+        <div class="reveal">
+          <div class="table-wrap" role="region" aria-labelledby="runs-cap" tabindex="0">
+            <table>
+              <caption id="runs-cap">Validation runs published in the repository</caption>
+              <thead><tr><th scope="col">Run</th><th scope="col">Start order</th><th scope="col">Lap (s)</th><th scope="col">Damage</th><th scope="col">Timeouts</th><th scope="col">Counted</th></tr></thead>
+              <tbody>
+                {runs.map((r) => <tr><th scope="row">{r.label}</th><td>{r.order}</td><td class="num">{fmtTime(r.seconds)}</td><td class="num">{r.damage}</td><td class="num">{r.timeouts}</td><td>{r.valid ? 'Yes' : 'No'}</td></tr>)}
+              </tbody>
+            </table>
+          </div>
+          <ul class="ticks plain" style="margin-top: var(--s-5)">
+            <li><strong>Determinism.</strong> Two runs of the same controller gave identical action streams. A SHA-256 over all {fmt(best.steps)} steps matched between the development package and the repository's driver on recorded observations.</li>
+            <li><strong>Timing safety.</strong> A single server timeout costs about 0.4 s. The driver disables garbage collection once before the race so a collection pause cannot cause one.</li>
+            <li><strong>Early noise.</strong> Before the cause was found, identical settings varied by up to 1.5 s between runs. Every later result is checked for timeouts.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tsection" aria-labelledby="demo">
+    <div class="wrap">
+      <p class="sec-label reveal"><span>09</span><span>Demonstration</span></p>
+      <h2 id="demo" class="reveal">Final demonstration</h2>
+      <div class="linkcard reveal">
+        <div class="videocard">
+          <a class="thumb" href={video.url} rel="noopener noreferrer" target="_blank">
+            <img src="/media/racing/video-cover-960.jpg" srcset="/media/racing/video-cover-640.jpg 640w, /media/racing/video-cover-960.jpg 960w" sizes="(min-width: 900px) 560px, 100vw" width="960" height="540" loading="lazy" decoding="async" alt="Cover image of the demonstration video: a stylised black racing car on a track, with the text 66.284 s, TORCS AI, Autonomous Qualifying Lap." />
+            <span class="play" aria-hidden="true"></span>
+            <span class="visually-hidden">Watch the demonstration on YouTube (opens in a new tab): {video.title}</span>
+          </a>
+          <p class="t-label">Video on YouTube &middot; about 1 min 28 s</p>
+          <h3>{video.title}</h3>
+          <p>The author's recorded footage of the controller driving the lap. The thumbnail is stored on this site and links out; no player is embedded and nothing is loaded from YouTube until you follow the link.</p>
+        </div>
+        <div>
+          <span class="t-label">Evidence note</span>
+          <h3>What the cover image is and is not</h3>
+          <p>The cover image is stylised artwork, not race footage. Only its headline time, 66.284 s, is checked here against the result files; the sector times, speed read-out and track map drawn on it are not verified by the evidence on this page.</p>
+          <p>The repository holds the official result files for the validated runs but no race footage. The footage itself was not checked frame by frame against them.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tsection" aria-labelledby="source">
+    <div class="wrap">
+      <p class="sec-label reveal"><span>10</span><span>Source</span></p>
+      <h2 id="source" class="reveal">Source code and evidence</h2>
+      <div class="linkcard reveal">
+        <div>
+          <span class="t-label">Public repository</span>
+          <h3>youssefabdelkariem / IBM-AI-Racing-League</h3>
+          <p>Controller, plan arrays, run instructions, the five native and three fresh-clone result sets, checksums and a validation script. Read here at commit <code>{repo.commit}</code> on {repo.checked}.</p>
+          <a class="go" href={repo.url} rel="noopener noreferrer" target="_blank">Open on GitHub<span class="visually-hidden"> (opens in a new tab)</span></a>
+        </div>
+        <div>
+          <span class="t-label">Disclosures</span>
+          <h3>Credits and licence</h3>
+          <p>The gym_torcs starter client is used unmodified (MIT, upstream credits in the repository). TORCS and the league's car and track belong to their owners and are not included. The repository states that no open-source licence has been chosen for the project's own code.</p>
+          <p>The repository README states the controller was developed with AI-assisted tools. This page makes no claim of contest placement, award, endorsement or official IBM recognition.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tsection" aria-labelledby="lessons">
+    <div class="wrap split">
+      <div class="lead reveal">
+        <p class="sec-label"><span>11</span><span>Takeaways</span></p>
+        <h2 id="lessons">Lessons from the lap</h2>
+      </div>
+      <ul class="ticks plain reveal">
+        <li><strong>Measure the simulator, not only the model.</strong> Planner-only changes that looked good on paper were slower on track; the real simulator ranked every candidate.</li>
+        <li><strong>Protect the timing before tuning.</strong> A single late reply costs about 0.4 s, and part of the early variation was this, not the controller.</li>
+        <li><strong>Write down the conditions.</strong> The 67.064 s lap depended on a tuned car file and could not be repeated. The final result uses stock files with published hashes, so someone else can check it.</li>
+        <li><strong>Keep the dead ends.</strong> The 100 km/h ceiling, the rejected V4, and the windows that gave no feasible gain are part of the record.</li>
+        <li><strong>Know the limits.</strong> One track, one simulator build, deterministic only while the client keeps up.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="tsection" aria-labelledby="next">
+    <div class="wrap">
+      <h2 id="next" class="reveal">Keep exploring</h2>
+      <nav class="next-band reveal" aria-label="Related pages">
+        <a href="/engineering/"><span class="k">Section</span><span class="v">All engineering</span></a>
+        <a href="/work/"><span class="k">Section</span><span class="v">VFX Portfolio</span></a>
+        <a href="/about/"><span class="k">Page</span><span class="v">About</span></a>
+      </nav>
+    </div>
+  </section>
+</BaseLayout>

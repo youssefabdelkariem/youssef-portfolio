@@ -1,0 +1,177 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Plate from '../../../components/Plate.astro';
+import BreakdownViewer from '../../../components/BreakdownViewer.astro';
+import { artDirected, picture } from '../../../data/media';
+import { passes } from '../../../data/aurelia-passes';
+import FilmPlayer from '../../../components/FilmPlayer.astro';
+import { film } from '../../../data/aurelia-film';
+import { published as walkthroughPublished } from '../../../data/walkthrough';
+
+// Media is looked up at build time. Without the local derivatives every slot renders a labelled placeholder.
+const hero = artDirected('hero', 'hero-m', 'Extreme close-up of a smartphone camera lens in a dark studio, with violet and blue reflections in the glass and a bright softbox reflected near the top.');
+const sizes = '(min-width: 900px) 50vw, 100vw';
+
+const renders = [
+  { id: 'lenses', label: 'Camera module', where: 'Shot 002, frame 36', how: 'Final composite', alt: 'Back of the Aurelia One phone showing two camera lenses ringed in polished metal on a near-black body, with a soft grey studio background.',
+    note: 'The dual camera module against the near-black body. Violet and blue coatings read in the lens glass.' },
+  { id: 'phone', label: 'The phone in the studio', where: 'Shot 002, frame 72', how: 'Final composite', alt: 'The phone floating upright in front of a dark studio cyclorama, lenses at the top left and the AURELIA ONE mark below.',
+    note: 'The full phone in a dark studio with a soft grey floor gradient and a faint contact shadow.' },
+  { id: 'wordmark', label: 'Engraved wordmark', where: 'Shot 001, frame 210', how: 'Render, display transform only', alt: 'Raised AURELIA and ONE lettering on a grey metal surface, lit from the right.',
+    note: 'The raised lettering raked by a single light. This still has no compositing or grade.' },
+  { id: 'port', label: 'Lower edge', where: 'Shot 005, frame 0', how: 'Render, display transform only', alt: 'Close view of the phone\'s lower edge with speaker holes and a USB-C port in bright metal against a dark background.',
+    note: 'Speaker holes and the USB-C opening on a bright metal edge. This still has no compositing or grade.' },
+].map((r) => ({ ...r, pic: picture(r.id, r.alt, sizes) }));
+
+
+
+const specs = [
+  ['Renderer', 'Cycles, in Blender 5.2.2 LTS (from the EXR metadata)'],
+  ['Frame size', '3840 x 2160 (UHD), square pixels'],
+  ['Frame rate', '24 fps'],
+  ['Render files', 'Half-float OpenEXR, scene-linear Rec.709. Shots 2, 3 and 5 are multilayer files with lighting passes and Cryptomatte IDs; shots 1 and 4 are beauty only'],
+  ['Display transform', 'AgX Base, no extra look or exposure, for sRGB stills; Rec.1886 for the video master'],
+  ['Compositing', 'Nuke 17.1 (project scripts); the final composite is documented for Shot 002'],
+  ['Video master', 'Apple ProRes 422 HQ, 10-bit, 3840 x 2160, 24 fps, Rec.709 tags (Shot 002: 72 frames, 3 seconds)'],
+];
+
+const shots = [
+  ['Shot 001', '250', '4096 on early frames, 512 after', 'Macro_120mm camera'],
+  ['Shot 002', '72', '512', 'Hero_85mm camera'],
+  ['Shot 003', '72', '128', 'Hero_85mm camera'],
+  ['Shot 004', '72', '256', 'Hero_85mm camera'],
+  ['Shot 005', '228', '300 (320 on six frames)', 'Hero_85mm camera'],
+];
+
+const flow = [
+  ['Render', 'Each shot is rendered with Cycles in Blender at 3840 x 2160. Sample counts differ by shot, from 128 to 512 (more on early frames of shot 1).'],
+  ['Multilayer EXR', 'Frames are written as half-float OpenEXR in scene-linear Rec.709. Where the shot needs it, the file carries lighting passes, depth, normals and Cryptomatte object and material IDs.'],
+  ['Composite', 'For Shot 002, a Cryptomatte matte isolates the engraved AURELIA and ONE lettering for a local 1.18 gain, and a highlight roll-off limits the brightest rim values. No global exposure, contrast or colour grade was added.'],
+  ['Display transform', 'AgX Base from Blender\'s colour configuration converts scene-linear values for display: sRGB for the stills on this page, Rec.1886 for the video master.'],
+  ['Master', 'Shot 002 is delivered as a ProRes 422 HQ master at 4K and 24 fps, with BT.709 tags.'],
+];
+---
+
+<BaseLayout title="Aurelia" description="Aurelia, a CGI smartphone commercial: selected renders, lighting and materials, a render-pass breakdown and the rendering and compositing workflow.">
+  <section class="hero case-top" aria-labelledby="case-title">
+    <Plate label="Aurelia hero still" priority gate pic={hero} focal="52% 50%" />
+    <div class="hero-copy">
+      <p class="eyebrow">VFX Portfolio / CGI</p>
+      <h1 id="case-title">Aurelia</h1>
+      <p class="lede">A CGI smartphone commercial for the Aurelia One. These pages show stills, a render-pass breakdown and technical notes taken from the production files.</p>
+      <dl class="facts">
+        <div><dt>Type</dt><dd>CGI smartphone commercial</dd></div>
+        <div><dt>Format</dt><dd>3840 x 2160, 24 fps</dd></div>
+        <div><dt>Built with</dt><dd>Blender (Cycles), Nuke</dd></div>
+      </dl>
+      {(film || walkthroughPublished) && (
+        <div class="actions" style="margin-top: var(--s-5)">
+          {film && <a class="btn" href="#film">Watch the film</a>}
+          {walkthroughPublished && <a class={film ? 'btn ghost' : 'btn'} href="/work/aurelia/walkthrough/">Explore the process</a>}
+        </div>
+      )}
+    </div>
+  </section>
+
+  {film && <FilmPlayer film={film} />}
+
+  <section class="section divided" aria-labelledby="intro">
+    <div class="wrap">
+      <div class="reveal">
+        <h2 id="intro">Introduction</h2>
+        <p>Aurelia is a commercial for a smartphone called the Aurelia One. Every frame is computer generated: the phone, the studio around it and the light.</p>
+        <p>The project archive holds five rendered shots. They run from a close reveal of the engraved wordmark, through views of the camera module and the full phone, to a close look at the lower edge.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section divided" aria-labelledby="renders">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2 id="renders">Selected renders</h2>
+        <p style="margin:0">Four frames from three shots. Each caption says whether the frame is a final composite or a render with the display transform only.</p>
+      </div>
+      <div class="shots">
+        {renders.map((r) => (
+          <figure class="shot reveal">
+            <Plate label={r.label} pic={r.pic} ratio="16 / 9" framed />
+            <figcaption>
+              <span class="where">{r.where} <span aria-hidden="true">&middot;</span> {r.how}</span>
+              <strong>{r.label}</strong>
+              <span>{r.note}</span>
+              {r.pic && <a href={r.pic.large}>Open larger image ({Math.round(r.pic.largeBytes / 1024)} KB)</a>}
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section divided" aria-labelledby="look">
+    <div class="wrap cols">
+      <div class="reveal">
+        <h2 id="look">Lighting and materials</h2>
+        <p class="lede">The scene is built like a product studio, with a lighting rig and material list recorded in the render files.</p>
+      </div>
+      <div class="reveal stack">
+        <div>
+          <h3>Studio lighting</h3>
+          <p>The Cryptomatte manifests list a cyclorama, key and fill softboxes, left and right rim strips, a top edge strip, a rear kicker, diffusion panels, white cards, black flags and a mirror card. Shots differ in which of these they use.</p>
+        </div>
+        <div>
+          <h3>Materials</h3>
+          <p>Named materials include anodized aluminium, PVD titanium, polished and satin gunmetal, matte black metal, black polymer, optical and etched glass, laser etching, an OLED screen stack and the flash LED and diffuser.</p>
+        </div>
+        <div>
+          <h3>Model detail</h3>
+          <p>The manifests record between 60 and 75 named objects per shot, including each lens element, retaining rings, antenna bands, gaskets, the flash assembly and the USB-C parts.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section divided" aria-labelledby="passes-title">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2 id="passes-title">Render passes</h2>
+        <p style="margin:0">One frame, shot 002 frame 36, taken apart. Pick a stage; a list of all stages follows the viewer.</p>
+      </div>
+      <div class="reveal">
+        <BreakdownViewer name="passes" legend="Render pass" stages={passes} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section divided" aria-labelledby="workflow">
+    <div class="wrap">
+      <h2 id="workflow" class="reveal">Rendering and compositing</h2>
+      <ol class="steps reveal">
+        {flow.map(([name, text]) => <li><div><h3>{name}</h3><p>{text}</p></div></li>)}
+      </ol>
+      <p class="slots-note">Compositing is documented for Shot 002. The stills from shots 1 and 5 above are display-transformed renders; the composite status of shots 3 and 4 is not recorded here.</p>
+    </div>
+  </section>
+
+  <section class="section divided" aria-labelledby="tech">
+    <div class="wrap">
+      <h2 id="tech" class="reveal">Technical details</h2>
+      <div class="table-wrap reveal" role="region" aria-labelledby="spec-cap" tabindex="0">
+        <table class="kv">
+          <caption id="spec-cap">Specifications read from the render metadata and project notes</caption>
+          <tbody>
+            {specs.map(([k, v]) => <tr><th scope="row">{k}</th><td>{v}</td></tr>)}
+          </tbody>
+        </table>
+      </div>
+      <div class="table-wrap reveal" role="region" aria-labelledby="shots-cap" tabindex="0" style="margin-top:1.5rem">
+        <table>
+          <caption id="shots-cap">Rendered shots in the project archive</caption>
+          <thead><tr><th scope="col">Shot</th><th scope="col">Frames</th><th scope="col">Cycles samples per frame</th><th scope="col">Camera object</th></tr></thead>
+          <tbody>
+            {shots.map(([a, b, c, d]) => <tr><th scope="row">{a}</th><td>{b}</td><td>{c}</td><td>{d}</td></tr>)}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

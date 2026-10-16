@@ -1,0 +1,18 @@
+---
+import Shell from './Shell.astro';
+---
+
+<Shell title="Design exploration index" description="Local design exploration. Not the site." themeColor="#101216" rootClass="explore-index">
+  <main id="main" tabindex="-1" style="max-width:40rem;margin:0 auto;padding:48px 20px;font:1.0625rem/1.6 system-ui,sans-serif;color:#f4f4f5;background:#101216;min-height:100vh">
+    <h1 style="font:600 2rem/1.1 system-ui,sans-serif">M1b design exploration</h1>
+    <p style="color:#c4c9d1">Two proposed visual directions using placeholder content only. Nothing here is approved, published or part of the production site. See docs/reviews/M1B_DESIGN_REVIEW.md for the comparison.</p>
+    <ul style="line-height:2">
+      <li><a style="color:#aac4ff" href="/explore/a/">Direction A: Cinematic Editorial</a></li>
+      <li><a style="color:#aac4ff" href="/explore/b/">Direction B: Digital Atelier</a></li>
+      <li><a style="color:#aac4ff" href="/">Current M1a foundation (provisional)</a></li>
+    </ul>
+  </main>
+  <style is:global>
+    html.explore-index body { margin: 0; background: #101216; }
+  </style>
+</Shell>

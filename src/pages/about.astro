@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Discipline areas are the owner's stated scope (PROJECT_VISION). Mechatronics and CAD are areas of study and skill, not completed projects.
+const areas = [
+  { name: 'CGI and VFX', items: ['3D rendering', 'Product visualization', 'Compositing', 'Shot breakdowns'] },
+  { name: 'Engineering: areas of study and skill', items: ['Mechatronics', 'CAD'] },
+  { name: 'Autonomy and software', items: ['Autonomous racing controller for TORCS'] },
+];
+---
+
+<BaseLayout title="About" description="About Youssef Studio: CGI, VFX and engineering work, with a flagship CGI commercial and an autonomous racing controller case study.">
+  <div class="wrap page-title">
+    <p class="eyebrow">About</p>
+    <h1>Where cinema meets engineering</h1>
+    <p class="lede">Youssef Studio connects cinematic CGI and VFX with mechatronics and CAD engineering work.</p>
+  </div>
+
+  <section class="section" style="padding-top:0" aria-labelledby="areas">
+    <div class="wrap cols">
+      <div>
+        <h2 id="areas">Disciplines</h2>
+        {areas.map((g) => (
+          <div style="margin-bottom:1.5rem">
+            <h3>{g.name}</h3>
+            <ul class="chips">{g.items.map((i) => <li>{i}</li>)}</ul>
+          </div>
+        ))}
+      </div>
+      <div>
+        <h2 id="work">Documented work</h2>
+        <p>Two projects are presented in full, each with its evidence.</p>
+        <ul class="chips">
+          <li><a href="/work/aurelia/">Aurelia: CGI smartphone commercial</a></li>
+          <li><a href="/engineering/ibm-ai-racing/">IBM AI Racing League: autonomous racing controller</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

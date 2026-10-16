@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.astro/
+*.log
+dist-explore/
+dist-v*/
+__pycache__/
+.rehearsal-dist/
+.repro-*/
+dist-preview/
+dist-film-*/

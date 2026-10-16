@@ -1,0 +1,38 @@
+---
+/**
+ * Stage viewer for render-pass breakdowns. Built from a native radio group, so it works with the keyboard
+ * and without JavaScript; a static table below lists every stage as the non-interactive alternative.
+ * Stages without a picture render labelled placeholders.
+ */
+import Plate from './Plate.astro';
+import type { Pic } from '../data/media';
+
+interface Stage { id: string; label: string; pic: Pic | null; caption: string }
+interface Props { name: string; legend: string; stages: Stage[]; ratio?: string }
+const { name, legend, stages, ratio = '16 / 9' } = Astro.props;
+---
+
+<div class="viewer" data-viewer={name}>
+  {stages.map((s, i) => <input class="vw-radio" type="radio" name={`vw-${name}`} id={`vw-${name}-${s.id}`} checked={i === 0} />)}
+  <fieldset class="vw-tabs">
+    <legend>{legend}</legend>
+    {stages.map((s) => <label for={`vw-${name}-${s.id}`}>{s.label}</label>)}
+  </fieldset>
+  <div class="vw-panels">
+    {stages.map((s) => (
+      <div class={`vw-panel vw-${s.id}`} data-stage={s.id}>
+        <Plate label={s.label} pic={s.pic} ratio={ratio} framed />
+        <p>{s.caption}</p>
+      </div>
+    ))}
+  </div>
+</div>
+<div class="table-wrap" role="region" aria-label={`${legend}: all stages`} tabindex="0">
+  <table>
+    <caption>{legend}: static list of every stage</caption>
+    <thead><tr><th scope="col">Stage</th><th scope="col">What it shows</th></tr></thead>
+    <tbody>
+      {stages.map((s) => <tr><th scope="row">{s.label}</th><td>{s.caption}</td></tr>)}
+    </tbody>
+  </table>
+</div>

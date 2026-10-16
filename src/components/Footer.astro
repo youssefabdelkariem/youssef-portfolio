@@ -1,0 +1,27 @@
+---
+import { nav, site } from '../data/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <a class="wordmark" href="/" aria-label="Youssef Studio, home">YOUSSEF<span>.</span>STUDIO</a>
+      <p>{site.footerLine}</p>
+    </div>
+    <div>
+      <h2>Explore</h2>
+      <ul>{nav.map((i) => <li><a href={i.href}>{i.label}</a></li>)}</ul>
+    </div>
+    <div>
+      <h2>Work</h2>
+      <ul>
+        <li><a href="/work/aurelia/">Aurelia</a></li>
+        <li><a href="/engineering/ibm-ai-racing/">IBM AI Racing League</a></li>
+      </ul>
+    </div>
+    <div class="legal">
+      <p>&copy; {year} {site.name}</p>
+    </div>
+  </div>
+</footer>

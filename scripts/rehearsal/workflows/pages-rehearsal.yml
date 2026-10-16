@@ -1,0 +1,122 @@
+# Scratch-repository rehearsal of the production Pages pipeline (ADR 0006, Proposed). It is copied to
+# .github/workflows/ of the scratch repository only; it is never installed in the production repository.
+# It publishes a SYNTHETIC copy of the site under the repository's own Pages URL: noindex, no CNAME, no sitemap.
+#
+# Rollback: dispatch with `ref` (a commit SHA), or, for this rehearsal only because no API token is available to the
+# agent, push a commit to main whose message contains `[rollback-to: <sha>]`. Both go through the same `resolve` job.
+name: Deploy rehearsal
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Commit SHA (7 to 40 hex characters) already on main to rebuild and redeploy (rollback rehearsal)
+        required: false
+        type: string
+permissions: {}
+concurrency:
+  group: pages
+  cancel-in-progress: false
+env:
+  REHEARSAL_BASE: /youssef-pages-rehearsal
+  REHEARSAL_URL: https://youssefabdelkariem.github.io/youssef-pages-rehearsal
+  REHEARSAL: "1"
+  CI: "1"
+jobs:
+  resolve:
+    # Runs on the commit that carries this workflow (the tip of main), never on the requested commit.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    outputs:
+      sha: ${{ steps.resolve.outputs.sha }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - id: resolve
+        env:
+          INPUT_REF: ${{ inputs.ref }}
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+          EVENT_SHA: ${{ github.sha }}
+        run: |
+          MARKER=$(printf '%s' "$COMMIT_MESSAGE" | sed -n 's/.*\[rollback-to: \([0-9a-fA-F]\{7,40\}\)\].*/\1/p' | head -n 1)
+          export REF="${INPUT_REF:-$MARKER}"
+          node scripts/resolve-deploy-ref.mjs
+  build:
+    needs: resolve
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.resolve.outputs.sha }}
+          persist-credentials: false
+      - name: Confirm the checked-out commit is the resolved commit
+        run: test "$(git rev-parse HEAD)" = "${{ needs.resolve.outputs.sha }}"
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run verify
+      - name: Reproducibility (two builds, identical bytes)
+        run: node scripts/check-reproducible.mjs
+      - name: Rebase for the project-site path (rehearsal only)
+        run: node scripts/rehearsal/rebase-dist.mjs dist rehearsal-dist --base "$REHEARSAL_BASE" --url "$REHEARSAL_URL" --build "${{ needs.resolve.outputs.sha }}" --run "${{ github.run_id }}-${{ github.run_attempt }}"
+      - name: Artifact allowlist on the exact files to be uploaded
+        run: DIST=rehearsal-dist node scripts/check-artifact.mjs
+      - name: Record the file list
+        run: |
+          (cd rehearsal-dist && find . -type f | sort) > artifact-files.txt
+          { echo '### Artifact files'; echo; echo '```'; cat artifact-files.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
+        with:
+          path: rehearsal-dist
+          retention-days: 14
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: artifact-files
+          path: artifact-files.txt
+          retention-days: 14
+  deploy:
+    needs: [resolve, build]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+  smoke:
+    # Uses the scripts of the tip of main (the newest checks), and the same resolved commit as the build and deploy jobs.
+    needs: [resolve, deploy]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    env:
+      CI: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Check the deployed site (Chrome, read-only)
+        run: node scripts/rehearsal/check-rehearsal.mjs "${{ needs.deploy.outputs.page_url }}" --expect-build "${{ needs.resolve.outputs.sha }}" --canonical-base "$REHEARSAL_URL"

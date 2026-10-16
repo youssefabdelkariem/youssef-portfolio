@@ -1,0 +1,105 @@
+---
+import '../../styles/engineering.css';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LapSparkline from '../../components/LapSparkline.astro';
+import { best, repo } from '../../data/racing';
+import { caseContents, demonstrates, verifiedTools } from '../../data/engineering';
+
+const fmtTime = (n: number) => n.toFixed(3);
+---
+
+<BaseLayout title="Engineering" description="Engineering work with evidence: the IBM AI Racing League / TORCS autonomous racing controller and its validated 66.284-second lap.">
+  <section class="eng-hero" aria-labelledby="eng-title">
+    <div class="grid-lines" aria-hidden="true"></div>
+    <div class="wrap">
+      <p class="t-eyebrow">Engineering</p>
+      <h1 id="eng-title">Code, simulation and <em>autonomous</em> systems</h1>
+      <p class="lede">Engineering work presented with the problem, the method, the tests and the limits. Every figure on these pages comes from a retained result file or a public repository.</p>
+      <ul class="quick" role="list">
+        <li><a class="btn" href="/engineering/ibm-ai-racing/">Read the case study</a></li>
+        <li><a class="btn ghost" href="/work/">VFX Portfolio</a></li>
+        <li><a class="btn ghost" href="/about/">About</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="tsection" aria-labelledby="featured">
+    <div class="wrap">
+      <p class="sec-label reveal"><span>01</span><span>Featured project</span></p>
+      <article class="feature solo reveal">
+        <div class="solo-copy">
+          <p class="t-eyebrow" style="margin-bottom: 0">Autonomous systems &middot; Simulation &middot; Programming</p>
+          <h2 id="featured"><a href="/engineering/ibm-ai-racing/">IBM AI Racing League / TORCS controller</a></h2>
+          <p>A Python controller that drives a TORCS race car around the Corkscrew circuit with no human input. It plans a racing line and a speed profile from the track geometry, follows them with feedback, and was tuned against the simulator&rsquo;s own lap time, from a first completed lap of 279.22 s to a validated {fmtTime(best.seconds)} s.</p>
+          <p class="more">Read the case study &rarr;</p>
+        </div>
+        <dl class="keyfigs">
+          <div><dt>Best lap</dt><dd>{fmtTime(best.seconds)}<small>s, validated</small></dd></div>
+          <div><dt>Damage</dt><dd>0<small>every counted run</small></dd></div>
+          <div><dt>Native runs</dt><dd>5/5<small>identical result</small></dd></div>
+          <div><dt>Source</dt><dd>Public<small>repo commit {repo.commit}</small></dd></div>
+        </dl>
+        <div class="solo-trace"><LapSparkline /></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="tsection" aria-labelledby="inside">
+    <div class="wrap split">
+      <div class="lead reveal">
+        <p class="sec-label"><span>02</span><span>Inside the case study</span></p>
+        <h2 id="inside">What the case study covers</h2>
+        <p class="lede" style="font-size: 1rem">Eleven sections, from the challenge to the lessons, with measured telemetry, architecture, test runs and a link to the source.</p>
+      </div>
+      <ol class="contents reveal">
+        {caseContents.map(([id, label], i) => (
+          <li><span class="n">{String(i + 1).padStart(2, '0')}</span><a href={`/engineering/ibm-ai-racing/#${id}`}>{label}</a></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="tsection" aria-labelledby="demo">
+    <div class="wrap">
+      <p class="sec-label reveal"><span>03</span><span>What it demonstrates</span></p>
+      <h2 id="demo" class="reveal">Disciplines in the evidence</h2>
+      <ul class="disc reveal">
+        {demonstrates.map((d) => (
+          <li>
+            <span class="chip ok">Evidenced</span>
+            <h3>{d.name}</h3>
+            <p>{d.note}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="tsection" aria-labelledby="tools">
+    <div class="wrap">
+      <p class="sec-label reveal"><span>04</span><span>Software and tools</span></p>
+      <h2 id="tools" class="reveal">Verified tools</h2>
+      <div class="prose reveal"><p>Only tools that appear in the project&rsquo;s files are listed.</p></div>
+      <div class="table-wrap reveal" role="region" aria-labelledby="tools-cap" tabindex="0">
+        <table class="tooltable">
+          <caption id="tools-cap">Tools and where they are evidenced</caption>
+          <thead><tr><th scope="col">Tool</th><th scope="col">Used for</th><th scope="col">Evidence</th></tr></thead>
+          <tbody>
+            {verifiedTools.map((t) => <tr><th scope="row">{t.name}</th><td>{t.use}</td><td>{t.evidence}</td></tr>)}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="tsection" aria-labelledby="next">
+    <div class="wrap">
+      <h2 id="next" class="reveal">Keep exploring</h2>
+      <nav class="next-band reveal" aria-label="Related pages">
+        <a href="/engineering/ibm-ai-racing/"><span class="k">Case study</span><span class="v">IBM AI Racing League / TORCS</span></a>
+        <a href="/work/"><span class="k">Section</span><span class="v">VFX Portfolio</span></a>
+        <a href="/about/"><span class="k">Page</span><span class="v">About</span></a>
+      </nav>
+    </div>
+  </section>
+</BaseLayout>

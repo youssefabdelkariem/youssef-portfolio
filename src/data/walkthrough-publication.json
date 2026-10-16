@@ -1,0 +1,6 @@
+{
+  "published": false,
+  "approvedBy": null,
+  "approvedOn": null,
+  "note": "Set published to true only after the owner approves the finished walkthrough; approvedBy and approvedOn are then required. See docs/AURELIA_PUBLICATION.md."
+}

@@ -1,0 +1,228 @@
+---
+import Shell from '../Shell.astro';
+
+const links = [
+  { n: '01', href: '/explore/b/#work', label: 'Work' },
+  { n: '02', href: '/explore/b/#case', label: 'Case' },
+  { n: '03', href: '/explore/b/#eng', label: 'Eng' },
+  { n: '04', href: '/contact/', label: 'Contact' },
+];
+const rows = [
+  { n: '01', title: 'Aurelia', tags: 'CGI / Commercial', href: '/work/aurelia/', lead: true },
+  { n: '02', title: 'Project slot', tags: 'No verified work yet', href: '', lead: false },
+  { n: '03', title: 'Project slot', tags: 'No verified work yet', href: '', lead: false },
+];
+const stages = [
+  { id: 'plate', label: 'Plate', note: 'Source plate or reference. Caption written from verified material.' },
+  { id: 'passes', label: 'Passes', note: 'Render passes actually used. Caption written from verified material.' },
+  { id: 'comp', label: 'Composite', note: 'Final composite and the decision it shows. Caption from verified material.' },
+];
+---
+
+<Shell
+  title="Direction B: Digital Atelier (exploration)"
+  description="Design exploration only. Placeholder content; not the site."
+  themeColor="#0d0f12"
+  rootClass="dir-b"
+>
+  <header class="rail">
+    <a class="mark" href="/explore/b/" aria-label="YOUSSEF.STUDIO home"><span>YOUSSEF</span><b>.</b><span>STUDIO</span></a>
+    <nav aria-label="Primary">
+      <ul>
+        {links.map((l) => <li><a href={l.href}><i>{l.n}</i><span>{l.label}</span></a></li>)}
+      </ul>
+    </nav>
+  </header>
+
+  <div class="page">
+    <aside class="ribbon" aria-label="Exploration notice">Design exploration, direction B. Placeholder content only; not approved and not published.</aside>
+    <main id="main" tabindex="-1">
+      <section class="hero" aria-labelledby="b-hero">
+        <div class="copy">
+          <p class="kicker">CGI &times; Engineering</p>
+          <h1 id="b-hero"><span>Rendered</span> <span>with intent.</span> <span class="sig">Engineered</span> <span class="sig">to run.</span></h1>
+          <p class="sample">Sample headline, not approved copy.</p>
+          <p class="cta"><a href="/explore/b/#work">View work</a><a href="/engineering/">Engineering</a></p>
+        </div>
+        <figure class="plate">
+          <svg viewBox="0 0 400 300" role="img" aria-label="Placeholder technical plate: wireframe cube with dimension lines. Not an approved asset.">
+            <g fill="none" stroke="currentColor" stroke-width="1">
+              <path class="d" pathLength="1" d="M200 60 L310 120 L310 220 L200 280 L90 220 L90 120 Z" />
+              <path class="d" pathLength="1" d="M200 60 L200 160 M200 160 L310 220 M200 160 L90 220" />
+              <path class="d dim" pathLength="1" d="M70 120 V220 M64 120 H76 M64 220 H76" />
+              <path class="d dim" pathLength="1" d="M90 300 H310 M90 294 V306 M310 294 V306" />
+            </g>
+            <g class="mk" stroke="currentColor" stroke-width="1.5"><path d="M6 20 V6 H20 M380 6 H394 V20 M394 280 V294 H380 M20 294 H6 V280" fill="none" /></g>
+          </svg>
+          <figcaption>FIG. 00 &middot; Placeholder plate &middot; not approved</figcaption>
+        </figure>
+      </section>
+
+      <section id="work" class="work" aria-labelledby="b-work">
+        <div class="sec"><i>01</i><h2 id="b-work">Selected work</h2></div>
+        <ul class="rows">
+          {rows.map((r) => (
+            <li class:list={['row', 'reveal', { lead: r.lead }]}>
+              <span class="n">{r.n}</span>
+              {r.href ? <a class="t" href={r.href}>{r.title}</a> : <span class="t dim">{r.title}</span>}
+              <span class="g">{r.tags}</span>
+              <span class="th" role="img" aria-label={`Placeholder thumbnail for ${r.title}`}>Placeholder</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section id="case" class="case" aria-labelledby="b-case">
+        <div class="sec"><i>02</i><h2 id="b-case">Aurelia: breakdown (sample layout)</h2></div>
+        <div class="viewer reveal">
+          {stages.map((s, i) => <input class="st" type="radio" name="stage" id={`st-${s.id}`} checked={i === 0} />)}
+          <fieldset class="tabs">
+            <legend>Breakdown stage</legend>
+            {stages.map((s) => <label for={`st-${s.id}`}>{s.label}</label>)}
+          </fieldset>
+          <div class="panels">
+            {stages.map((s) => (
+              <div class={`panel p-${s.id}`}>
+                <div class="shot" role="img" aria-label={`Placeholder frame: ${s.label}`}><span>Placeholder &middot; {s.label}</span></div>
+                <p>{s.note}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <table class="spec reveal">
+          <caption>Static stage summary (also the non-interactive alternative)</caption>
+          <thead><tr><th scope="col">Stage</th><th scope="col">Evidence</th><th scope="col">Status</th></tr></thead>
+          <tbody>
+            {stages.map((s) => <tr><th scope="row">{s.label}</th><td>Pending verification</td><td>Placeholder</td></tr>)}
+          </tbody>
+        </table>
+      </section>
+
+      <section id="eng" class="eng reveal" aria-labelledby="b-eng">
+        <div class="sec"><i>03</i><h2 id="b-eng">Engineering crossover</h2></div>
+        <p>Mechatronics, CAD and autonomous racing share the same visual system, as a second track beside the creative work.</p>
+        <p class="cta"><a href="/engineering/">Engineering</a><a href="/engineering/ibm-ai-racing/">IBM AI Racing League / TORCS</a></p>
+      </section>
+    </main>
+    <footer class="foot"><span>YOUSSEF.STUDIO</span><span>Provisional exploration</span></footer>
+  </div>
+</Shell>
+
+<style is:global>
+  .dir-b {
+    --bg: #0d0f12; --panel: #14171c; --line: #262b33; --text: #e8ecef; --mute: #98a2ad; --sig: #ff5a36;
+    --sans: 'Segoe UI Variable Display', 'SF Pro Display', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    --mono: ui-monospace, 'Cascadia Mono', 'SF Mono', Menlo, Consolas, monospace;
+    --snap: cubic-bezier(.2, .8, .2, 1);
+    --rail: 88px;
+    color-scheme: dark;
+  }
+  .dir-b *, .dir-b *::before, .dir-b *::after { box-sizing: border-box; }
+  .dir-b body { margin: 0; background: var(--bg); color: var(--text); font: 1rem/1.6 var(--sans); }
+  .dir-b a { color: inherit; text-underline-offset: .2em; }
+  .dir-b :focus-visible { outline: 2px solid var(--sig); outline-offset: 3px; }
+  .dir-b h1, .dir-b h2 { margin: 0; }
+  .dir-b .ribbon { margin: 0; padding: 6px 20px; font: 500 .6875rem/1.4 var(--mono); color: var(--mute); border-bottom: 1px solid var(--line); }
+  .dir-b .kicker { margin: 0 0 18px; font: 500 .75rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--sig); }
+
+  /* navigation: vertical index rail on desktop, bottom bar on mobile */
+  .dir-b .rail { position: fixed; z-index: 40; left: 0; top: 0; bottom: 0; width: var(--rail); border-right: 1px solid var(--line); background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 22px 0; }
+  .dir-b .mark { writing-mode: vertical-rl; transform: rotate(180deg); font: 700 .8125rem/1 var(--mono); letter-spacing: .32em; text-decoration: none; white-space: nowrap; }
+  .dir-b .mark b { color: var(--sig); font-weight: 700; padding-block: .1em; }
+  .dir-b .rail ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+  .dir-b .rail li a { display: grid; justify-items: center; gap: 2px; padding: 10px 6px; min-width: 56px; min-height: 44px; text-decoration: none; font: 500 .6875rem/1.1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--mute); border-left: 2px solid transparent; transition: color .12s, border-color .12s; }
+  .dir-b .rail li a i { font-style: normal; color: var(--sig); }
+  .dir-b .rail li a:hover, .dir-b .rail li a:focus-visible { color: var(--text); border-left-color: var(--sig); }
+  .dir-b .page { margin-left: var(--rail); }
+
+  .dir-b .hero { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(24px, 4vw, 64px); align-items: center; padding: clamp(40px, 8vw, 110px) clamp(20px, 4vw, 64px); min-height: min(86svh, 54rem); border-bottom: 1px solid var(--line); }
+  .dir-b h1 { font: 800 clamp(2.5rem, 7.2vw, 6.25rem)/.95 var(--sans); letter-spacing: -.045em; text-transform: uppercase; }
+  .dir-b h1 span { display: inline-block; }
+  .dir-b h1 .sig { color: var(--sig); }
+  .dir-b .sample { margin: 18px 0 0; font: .75rem/1.4 var(--mono); color: var(--mute); }
+  .dir-b .cta { display: flex; flex-wrap: wrap; gap: 12px; margin: 28px 0 0; }
+  .dir-b .cta a { display: inline-block; padding: 12px 18px; min-height: 44px; border: 1px solid var(--line); font: 500 .8125rem/1.4 var(--mono); letter-spacing: .06em; text-transform: uppercase; text-decoration: none; background: linear-gradient(var(--sig), var(--sig)) left / 0 100% no-repeat; transition: background-size .18s var(--snap), color .18s, border-color .18s; }
+  .dir-b .cta a:hover, .dir-b .cta a:focus-visible { background-size: 100% 100%; color: #0d0f12; border-color: var(--sig); }
+  .dir-b .plate { margin: 0; color: var(--mute); }
+  .dir-b .plate svg { width: 100%; height: auto; border: 1px solid var(--line); background: repeating-linear-gradient(0deg, transparent 0 23px, #181c22 23px 24px), repeating-linear-gradient(90deg, transparent 0 23px, #181c22 23px 24px), var(--panel); }
+  .dir-b .plate .dim { stroke: var(--sig); }
+  .dir-b .plate figcaption { margin-top: 10px; font: .6875rem/1.4 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+
+  .dir-b .work, .dir-b .case, .dir-b .eng { padding: clamp(48px, 8vw, 104px) clamp(20px, 4vw, 64px); border-bottom: 1px solid var(--line); }
+  .dir-b .sec { display: flex; align-items: baseline; gap: 16px; margin-bottom: clamp(24px, 4vw, 48px); }
+  .dir-b .sec i { font: 500 .8125rem/1 var(--mono); color: var(--sig); font-style: normal; }
+  .dir-b h2 { font: 700 clamp(1.5rem, 3.4vw, 2.5rem)/1.05 var(--sans); letter-spacing: -.03em; text-transform: uppercase; }
+
+  /* featured work: index rows */
+  .dir-b .rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+  .dir-b .row { position: relative; display: grid; grid-template-columns: 4rem minmax(0, 1fr) minmax(0, 14rem) 11rem; align-items: center; gap: 16px; padding: 22px 8px; border-bottom: 1px solid var(--line); isolation: isolate; }
+  .dir-b .row::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--panel); transform: scaleX(0); transform-origin: left; transition: transform .18s var(--snap); }
+  .dir-b .row:hover::before, .dir-b .row:focus-within::before { transform: scaleX(1); }
+  .dir-b .row .n { font: 500 .8125rem/1 var(--mono); color: var(--sig); }
+  .dir-b .row .t { font: 700 clamp(1.5rem, 4vw, 3rem)/1 var(--sans); letter-spacing: -.035em; text-transform: uppercase; text-decoration: none; }
+  .dir-b .row .t.dim { color: var(--mute); }
+  .dir-b .row a.t::after { content: ''; position: absolute; inset: 0; }
+  .dir-b .row .g { font: .75rem/1.3 var(--mono); color: var(--mute); text-transform: uppercase; letter-spacing: .06em; }
+  .dir-b .row .th { aspect-ratio: 16 / 9; display: grid; place-items: center; border: 1px dashed #3a414c; color: var(--mute); font: .625rem/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+  .dir-b .row.lead .th { border-style: solid; background: linear-gradient(135deg, #1b2027, #12151a); }
+
+  /* sample case study: CSS-only stage viewer (radio group), plus a static table alternative */
+  .dir-b .viewer { display: grid; gap: 16px; max-width: 60rem; }
+  .dir-b .st { position: absolute; opacity: 0; pointer-events: none; }
+  .dir-b .tabs { display: flex; flex-wrap: wrap; gap: 8px; border: 0; margin: 0; padding: 0; }
+  .dir-b .tabs legend { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .dir-b .tabs label { padding: 10px 16px; min-height: 44px; display: inline-flex; align-items: center; border: 1px solid var(--line); font: 500 .75rem/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; cursor: pointer; color: var(--mute); transition: color .12s, border-color .12s, background-color .12s; }
+  .dir-b #st-plate:checked ~ .tabs label[for='st-plate'], .dir-b #st-passes:checked ~ .tabs label[for='st-passes'], .dir-b #st-comp:checked ~ .tabs label[for='st-comp'] { color: #0d0f12; background: var(--sig); border-color: var(--sig); }
+  .dir-b .st:focus-visible ~ .tabs label { outline: 2px solid var(--sig); outline-offset: 3px; }
+  .dir-b .panel { display: none; }
+  .dir-b #st-plate:checked ~ .panels .p-plate, .dir-b #st-passes:checked ~ .panels .p-passes, .dir-b #st-comp:checked ~ .panels .p-comp { display: block; }
+  .dir-b .shot { aspect-ratio: 16 / 9; display: grid; place-items: center; border: 1px solid var(--line); background: linear-gradient(135deg, #1b2027, #0f1216), var(--panel); color: var(--mute); font: .75rem/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; position: relative; }
+  .dir-b .shot::before, .dir-b .shot::after { content: ''; position: absolute; width: 18px; height: 18px; border: 2px solid var(--sig); }
+  .dir-b .shot::before { top: 10px; left: 10px; border-right: 0; border-bottom: 0; }
+  .dir-b .shot::after { bottom: 10px; right: 10px; border-left: 0; border-top: 0; }
+  .dir-b .panel p { margin: 12px 0 0; color: var(--mute); max-width: 56ch; font-size: .9375rem; }
+  .dir-b .spec { margin-top: 32px; border-collapse: collapse; width: 100%; max-width: 60rem; font: .8125rem/1.4 var(--mono); }
+  .dir-b .spec caption { text-align: left; padding-bottom: 10px; color: var(--mute); }
+  .dir-b .spec th, .dir-b .spec td { text-align: left; padding: 10px 12px; border-top: 1px solid var(--line); }
+  .dir-b .spec thead th { color: var(--mute); font-weight: 500; }
+  .dir-b .eng p { color: var(--mute); max-width: 56ch; }
+  .dir-b .foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding: 24px clamp(20px, 4vw, 64px) 36px; color: var(--mute); font: .6875rem/1.4 var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+
+  /* mobile: rail becomes a bottom bar; wordmark returns to horizontal */
+  @media (max-width: 860px) {
+    .dir-b { --rail: 0px; }
+    .dir-b .rail { top: auto; bottom: 0; width: 100%; height: auto; flex-direction: row; border-right: 0; border-top: 1px solid var(--line); padding: 0 6px; }
+    .dir-b .mark { position: fixed; z-index: 41; top: 0; left: 0; right: 0; writing-mode: horizontal-tb; transform: none; padding: 14px 20px; background: var(--bg); border-bottom: 1px solid var(--line); }
+    .dir-b .rail nav { width: 100%; }
+    .dir-b .rail ul { grid-auto-flow: column; grid-auto-columns: 1fr; gap: 0; }
+    .dir-b .rail li a { border-left: 0; border-top: 2px solid transparent; padding: 10px 2px; min-width: 0; }
+    .dir-b .rail li a:hover, .dir-b .rail li a:focus-visible { border-left-color: transparent; border-top-color: var(--sig); }
+    .dir-b .page { margin-left: 0; padding: 46px 0 72px; }
+    .dir-b .spec { font-size: .6875rem; }
+    .dir-b .spec th, .dir-b .spec td { padding: 8px 5px; overflow-wrap: anywhere; }
+    .dir-b .hero { grid-template-columns: 1fr; min-height: 0; }
+    .dir-b .row { grid-template-columns: 2.5rem minmax(0, 1fr); }
+    .dir-b .row .g { grid-column: 2; }
+    .dir-b .row .th { grid-column: 2; width: 8rem; }
+  }
+
+  /* motion: plate lines draw in, snappy row wipe and stage switch. Reduced motion shows final states. */
+  @media (prefers-reduced-motion: no-preference) {
+    .dir-b .plate .d { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1.5s var(--snap) .2s forwards; }
+    .dir-b .plate .dim { animation-delay: .9s; }
+    .dir-b h1 span { animation: slide .5s var(--snap) both; }
+    .dir-b h1 span:nth-child(2) { animation-delay: .06s; }
+    .dir-b h1 span:nth-child(3) { animation-delay: .12s; }
+    .dir-b h1 span:nth-child(4) { animation-delay: .18s; }
+    .dir-b .panel { animation: fade .16s linear; }
+    .dir-b.js .reveal { opacity: 0; transform: translateY(10px); transition: opacity .3s var(--snap), transform .3s var(--snap); }
+    .dir-b.js .reveal.in { opacity: 1; transform: none; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+    @keyframes slide { from { opacity: 0; transform: translateY(.3em); } to { opacity: 1; transform: none; } }
+    @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .dir-b .plate .d { stroke-dasharray: none; stroke-dashoffset: 0; }
+    .dir-b .row::before, .dir-b .cta a, .dir-b .tabs label { transition: none; }
+  }
+</style>

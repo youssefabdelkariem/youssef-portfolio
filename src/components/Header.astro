@@ -1,0 +1,25 @@
+---
+import { nav } from '../data/site';
+const path = Astro.url.pathname;
+const desktop = nav.filter((i) => i.href !== '/');
+const isCurrent = (href: string) => path === href || (href !== '/' && path.startsWith(href));
+---
+
+<header class="site-header">
+  <div class="bar">
+    <a class="wordmark" href="/" aria-label="Youssef Studio, home">YOUSSEF<span>.</span>STUDIO</a>
+    <nav class="nav-links" aria-label="Primary">
+      <ul>
+        {desktop.map((i) => <li><a href={i.href} aria-current={isCurrent(i.href) ? 'page' : undefined}>{i.label}</a></li>)}
+      </ul>
+    </nav>
+    <details class="nav-menu">
+      <summary>Menu</summary>
+      <nav aria-label="Primary (menu)">
+        <ul>
+          {nav.map((i) => <li><a href={i.href} aria-current={isCurrent(i.href) ? 'page' : undefined}>{i.label}</a></li>)}
+        </ul>
+      </nav>
+    </details>
+  </div>
+</header>
