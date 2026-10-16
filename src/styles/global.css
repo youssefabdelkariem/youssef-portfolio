@@ -72,22 +72,6 @@ a:hover { color: var(--accent-hover); text-decoration-color: currentColor; }
 .btn.ghost { background: transparent; color: var(--accent); }
 .btn.ghost:hover { background: rgb(201 169 110 / .12); color: var(--accent-hover); }
 
-/* cards, tags, media placeholder (shared with inner pages) */
-.grid { display: grid; gap: var(--s-5); grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); }
-.card { position: relative; display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--r-2); overflow: hidden; transition: border-color 200ms var(--ease); }
-.card:hover, .card:focus-within { border-color: var(--accent); }
-.card .body { padding: var(--s-5); display: flex; flex-direction: column; gap: var(--s-2); flex: 1; }
-.card h3 { margin: 0; }
-.card h3 a { color: var(--text); text-decoration: none; }
-.card h3 a::after { content: ''; position: absolute; inset: 0; }
-.card p { color: var(--text-2); margin: 0; font-size: 0.9688rem; }
-.meta { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-bottom: var(--s-1); }
-.tag { font-size: 0.8125rem; padding: 0.15rem 0.6rem; border: 1px solid var(--border-strong); border-radius: 999px; color: var(--text-2); }
-.tag.pending { border-color: var(--warn-line); color: var(--warn); }
-.media { position: relative; aspect-ratio: 16 / 9; display: grid; place-items: center; text-align: center; padding: var(--s-4); color: var(--text-2); background: radial-gradient(70% 90% at 30% 20%, rgb(201 169 110 / .12), transparent), linear-gradient(135deg, var(--surface-2), var(--surface)); border-bottom: 1px solid var(--border); }
-.media.standalone { border: 1px solid var(--border-strong); border-radius: var(--r-2); }
-.media .label { font-size: 0.875rem; max-width: 34ch; }
-.media .label strong { display: block; color: var(--text); font-weight: 600; margin-bottom: var(--s-1); }
 
 /* inner-page structure (unchanged contracts from M1a) */
 .page-title { padding-block: clamp(var(--s-7), 10vw, var(--s-9)) var(--s-5); }
@@ -124,5 +108,5 @@ thead th { color: var(--text-2); font-weight: 600; font-size: 0.875rem; }
   .js .reveal.in { opacity: 1; transform: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .card, .btn { transition: none; }
+  .btn { transition: none; }
 }

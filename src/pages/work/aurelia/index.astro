@@ -2,7 +2,6 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Plate from '../../../components/Plate.astro';
 import BreakdownViewer from '../../../components/BreakdownViewer.astro';
-import Pending from '../../../components/Pending.astro';
 import { artDirected, picture } from '../../../data/media';
 
 // Media is looked up at build time. Without the local derivatives every slot renders a labelled placeholder.
@@ -71,20 +70,16 @@ const flow = [
         <div><dt>Type</dt><dd>CGI smartphone commercial</dd></div>
         <div><dt>Format</dt><dd>3840 x 2160, 24 fps</dd></div>
         <div><dt>Built with</dt><dd>Blender (Cycles), Nuke</dd></div>
-        <div><dt>Role and credits</dt><dd>Pending confirmation</dd></div>
       </dl>
     </div>
   </section>
 
   <section class="section divided" aria-labelledby="intro">
-    <div class="wrap cols">
+    <div class="wrap">
       <div class="reveal">
         <h2 id="intro">Introduction</h2>
         <p>Aurelia is a commercial for a smartphone called the Aurelia One. Every frame is computer generated: the phone, the studio around it and the light.</p>
         <p>The project archive holds five rendered shots. They run from a close reveal of the engraved wordmark, through views of the camera module and the full phone, to a close look at the lower edge.</p>
-      </div>
-      <div class="reveal">
-        <Pending what="Project brief pending.">The intent of the film, the owner's role and the team are added once confirmed. Nothing is claimed here beyond what the files show.</Pending>
       </div>
     </div>
   </section>
@@ -175,15 +170,6 @@ const flow = [
             {shots.map(([a, b, c, d]) => <tr><th scope="row">{a}</th><td>{b}</td><td>{c}</td><td>{d}</td></tr>)}
           </tbody>
         </table>
-      </div>
-    </div>
-  </section>
-
-  <section class="section divided" aria-labelledby="credits">
-    <div class="wrap">
-      <h2 id="credits" class="reveal">Credits</h2>
-      <div class="reveal">
-        <Pending what="Credits pending.">Role, collaborators, music and sound, and any client or brand attribution are listed once the owner confirms them.</Pending>
       </div>
     </div>
   </section>

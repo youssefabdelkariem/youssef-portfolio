@@ -53,7 +53,8 @@ See [ADR 0002](adr/0002-tech-stack.md) for the candidate React `prerenderToNodeS
 | `/engineering/` | Engineering index with one featured project (IBM AI Racing, with a telemetry trace and key figures), a linked contents list of its case study, the disciplines the evidence supports and verified tools; FR-03. Verified work only. Implemented |
 | `/engineering/<approved-slug>/` | Further engineering case studies, added only after their evidence is verified and approved; FR-03 |
 | `/engineering/ibm-ai-racing/` | Dedicated IBM AI Racing League / TORCS case study with a measured speed chart, lap ladder and run table drawn at build time from `src/data/racing*`; FR-04, Q08. Implemented, pending owner approval. Two verified outbound links (GitHub, YouTube), no embeds |
-| `/about/`, `/contact/` | Separate biography/contact destinations; FR-05a, FR-05b |
+| `/about/` | Concise page limited to owner-confirmed scope and links to the two documented projects; FR-05a. Implemented |
+| `/contact/` | **Not built.** Removed on 2026-10-16 because no verified, owner-approved contact destination exists; it returns with one (FR-05b, Q05). The nav, homepage and footer carry no contact link |
 
 Racing is engineering work with an optional bonus label in navigation; the URL should not encode temporary editorial framing. All slugs await owner review. Keep `/` working. Prefer `route/index.html`, normal links and a real `404.html`; no opaque SPA fallback redirects. Cross-document transitions are optional enhancements. [ADR 0003](adr/0003-routing.md) defines route tests.
 
@@ -70,8 +71,8 @@ Not deployed and not an accepted decision ([ADR 0002](adr/0002-tech-stack.md) is
 | Aspect | State |
 | --- | --- |
 | Stack | Astro 7 static output (`output: 'static'`, `format: 'directory'`, `trailingSlash: 'always'`), TypeScript strict, plain CSS custom properties from [DESIGN_SYSTEM](DESIGN_SYSTEM.md); no UI framework, Tailwind, GSAP or Three.js |
-| Source layout | `src/pages/` routes; `src/layouts/BaseLayout.astro` (metadata, canonical, skip link, nav, reveal script); `src/components/` (`Plate`, `BreakdownViewer`, `LapSparkline`, `SpeedChart`, `LapLadder`, `Architecture`, `Pending`; `Media`, `ProjectCard`, `SlotCard`, `TechPlate` and `CaseHero` are no longer used and can be deleted); `src/data/` typed site and project records with a content-readiness `status`; `src/styles/global.css`; `public/` (favicon, robots) |
-| Routes built | `/`, `/work/`, `/work/aurelia/`, `/engineering/`, `/engineering/ibm-ai-racing/`, `/about/`, `/contact/`, `404.html`; sitemap excludes 404. Slugs remain Proposed (Q08) |
+| Source layout | `src/pages/` routes; `src/layouts/BaseLayout.astro` (metadata, canonical, skip link, nav, reveal script); `src/components/` (`Plate`, `BreakdownViewer`, `LapSparkline`, `SpeedChart`, `LapLadder`, `Architecture`, `Pending`; the unused `Media`, `ProjectCard`, `SlotCard`, `TechPlate` and `CaseHero` components and `src/data/projects.ts` were deleted on 2026-10-16); `src/data/` typed site and project records with a content-readiness `status`; `src/styles/global.css`; `public/` (favicon, robots) |
+| Routes built | `/`, `/work/`, `/work/aurelia/`, `/engineering/`, `/engineering/ibm-ai-racing/`, `/about/`, `404.html`; sitemap excludes 404. Slugs remain Proposed (Q08) |
 | JavaScript | One tiny inline reveal observer. Content is visible without JS and with reduced motion. Zero external JS bundles |
 | Motion | CSS only: hero light sweep, reveal fade, CSS cross-document `@view-transition`; all gated by `prefers-reduced-motion` |
 | Future 3D | Add as an Astro island (`client:visible`, dynamic import) on one route only; not implemented, no `three` dependency (Q10) |

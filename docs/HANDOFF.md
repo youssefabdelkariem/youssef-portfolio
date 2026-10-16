@@ -29,7 +29,16 @@ Updated 2026-10-15 by Claude Code (acting lead engineer while Codex is unavailab
 
 ### Verified work only (2026-10-16)
 
-Owner decision applied across the public site: only verified, completed projects are shown. Removed: the planned robotic arm, the reserved CAD slot and the engineering gallery; the empty project slots on the homepage and `/work/`; the Aurelia "playback not published yet" block; the placeholder technical plate on the homepage (now a real telemetry trace). `/engineering/` is a single-featured-project page; `/work/` shows Aurelia with a linked contents list. `check-dist` now fails on placeholder wording on any public page, and `check-racing` asserts one featured engineering project and working contents links. Remaining notices are for missing facts about finished work: About biography, Contact destination, Aurelia brief, role and credits. Unused components (`Media`, `ProjectCard`, `SlotCard`, `TechPlate`, `CaseHero`) were left in place because file deletion was not authorised in this session; delete them on approval.
+Owner decision applied across the public site: only verified, completed projects are shown. Removed: the planned robotic arm, the reserved CAD slot and the engineering gallery; the empty project slots on the homepage and `/work/`; the Aurelia "playback not published yet" block; the placeholder technical plate on the homepage (now a real telemetry trace). `/engineering/` is a single-featured-project page; `/work/` shows Aurelia with a linked contents list. `check-dist` now fails on placeholder wording on any public page, and `check-racing` asserts one featured engineering project and working contents links. Remaining notices are for missing facts about finished work: About biography, Contact destination, Aurelia brief, role and credits. The unused components were deleted later the same day (next section).
+
+### Verified-content cleanup (2026-10-16)
+
+- **Removed notices:** About (biography and skills "pending"), Aurelia (brief, role, credits, the Credits section) and the homepage featured-project "Role and Credits pending". Nothing replaced them. Outstanding items are in [CONTENT_MANIFEST](CONTENT_MANIFEST.md#j-outstanding-facts-and-approvals-not-shown-publicly), section J.
+- **About:** now only the owner's stated areas of work and links to the two documented projects.
+- **Contact:** the page, nav item and homepage button were removed because no verified, owner-approved destination exists; no email, form or profile link was invented. Restore it (page, `nav` entry in `src/data/site.ts`, route lists in `check-dist` and `check-browser`) when the owner supplies one. The homepage closing band now links to the two projects and About.
+- **Deleted after checking for imports:** `Media`, `ProjectCard`, `SlotCard`, `TechPlate`, `CaseHero`, `src/data/projects.ts`, and their unused CSS (`.card`, `.media`, `.tag`, `.meta`, `.grid`). `Pending.astro` is now unused as well and was kept; delete it if nothing needs it.
+- **Fallback wording:** the image-failure label in `Plate` now reads "<name> · image unavailable" (it used to say "Placeholder … not approved"), so no placeholder wording exists in public HTML.
+- **Guards:** `check-dist` also fails on "placeholder", "not approved", "pending confirmation", "biography pending", "credits pending" and "in preparation", and checks 7 routes (no `/contact/`).
 
 ### Workspace safety status (2026-10-16)
 
@@ -199,7 +208,7 @@ After `npm run build` on `feat/m1b-homepage`: no `dist/explore/` directory, no `
 
 Rationale and measurements: [M1A_EVALUATION](reviews/M1A_EVALUATION.md); layout and routes: [SITE_ARCHITECTURE](SITE_ARCHITECTURE.md#provisional-implementation-feature-branch-2026-10-15).
 
-- Routes (all static `index.html` + real `404.html`): `/`, `/work/`, `/work/aurelia/`, `/engineering/`, `/engineering/ibm-ai-racing/`, `/about/`, `/contact/`. Slugs are Proposed (Q08).
+- Routes (all static `index.html` + real `404.html`): `/`, `/work/`, `/work/aurelia/`, `/engineering/`, `/engineering/ibm-ai-racing/`, `/about/` (`/contact/` removed 2026-10-16). Slugs are Proposed (Q08).
 - Components: `BaseLayout`, `Media` (labelled placeholder or responsive image), `ProjectCard`, `SlotCard`, `CaseHero`, `Pending`. Data: `src/data/site.ts`, `src/data/projects.ts` (typed, with readiness `status`).
 - Design: tokens from [DESIGN_SYSTEM](DESIGN_SYSTEM.md); system fonts with a serif display stack (no webfonts, Q06); CSS-only motion, reduced-motion safe; cross-document view transitions as enhancement.
 - Content: every project fact beyond owner-stated scope is a visible placeholder. No credits, tools, metrics, results, contact address or repository link were invented.

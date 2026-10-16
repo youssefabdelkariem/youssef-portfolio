@@ -86,3 +86,7 @@ The owner approved the hero selection: Shot 002 frame 1 on desktop, Shot 003 fra
 
 Public pages now show only verified, completed projects: placeholders, planned and reserved entries were removed (engineering gallery, homepage and `/work/` slots, Aurelia film block, placeholder plate). IBM AI Racing is the featured engineering project. Rule and enforcement: [CONTENT_PLAN](CONTENT_PLAN.md#verified-work-only-2026-10-16). Not merged, not deployed.
 
+## M1b verified-content cleanup (2026-10-16)
+
+"Pending" notices removed from About and Aurelia, Contact page removed (no verified destination), About reduced to confirmed scope, five unused components and `src/data/projects.ts` deleted after confirming no imports. Outstanding facts live in [CONTENT_MANIFEST](CONTENT_MANIFEST.md#j-outstanding-facts-and-approvals-not-shown-publicly). Not merged, not deployed.
+

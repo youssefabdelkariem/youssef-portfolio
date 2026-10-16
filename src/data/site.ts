@@ -1,6 +1,6 @@
 export const site = {
   name: 'Youssef Studio',
-  // Provisional copy (Q01/Q06 pending). Describes owner-confirmed scope only; asserts no results or credits.
+  // Describes owner-confirmed scope only; asserts no results or credits.
   tagline: 'Engineering precision. Cinematic imagination.',
   footerLine: 'CGI, 3D rendering, VFX and engineering.',
   description:
@@ -12,5 +12,4 @@ export const nav = [
   { href: '/work/', label: 'VFX Portfolio' },
   { href: '/engineering/', label: 'Engineering' },
   { href: '/about/', label: 'About' },
-  { href: '/contact/', label: 'Contact' },
 ] as const;

@@ -33,11 +33,11 @@ const style = `--focal: ${focal}${ratio ? `; --ratio: ${ratio}` : ''}`;
 const hasMobile = !!pic?.sources.some((s) => s.media);
 ---
 
-<figure class:list={['plate', { framed, 'has-src': !!pic, 'has-mobile': hasMobile }]} style={style} {...(!pic ? { role: 'img', 'aria-label': `Placeholder: ${label}. Not an approved asset.` } : {})}>
+<figure class:list={['plate', { framed, 'has-src': !!pic, 'has-mobile': hasMobile }]} style={style} {...(!pic ? { role: 'img', 'aria-label': `${label}: image unavailable.` } : {})}>
   <span class="streak" aria-hidden="true"></span>
   {gate && <span class="gate gate-top" aria-hidden="true"></span>}
   {gate && <span class="gate gate-bottom" aria-hidden="true"></span>}
-  <p class="tag-label">Placeholder &middot; {label} &middot; not approved</p>
+  <p class="tag-label">{label} &middot; image unavailable</p>
   {pic && (
     <picture>
       {pic.sources.map((s) => <source type={s.type} srcset={s.srcset} sizes={s.sizes} media={s.media} />)}

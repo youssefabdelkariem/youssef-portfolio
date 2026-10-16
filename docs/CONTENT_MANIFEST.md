@@ -126,3 +126,21 @@ Not yet approved or supplied: role, credits, collaborators, the brief, the finis
 | Video cover image (stored, 640 and 960 px) | Used on owner's instruction; artwork is stylised, not footage; rights and drawn figures unverified | `public/media/racing/`, source `i.ytimg.com/vi/lp-c8A3NIJI/maxresdefault.jpg` |
 | Contest result, track-access eligibility, code licence | Pending owner; no claim made, no licence added | See report |
 
+## J. Outstanding facts and approvals (not shown publicly)
+
+These were visible as "pending" notices on the site until 2026-10-16. They are tracked here only; the public pages state nothing about them.
+
+| Item | Page it belongs to | Needed from the owner | Related |
+| --- | --- | --- | --- |
+| Aurelia brief: intent of the film | `/work/aurelia/` | Confirmed description | Q02 |
+| Role on Aurelia and any collaborators | `/work/aurelia/`, `/` | Confirmed role and credits | Q02, FR-01b |
+| Music, sound, client or brand attribution | `/work/aurelia/` | Confirmed credits | Q02 |
+| Finished commercial playback | `/work/aurelia/` | Approved film with captions and audio description or text alternative; the "film" block is removed until then | Q02, QA-12 |
+| Showreel | `/work/` | Approved footage, shot credits, accessible alternatives | FR-01c |
+| Biography, portrait, location | `/about/` | Approved text and portrait rights | FR-05a, Q05 |
+| Specific software and proficiency levels | `/about/` | Confirmed list | Q05 |
+| Contact destination (email or profile link) | `/contact/` (removed) | Verified, owner-approved destination; then restore the page, nav item and footer link | FR-05b, Q05 |
+| Racing role wording | `/engineering/ibm-ai-racing/` | Approve or replace the provisional statement; remove the "pending owner approval" and "provisional" labels | M-11 |
+| Racing video cover rights, rule-compliance question, code licence | `/engineering/ibm-ai-racing/` | See [M1B_ENGINEERING_RACING](reviews/M1B_ENGINEERING_RACING.md) | Q04, Q15 |
+| Launch language, OG image, site licence | whole site | Decisions | Q05, Q15, QA-14, QA-16 |
+
