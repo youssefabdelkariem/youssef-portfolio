@@ -21,7 +21,7 @@ Updated 2026-10-15 by Claude Code (acting lead engineer while Codex is unavailab
 
 ## M3 launch readiness (2026-10-16)
 
-- **Branch:** `feat/m3-launch-readiness` in `worktrees/m3-launch`, based on `chore/m2-pages-actions` (`a9c4b65`); local, not pushed. Read [M3_LAUNCH_READINESS](reviews/M3_LAUNCH_READINESS.md) and [AURELIA_PUBLICATION](AURELIA_PUBLICATION.md).
+- **Branch:** `feat/m3-launch-readiness` in `worktrees/m3-launch`, based on `chore/m2-pages-actions` (`a9c4b65`); pushed to origin on 2026-10-16 with the owner's approval (no force); the push ran CI only, [run 38959332801](https://github.com/youssefabdelkariem/youssef-portfolio/actions/runs/38959332801), success on a GitHub-hosted runner; no deployment was created and `main` is still `c882895`. Read [M3_LAUNCH_READINESS](reviews/M3_LAUNCH_READINESS.md) and [AURELIA_PUBLICATION](AURELIA_PUBLICATION.md).
 - **Policy changes:** no institutional references in public case studies (enforced by `check-dist`); About calls Mechatronics and CAD areas of study and skill; no planned or pending content; no contact method.
 - **Dormant by design:** the film component (`aurelia-film.json` is `{ "film": null }`) and the walkthrough (`walkthrough-publication.json` is `published: false`). Do not add public links, nav entries, sitemap entries or "coming soon" text for either; turn them on only with the owner's approval and the procedure in AURELIA_PUBLICATION. `npm run test:publication` and `npm run test:film` guard this.
 - **Branding:** three directions previewed in `previews/m3-branding` (local); direction A recommended; no asset committed.
