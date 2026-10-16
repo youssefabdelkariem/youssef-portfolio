@@ -26,12 +26,12 @@ node scripts/rehearsal/check-rehearsal.mjs http://localhost:4710/youssef-pages-r
 
 In Git Bash prefix commands that take a `/path` argument with `MSYS_NO_PATHCONV=1`, otherwise `/youssef-pages-rehearsal` is rewritten into a Windows path.
 
-## Scratch repository on GitHub (needs the owner: nothing below has been run)
+## Scratch repository on GitHub (executed 2026-10-16; see the report)
 
 1. **Visibility and exposure.** The account's user site `youssefabdelkariem.github.io` has the custom domain `yousseff.me`. GitHub serves project sites without their own domain under that domain, and `https://youssefabdelkariem.github.io/<repo>/` redirects to `https://yousseff.me/<repo>/` (observed for an unrelated path). A public scratch repository would therefore appear at `yousseff.me/youssef-pages-rehearsal/`. Private-repository Pages needs a paid plan; check Settings, Pages in a private repository first. If private Pages is unavailable, either accept the exposure of a synthetic, noindex copy, use a separate throwaway GitHub account, or run only the build and artifact steps (remove the deploy job).
-2. Create the empty repository `youssef-pages-rehearsal` (no README, no licence).
-3. `git remote add origin https://github.com/youssefabdelkariem/youssef-pages-rehearsal.git`, then `git push -u origin main` from the scratch directory.
+2. Create the repository `youssef-pages-rehearsal` (private if Pages allows it; a readme is fine) and clone it.
+3. `python scripts/rehearsal/make_scratch.py <clone> --existing` adds the kit as one commit (it refuses a clone that holds other files); push it to `main`. Build 2 is any later commit; make a visible one to prove rollbacks.
 4. In the scratch repository, Settings, Pages: choose a **branch** source first (deploy from `main`) to reproduce the production starting state, note what is served, then switch the source to **GitHub Actions** and record what the site serves before the first workflow deployment. This answers the open question in the runbook.
 5. Run the `Deploy rehearsal` workflow (Actions tab, Run workflow). Check the run summary file list, the `artifact-files` artifact and the smoke job.
-6. Rollback test: Run workflow again with `ref` set to the SHA of `rehearsal build 1`; the smoke job expects that build id.
+6. Rollback tests: (a) `git revert` the newer commit and push (rehearsed); (b) Run workflow with `ref` set to the first commit's SHA. After either, the page's `rehearsal-build` meta shows the commit that was built and `check-rehearsal.mjs --expect-build <sha>` confirms it.
 7. Delete the scratch repository when finished.

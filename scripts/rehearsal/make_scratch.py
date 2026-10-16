@@ -16,7 +16,9 @@ import sys
 from PIL import Image, ImageDraw
 
 SRC = os.getcwd()
-DEST = sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(SRC), '..', 'rehearsal', 'youssef-pages-rehearsal')
+ARGS = [a for a in sys.argv[1:] if not a.startswith('--')]
+EXISTING = '--existing' in sys.argv  # add the kit to an existing clone (keeps its readme and history) instead of creating a repository
+DEST = ARGS[0] if ARGS else os.path.join(os.path.dirname(SRC), '..', 'rehearsal', 'youssef-pages-rehearsal')
 DEST = os.path.abspath(DEST)
 
 EXCLUDE_PREFIX = ('docs/', '.github/', 'scripts/aurelia/', 'public/media/', 'local-assets/', 'previews/')
@@ -24,9 +26,15 @@ EXCLUDE_EXACT = {'CNAME', 'public/CNAME', 'index.html', 'README.md', 'AGENTS.md'
                  'scripts/build-explore.mjs', 'scripts/preview-explore.mjs', 'scripts/check-explore.mjs', 'scripts/check-docs.mjs',
                  'scripts/shoot-explore.mjs', 'scripts/shoot-home.mjs', 'scripts/shoot-pages.mjs', 'scripts/lib/fixtures.mjs'}
 
-if os.path.exists(DEST):
+if EXISTING:
+    if not os.path.isdir(os.path.join(DEST, '.git')):
+        sys.exit(f'{DEST} is not a git clone')
+    if [n for n in os.listdir(DEST) if n not in ('.git', 'readme.md', 'README.md', 'LICENSE')]:
+        sys.exit(f'{DEST} holds files other than a readme and a licence; refusing to mix them with the kit')
+elif os.path.exists(DEST):
     sys.exit(f'{DEST} already exists; remove it first (scratch only).')
-os.makedirs(DEST)
+else:
+    os.makedirs(DEST)
 
 files = subprocess.check_output(['git', 'ls-files', '--cached', '--others', '--exclude-standard'], text=True).splitlines()
 copied = 0
@@ -91,17 +99,24 @@ synth(os.path.join(racing, 'video-cover-960.jpg'), 960, 540, 'video-cover-960', 
 wf = os.path.join(DEST, '.github', 'workflows')
 os.makedirs(wf)
 shutil.copy2('scripts/rehearsal/workflows/pages-rehearsal.yml', os.path.join(wf, 'pages.yml'))
-open(os.path.join(DEST, 'README.md'), 'w', encoding='utf8').write(
-    '# youssef-pages-rehearsal\n\nTemporary scratch repository for rehearsing the GitHub Pages deployment of youssef.studio. '
-    'It publishes a synthetic, noindex copy of the site; it has no custom domain and contains no real renders. Delete it after the rehearsal.\n')
+if not EXISTING:
+    open(os.path.join(DEST, 'README.md'), 'w', encoding='utf8').write(
+        '# youssef-pages-rehearsal\n\nTemporary scratch repository for rehearsing the GitHub Pages deployment of youssef.studio. '
+        'It publishes a synthetic, noindex copy of the site; it has no custom domain and contains no real renders. Delete it after the rehearsal.\n')
 open(os.path.join(DEST, '.gitignore'), 'w').write('node_modules/\ndist/\n.astro/\nrehearsal-dist/\n.repro-*/\n')
 
 env = dict(os.environ, GIT_AUTHOR_NAME='Rehearsal Kit', GIT_AUTHOR_EMAIL='rehearsal@example.invalid', GIT_COMMITTER_NAME='Rehearsal Kit', GIT_COMMITTER_EMAIL='rehearsal@example.invalid')
 run = lambda *a: subprocess.check_call(a, cwd=DEST, env=env, stdout=subprocess.DEVNULL)
-run('git', 'init', '-q', '-b', 'main')
+if not EXISTING:
+    run('git', 'init', '-q', '-b', 'main')
 run('git', 'add', '-A')
 run('git', 'commit', '-q', '-m', 'rehearsal build 1')
-open(os.path.join(DEST, 'README.md'), 'a', encoding='utf8').write('\nBuild 2 marker (used to tell two deployments apart in the rollback rehearsal).\n')
-run('git', 'add', '-A')
-run('git', 'commit', '-q', '-m', 'rehearsal build 2')
-print(f'scratch repository ready at {DEST}: {copied} source files, 2 commits, no remote configured')
+if EXISTING:
+    # Build 2 is made later with `--build2`, after build 1 has been deployed.
+    print(f'kit added to {DEST}: {copied} source files, 1 commit (build 1); nothing pushed')
+else:
+    readme = next(n for n in ('README.md', 'readme.md') if os.path.exists(os.path.join(DEST, n)))
+    open(os.path.join(DEST, readme), 'a', encoding='utf8').write('\nBuild 2 marker (used to tell two deployments apart in the rollback rehearsal).\n')
+    run('git', 'add', '-A')
+    run('git', 'commit', '-q', '-m', 'rehearsal build 2')
+    print(f'scratch repository ready at {DEST}: {copied} source files, 2 commits, no remote configured')

@@ -4,7 +4,7 @@ Date: 2026-10-16. Prepared by Claude Code on `chore/m2-pages-actions` (local; no
 
 ## Verdict
 
-**Partially complete.** The deployment and rollback were **not** rehearsed on GitHub (no scratch repository exists; private-repository Pages could not be checked without authentication, and a public one needs separate approval). What is now proven on GitHub-hosted infrastructure is the build side: the CI workflow ran on a GitHub-hosted `ubuntu-24.04` runner and the full `npm run verify` passed (section 3a). The prepared system remains **PASS WITH CONDITIONS**; the conditions are the Pages deployment and rollback rehearsal, the source-transition test, verified Pages and protection settings, and the owner approvals below. Local results are not evidence of a successful GitHub-hosted Pages deployment and are not presented as such.
+**PASS WITH CONDITIONS.** On 2026-10-16 the owner created the private scratch repository `youssef-pages-rehearsal` (Pages source: GitHub Actions) and authorised its use. The prepared pipeline was run on GitHub: seven workflow runs built, verified and deployed a synthetic site through the official Pages actions, and two rollbacks restored the earlier version exactly (section 3b). The conditions: the Pages source **transition** (branch to Actions) was not tested because the owner had already chosen Actions; the `smoke` job result and the logs are private and were not readable here (the deployment itself proves the build job passed, because `deploy` needs it); the rollback by `workflow_dispatch` with a `ref` input needs the owner to click Run workflow (no API token here) and has not been done; Firefox could not be driven against the deployed URL; production settings remain unverified; and the owner approvals listed in section 7. Nothing about `youssef.studio` or the production repository's Pages configuration was touched.
 
 ## 1. Repository and workflow inspection
 
@@ -48,6 +48,50 @@ No authenticated access, so settings that need it are **unverified**. What publi
 
 What you should check (Settings in `youssef-portfolio`): Pages (Build and deployment source, Custom domain, Enforce HTTPS, Domain verification); Rules, Rulesets and Branches (protection for `main`); Actions, General (actions permissions, workflow permissions: set read-only, fork pull-request approval); Environments, `github-pages` (deployment branches, required reviewers); Secrets and variables (none should be needed). A screenshot or pasted values of these screens is enough for me to complete this section.
 
+## 3b. GitHub Pages deployment and rollback rehearsal (2026-10-16)
+
+Scratch repository: `https://github.com/youssefabdelkariem/youssef-pages-rehearsal`, private, no custom domain, Pages source GitHub Actions, public Pages site. It held only a readme (`Create readme.md`, by the owner) before the kit was added; no unrelated work was present. The kit was added with `make_scratch.py --existing` (synthetic media only; scan of the scratch tree: no EXR, Blender, Nuke, video, document or provenance data). The `GITHUB_TOKEN` of that repository is the only deployment credential involved; no secrets exist; the production repository was not touched. Pushes used the owner's existing Git credential and went to the scratch remote only.
+
+Workflow actions were updated to Node 24 releases (verified `using: node24` in each `action.yml`), pinned by commit SHA: `checkout` v7.0.1 `3d3c42e`, `setup-node` v7 `949feb2`, `upload-pages-artifact` v5 `fc324d3` (composite, wraps `upload-artifact` v7), `upload-artifact` v7 `cf430e0`, `deploy-pages` v5.0.1 `368f825`. The same pins are now in the production workflows on this branch.
+
+Scratch Pages URL: `https://youssefabdelkariem.github.io/youssef-pages-rehearsal/` (answers 301 to `http://yousseff.me/youssef-pages-rehearsal/`, see compatibility below). Run IDs come from the `rehearsal-run` meta tag that each build stamps into the deployed site; the run pages are private to the owner.
+
+| Deployment | Commit | Workflow run |
+| --- | --- | --- |
+''' + table + '''
+
+Each push to `main` produced one run, and the live site showed the new build id about two minutes later. The `build` job (`npm ci`, `npm run verify`, reproducibility, sub-path rebase, allowlist on the exact upload directory, upload) and the `deploy` job succeeded for every run listed, because `deploy` depends on `build` and the live site changed.
+
+Deployed site checks (Edge 155 against the Pages URL: all 6 routes at 390 and 1440 px, no console errors, no failed requests, fonts and images load, hero AVIF with the 4:5 crop below 561 px, render-pass viewer from the keyboard, 314 chart points and 13 ladder rows, 35 distinct links with 2 external, first Tab the skip link): **passed** for build 1, build 2 and the final rollback; the check expecting the wrong build correctly failed.
+
+Observed Pages behaviour on the deployed site (HTTP):
+
+| Item | Result |
+| --- | --- |
+| Routes | The six routes return 200 `text/html; charset=utf-8`; `/work` and `/engineering/ibm-ai-racing` return 301 to the trailing-slash URL; an unknown path returns 404 with the custom 404 page; `/404.html` returns 200 |
+| Assets | CSS `text/css` gzip; fonts `font/woff2`; AVIF `image/avif`; JPEG `image/jpeg`; SVG `image/svg+xml`; all `Cache-Control: max-age=600`; text types gzip |
+| Artifact contents | All 56 expected files return 200. Probes for `README.md`, `readme.md`, `package.json`, `package-lock.json`, `src/`, `docs/`, `scripts/`, `.git/config`, `.github/workflows/pages.yml`, `media/aurelia/manifest.json`, `CNAME`, `sitemap*.xml`, `astro.config.mjs`, `public/`, `node_modules/`, `AGENTS.md` all return 404 |
+| Metadata | `noindex, nofollow`, canonical on the rehearsal URL (no `youssef.studio` reference), build and run stamps present |
+
+Rollback rehearsal (two procedures from the runbook, executed with a revert commit pushed to the scratch `main`):
+
+| Step | Evidence |
+| --- | --- |
+| Baseline | HTML of the 6 routes and the 404 page saved from build 1 content |
+| Version 2 deployed | Footer text "REHEARSAL VERSION 2." appears on every page |
+| Rollback 1 (`git revert`, no history rewrite) | Git tree of the rollback commit equals the tree of build 1; the live site returns to the original text; **7 of 7 HTML pages byte-identical to the baseline** once the build stamps are removed |
+| Repeat | Version 2 re-applied by reverting the rollback, then rolled back again: tree equal to build 1 again, 7 of 7 pages identical again |
+| Identifiable history | Every deployment has a run ID, a commit and a stamp in the page; the Actions artifacts `github-pages` and `artifact-files` are kept 14 days |
+| Not done | Rollback by `workflow_dispatch` with `ref` (needs the owner to click Run workflow in the scratch repository and enter the build 1 commit `09a314b259411fbf3762c8327a0b8413242c339f`; afterwards the page stamp must show that commit) and re-running an earlier deployment run |
+
+Compatibility findings and fixes:
+
+1. **The project URL redirects to another domain.** `youssefabdelkariem.github.io/<repo>/` returns 301 to `http://yousseff.me/<repo>/` because the user site has that custom domain. The final location is **HTTP only**: `https://yousseff.me` fails the certificate check, so the rehearsal site could not be tested over HTTPS at its final address. The production site is unaffected (its own domain `youssef.studio` has valid HTTPS), but the `yousseff.me` HTTPS problem is a separate defect of the user site worth fixing.
+2. **Canonical check bug in the rehearsal checks (fixed).** The checker compared canonical URLs with the redirect target; it now compares the path and rules out production references.
+3. **Firefox could not be driven against the live site.** Headless Firefox 158 timed out or aborted navigation to the plain-HTTP final URL, and also to `http://example.com`, so this is a limitation of the test setup, not evidence about the site. Firefox passed the same checks against the local emulator and the earlier production build.
+4. **Action versions.** The Node 20 deprecation warning is resolved by the Node 24 releases above; the deploy and upload actions worked on GitHub.
+5. **Source transition not tested.** The repository was already set to Actions, so what stays live when the source changes remains unknown.
+
 ## 3a. GitHub-hosted CI run (2026-10-16, after the owner approved the push)
 
 Pushed without force: `chore/m2-pages-actions` at `9553361e46d27da4e51f382fdc1b7f372a5ceea4` and `rollback/placeholder` at `c882895` (the live placeholder; `main` is still `c882895`).
@@ -67,7 +111,9 @@ Pushed without force: `chore/m2-pages-actions` at `9553361e46d27da4e51f382fdc1b7
 
 ## 3. Scratch-repository rehearsal
 
-**Not executed.** Needed from you before it can run:
+Status: executed on 2026-10-16, see section 3b. The text below is the original requirements list, kept for the record.
+
+Needed from the owner before it could run:
 
 - **Approval, name and visibility.** Requested: a **private** repository named `youssef-pages-rehearsal` under your account, created by you (or by me once authenticated), deleted after the rehearsal. Private-repository Pages could not be verified without authentication; it normally needs GitHub Pro, Team or Enterprise (a student plan may include it). To check: Settings, Billing and plans shows your plan, or create the private repository, open Settings, Pages, and see whether a source can be chosen or whether it asks you to upgrade or make the repository public. If it asks, stop: a public repository needs your separate approval and the exposure decision below.
 - **Decision on exposure.** On a public scratch repository the synthetic, noindex site would appear at `https://yousseff.me/youssef-pages-rehearsal/` because of the user-site domain. That is another of your domains, not `youssef.studio`, but it is a live site. Alternatives: a private repository if Pages allows it, a separate throwaway account, or running the build and artifact steps only.
@@ -113,7 +159,7 @@ The allowlist (`scripts/check-artifact.mjs`) accepts only HTML routes, hashed CS
 
 Recommended architecture stays as in the runbook: Astro static build, only `dist/` published, `main` as the sole production branch, official GitHub Actions deployment, least privilege, pinned actions, separate verification, smoke test, custom domain and HTTPS preserved, explicit rollback. The rehearsal results support it **only** at the build, artifact, routing and rollback-semantics level. The Pages source transition is untested.
 
-Ordered cutover proposal (not executed; revised from the earlier runbook because of the findings above):
+Ordered cutover proposal (not executed; revised from the earlier runbook because of the findings above and section 3b; production still needs a separate, explicit authorisation):
 
 0. **Rehearse on GitHub** (section 3), including the source transition test. Stop if the previous site does not stay up when the source changes.
 1. **Preflight.** Re-run `npm run verify`, `test:repro` and `test:artifact` on the release commit; record the digest. Record `c882895` as known good; push `rollback/placeholder` (needs your approval). Confirm Settings from section 2.
@@ -177,9 +223,17 @@ Run on the production build and on the rebased copy served under a sub-path.
 
 Manual checklist for the owner or a tester: (1) iPhone Safari: load every route, check hero image crop and the menu, scroll the racing tables and chart, play with the render-pass tabs; (2) Android Chrome: same; (3) macOS Safari: same; (4) NVDA or VoiceOver: headings list, landmarks, the render-pass tabs, the data tables and the chart description; (5) browser text zoom 200 percent and 400 percent: nothing clipped; (6) forced colours or high contrast: focus rings and buttons remain visible; (7) disable images: labelled fallbacks show.
 
-## 9. Remaining decisions and next steps
+## 9. Updated cutover recommendation, blockers and next steps
 
-1. Check private-repository Pages (section 3), create the private scratch repository and tell me, or approve another route. Then I run the kit: branch-source start, switch to Actions, deploy, smoke, rollback by `ref`.
-2. Send screenshots or values for the settings in section 2 (Pages, Rules, Actions permissions, `github-pages` environment).
-3. Approve the launch assets once drawn, and the owner checklist items.
-4. After the rehearsal: bump the actions together, update the runbook with observed behaviour, decide the cutover variant, name the approver, then request a separate, explicit production authorisation.
+Recommendations after the rehearsal:
+
+1. Keep the architecture. The official Actions deployment, the allowlisted artifact and the revert-based rollback worked on GitHub as designed; deployments take about two minutes.
+2. Use the pinned Node 24 releases now in the production workflows.
+3. Before the real cutover, test the **source transition** once on a second scratch repository (start with branch publishing, add the workflow, then switch the source) or accept a short measured window. This is the last unknown for downtime.
+4. Keep both rollback methods in the runbook: `workflow_dispatch` with `ref` (to be exercised by the owner) and a reviewed revert pull request (rehearsed twice). Keep `rollback/placeholder` for the emergency source change.
+5. Production uses the custom domain `youssef.studio`, so the site is served at the domain root and needs no path transform; the transform exists only for project-path rehearsals.
+6. Fix HTTPS on `yousseff.me` separately; it affects every project site under the user site.
+
+Remaining launch blockers: owner approvals (section 7), branding assets, verified production Pages and protection settings (section 2), the ruleset on `main`, the transition test or accepted downtime, the dispatch-by-ref rollback click, ADRs 0002 to 0006 unresolved, and Safari, iOS, Android and screen-reader checks.
+
+Next owner approval required: (a) run the dispatch-by-ref rollback in the scratch repository (or confirm it is not needed), (b) send the production settings screenshots from section 2, (c) approve the branding assets and the checklist items, (d) decide the transition test, (e) later, a separate explicit authorisation for production.

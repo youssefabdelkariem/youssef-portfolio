@@ -67,7 +67,8 @@ try {
     if (o.over > 0) fail(`${tag}: horizontal overflow ${o.over}px`);
     for (const b of o.broken) fail(`${tag}: image failed ${b}`);
     if (!o.fontOk && w === 1440) fail(`${tag}: display font not loaded`);
-    if (o.canon && !o.canon.startsWith(arg)) fail(`${tag}: canonical ${o.canon}`);
+    // The canonical URL is fixed at build time to the rehearsal URL, which may redirect to another host: compare path and rule out production.
+    if (o.canon && (o.canon.includes('youssef.studio') || new URL(o.canon).pathname !== basePath + r)) fail(`${tag}: canonical ${o.canon}`);
     if (expectBuild && o.build !== expectBuild) fail(`${tag}: build ${o.build}, expected ${expectBuild}`);
     if (r === '/' ) notes.push(`home hero @${w}: ${o.hero}`);
     if (r === '/work/aurelia/' && w === 390) {

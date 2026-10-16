@@ -10,7 +10,8 @@ const opt = (name) => { const i = process.argv.indexOf(`--${name}`); return i > 
 const base = (opt('base') ?? '').replace(/\/$/, '');
 const url = (opt('url') ?? '').replace(/\/$/, '');
 const build = opt('build') ?? 'local';
-if (!inDir || !outDir || !base.startsWith('/') || !url.startsWith('http')) { console.error('usage: rebase-dist.mjs <in> <out> --base /repo --url https://host/repo [--build id]'); process.exit(2); }
+const run = opt('run') ?? 'local';
+if (!inDir || !outDir || !base.startsWith('/') || !url.startsWith('http')) { console.error('usage: rebase-dist.mjs <in> <out> --base /repo --url https://host/repo [--build id] [--run id]'); process.exit(2); }
 
 const prefix = (u) => (u.startsWith('/') && !u.startsWith('//') && !u.startsWith(base + '/') ? base + u : u);
 const html = (s) => {
@@ -18,7 +19,7 @@ const html = (s) => {
   s = s.replace(/\bsrcset="([^"]*)"/g, (_, v) => `srcset="${v.split(',').map((p) => { const t = p.trim().split(/\s+/); t[0] = prefix(t[0]); return t.join(' '); }).join(', ')}"`);
   s = s.replace(/url\((['"]?)(\/[^)'"]*)\1\)/g, (_, q, u) => `url(${q}${prefix(u)}${q})`);
   s = s.replaceAll('https://youssef.studio', url);
-  return s.replace('</head>', `<meta name="robots" content="noindex, nofollow"><meta name="rehearsal-build" content="${build}"></head>`);
+  return s.replace('</head>', `<meta name="robots" content="noindex, nofollow"><meta name="rehearsal-build" content="${build}"><meta name="rehearsal-run" content="${run}"></head>`);
 };
 const css = (s) => s.replace(/url\((['"]?)(\/[^)'"]*)\1\)/g, (_, q, u) => `url(${q}${prefix(u)}${q})`);
 
