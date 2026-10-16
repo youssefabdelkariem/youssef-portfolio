@@ -41,6 +41,7 @@ Push the branch without force (done); do not merge or deploy; keep the old Drive
 
 ## Follow-up changes (same date)
 
+- **Superseded 2026-10-16 ([M2_SITE_AUDIT](M2_SITE_AUDIT.md)):** the public approval-status labels were removed; the role row now repeats only the repository README wording, and the provisional statement below is internal until approved.
 - **Role:** the overview and hero carry "Role wording provisional"; the overview row reads "Independent developer of the racing controller, working with AI-assisted tools (IBM Bob, Codex and Claude Code)". Remove the provisional chip only on owner approval.
 - **Predictive braking:** it appears once, as a V3.4 experiment, and the page now states V3.4 is not part of the final controller. `check-racing` fails if the page calls predictive braking active.
 - **Video thumbnail:** the page shows a stored copy of the video's cover image (`public/media/racing/video-cover-{640,960}.jpg`, from `i.ytimg.com/vi/lp-c8A3NIJI/maxresdefault.jpg`, SHA-256 of the original `71f0f7491bc58d7b0cc0ba9920c1ca98edec5e7dd37877bb9be97382cb6ddb9b`, downloaded 2026-10-16). It is wrapped in the only link to the video, loads lazily and loads nothing from YouTube. The cover was inspected: it is **stylised promotional artwork, not race footage**. Its headline 66.284 s matches the result files; its sector times (18.712, 23.441, 24.131), the 268 km/h read-out, the "Laguna Seca" track map and the photoreal car are not verified by any retained evidence, so the page says so next to the image.

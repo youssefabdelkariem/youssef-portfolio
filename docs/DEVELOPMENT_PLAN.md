@@ -90,3 +90,7 @@ Public pages now show only verified, completed projects: placeholders, planned a
 
 "Pending" notices removed from About and Aurelia, Contact page removed (no verified destination), About reduced to confirmed scope, five unused components and `src/data/projects.ts` deleted after confirming no imports. Outstanding facts live in [CONTENT_MANIFEST](CONTENT_MANIFEST.md#j-outstanding-facts-and-approvals-not-shown-publicly). Not merged, not deployed.
 
+## M2 audit and launch preparation (2026-10-16)
+
+Site-wide audit completed and fixes applied ([M2_SITE_AUDIT](reviews/M2_SITE_AUDIT.md)). A build-artifact GitHub Pages deployment was prepared and tested locally on `chore/m2-pages-actions` without touching production; ADR 0006 stays Proposed. Remaining before any release: owner approvals, social-card and icon assets, rehearsal and approval of the deployment architecture, verified Pages and branch-protection settings, accepted or resolved ADRs, and the untested browsers and screen readers. Not merged, not deployed.
+

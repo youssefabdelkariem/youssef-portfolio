@@ -140,7 +140,8 @@ These were visible as "pending" notices on the site until 2026-10-16. They are t
 | Biography, portrait, location | `/about/` | Approved text and portrait rights | FR-05a, Q05 |
 | Specific software and proficiency levels | `/about/` | Confirmed list | Q05 |
 | Contact destination (email or profile link) | `/contact/` (removed) | Verified, owner-approved destination; then restore the page, nav item and footer link | FR-05b, Q05 |
-| Racing role wording | `/engineering/ibm-ai-racing/` | Approve or replace the provisional statement; remove the "pending owner approval" and "provisional" labels | M-11 |
+| Racing role wording | `/engineering/ibm-ai-racing/` | The owner's provisional statement is "independent developer of the racing controller, with AI-assistance disclosure". Public pages show only the README wording until the owner approves it; then update the page row. The public approval-status labels were removed on 2026-10-16 | M-11 |
+| Social-card image, PNG and touch icons | whole site | Owner-approved assets (none exist) | QA-14 |
 | Racing video cover rights, rule-compliance question, code licence | `/engineering/ibm-ai-racing/` | See [M1B_ENGINEERING_RACING](reviews/M1B_ENGINEERING_RACING.md) | Q04, Q15 |
 | Launch language, OG image, site licence | whole site | Decisions | Q05, Q15, QA-14, QA-16 |
 

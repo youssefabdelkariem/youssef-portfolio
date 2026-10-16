@@ -19,6 +19,16 @@ Updated 2026-10-15 by Claude Code (acting lead engineer while Codex is unavailab
 | ADR statuses | 0001 Accepted; 0002-0006 Proposed (unchanged) |
 | Stack | Astro 7.3.8 static output, TypeScript strict, plain CSS; Node >= 22.12 |
 
+## M2 site audit and launch preparation (2026-10-16)
+
+- **Report:** [M2_SITE_AUDIT](reviews/M2_SITE_AUDIT.md): findings, fixes, accessibility and performance evidence, ADR readiness, launch blockers.
+- **Branches:** `feat/m1b-engineering-racing` carries the audit fixes (pushed). `chore/m2-pages-actions` (local until the owner approves a push; based on the feature branch) carries the proposed build-artifact deployment: `.github/workflows/ci.yml` and `pages.yml`, `scripts/check-artifact.mjs`, `scripts/check-live.mjs`, `scripts/prune-dist.mjs`, `public/CNAME` and `docs/DEPLOYMENT_RUNBOOK.md`. A local branch `rollback/placeholder` points at `c882895` (the live placeholder) for the emergency path in the runbook; it has not been pushed.
+- **Not production:** nothing was merged, deployed, enabled or pushed to a protected branch. Production was probed with read-only requests. ADRs 0002 to 0006 remain Proposed; ADR 0006 gained an evidence note only.
+- **Fixed:** approval labels removed from the public racing page (role row limited to the README wording; "independent developer" stays internal until approved), racing stat grid at tablet width, Aurelia spec table on phones, Escape closes the mobile menu, 404 canonical, manifest pruned from the artifact.
+- **New checks:** `npm run test:a11y` (keyboard sweep, focus visibility, target size, landmarks, headings, menu) in `verify`; on the chore branch also `test:artifact` and `test:live`.
+- **Evidence:** Lighthouse mobile, 30 runs on the production build with approved Aurelia images: 99 to 100 on every route, LCP 1.2 to 1.8 s, CLS 0 to 0.001, no leaked browser processes; accessibility, best practices and SEO 100. axe 0 violations. Firefox 158 smoke test passed. Safari, iOS, Android and screen readers untested.
+- **Codex continuation:** read the audit report, then the runbook on the chore branch. Do not merge, change Pages settings or enable the workflows without the owner. Next useful work: the social-card image and icon set once supplied, a rehearsal repository for the workflow, and the cross-browser and screen-reader passes. Keep `check-dist` and `check-racing` rules intact.
+
 ## Engineering and IBM racing (2026-10-16)
 
 - **Branch:** `feat/m1b-engineering-racing` in `worktrees/engineering-racing`, based on `e7ac8cf`. Pushed to `origin/feat/m1b-engineering-racing` at `79a57c3` on the owner's instruction (no force; no pull request; not merged or deployed); follow-up work is committed on top. Report: [M1B_ENGINEERING_RACING](reviews/M1B_ENGINEERING_RACING.md).
