@@ -80,5 +80,5 @@ The owner approved the hero selection: Shot 002 frame 1 on desktop, Shot 003 fra
 
 ## M1b engineering and racing (updated 2026-10-16)
 
-`/engineering/` and `/engineering/ibm-ai-racing/` are implemented on `feat/m1b-engineering-racing` (local, not pushed) after the workspace was moved out of Google Drive. Facts were read from the owner's racing repository and project history; the page is pending owner approval. Record: [M1B_ENGINEERING_RACING](reviews/M1B_ENGINEERING_RACING.md). Not merged, not deployed.
+`/engineering/` and `/engineering/ibm-ai-racing/` are implemented on `feat/m1b-engineering-racing` (local, not pushed) after the workspace was moved out of Google Drive. Facts were read from the owner's racing repository and project history; the page is pending owner approval. Record: [M1B_ENGINEERING_RACING](reviews/M1B_ENGINEERING_RACING.md). Pushed to `origin/feat/m1b-engineering-racing` on 2026-10-16 at the owner's request; follow-up: provisional role wording, stored video cover, performance investigation. Not merged, not deployed.
 

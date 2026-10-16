@@ -42,7 +42,11 @@ export async function launchBrowser() {
     const close = browser.close.bind(browser);
     browser.close = async () => {
       try { await close(); } catch {}
-      if (process.platform === 'win32') spawnSync('taskkill', ['/F', '/T', '/PID', String(child.pid)], { stdio: 'ignore' }); else child.kill();
+      if (process.platform === 'win32') {
+        spawnSync('taskkill', ['/F', '/T', '/PID', String(child.pid)], { stdio: 'ignore' });
+        // Edge can hand the browser off to another process tree that taskkill on the original pid misses; stop whatever still uses this profile.
+        spawnSync('powershell', ['-NoProfile', '-Command', 'Get-CimInstance Win32_Process | Where-Object { $_.Name -eq "msedge.exe" -and $_.CommandLine -like "*' + path.basename(profile) + '*" } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }'], { stdio: 'ignore' });
+      } else child.kill();
       try { fs.rmSync(profile, { recursive: true, force: true, maxRetries: 3 }); } catch { /* the OS temp folder is cleaned later */ }
     };
     return browser;

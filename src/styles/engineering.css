@@ -95,7 +95,7 @@
 .race-stats dd { margin: var(--s-2) 0 0; font: 500 clamp(1.75rem, 4.4vw, 3rem)/1 var(--font-mono); font-variant-numeric: tabular-nums; color: var(--text); }
 .race-stats dd.sig { color: var(--signal); }
 .race-stats dd small { display: block; margin-top: var(--s-2); font: 400 0.8125rem/1.4 var(--font-body); color: var(--text-2); }
-.race-meta { margin-top: var(--s-5); display: flex; flex-wrap: wrap; gap: var(--s-2); }
+.race-meta { padding: 0; list-style: none; margin-top: var(--s-5); display: flex; flex-wrap: wrap; gap: var(--s-2); }
 
 /* ---- racing: architecture diagram (HTML, responsive) ---- */
 .arch { display: grid; gap: var(--s-5); margin: var(--s-6) 0 0; }
@@ -174,6 +174,13 @@
 .linkcard p { margin: 0; color: var(--text-2); font-size: 0.9688rem; }
 .linkcard a.go { justify-self: start; display: inline-flex; align-items: center; min-height: 44px; font: 600 0.8125rem/1.2 var(--font-body); letter-spacing: 0.12em; text-transform: uppercase; }
 .linkcard a.go::after { content: ''; position: absolute; inset: 0; }
+.videocard { grid-template-columns: minmax(0, 1fr); }
+.thumb { position: relative; display: block; border: 1px solid var(--border-strong); border-radius: var(--r-1); overflow: hidden; background: var(--canvas); transition: border-color 200ms var(--ease); }
+.thumb:hover, .thumb:focus-visible { border-color: var(--signal); }
+.thumb img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+.thumb .play { position: absolute; left: 50%; top: 50%; width: 4.5rem; height: 4.5rem; margin: -2.25rem 0 0 -2.25rem; border-radius: 50%; background: rgb(11 10 9 / .78); border: 2px solid var(--text); }
+.thumb .play::after { content: ''; position: absolute; left: 1.75rem; top: 1.35rem; border-style: solid; border-width: 0.9rem 0 0.9rem 1.45rem; border-color: transparent transparent transparent var(--text); }
+.videocard .t-label { margin: 0; }
 .linkcard code, .prose code, .ticks code { font: 0.8125rem/1.4 var(--font-mono); color: var(--text); overflow-wrap: anywhere; }
 
 .next-band { display: grid; gap: var(--s-4); grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); }

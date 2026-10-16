@@ -18,8 +18,8 @@ try {
 
   // ---- racing page content rules
   const race = await text('/engineering/ibm-ai-racing/');
-  for (const must of ['66.284', '279.22', '67.064', 'No placement or award claimed', 'Pending owner approval', 'AI-assisted', 'not a trained neural network', 'Native Windows only']) if (!race.includes(must)) fail(`racing page missing "${must}"`);
-  for (const bad of [/\bwinner\b/i, /\bwon\b/i, /first place/i, /\bchampion/i, /\bpodium\b/i, /officially (ranked|endorsed)/i, /\b65\.772\b/, /\b4:39\b(?!\.22)/]) if (bad.test(race)) fail(`racing page contains forbidden wording ${bad}`);
+  for (const must of ['66.284', '279.22', '67.064', 'No placement or award claimed', 'Pending owner approval', 'AI-assisted', 'not a trained neural network', 'Native Windows only', 'Role wording provisional', 'Provisional wording', 'not part of the final controller', 'stylised artwork, not race footage']) if (!race.includes(must)) fail(`racing page missing "${must}"`);
+  for (const bad of [/predictive[^.]{0,80}\b(is active|enabled|used in the final)\b/i, /\bwinner\b/i, /\bwon\b/i, /first place/i, /\bchampion/i, /\bpodium\b/i, /officially (ranked|endorsed)/i, /\b65\.772\b/, /\b4:39\b(?!\.22)/]) if (bad.test(race)) fail(`racing page contains forbidden wording ${bad}`);
   const chart = await page.evaluate(() => ({ d: document.querySelector('.chart .trace')?.getAttribute('d') ?? '', rows: document.querySelectorAll('.rung').length, runs: document.querySelectorAll('#runs-cap')[0]?.closest('table')?.querySelectorAll('tbody tr').length ?? 0, final: document.querySelectorAll('.rung.final').length }));
   const points = (chart.d.match(/[ML]/g) ?? []).length;
   if (points !== profile.distance_m.length) fail(`chart has ${points} points, data has ${profile.distance_m.length}`);
@@ -27,6 +27,8 @@ try {
   if (chart.runs !== 8) fail(`run table rows ${chart.runs}, expected 8`);
   if (chart.final !== 1) fail(`expected exactly one final rung, found ${chart.final}`);
   const links = await page.evaluate(() => [...document.querySelectorAll('a[href^="http"]')].map((a) => [a.href, a.rel]));
+  const thumb = await page.evaluate(() => { const i = document.querySelector('.thumb img'); return i ? { src: i.getAttribute('src'), lazy: i.loading, alt: i.alt.length, anchors: document.querySelectorAll('a[href="https://youtu.be/lp-c8A3NIJI"]').length } : null; });
+  if (!thumb || !thumb.src.startsWith('/media/racing/') || thumb.lazy !== 'lazy' || thumb.alt < 20 || thumb.anchors !== 1) fail(`video thumbnail treatment unexpected: ${JSON.stringify(thumb)}`);
   const allowed = ['https://github.com/youssefabdelkariem/IBM-AI-Racing-League', 'https://youtu.be/lp-c8A3NIJI'];
   if (links.length !== 2 || !allowed.every((u) => links.some(([h, rel]) => h === u && /noopener/.test(rel)))) fail(`outbound links unexpected: ${JSON.stringify(links)}`);
 

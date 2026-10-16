@@ -123,5 +123,7 @@ Not yet approved or supplied: role, credits, collaborators, the brief, the finis
 | Speed telemetry chart (314 samples) | Verified, already public | `evidence/lap_speed_profile.json` |
 | Robotic arm | Planned, not built; no evidence | Owner statement |
 | CAD project | Reserved slot, no evidence | None |
-| Role, contest result, footage still, track-access eligibility, code licence | Pending owner | See report |
+| Role | Provisional wording shown (independent developer with AI-assisted tools); pending owner approval | Owner decision 2026-10-16 |
+| Video cover image (stored, 640 and 960 px) | Used on owner's instruction; artwork is stylised, not footage; rights and drawn figures unverified | `public/media/racing/`, source `i.ytimg.com/vi/lp-c8A3NIJI/maxresdefault.jpg` |
+| Contest result, track-access eligibility, code licence | Pending owner; no claim made, no licence added | See report |
 
