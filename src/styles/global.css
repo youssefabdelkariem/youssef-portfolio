@@ -89,6 +89,7 @@ a:hover { color: var(--accent-hover); text-decoration-color: currentColor; }
 .steps p { color: var(--text-2); margin: 0; }
 .table-wrap { overflow-x: auto; border: 1px solid var(--border-strong); border-radius: var(--r-2); }
 .table-wrap:focus-visible { outline-offset: 0; }
+table.kv { min-width: 0; }
 table { border-collapse: collapse; width: 100%; min-width: 34rem; font-size: 0.9688rem; }
 caption { text-align: left; padding: var(--s-4); color: var(--text-2); }
 th, td { text-align: left; padding: var(--s-3) var(--s-4); border-top: 1px solid var(--border-strong); vertical-align: top; }

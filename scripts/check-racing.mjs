@@ -18,8 +18,8 @@ try {
 
   // ---- racing page content rules
   const race = await text('/engineering/ibm-ai-racing/');
-  for (const must of ['66.284', '279.22', '67.064', 'No placement or award claimed', 'Pending owner approval', 'AI-assisted', 'not a trained neural network', 'Native Windows only', 'Role wording provisional', 'Provisional wording', 'not part of the final controller', 'stylised artwork, not race footage']) if (!race.includes(must)) fail(`racing page missing "${must}"`);
-  for (const bad of [/predictive[^.]{0,80}\b(is active|enabled|used in the final)\b/i, /\bwinner\b/i, /\bwon\b/i, /first place/i, /\bchampion/i, /\bpodium\b/i, /officially (ranked|endorsed)/i, /\b65\.772\b/, /\b4:39\b(?!\.22)/]) if (bad.test(race)) fail(`racing page contains forbidden wording ${bad}`);
+  for (const must of ['66.284', '279.22', '67.064', 'AI-assisted', 'not a trained neural network', 'Native Windows only', 'not part of the final controller', 'stylised artwork, not race footage', 'makes no claim of contest placement']) if (!race.includes(must)) fail(`racing page missing "${must}"`);
+  for (const bad of [/pending owner approval/i, /role wording/i, /provisional/i, /independent developer/i, /evidence checked/i, /predictive[^.]{0,80}\b(is active|enabled|used in the final)\b/i, /\bwinner\b/i, /\bwon\b/i, /first place/i, /\bchampion/i, /\bpodium\b/i, /officially (ranked|endorsed)/i, /\b65\.772\b/, /\b4:39\b(?!\.22)/]) if (bad.test(race)) fail(`racing page contains forbidden wording ${bad}`);
   const chart = await page.evaluate(() => ({ d: document.querySelector('.chart .trace')?.getAttribute('d') ?? '', rows: document.querySelectorAll('.rung').length, runs: document.querySelectorAll('#runs-cap')[0]?.closest('table')?.querySelectorAll('tbody tr').length ?? 0, final: document.querySelectorAll('.rung.final').length }));
   const points = (chart.d.match(/[ML]/g) ?? []).length;
   if (points !== profile.distance_m.length) fail(`chart has ${points} points, data has ${profile.distance_m.length}`);

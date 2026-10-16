@@ -27,8 +27,9 @@ for (const r of [...routes, '/404.html']) {
   if (!/<html lang="en"/.test(html)) fail(`${r}: missing html lang`);
   if (!title) fail(`${r}: missing title`); else if (titles.has(title)) fail(`${r}: duplicate title "${title}"`); else titles.add(title);
   if (!desc) fail(`${r}: missing description`);
-  if (!canon) fail(`${r}: missing canonical`);
-  else if (r !== '/404.html' && canon !== `https://youssef.studio${r}`) fail(`${r}: canonical ${canon}`);
+  if (r === '/404.html') { if (canon) fail('404.html must not declare a canonical URL'); }
+  else if (!canon) fail(`${r}: missing canonical`);
+  else if (canon !== `https://youssef.studio${r}`) fail(`${r}: canonical ${canon}`);
   const h1s = html.match(/<h1[\s>]/g) ?? [];
   if (h1s.length !== 1) fail(`${r}: expected exactly one h1, found ${h1s.length}`);
   if (!/<main id="main"/.test(html)) fail(`${r}: missing main landmark`);
@@ -58,7 +59,7 @@ for (const r of [...routes, '/404.html']) {
   if (/<img(?![^>]*\balt=)/.test(html)) fail(`${r}: img without alt`);
   // Verified work only: no planned, coming-soon or empty-slot project placeholders on any public page.
   const text = html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, '').replace(/<[^>]+>/g, ' ');
-  for (const bad of [/coming soon/i, /planned,? not built/i, /\bempty slot\b/i, /project slot/i, /none verified yet/i, /appears here when/i, /reserved,? no project/i, /robotic arm/i, /not published yet/i, /pending confirmation/i, /biography pending/i, /credits pending/i, /in preparation/i, /placeholder/i, /not approved/i]) if (bad.test(text)) fail(`${r}: placeholder wording ${bad}`);
+  for (const bad of [/coming soon/i, /planned,? not built/i, /\bempty slot\b/i, /project slot/i, /none verified yet/i, /appears here when/i, /reserved,? no project/i, /robotic arm/i, /not published yet/i, /pending confirmation/i, /biography pending/i, /credits pending/i, /in preparation/i, /placeholder/i, /not approved/i, /pending owner approval/i, /provisional/i, /role wording/i]) if (bad.test(text)) fail(`${r}: placeholder wording ${bad}`);
 }
 for (const f of fs.readdirSync(path.join(dist, '_astro'), { recursive: true })) {
   const p = path.join(dist, '_astro', f);

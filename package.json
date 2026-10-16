@@ -18,8 +18,9 @@
     "test:dist": "node scripts/check-dist.mjs",
     "test:browser": "node scripts/check-browser.mjs",
     "check:docs": "node scripts/check-docs.mjs",
-    "verify": "npm run check:docs && npm run typecheck && npm run build && npm run test:dist && npm run test:browser && npm run test:aurelia && npm run test:racing",
-    "test:racing": "node scripts/check-racing.mjs"
+    "verify": "npm run check:docs && npm run typecheck && npm run build && npm run test:dist && npm run test:browser && npm run test:aurelia && npm run test:racing && npm run test:a11y",
+    "test:racing": "node scripts/check-racing.mjs",
+    "test:a11y": "node scripts/check-a11y.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
