@@ -50,8 +50,8 @@ shutil.copy2('package-lock.json', os.path.join(DEST, 'package-lock.json'))
 # package.json: same dependencies and checks, without the documentation and exploration scripts
 pkg = json.load(open('package.json', encoding='utf8'))
 pkg['name'] = 'youssef-pages-rehearsal'
-pkg['scripts'] = {k: v for k, v in pkg['scripts'].items() if k in ('build', 'typecheck', 'test:dist', 'test:artifact', 'test:browser', 'test:aurelia', 'test:racing', 'test:a11y', 'test:repro', 'preview', 'dev')}
-pkg['scripts']['verify'] = 'npm run typecheck && npm run build && npm run test:dist && npm run test:artifact && npm run test:browser && npm run test:aurelia && npm run test:racing && npm run test:a11y'
+pkg['scripts'] = {k: v for k, v in pkg['scripts'].items() if k in ('build', 'typecheck', 'test:dist', 'test:artifact', 'test:resolve', 'test:browser', 'test:aurelia', 'test:racing', 'test:a11y', 'test:repro', 'preview', 'dev')}
+pkg['scripts']['verify'] = 'npm run typecheck && npm run build && npm run test:dist && npm run test:artifact && npm run test:resolve && npm run test:browser && npm run test:aurelia && npm run test:racing && npm run test:a11y'
 json.dump(pkg, open(os.path.join(DEST, 'package.json'), 'w', encoding='utf8'), indent=2)
 
 # the exploration routes are not part of the scratch site

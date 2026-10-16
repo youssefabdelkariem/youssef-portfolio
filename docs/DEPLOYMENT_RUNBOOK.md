@@ -65,7 +65,7 @@ The full, revised procedure with downtime assessment is in [M25_REHEARSAL, secti
 
 | Situation | Action |
 | --- | --- |
-| A deployed version is bad, a good build exists | Actions, `Deploy site`, run `workflow_dispatch` with `ref` set to the last good commit SHA. Or re-run the last good deployment run (artifacts kept 30 days) |
+| A deployed version is bad, a good build exists | Actions, `Deploy site`, Run workflow from `main`, `ref` = the last good commit SHA (7 to 40 hex characters, already in `main`'s history). The `resolve` job rejects branches, tags, unknown or off-main commits, resolves the full SHA, and `build`, `deploy` and `smoke` all use that one SHA. Afterwards confirm the deployed build is that commit. Or re-run the last good deployment run (artifacts kept 30 days) |
 | Emergency, serve the old placeholder | Settings, Pages, Source: Deploy from branch, `rollback/placeholder`, `/ (root)`. Takes effect within minutes; custom domain stays |
 | Workflow is broken | Revert the merge commit on `main` through a reviewed pull request; do not force-push |
 
@@ -80,6 +80,13 @@ Note that the `ref` rollback only works for commits that contain the Astro build
 Tested: full `npm run verify` with `CI=1` (no-sandbox launch path), artifact allowlist with injected bad files, `check-live` against a Pages-like local server and read-only against production (it fails today, as expected), YAML parse of both workflows. **Not tested:** the workflows on GitHub-hosted runners (Chrome path and sandbox on `ubuntu-24.04`), the deploy action, environment rules, the Pages source switch, domain persistence, branch protection. These need a rehearsal repository or the owner's settings access.
 
 M2.5 added: byte-identical double builds, a local scratch-repository run of the whole pipeline including two deployments and a rollback by rebuilding the earlier commit, and Edge and Firefox checks of the rebased site under a sub-path. M2.5 then rehearsed the Pages deployment on GitHub in the private scratch repository `youssef-pages-rehearsal` ([results](reviews/M25_REHEARSAL.md#3b-github-pages-deployment-and-rollback-rehearsal-2026-10-16)): seven deployments with the Node 24 action pins, deployed-site checks in Edge, artifact exposure probes, and two repeatable rollbacks by revert commit. Still **not** tested there: the rollback by `workflow_dispatch` with `ref` (owner click), the Pages source transition and Firefox against the live URL. A GitHub-hosted CI run of the whole `verify` suite (including the browser tests on `ubuntu-24.04` with the no-sandbox path) passed on 2026-10-16 ([run](https://github.com/youssefabdelkariem/youssef-portfolio/actions/runs/38923066056)); it showed that pushing the branch triggers `CI` only. Still **not** tested: the Pages deployment on GitHub, the Pages source transition and what stays live during it, domain persistence, environment rules and branch protection.
+
+## 8a. Rollback lessons from the rehearsal (2026-10-16)
+
+- Rolling back with `git revert` also reverts scripts and workflow changes made in the reverted commits, so the next run may use older checks. Keep the smoke checks in the tip of `main` independent of what was rolled back (the smoke job already checks out the tip of `main`).
+- A new deployment can take a short while to reach every Pages edge and HTML is cached for up to ten minutes (`max-age=600`): the smoke test waits for the expected build, and visitors may briefly see the previous version.
+- The deployed build must be compared with the **resolved** commit, not with the commit that triggered the run. Details and run IDs: [M25_REHEARSAL, section 3c](reviews/M25_REHEARSAL.md#3c-manual-rollback-run-8-investigation-fix-and-re-test-2026-10-16).
+- `scripts/resolve-deploy-ref.mjs` is tested by `npm run test:resolve` (14 cases). Production `check-live` does not yet verify which commit is live; consider publishing a build stamp (for example a `build.txt` added to the allowlist) so the post-deployment check can compare commits, as the rehearsal does.
 
 ## 8. Observed Pages behaviour (scratch deployment, 2026-10-16)
 

@@ -15,6 +15,25 @@ const problems = [], notes = [];
 const fail = (m) => problems.push(m);
 const origin = new URL(arg).origin; const basePath = new URL(arg).pathname.replace(/\/$/, '');
 const routes = ['/', '/work/', '/work/aurelia/', '/engineering/', '/engineering/ibm-ai-racing/', '/about/'];
+// Expected canonical origin and path, fixed at build time (REHEARSAL_URL). It is independent of the URL the browser ends up on after
+// redirects: the check compares each page's canonical link with canonicalBase + route, and rules out production URLs.
+const canonicalBase = (process.argv.includes('--canonical-base') ? process.argv[process.argv.indexOf('--canonical-base') + 1] : '').replace(/\/$/, '');
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// ---- propagation: a new deployment can take a short while to reach every Pages edge, so the previous version may still be served
+// for a moment. Wait (bounded) until the page the user would get, with and without a cache-busting query, reports the expected build.
+if (expectBuild) {
+  const stamp = async (u) => /<meta name="rehearsal-build" content="([0-9a-f]+)"/.exec(await (await fetch(u, { headers: { 'cache-control': 'no-cache' } })).text())?.[1] ?? null;
+  const t0 = Date.now(); let plain = null, busted = null, n = 0, plainAt = null, bustedAt = null;
+  while (Date.now() - t0 < Number(process.env.REHEARSAL_WAIT_MS ?? 5 * 60 * 1000)) {
+    n++; busted = await stamp(`${arg}/?probe=${Date.now()}`); plain = await stamp(`${arg}/`);
+    if (busted === expectBuild && bustedAt === null) bustedAt = Math.round((Date.now() - t0) / 1000);
+    if (plain === expectBuild) { plainAt = Math.round((Date.now() - t0) / 1000); break; }
+    await sleep(10000);
+  }
+  notes.push(`build stamp: expected ${expectBuild.slice(0, 7)}, plain URL ${plain?.slice(0, 7)} after ${plainAt ?? '>300'} s (${n} probe(s)), cache-busted URL matched after ${bustedAt ?? 'never'} s`);
+  if (plain !== expectBuild) fail(`deployed build ${plain} did not become ${expectBuild} within the wait limit`);
+}
 
 // ---- HTTP level
 for (const r of routes) {
@@ -68,7 +87,9 @@ try {
     for (const b of o.broken) fail(`${tag}: image failed ${b}`);
     if (!o.fontOk && w === 1440) fail(`${tag}: display font not loaded`);
     // The canonical URL is fixed at build time to the rehearsal URL, which may redirect to another host: compare path and rule out production.
-    if (o.canon && (o.canon.includes('youssef.studio') || new URL(o.canon).pathname !== basePath + r)) fail(`${tag}: canonical ${o.canon}`);
+    if (!o.canon) fail(`${tag}: no canonical link`);
+    else if (o.canon.includes('youssef.studio') || new URL(o.canon).pathname !== basePath + r) fail(`${tag}: canonical ${o.canon} does not match the rehearsal path ${basePath + r}`);
+    else if (canonicalBase && o.canon !== canonicalBase + r) fail(`${tag}: canonical ${o.canon}, expected ${canonicalBase + r}`);
     if (expectBuild && o.build !== expectBuild) fail(`${tag}: build ${o.build}, expected ${expectBuild}`);
     if (r === '/' ) notes.push(`home hero @${w}: ${o.hero}`);
     if (r === '/work/aurelia/' && w === 390) {

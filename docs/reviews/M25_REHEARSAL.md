@@ -92,6 +92,38 @@ Compatibility findings and fixes:
 4. **Action versions.** The Node 20 deprecation warning is resolved by the Node 24 releases above; the deploy and upload actions worked on GitHub.
 5. **Source transition not tested.** The repository was already set to Actions, so what stays live when the source changes remains unknown.
 
+## 3c. Manual rollback run #8: investigation, fix and re-test (2026-10-16)
+
+The owner dispatched `Deploy rehearsal` with `ref` = `09a314b259411fbf3762c8327a0b8413242c339f` ([run 38942505896](https://github.com/youssefabdelkariem/youssef-pages-rehearsal/actions/runs/38942505896)): build and deploy passed, smoke failed, and the failure reported the build `0b4d89c` and canonical URL mismatches.
+
+**Findings**
+
+1. **The `ref` input was used for the checkout.** The original build job had `ref: ${{ inputs.ref || github.sha }}`, and the stamp step recorded `git rev-parse HEAD` of that checkout. Proof from the deployed site: it now reports `rehearsal-build 09a314b259411fbf3762c8327a0b8413242c339f` and `rehearsal-run 38942505896-1`, i.e. the artifact of run #8 was built from the requested commit. The deployed rollback itself therefore worked.
+2. **The smoke failure was in the checks, not in the rollback.** (a) The smoke job ran straight after the deploy job with no wait. A new Pages deployment takes some time to reach every edge, and HTML is served with `Cache-Control: max-age=600`; seeing the previous build (`0b4d89c`) for a short time is consistent with that. The logs are private, so which build the smoke saw could not be read; the later state of the site and the run stamp rule out a wrong checkout. (b) The smoke job checks out the tip of `main`, whose tree after my revert-based rollbacks was identical to build 1, so it ran the **old** checker. The corrected canonical-URL logic existed only in build 2 and had been reverted away with it (a side effect of rolling back by revert: scripts roll back too). The old checker compared each page's canonical URL, fixed at build time to the github.io address, with the URL the browser ended on after the redirect to `yousseff.me`.
+3. **Two weaknesses did remain in the workflow**: the requested ref was not validated (a branch name, a tag or any string went straight to `checkout`), and the deploy and smoke jobs recomputed their own idea of the commit instead of sharing one resolved value.
+
+**Canonical URL, redefined.** The expected canonical is `REHEARSAL_URL` plus the route, decided at build time and passed to the checker with `--canonical-base`. The URL the browser ends on is a different thing and may be on another host after a redirect. The checker now fails when a page has no canonical, when it mentions `youssef.studio`, when its path is not the route under the base path, or when it differs from `canonicalBase + route`. Verified locally with a correct base (pass) and a wrong base (fail).
+
+**Propagation.** `check-rehearsal.mjs` now polls, for up to 5 minutes (`REHEARSAL_WAIT_MS`), the page the user would get and a cache-busted copy of it until the build stamp equals the expected commit, and reports after how many seconds each matched; it fails if the plain URL never matches. Browser cache is not involved in the smoke job (fresh runner, no cache), but real visitors can keep the previous HTML for up to ten minutes (`max-age=600`).
+
+**Workflow changes (scratch template and production `pages.yml`)**
+
+- New first job `resolve`, which runs on the tip of `main` (never on the requested commit) and calls `scripts/resolve-deploy-ref.mjs`. It requires a plain hexadecimal SHA of 7 to 40 characters (branches, tags, ranges, options and any other text are rejected before any git call), resolves it with `git rev-parse --verify --end-of-options` to a full SHA (rejecting unknown or ambiguous values), and requires it to be an ancestor of the workflow commit, so only history already on `main` can be deployed. No shell is involved; the request travels in an environment variable. Output: `sha`.
+- `build` checks out `ref: ${{ needs.resolve.outputs.sha }}` and a step fails if `git rev-parse HEAD` differs; `deploy` needs `resolve` and `build`; `smoke` takes the same `needs.resolve.outputs.sha`. One resolved commit is used by all three jobs. The workflow file itself always comes from the default branch (a dispatch from another branch cannot deploy: the deploy job requires `github.ref == refs/heads/main`).
+- Scratch only: because the agent has no API token to dispatch, a push to `main` whose message contains `[rollback-to: <sha>]` feeds the same `resolve` job. It is not in the production workflow.
+- `npm run test:resolve` (also in `verify`) tests the resolver against a throwaway repository: 14 cases (no ref, full, short and upper-case SHA, the workflow commit itself, unknown commit, branch, tag, `HEAD~1`, range, `--help`, injected command, too short, a commit on another branch). All pass.
+
+**Re-test on GitHub (scratch repository only)**
+
+| Step | Commit | Run | Result |
+| --- | --- | --- | --- |
+| Push of the fixed workflow, scripts and checker | `dfcbf05` | [38943921505](https://github.com/youssefabdelkariem/youssef-pages-rehearsal/actions/runs/38943921505) | Normal path: `resolve`, `build`, `deploy`; the site stamp became `dfcbf05` |
+| Rollback by push marker `[rollback-to: 09a314b259411fbf3762c8327a0b8413242c339f]` (empty commit `aece9ca`) | `aece9ca` carries the workflow | [38944332800](https://github.com/youssefabdelkariem/youssef-pages-rehearsal/actions/runs/38944332800) | **Deployed site reports `rehearsal-build 09a314b259411fbf3762c8327a0b8413242c339f` and `rehearsal-run 38944332800-1`**: the requested commit, not the commit that triggered the run |
+
+Local verification of the live result with the same arguments as the smoke job (`--expect-build 09a314b… --canonical-base https://youssefabdelkariem.github.io/youssef-pages-rehearsal`, Edge 155): build stamp matched on the first probe (plain and cache-busted), canonical URLs correct on all pages at both widths, all other checks passed, and all 7 HTML pages are identical to the original build 1 pages once the stamps are removed. The smoke job's own result for these two runs is private and has to be read from the run pages by the owner; I did not treat a missing result as a pass.
+
+**Status of manual rollback.** Rollback by dispatching with `ref` is proven for checkout and deployment by run #8 (live stamp equals the requested commit) and, with validation, by run 38944332800 through the identical `resolve` path. The only part not exercised on GitHub after the fix is the dispatch click itself; its input handling is the same `REF` environment variable the marker path uses. Treat the dispatch rollback as verified once the owner has re-run it once with the fixed workflow and the smoke job shows green.
+
 ## 3a. GitHub-hosted CI run (2026-10-16, after the owner approved the push)
 
 Pushed without force: `chore/m2-pages-actions` at `9553361e46d27da4e51f382fdc1b7f372a5ceea4` and `rollback/placeholder` at `c882895` (the live placeholder; `main` is still `c882895`).
