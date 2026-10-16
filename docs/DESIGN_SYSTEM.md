@@ -66,3 +66,20 @@ Palette, wordmark and tokens are unchanged. Typography keeps the system stacks, 
 Display face: **Instrument Serif** (OFL 1.1, self-hosted, verified; see [M1B_FONT_EVALUATION](reviews/M1B_FONT_EVALUATION.md#decision-and-licence-verification-2026-10-15)) for `h1` and `h2` through the `--font-headline` token, with a metric-matched fallback. Navigation, body, labels, `h3` and metadata keep the system faces. Headline sizes were retuned for the narrower face (`h1` 2.75 to 6.5 rem, `h2` 2.25 to 4 rem; homepage hero 1.75 rem on phones to 7.5 rem).
 
 New components: `Plate` (now takes a responsive `Pic` from `src/data/media.ts`: AVIF with JPEG fallback, optional phone crop at 560 px, focal point, placeholder and failure fallback), `BreakdownViewer` (native radio group with a static table alternative), and the case-study layouts (`.work-feature`, `.shots`, `.filmslot`, `.steps`, specification tables). Media-backed images keep the placeholder contract: a clean checkout without derivatives renders labelled placeholders.
+
+## Approved identity: Direction A "Brass Y and period" (owner decision 2026-10-17)
+
+The owner approved Direction A for the first public release: a geometric brass Y (`#c9a96e`, round caps and joins), a small ivory period (`#ebe5da`) at its lower right, on a warm-black (`#0b0a09`) rounded square, with the uppercase `YOUSSEF.STUDIO` wordmark and the ivory and brass Instrument Serif editorial typography. Directions B and C are rejected and not to be reused. Brass stays restrained; vermilion (`#ff5a36`) remains Engineering-only and never appears in the mark or the social card.
+
+**Dot refinement (adopted, 2026-10-17).** Compared at 16, 32, 64 and 180 px (`scripts/branding/compare-dot.mjs`, preview `previews/m4-branding/dot-comparison.png`): the approved dot (`cx 46, cy 49, r 3.6`) read as a speck at 16 and 32 px, the refined dot (`cx 46.6, cy 49.6, r 4.4`) stays distinct from the Y stem and keeps its clearance; no visible downside at 64 and 180 px. Colours, stroke, the geometry of the Y and the rounded square are unchanged. (`compare-dot.mjs` only runs against the original master; it exits with a message once the refined dot is in place.)
+
+| Asset (in `public/`) | Spec | Source |
+| --- | --- | --- |
+| `favicon.svg` | 64 x 64 master, the single source of the mark | hand-authored, approved |
+| `favicon.ico` | 16, 32, 48 px PNG entries | rendered from the master |
+| `icon-192.png`, `icon-512.png` | rounded square, transparent corners | rendered from the master |
+| `apple-touch-icon.png` | 180 x 180, full-bleed square (iOS applies its own mask) | master with `rx=0` |
+| `og-image.png` | 1200 x 630, under 300 KB: mark, wordmark, the site tagline | `scripts/branding/make-assets.mjs` using the self-hosted fonts |
+| `site.webmanifest` | name, theme and background `#0b0a09`, 192 and 512 icons | authored |
+
+Regenerate with `node scripts/branding/make-assets.mjs`; guard with `npm run test:branding`. The card text is the site's own tagline and service line; it makes no claim, credit or client reference.

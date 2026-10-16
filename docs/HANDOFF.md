@@ -290,3 +290,10 @@ M1b is planned in [M1B_PLAN](M1B_PLAN.md) (not started): owner inputs, phases an
 3. Run `npm ci && npm run verify` first and compare with the table above. Report differences; do not assume it passes.
 4. Treat ADRs 0002-0006 as Proposed. Do not merge, deploy, change Pages/DNS, or add workflows without owner authorization. Commit with an `Agent: Codex` body line and the real author.
 5. Keep this file, DEVELOPMENT_PLAN and SITE_ARCHITECTURE in step with any change; add placeholders rather than invented content.
+
+## M3 final branding and M4 pre-launch (2026-10-17)
+
+- **Decision:** the owner approved Direction A; no further exploration. Assets and provenance: [DESIGN_SYSTEM](DESIGN_SYSTEM.md#approved-identity-direction-a-brass-y-and-period-owner-decision-2026-10-17), [CONTENT_MANIFEST section L](CONTENT_MANIFEST.md).
+- **Code:** `src/layouts/BaseLayout.astro` now fails the build if a brand asset is missing and emits unconditional absolute metadata; `scripts/check-branding.mjs` (`npm run test:branding`) validates decoded icon sizes, the manifest, every page head and that no branding source leaks. `scripts/branding/` holds the generators (not shipped).
+- **Verification:** `CI=1 npm run verify` passes including branding, artifact allowlist and reproducibility; Chrome-family and Firefox rehearsal checks pass; mobile and desktop screenshots reviewed. Not tested: Safari, iOS, Android, real social-platform unfurls.
+- **Still owner-gated:** production cutover, ADR acceptance, film, walkthrough, contact destination. Do not merge or push without the owner.

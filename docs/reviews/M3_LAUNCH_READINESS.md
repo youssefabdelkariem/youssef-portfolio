@@ -113,3 +113,13 @@ Claude Code: implementation. Codex: independent technical review, using the hand
 **Recommended checks**: Safari, iOS Safari, Android Chrome and a screen reader pass; the dispatch rollback click re-run after the workflow fix with a green smoke job; Lighthouse on the live URL; fixing HTTPS on the unrelated `yousseff.me` user-site domain.
 
 **Optional**: page-specific social cards; a launch language statement (QA-16); sitemap submission after launch; adding the finished film and the walkthrough later through the documented workflow.
+
+## 10. Final branding integration and M4 pre-launch (2026-10-17)
+
+**Verdict: READY WITH CONDITIONS** for M4 review.
+
+- **Approval:** Direction A "Brass Y and period" (owner, 2026-10-17). Assets, dot refinement and provenance: [DESIGN_SYSTEM](../DESIGN_SYSTEM.md#approved-identity-direction-a-brass-y-and-period-owner-decision-2026-10-17).
+- **Metadata verified** by `check-branding` on all 7 built pages: SVG, ICO, 192 and apple icons, manifest, theme colour, absolute resolving og:image and twitter:image (`https://youssef.studio/og-image.png`, 1200 x 630, 266 KB), alt text, canonical (none on 404).
+- **Checks run:** `CI=1 npm run verify` (docs, typecheck, build, dist, artifact, branding, resolver, browser/axe, Aurelia, racing, publication, film, keyboard, reproducibility) all pass; Chrome-family and Firefox rehearsal checks pass; screenshots of the 7 routes at three widths reviewed. Film dormant (`film: null`), walkthrough absent from artifact and sitemap, no university wording.
+- **Not tested:** Safari, iOS, Android, real platform unfurls (social crops simulated only: a 1:1 crop cuts the card text, the full 1.91:1 and 16:9 crops are clean).
+- **Remaining approvals:** production cutover and settings (section 6, runbook section 10), ADR 0002 to 0006 per section 8 (unchanged, recommendations stand), film, walkthrough, contact destination.

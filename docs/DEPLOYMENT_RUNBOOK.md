@@ -96,3 +96,15 @@ Trailing-slash 301 for directory routes, custom 404 with status 404, correct MIM
 
 The ordered procedure is section 4 and [M25_REHEARSAL, section 5](reviews/M25_REHEARSAL.md#5-production-architecture-review-and-cutover-proposal); the M3 readiness review ([M3_LAUNCH_READINESS](reviews/M3_LAUNCH_READINESS.md)) adds the release checklist and ADR recommendations. Integration baseline for the release pull request: `chore/m2-pages-actions` plus the approved `feat/m3-launch-readiness`, merged only after the Pages source is GitHub Actions. New guards in the pipeline: `check-publication` (unpublished walkthrough and film excluded), the artifact allowlist (walkthrough paths and film files rejected until approved), `check-live` (walkthrough URL must return 404 until published) and the university and placeholder wording bans in `check-dist`.
 
+## 10. Production re-probe and final cutover sequence (2026-10-17)
+
+Public, read-only probe: `main` is unprotected, the rulesets list is empty, and the `github-pages` environment lists exactly one allowed deployment branch, `main` (this narrows the earlier "unverified" note). The Pages source, Enforce HTTPS, Actions permissions and the custom domain setting still need the owner's authenticated view; production settings were not changed.
+
+Final cutover sequence (each step needs the owner; expected downtime: none to a few minutes, the placeholder keeps serving until the first Actions deployment replaces it):
+
+1. Owner confirms: Pages source (still branch), Enforce HTTPS on, Actions permissions allow the pinned actions, and the `github-pages` policy (`main` only).
+2. Push `rollback/placeholder` at the known-good commit `c882895`.
+3. Add the ruleset on `main` (pull request, `CI / verify`, no force-push or deletion).
+4. Switch the Pages source to GitHub Actions, keeping the custom domain and HTTPS. Never merge the Astro source while the source is still a branch.
+5. Open and review the release pull request, then merge with explicit authorisation; `pages.yml` verifies, deploys and smoke-tests (including the new brand assets and the 404 walkthrough).
+6. Verify live (`npm run test:live`, manual pass); on failure revert the merge commit or dispatch with the placeholder SHA.

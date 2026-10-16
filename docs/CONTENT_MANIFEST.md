@@ -154,3 +154,10 @@ These were visible as "pending" notices on the site until 2026-10-16. They are t
 | Social card, favicon, touch and PNG icons | Three directions previewed locally, direction A recommended | Choice of direction and approval of the final assets | `scripts/branding/make-previews.mjs`, M3 report |
 | Institutional references | Excluded from public pages by policy and by a build check | Written change of the instruction if ever wanted | CONTENT_PLAN |
 
+## L. Final brand assets (2026-10-17)
+
+| Item | State | Provenance | Approval |
+| --- | --- | --- | --- |
+| `favicon.svg`, `favicon.ico`, `icon-192.png`, `icon-512.png`, `apple-touch-icon.png`, `og-image.png`, `site.webmanifest` | Committed in `public/`, shipped in the artifact | Original work for this site, generated from the approved master by `scripts/branding/make-assets.mjs`; uses only the site's own fonts and tagline; no third-party imagery | Owner approved Direction A on 2026-10-17; dot refinement adopted by the implementer on evidence (see DESIGN_SYSTEM) |
+
+Metadata: every page carries an SVG icon, ICO fallback, 192 icon, apple touch icon, manifest link, theme colour, absolute `https://youssef.studio` canonical (not on 404), Open Graph and Twitter `summary_large_image` tags with alt text. Branding previews and review images stay outside the repository.

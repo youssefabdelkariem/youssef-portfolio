@@ -102,3 +102,6 @@ Prepared and locally tested; the deployment branch and the rollback branch were 
 
 `feat/m3-launch-readiness` (local, based on `chore/m2-pages-actions`): university references removed and banned from public pages, About reworded, a dormant poster-first film component, an internal draft Aurelia walkthrough behind a publication gate with tests proving its exclusion, three branding directions (A recommended, previews only), final readiness review. Verdict READY WITH CONDITIONS; report: [M3_LAUNCH_READINESS](reviews/M3_LAUNCH_READINESS.md), procedure: [AURELIA_PUBLICATION](AURELIA_PUBLICATION.md). Not merged, not deployed, not pushed.
 
+## M3 final branding integration and M4 pre-launch (2026-10-17)
+
+Direction A is approved and integrated on `feat/m3-launch-readiness` (local commit, not pushed): final assets, unconditional absolute metadata, `site.webmanifest`, `test:branding` in `verify`, an extended artifact allowlist and `check-live` asset checks. The film stays dormant and the walkthrough excluded. Production integration is **not** started: Pages still publishes from the `main` branch. Report: [M3_LAUNCH_READINESS](reviews/M3_LAUNCH_READINESS.md#10-final-branding-integration-and-m4-pre-launch-2026-10-17).
