@@ -1,0 +1,29 @@
+---
+// One walkthrough clip: an AVIF poster that is always present, and a silent video that scripts/walkthrough.ts
+// loads and plays only when it is on screen. Without JavaScript, or when the video fails, the poster remains.
+// The poster box is sized by CSS aspect-ratio, so media never shifts layout.
+interface Props {
+  id: string;
+  alt: string;
+  ratio: [number, number];
+  ratioM?: [number, number];
+  /** A smaller, cropped rendition exists as <id>-m. */
+  mobile?: boolean;
+  loop?: boolean;
+  eager?: boolean;
+  label?: string;
+  class?: string;
+}
+const { id, alt, ratio, ratioM, mobile = false, loop = true, eager = false, label = '', class: cls = '' } = Astro.props;
+const base = '/media/walkthrough/';
+const ratioMobile = ratioM ?? ratio;
+---
+
+<figure class:list={['clip', cls]} data-clip={id} data-loop={loop ? 'true' : 'false'} style={`--r:${ratio[0]} / ${ratio[1]};--rm:${ratioMobile[0]} / ${ratioMobile[1]}`}>
+  <picture>
+    {mobile && <source media="(max-width: 700px)" srcset={`${base}${id}-m.avif`} />}
+    <img src={`${base}${id}.avif`} alt={alt} width={ratio[0]} height={ratio[1]} decoding="async" loading={eager ? 'eager' : 'lazy'} fetchpriority={eager ? 'high' : undefined} />
+  </picture>
+  <video muted playsinline preload="none" loop={loop} aria-hidden="true" tabindex="-1" disablepictureinpicture disableRemotePlayback data-src={`${base}${id}.mp4`} data-src-m={mobile ? `${base}${id}-m.mp4` : undefined}></video>
+  <button class="clip-ctl" type="button" hidden data-label={label || alt.split('.')[0]}><span class="clip-ctl-i" aria-hidden="true"></span><span class="sr">Pause clip</span></button>
+</figure>

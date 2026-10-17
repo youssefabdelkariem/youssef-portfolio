@@ -1,0 +1,328 @@
+{
+  "note": "Times are seconds on the timeline of Aurelia_Walkthrough_v002_4K.mp4 (3840x2160, 24 fps, 2:49:10). Each clip is trimmed 2 frames inside the listed shot cuts. Mobile crop rectangles are in full-frame coordinates (region origin 800,190 already added).",
+  "trimFrames": 2,
+  "crops": {
+    "ill": {
+      "desktop": [
+        800,
+        190,
+        2920,
+        1780
+      ],
+      "mobile": [
+        1000,
+        390,
+        1960,
+        1470
+      ]
+    },
+    "pla": {
+      "desktop": [
+        800,
+        190,
+        2920,
+        1780
+      ],
+      "mobile": [
+        1390,
+        320,
+        1900,
+        1425
+      ]
+    },
+    "ble": {
+      "desktop": [
+        800,
+        190,
+        2920,
+        1780
+      ],
+      "mobile": [
+        1100,
+        380,
+        1800,
+        1350
+      ]
+    },
+    "nuke": {
+      "desktop": [
+        800,
+        190,
+        2920,
+        1780
+      ],
+      "mobile": [
+        800,
+        320,
+        1850,
+        1390
+      ]
+    },
+    "ae": {
+      "desktop": [
+        800,
+        190,
+        2920,
+        1780
+      ],
+      "mobile": [
+        1450,
+        420,
+        1700,
+        1275
+      ]
+    },
+    "full": {
+      "desktop": [
+        0,
+        0,
+        3840,
+        2160
+      ],
+      "mobile": null
+    },
+    "cmpL": {
+      "desktop": [
+        112,
+        500,
+        1760,
+        990
+      ],
+      "mobile": null
+    },
+    "cmpR": {
+      "desktop": [
+        1968,
+        500,
+        1760,
+        990
+      ],
+      "mobile": null
+    }
+  },
+  "sizes": {
+    "ui": {
+      "desktop": [
+        1440,
+        878
+      ],
+      "mobile": [
+        800,
+        600
+      ]
+    },
+    "full": {
+      "desktop": [
+        1920,
+        1080
+      ],
+      "mobile": [
+        960,
+        540
+      ]
+    },
+    "cmp": {
+      "desktop": [
+        1280,
+        720
+      ],
+      "mobile": [
+        1280,
+        720
+      ]
+    }
+  },
+  "clips": [
+    {
+      "id": "hero",
+      "in": 0,
+      "out": 8,
+      "crop": "full",
+      "shots": "1-3"
+    },
+    {
+      "id": "d1",
+      "in": 11,
+      "out": 16,
+      "crop": "ill",
+      "shots": "5"
+    },
+    {
+      "id": "d2",
+      "in": 16,
+      "out": 24,
+      "crop": "ill",
+      "shots": "6"
+    },
+    {
+      "id": "d3",
+      "in": 24,
+      "out": 29,
+      "crop": "ill",
+      "shots": "7"
+    },
+    {
+      "id": "d4",
+      "in": 29,
+      "out": 34,
+      "crop": "ill",
+      "shots": "8"
+    },
+    {
+      "id": "m1",
+      "in": 36,
+      "out": 44,
+      "crop": "pla",
+      "shots": "10"
+    },
+    {
+      "id": "m2",
+      "in": 44,
+      "out": 52,
+      "crop": "pla",
+      "shots": "11"
+    },
+    {
+      "id": "m3",
+      "in": 52,
+      "out": 58,
+      "crop": "pla",
+      "shots": "12"
+    },
+    {
+      "id": "m4",
+      "in": 58,
+      "out": 63,
+      "crop": "pla",
+      "shots": "13"
+    },
+    {
+      "id": "b1",
+      "in": 65,
+      "out": 71,
+      "crop": "ble",
+      "shots": "15"
+    },
+    {
+      "id": "b2",
+      "in": 71,
+      "out": 77,
+      "crop": "ble",
+      "shots": "16"
+    },
+    {
+      "id": "b3",
+      "in": 77,
+      "out": 83,
+      "crop": "ble",
+      "shots": "17"
+    },
+    {
+      "id": "b4",
+      "in": 83,
+      "out": 87,
+      "crop": "ble",
+      "shots": "18"
+    },
+    {
+      "id": "b5",
+      "in": 87,
+      "out": 93,
+      "crop": "ble",
+      "shots": "19"
+    },
+    {
+      "id": "b6",
+      "in": 93,
+      "out": 101,
+      "crop": "ble",
+      "shots": "20"
+    },
+    {
+      "id": "b7",
+      "in": 101,
+      "out": 109,
+      "crop": "ble",
+      "shots": "21"
+    },
+    {
+      "id": "c1",
+      "in": 109,
+      "out": 116,
+      "crop": "nuke",
+      "shots": "22"
+    },
+    {
+      "id": "c2",
+      "in": 118,
+      "out": 122,
+      "crop": "ae",
+      "shots": "24"
+    },
+    {
+      "id": "c3",
+      "in": 122,
+      "out": 130,
+      "crop": "nuke",
+      "shots": "25"
+    },
+    {
+      "id": "cmp-a",
+      "in": 130,
+      "out": 133,
+      "crop": "cmpL",
+      "size": "cmp",
+      "shots": "26 (left panel)"
+    },
+    {
+      "id": "cmp-b",
+      "in": 130,
+      "out": 133,
+      "crop": "cmpR",
+      "size": "cmp",
+      "shots": "26 (right panel)"
+    },
+    {
+      "id": "f1",
+      "in": 135,
+      "out": 142,
+      "crop": "full",
+      "shots": "28"
+    },
+    {
+      "id": "f2",
+      "in": 142,
+      "out": 145,
+      "crop": "full",
+      "shots": "29"
+    },
+    {
+      "id": "f3",
+      "in": 145,
+      "out": 148,
+      "crop": "full",
+      "shots": "30"
+    },
+    {
+      "id": "f4",
+      "in": 148,
+      "out": 151,
+      "crop": "full",
+      "shots": "31"
+    },
+    {
+      "id": "f5",
+      "in": 151,
+      "out": 160.41667,
+      "crop": "full",
+      "shots": "32"
+    },
+    {
+      "id": "f6",
+      "in": 160.41667,
+      "out": 164.41667,
+      "crop": "full",
+      "shots": "33"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
-  "published": false,
-  "approvedBy": null,
-  "approvedOn": null,
+  "published": true,
+  "approvedBy": "Youssef Abdelkarim",
+  "approvedOn": "2026-10-17",
   "note": "Set published to true only after the owner approves the finished walkthrough; approvedBy and approvedOn are then required. See docs/AURELIA_PUBLICATION.md."
 }

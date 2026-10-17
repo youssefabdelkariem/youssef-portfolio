@@ -15,7 +15,7 @@ export function blockers(): string[] {
   const out: string[] = [];
   for (const s of data.sections) {
     if (s.status !== 'ready') out.push(`${s.title}: ${s.need.join('; ') || 'not ready'}`);
-    for (const m of s.media) if (m.status === 'needed') out.push(`${s.title}: media needed (${m.description})`);
+    for (const m of s.media as { status: string; description: string }[]) if (m.status === 'needed') out.push(`${s.title}: media needed (${m.description})`);
   }
   return out;
 }
