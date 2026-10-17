@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/contact.css';
+import { contact } from '../data/contact';
+
+const services = [
+  ['product', 'Product and CGI rendering'],
+  ['vfx', 'VFX and compositing'],
+  ['cad', 'CAD and engineering'],
+  ['other', 'Something else'],
+];
+const budgets = [
+  ['', 'Prefer to discuss'],
+  ['small', 'Small: a single image or a short shot'],
+  ['medium', 'Medium: a short film or a set of renders'],
+  ['large', 'Large: an ongoing or multi-shot project'],
+];
+const timelines = [
+  ['', 'Flexible'],
+  ['urgent', 'Urgent: within two weeks'],
+  ['month', 'Within a month'],
+  ['later', 'More than a month away'],
+];
+---
+
+<BaseLayout title="Work with me" description="Hire Youssef Studio for CGI, product rendering, VFX and compositing, or CAD and engineering work. Send a short project brief.">
+  <div class="wrap page-title">
+    <p class="eyebrow">Hire me</p>
+    <h1>Let's make something</h1>
+    <p class="lede">Tell me about your project: what you need, roughly when, and what it is for. The more specific the brief, the more useful my reply.</p>
+  </div>
+
+  <section class="section" style="padding-top:0" aria-labelledby="form-title">
+    <div class="wrap contact-grid">
+      <aside class="contact-side reveal" aria-label="About working together">
+        <h2 id="side-title">What I work on</h2>
+        <ul class="chips">
+          <li>Product and CGI rendering</li><li>VFX and compositing</li><li>CAD and engineering</li>
+        </ul>
+        <p>See the work first: <a href="/work/aurelia/">Aurelia</a>, the <a href="/work/#more">earlier projects</a>, or the full portfolio on <a href="https://www.artstation.com/stampvfx" rel="noopener">ArtStation</a>.</p>
+        <h3>What happens next</h3>
+        <p>Your message goes straight to my inbox. I read every brief and reply by email.</p>
+      </aside>
+
+      <div class="reveal">
+        <h2 id="form-title" class="sr">Project brief</h2>
+        <form id="brief" class="brief" method="post" action={contact.endpoint ?? undefined} novalidate>
+          <p class="req-note">Fields marked <span aria-hidden="true">*</span><span class="sr">with an asterisk</span> are required.</p>
+          <div class="row">
+            <div class="field"><label for="f-name">Name <span aria-hidden="true">*</span></label><input id="f-name" name="name" type="text" autocomplete="name" required maxlength="120" /></div>
+            <div class="field"><label for="f-email">Email <span aria-hidden="true">*</span></label><input id="f-email" name="email" type="email" autocomplete="email" required maxlength="200" /></div>
+          </div>
+          <div class="field"><label for="f-company">Company or studio <span class="opt">(optional)</span></label><input id="f-company" name="company" type="text" autocomplete="organization" maxlength="160" /></div>
+          <div class="row">
+            <div class="field"><label for="f-service">What do you need? <span aria-hidden="true">*</span></label>
+              <select id="f-service" name="service" required>
+                <option value="">Choose one</option>
+                {services.map(([v, l]) => <option value={l}>{l}</option>)}
+              </select>
+            </div>
+            <div class="field"><label for="f-timeline">Timeline <span class="opt">(optional)</span></label>
+              <select id="f-timeline" name="timeline">{timelines.map(([v, l]) => <option value={v ? l : ''}>{l}</option>)}</select>
+            </div>
+          </div>
+          <div class="field"><label for="f-budget">Budget <span class="opt">(optional)</span></label>
+            <select id="f-budget" name="budget">{budgets.map(([v, l]) => <option value={v ? l : ''}>{l}</option>)}</select>
+          </div>
+          <div class="field"><label for="f-message">About the project <span aria-hidden="true">*</span></label>
+            <textarea id="f-message" name="message" rows="7" required minlength="20" maxlength="4000" aria-describedby="f-message-help"></textarea>
+            <p id="f-message-help" class="help">What is it, who is it for, and what should the result look like? At least a couple of sentences.</p>
+          </div>
+          <div class="field"><label for="f-links">Links <span class="opt">(optional)</span></label><input id="f-links" name="links" type="text" maxlength="400" placeholder="References, a brief, a folder" /></div>
+          <div class="field hp" aria-hidden="true"><label for="f-hp">Leave this empty</label><input id="f-hp" name="_gotcha" type="text" tabindex="-1" autocomplete="off" /></div>
+          <input type="hidden" name="_subject" value="New project brief from youssef.studio" />
+          <div class="field consent">
+            <label class="check"><input id="f-consent" name="consent" type="checkbox" value="yes" required /> <span>I agree that this message is sent to Youssef Studio through Formspree, a form service, and used only to reply to my enquiry. <span aria-hidden="true">*</span></span></label>
+          </div>
+          <div class="actions"><button class="btn" type="submit">Send the brief</button></div>
+          <p id="brief-status" class="status" role="status" aria-live="polite"></p>
+        </form>
+        <div id="brief-done" class="done notice" tabindex="-1" hidden>
+          <h3>Thank you, your brief is sent.</h3>
+          <p>I will reply to the email address you gave. <a href="/work/aurelia/">Look at the Aurelia case study</a> while you wait.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    import '../scripts/contact';
+  </script>
+</BaseLayout>

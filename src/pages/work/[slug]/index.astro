@@ -13,6 +13,7 @@ const prev = projects[(i + projects.length - 1) % projects.length];
 const next = projects[(i + 1) % projects.length];
 const hero = framePic(project.slug, project.frames[0].id, project.frames[0].alt, '100vw');
 const frames = project.frames.map((f) => ({ ...f, pic: framePic(project.slug, f.id, f.alt, '(min-width: 1200px) 1100px, 100vw') }));
+import { contact } from '../../../data/contact';
 ---
 
 <BaseLayout title={project.title} description={`${project.title}: ${project.summary} An early learning project from the VFX portfolio.`}>
@@ -83,7 +84,7 @@ const frames = project.frames.map((f) => ({ ...f, pic: framePic(project.slug, f.
       <a href={`/work/${next.slug}/`} rel="next"><span>Next</span>{next.title}</a>
     </div>
     <div class="wrap">
-      <p class="slots-note">More of my work is on <a href={artstation} rel="noopener">ArtStation</a>.</p>
+      <p class="slots-note">More of my work is on <a href={artstation} rel="noopener">ArtStation</a>.{contact.enabled && <> Have a project in mind? <a href="/contact/">Hire me</a>.</>}</p>
     </div>
   </section>
 </BaseLayout>

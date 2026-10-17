@@ -31,7 +31,10 @@ for (const f of files) if (/\.(md|map|json|py|mjs|ts|exr|blend|nk|psd|zip|env)$/
 for (const need of [...(rehearsal ? [] : ['CNAME', 'sitemap-index.xml', 'sitemap-0.xml']), 'index.html', '404.html', 'robots.txt', 'favicon.svg', 'favicon.ico', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png', 'og-image.png', 'site.webmanifest', 'work/index.html', 'work/aurelia/index.html', 'engineering/index.html', 'engineering/ibm-ai-racing/index.html', 'about/index.html']) if (!files.includes(need)) fail(`required file missing: ${need}`);
 if (rehearsal && files.includes('CNAME')) fail('a rehearsal artifact must not contain CNAME');
 if (fs.existsSync(path.join(dist, 'CNAME')) && fs.readFileSync(path.join(dist, 'CNAME'), 'utf8').trim() !== 'youssef.studio') fail('CNAME content is not youssef.studio');
-if (fs.existsSync(path.join(dist, 'contact'))) fail('contact route present although it was removed');
+const contactCfg = JSON.parse(fs.readFileSync('src/data/contact.json', 'utf8'));
+const contactEnabled = /^https:\/\/formspree\.io\/f\/[A-Za-z0-9]{6,}$/.test(contactCfg.endpoint ?? '') && !!contactCfg.approvedBy && !!contactCfg.approvedOn;
+if (!contactEnabled && fs.existsSync(path.join(dist, 'contact'))) fail('contact route present although the form is not enabled');
+if (contactEnabled && !files.includes('contact/index.html')) fail('the contact form is enabled but contact/index.html is missing');
 const bytes = files.reduce((n, f) => n + fs.statSync(path.join(dist, f)).size, 0);
 if (bytes > 100 * 1024 * 1024) fail(`artifact ${bytes} B exceeds the 100 MB working limit`);
 // secrets and private paths

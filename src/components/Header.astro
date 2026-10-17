@@ -10,7 +10,7 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
     <a class="wordmark" href="/" aria-label="Youssef Studio, home">YOUSSEF<span>.</span>STUDIO</a>
     <nav class="nav-links" aria-label="Primary">
       <ul>
-        {desktop.map((i) => <li><a href={i.href} aria-current={isCurrent(i.href) ? 'page' : undefined}>{i.label}</a></li>)}
+        {desktop.map((i) => <li><a class:list={{ 'nav-cta': i.href === '/contact/' }} href={i.href} aria-current={isCurrent(i.href) ? 'page' : undefined}>{i.label}</a></li>)}
       </ul>
     </nav>
     <details class="nav-menu">

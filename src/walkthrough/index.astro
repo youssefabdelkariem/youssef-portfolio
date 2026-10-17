@@ -5,6 +5,7 @@ import '../styles/walkthrough.css';
 import { chapters, compare, finals, hero, pipeline } from '../data/aurelia-walkthrough';
 
 const compareRatio: [number, number] = [16, 9];
+import { contact } from '../data/contact';
 ---
 
 <BaseLayout
@@ -122,6 +123,7 @@ const compareRatio: [number, number] = [16, 9];
           <a class="btn" href="/work/aurelia/#film">Watch the finished film</a>
           <a class="btn ghost" href="/work/aurelia/">Back to the Aurelia case study</a>
           <a class="btn ghost" href="/work/">More VFX work</a>
+          {contact.enabled && <a class="btn" href="/contact/">Hire me for a project</a>}
         </div>
       </div>
     </section>

@@ -14,6 +14,7 @@ const disciplines = [
   ['Engineering and autonomy', 'Mechatronics and CAD foundations, and a documented autonomous-racing project'],
 ];
 import { published as walkthroughPublished } from '../data/walkthrough';
+import { contact } from '../data/contact';
 ---
 
 <BaseLayout title={site.name} description={site.description} preloadItalic>
@@ -105,6 +106,7 @@ import { published as walkthroughPublished } from '../data/walkthrough';
         <a class="btn" href="/work/aurelia/">Aurelia</a>
         <a class="btn ghost" href="/engineering/ibm-ai-racing/">IBM AI Racing</a>
         <a class="btn ghost" href="/about/">About</a>
+        {contact.enabled && <a class="btn" href="/contact/">Hire me</a>}
       </div>
     </div>
   </section>

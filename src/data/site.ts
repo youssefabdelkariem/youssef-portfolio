@@ -7,9 +7,12 @@ export const site = {
     'Portfolio covering CGI, 3D rendering, VFX, product visualization, mechatronics engineering and CAD.',
 };
 
+import { contact } from './contact';
+
 export const nav = [
   { href: '/', label: 'Home' },
   { href: '/work/', label: 'VFX Portfolio' },
   { href: '/engineering/', label: 'Engineering' },
   { href: '/about/', label: 'About' },
-] as const;
+  ...(contact.enabled ? [{ href: '/contact/', label: 'Hire me' }] : []),
+];

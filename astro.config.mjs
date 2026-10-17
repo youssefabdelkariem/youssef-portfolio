@@ -27,6 +27,15 @@ const walkthroughRoute = {
   hooks: { 'astro:config:setup': ({ injectRoute }) => injectRoute({ pattern: '/work/aurelia/walkthrough', entrypoint: './src/walkthrough/index.astro' }) },
 };
 
+// The contact form is dormant until the owner supplies a Formspree endpoint (src/data/contact.json). While dormant there is no
+// /contact/ route, no sitemap entry and no "Hire me" link. YS_CONTACT_FIXTURE=1 builds it with a synthetic endpoint for tests.
+const contactCfg = JSON.parse(fs.readFileSync(new URL('./src/data/contact.json', import.meta.url), 'utf8'));
+const contactEnabled = process.env.YS_CONTACT_FIXTURE === '1' || (/^https:\/\/formspree\.io\/f\/[A-Za-z0-9]{6,}$/.test(contactCfg.endpoint ?? '') && !!contactCfg.approvedBy && !!contactCfg.approvedOn);
+const contactRoute = {
+  name: 'ys-contact-route',
+  hooks: { 'astro:config:setup': ({ injectRoute }) => injectRoute({ pattern: '/contact', entrypoint: './src/contact/index.astro' }) },
+};
+
 // Provisional stack (ADR 0002 Proposed). Static output, one index.html per route.
 // `site` is the recorded production origin; canonical/sitemap URLs derive from it.
 export default defineConfig({
@@ -35,5 +44,5 @@ export default defineConfig({
   output: 'static',
   trailingSlash: 'always',
   build: { format: 'directory' },
-  integrations: [sitemap({ filter: (page) => !page.endsWith('/404/') && !page.includes('/explore/') && (walkthroughPublished || !page.includes('/walkthrough/')) }), ...(explore ? [exploreRoutes] : []), ...(walkthroughPublished || process.env.YS_PREVIEW_WALKTHROUGH === '1' ? [walkthroughRoute] : [])],
+  integrations: [sitemap({ filter: (page) => !page.endsWith('/404/') && !page.includes('/explore/') && (walkthroughPublished || !page.includes('/walkthrough/')) && (contactEnabled || !page.includes('/contact/')) }), ...(explore ? [exploreRoutes] : []), ...(walkthroughPublished || process.env.YS_PREVIEW_WALKTHROUGH === '1' ? [walkthroughRoute] : []), ...(contactEnabled ? [contactRoute] : [])],
 });
