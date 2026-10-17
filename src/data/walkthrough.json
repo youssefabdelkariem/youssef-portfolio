@@ -1,122 +1,12 @@
 {
   "title": "Aurelia: the making of",
-  "lede": "How the Aurelia One commercial was built, from the scene and the light to the render passes, the composite and the delivery master.",
+  "lede": "A scroll-driven walkthrough of the Aurelia One commercial, told through the working footage: Illustrator, Plasticity, Blender, Nuke and After Effects, then the finished shots. Page content lives in src/data/aurelia-walkthrough.ts; clip timestamps in docs/reviews/AURELIA_WALKTHROUGH.md.",
   "sections": [
-    {
-      "id": "overview", "title": "Project overview and creative objective", "status": "needs-owner",
-      "summary": "",
-      "points": [],
-      "need": ["The creative objective and intent of the film in the owner's words", "Confirmation of role and any collaborators (not shown publicly until confirmed)"],
-      "media": []
-    },
-    {
-      "id": "planning", "title": "Planning and shot design", "status": "needs-owner",
-      "summary": "",
-      "points": [],
-      "need": ["Owner's explanation of the planning process and shot list", "Rights clearance for any planning-board visuals (the collected boards may embed third-party reference imagery)"],
-      "media": [{ "id": "planning-visual", "kind": "figure", "status": "needed", "description": "Approved planning or shot-design visual" }]
-    },
-    {
-      "id": "scene", "title": "Smartphone model and scene organization", "status": "ready",
-      "summary": "Every frame is computer generated: the phone, the studio around it and the light. The scene files are organised as named objects that the render later reports back through its Cryptomatte manifests.",
-      "points": [
-        { "text": "The manifests record between 60 and 75 named objects per shot.", "source": "Cryptomatte manifests in the render files" },
-        { "text": "Named objects include each lens element, retaining rings, antenna bands, gaskets, the flash assembly and the USB-C parts.", "source": "Cryptomatte manifests in the render files" }
-      ],
-      "need": [],
-      "media": []
-    },
-    {
-      "id": "materials", "title": "Materials and surface realism", "status": "ready",
-      "summary": "Realism on a product this small comes from the surface finish of each part, so the materials are named and separated rather than painted on one body.",
-      "points": [
-        { "text": "Named materials include anodized aluminium, PVD titanium, polished and satin gunmetal, matte black metal, black polymer, optical and etched glass, laser etching, an OLED screen stack, and the flash LED and diffuser.", "source": "Cryptomatte manifests in the render files" }
-      ],
-      "need": [],
-      "media": []
-    },
-    {
-      "id": "lighting", "title": "Studio lighting and reflections", "status": "ready",
-      "summary": "The phone is lit like a product shoot: soft sources for the broad reflections and thin strips to draw the edges.",
-      "points": [
-        { "text": "The manifests list a cyclorama, key and fill softboxes, left and right rim strips, a top edge strip, a rear kicker, diffusion panels, white cards, black flags and a mirror card.", "source": "Cryptomatte manifests in the render files" },
-        { "text": "Shots differ in which of these they use.", "source": "Cryptomatte manifests in the render files" }
-      ],
-      "need": [],
-      "media": []
-    },
-    {
-      "id": "camera", "title": "Camera animation and cinematography", "status": "needs-owner",
-      "summary": "",
-      "points": [
-        { "text": "Shot 001 uses a Macro_120mm camera; shots 002 to 005 use a Hero_85mm camera.", "source": "Camera object names in the render files" },
-        { "text": "Frame counts: 250, 72, 72, 72 and 228 frames for shots 001 to 005, at 24 fps.", "source": "Render files" }
-      ],
-      "need": ["Owner's explanation of the camera moves and the intent behind them"],
-      "media": [{ "id": "camera-diagram", "kind": "diagram", "status": "needed", "description": "Camera path or movement diagram, drawn only from the project files" }]
-    },
-    {
-      "id": "rendering", "title": "Rendering pipeline", "status": "ready",
-      "summary": "Each shot is rendered with Cycles in Blender and written as scene-linear OpenEXR so that every later decision can be made in the composite.",
-      "points": [
-        { "text": "Cycles in Blender 5.2.2 LTS, at 3840 x 2160 with square pixels and 24 frames per second.", "source": "EXR metadata" },
-        { "text": "Sample counts differ by shot, from 128 to 512 per frame; shot 001 used 4096 on its early frames and shot 005 used 300 (320 on six frames).", "source": "EXR metadata" },
-        { "text": "Frames are half-float OpenEXR in scene-linear Rec.709. Shots 002, 003 and 005 are multilayer files with lighting passes and Cryptomatte IDs; shots 001 and 004 are beauty only.", "source": "EXR metadata" }
-      ],
-      "need": [],
-      "media": []
-    },
-    {
-      "id": "passes", "title": "Render passes and AOVs", "status": "ready",
-      "summary": "One frame, shot 002 frame 36, taken apart into the stages that build it.",
-      "points": [
-        { "text": "The multilayer files carry glossy and transmission lighting, depth, surface normals, the undenoised image and Cryptomatte object and material IDs.", "source": "EXR metadata" },
-        { "text": "The undenoised image is the Cycles Noisy Image pass at 512 samples.", "source": "EXR metadata" }
-      ],
-      "need": [],
-      "media": [{ "id": "passes-viewer", "kind": "viewer", "status": "available", "description": "The five-stage render-pass viewer built from the approved derivatives (reuses the case-study component)" }]
-    },
-    {
-      "id": "compositing", "title": "Nuke compositing", "status": "ready",
-      "summary": "The composite is deliberately light: it protects the brightest values and lifts one detail without grading the whole frame.",
-      "points": [
-        { "text": "Nuke 17.1 project scripts exist for the composite; the composite is documented for shot 002.", "source": "Nuke project scripts" },
-        { "text": "In shot 002 a Cryptomatte matte isolates the engraved AURELIA and ONE lettering for a local gain of 1.18, and a highlight roll-off limits the brightest rim values.", "source": "Nuke project script, shot 002" },
-        { "text": "No global exposure, contrast or colour grade is added in that composite.", "source": "Nuke project script, shot 002" }
-      ],
-      "need": [],
-      "media": [{ "id": "comp-before-after", "kind": "comparison", "status": "needed", "description": "Before and after of the shot 002 composite as an approved comparison" }]
-    },
-    {
-      "id": "finishing", "title": "After Effects and Premiere Pro finishing", "status": "needs-owner",
-      "summary": "",
-      "points": [],
-      "need": ["Confirmation of which finishing steps were done in After Effects and Premiere Pro, backed by the project files or the owner's explanation. Nothing about these tools is claimed until then"],
-      "media": []
-    },
-    {
-      "id": "colour", "title": "Color management and delivery", "status": "ready",
-      "summary": "The pipeline stays scene-linear until the last step, so one display transform decides how the images look.",
-      "points": [
-        { "text": "AgX Base with no extra look or exposure turns scene-linear values into sRGB for the stills, and into Rec.1886 for the video master.", "source": "Colour-management settings and project notes" },
-        { "text": "Shot 002 is delivered as an Apple ProRes 422 HQ master, 10-bit, 3840 x 2160 at 24 fps, with Rec.709 tags (72 frames, 3 seconds).", "source": "Delivered master file metadata" }
-      ],
-      "need": [],
-      "media": []
-    },
-    {
-      "id": "challenges", "title": "Challenges, iterations and solutions", "status": "needs-owner",
-      "summary": "",
-      "points": [],
-      "need": ["The owner's account of the real problems met and how they were solved, with supporting before and after material if it exists"],
-      "media": []
-    },
-    {
-      "id": "results", "title": "Final results and technical lessons", "status": "needs-owner",
-      "summary": "",
-      "points": [],
-      "need": ["The finished, approved commercial (the film component must be live), and the owner's own technical lessons"],
-      "media": []
-    }
+    { "id": "design", "title": "Design (Illustrator)", "status": "ready", "need": [], "media": [] },
+    { "id": "form", "title": "Building the form (Plasticity)", "status": "ready", "need": [], "media": [] },
+    { "id": "surface", "title": "Materials and lighting (Blender)", "status": "ready", "need": [], "media": [] },
+    { "id": "motion", "title": "Animation and rendering (Blender)", "status": "ready", "need": [], "media": [] },
+    { "id": "comp", "title": "Compositing and finishing (Nuke, After Effects)", "status": "ready", "need": [], "media": [] },
+    { "id": "result", "title": "The result", "status": "ready", "need": [], "media": [] }
   ]
 }
