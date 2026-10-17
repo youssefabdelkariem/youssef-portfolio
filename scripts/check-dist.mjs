@@ -4,7 +4,7 @@ import path from 'node:path';
 import zlib from 'node:zlib';
 
 const dist = path.resolve('dist');
-const routes = ['/', '/work/', '/work/aurelia/', '/engineering/', '/engineering/ibm-ai-racing/', '/about/', '/contact/'];
+const routes = ['/', '/work/', '/work/aurelia/', '/work/aurelia/walkthrough/', '/engineering/', '/engineering/ibm-ai-racing/', '/about/', '/contact/'];
 const problems = [];
 const fail = (m) => problems.push(m);
 const fileFor = (r) => path.join(dist, r.endsWith('/') ? r + 'index.html' : r);

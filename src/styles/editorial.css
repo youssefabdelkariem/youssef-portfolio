@@ -162,6 +162,8 @@
 .case-top .hero-copy h1 { max-width: none; }
 .case-top .facts { margin-top: var(--s-6); }
 .filmslot { display: grid; gap: var(--s-4); max-width: 1100px; }
+.walk-link { margin: var(--s-6) 0 0; }
+.walk-link.top { margin: 0 0 var(--s-2); }
 .film-note { margin: 0; color: var(--text-2); font-size: 0.9688rem; max-width: 70ch; }
 .film-note strong { color: var(--text); }
 .shots { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-7) var(--s-6); }

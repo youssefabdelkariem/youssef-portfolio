@@ -13,12 +13,13 @@
     "test:media": "node scripts/check-media-fallback.mjs",
     "test:home": "node scripts/check-home.mjs",
     "test:aurelia": "node scripts/check-aurelia.mjs",
+    "test:walkthrough": "node scripts/check-walkthrough.mjs",
     "preview": "astro preview",
     "typecheck": "astro check",
     "test:dist": "node scripts/check-dist.mjs",
     "test:browser": "node scripts/check-browser.mjs",
     "check:docs": "node scripts/check-docs.mjs",
-    "verify": "npm run check:docs && npm run typecheck && npm run build && npm run test:dist && npm run test:browser && npm run test:aurelia"
+    "verify": "npm run check:docs && npm run typecheck && npm run build && npm run test:dist && npm run test:browser && npm run test:aurelia && npm run test:walkthrough"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

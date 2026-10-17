@@ -1,0 +1,141 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import Clip from '../../../../components/Clip.astro';
+import '../../../../styles/walkthrough.css';
+import { chapters, compare, finals, hero, pipeline } from '../../../../data/walkthrough';
+
+const compareRatio: [number, number] = [16, 9];
+---
+
+<BaseLayout
+  title="Aurelia walkthrough"
+  description="How the Aurelia smartphone commercial was made, told through the working footage: Illustrator blueprints, Plasticity modelling, Blender lighting and animation, and Nuke and After Effects compositing."
+  ogImage="/media/walkthrough/og.jpg"
+  preloadItalic
+>
+  <div class="wt" data-walkthrough>
+    <section class="wt-hero" aria-labelledby="wt-title">
+      <Clip class="wt-hero-media" id={hero.clip} alt={hero.alt} ratio={[16, 9]} mobile eager label="Opening montage from the finished commercial" />
+      <div class="wt-hero-copy wrap">
+        <p class="eyebrow">VFX Portfolio / CGI / Walkthrough</p>
+        <h1 id="wt-title">Aurelia</h1>
+        <p class="wt-sub"><em>From the first line to the final frame.</em></p>
+        <a class="wt-cue" href="#intro"><span>Scroll</span><i aria-hidden="true"></i></a>
+      </div>
+    </section>
+
+    <section class="wt-intro wrap" id="intro" aria-labelledby="intro-title">
+      <div class="wt-intro-lead reveal">
+        <h2 id="intro-title">One phone, five stages, all of it on screen.</h2>
+        <p class="lede">This page follows the making of the Aurelia One commercial through the screen recordings kept while it was built. Each clip below is cut from that footage, and each note describes something visible in it.</p>
+        <ol class="wt-pipe" aria-label="Software order">
+          {pipeline.map((p) => <li>{p}</li>)}
+        </ol>
+      </div>
+      <nav class="wt-index reveal" aria-label="Chapters">
+        <ol>
+          {chapters.map((c) => (
+            <li><a href={`#${c.id}`}><span class="n">{c.n}</span><span class="t">{c.title}</span><span class="a">{c.app}</span></a></li>
+          ))}
+          <li><a href="#result"><span class="n">06</span><span class="t">The result</span><span class="a">Finished frames</span></a></li>
+        </ol>
+      </nav>
+    </section>
+
+    {chapters.map((c) => (
+      <section class="chapter" id={c.id} data-chapter={c.n} aria-labelledby={`${c.id}-title`}>
+        <header class="chapter-head wrap">
+          <p class="chapter-n reveal" aria-hidden="true">{c.n}</p>
+          <div class="reveal">
+            <p class="eyebrow">{c.app}</p>
+            <h2 id={`${c.id}-title`}>{c.title}</h2>
+            <p class="lede">{c.deck}</p>
+          </div>
+        </header>
+        <div class="stage" data-stage>
+          <div class="stage-media">
+            <div class="stage-frame">
+              {c.steps.map((s) => (
+                <Clip class="stage-clip" id={s.clip} alt={s.alt} ratio={s.ratio} ratioM={s.ratioM} mobile={s.hasMobile} label={s.title} />
+              ))}
+            </div>
+            <p class="stage-count" aria-hidden="true"><span data-step-now>01</span> / {String(c.steps.length).padStart(2, '0')}</p>
+          </div>
+          <ol class="stage-steps">
+            {c.steps.map((s, i) => (
+              <li class="step" data-step={i}>
+                <p class="step-n">{String(i + 1).padStart(2, '0')}</p>
+                <h3>{s.title}</h3>
+                <p>{s.text}</p>
+                <p class="step-t">Walkthrough {s.t}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+        {c.id === 'comp' && (
+          <div class="wt-compare wrap" data-compare>
+            <div class="reveal compare-copy">
+              <p class="eyebrow">Preview to final</p>
+              <h3>The same camera move, before and after</h3>
+              <p>The walkthrough puts the animation preview and the final composite side by side. The preview source is only 480 &times; 270, so the left panel is soft by nature. The right panel adds lens-glass reflections, a clean flash and a darker surface.</p>
+              <p class="compare-hint">Drag the divider or use the slider to compare. The clip plays once; replay it at any time.</p>
+            </div>
+            <div class="compare-stage">
+              <div class="compare-frame" style={`--r:${compareRatio[0]} / ${compareRatio[1]}`}>
+                <Clip class="compare-a" id={compare.a.clip} alt={compare.a.alt} ratio={[1280, 720]} loop={false} label={compare.a.label} />
+                <Clip class="compare-b" id={compare.b.clip} alt={compare.b.alt} ratio={[1280, 720]} loop={false} label={compare.b.label} />
+                <span class="compare-tag a" aria-hidden="true">{compare.a.label}</span>
+                <span class="compare-tag b" aria-hidden="true">{compare.b.label}</span>
+                <span class="compare-line" aria-hidden="true"></span>
+              </div>
+              <div class="compare-bar" hidden>
+                <label for="cmp-range"><span class="sr">Reveal the final composite over the animation preview</span></label>
+                <input id="cmp-range" type="range" min="0" max="100" value="50" step="1" />
+                <button type="button" class="btn ghost" data-replay>Replay</button>
+              </div>
+            </div>
+          </div>
+        )}
+      </section>
+    ))}
+
+    <section class="result" id="result" aria-labelledby="result-title">
+      <header class="chapter-head wrap">
+        <p class="chapter-n reveal" aria-hidden="true">06</p>
+        <div class="reveal">
+          <p class="eyebrow">Finished commercial</p>
+          <h2 id="result-title">The result</h2>
+          <p class="lede">Six frames from the finished shots, in the order they play in the commercial: a wordmark, a lens, the back of the phone, a macro, a glass edge and a turn.</p>
+        </div>
+      </header>
+      <div class="finals wrap">
+        {finals.map((f, i) => (
+          <figure class:list={['final', f.layout]}>
+            <Clip id={f.clip} alt={f.alt} ratio={[16, 9]} mobile label={f.label} />
+            <figcaption><span class="n">{String(i + 1).padStart(2, '0')}</span><span class="t">{f.label}</span><span class="m">{f.shot}</span></figcaption>
+          </figure>
+        ))}
+      </div>
+      <div class="wt-end wrap reveal">
+        <h2>The finished commercial is not published yet.</h2>
+        <p class="lede">It will be added to the case study once it is approved for release. Until then, the case study carries the stills, render passes and technical notes behind these clips.</p>
+        <div class="actions">
+          <a class="btn" href="/work/aurelia/">Back to the Aurelia case study</a>
+          <a class="btn ghost" href="/work/">More VFX work</a>
+        </div>
+      </div>
+    </section>
+
+    <nav class="rail" aria-label="Chapter progress" hidden>
+      <ol>
+        {chapters.map((c) => <li><a href={`#${c.id}`} data-rail={c.id}><span class="n">{c.n}</span><span class="t">{c.nav}</span></a></li>)}
+        <li><a href="#result" data-rail="result"><span class="n">06</span><span class="t">Result</span></a></li>
+      </ol>
+      <span class="rail-bar" aria-hidden="true"><i></i></span>
+    </nav>
+  </div>
+
+  <script>
+    import '../../../../scripts/walkthrough';
+  </script>
+</BaseLayout>
