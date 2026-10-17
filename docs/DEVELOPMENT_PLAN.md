@@ -105,3 +105,7 @@ Prepared and locally tested; the deployment branch and the rollback branch were 
 ## M3 final branding integration and M4 pre-launch (2026-10-17)
 
 Direction A is approved and integrated on `feat/m3-launch-readiness` (local commit, not pushed): final assets, unconditional absolute metadata, `site.webmanifest`, `test:branding` in `verify`, an extended artifact allowlist and `check-live` asset checks. The film stays dormant and the walkthrough excluded. Production integration is **not** started: Pages still publishes from the `main` branch. Report: [M3_LAUNCH_READINESS](reviews/M3_LAUNCH_READINESS.md#10-final-branding-integration-and-m4-pre-launch-2026-10-17).
+
+## M4 production launch and film publication (2026-10-17)
+
+The site went live at https://youssef.studio on 2026-10-16 (pull request 1, merge commit `4aa4abb`, Actions run 38982172740). On the owner's instruction of 2026-10-17 the finished Aurelia commercial is published as a poster-first YouTube player on a follow-up branch (`feat/aurelia-film-publication`). Report: [M4_PRODUCTION_LAUNCH](reviews/M4_PRODUCTION_LAUNCH.md). The walkthrough stays dormant.
