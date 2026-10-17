@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import '../styles/editorial.css';
+import '../styles/motion.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import fs from 'node:fs';
@@ -40,6 +41,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
     <link rel="icon" href="/icon-192.png" sizes="192x192" type="image/png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
+    <link rel="preload" href="/fonts/HankenGrotesk-Variable.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/InstrumentSerif-Regular.woff2" as="font" type="font/woff2" crossorigin />
     {preloadItalic && <link rel="preload" href="/fonts/InstrumentSerif-Italic.woff2" as="font" type="font/woff2" crossorigin />}
     <meta name="theme-color" content="#0b0a09" />
@@ -79,6 +81,16 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
             entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
           }, { rootMargin: '0px 0px -8% 0px' });
           els.forEach(function (e) { io.observe(e); });
+        }
+        // Project tiles: the spotlight follows the pointer (fine pointers only, never under reduced motion).
+        if (matchMedia('(hover: hover) and (pointer: fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          document.querySelectorAll('.tile').forEach(function (t) {
+            t.addEventListener('pointermove', function (e) {
+              var r = t.getBoundingClientRect();
+              t.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+              t.style.setProperty('--my', (e.clientY - r.top) + 'px');
+            });
+          });
         }
         // Mobile menu: Escape closes it and returns focus to the Menu button.
         document.addEventListener('keydown', function (e) {

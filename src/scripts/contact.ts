@@ -12,7 +12,9 @@ if (form && statusEl && done) {
   const messageFor = (f: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement): string => {
     const v = f.validity;
     if (v.valueMissing) return f instanceof HTMLInputElement && f.type === 'checkbox' ? 'Please tick the box to agree.' : f.name === 'service' ? 'Please choose what you need.' : 'This field is required.';
+    if (f instanceof HTMLInputElement && f.type === 'url' && (v.typeMismatch || v.patternMismatch)) return 'Please enter a full link starting with https://, for example https://drive.google.com/...';
     if (v.typeMismatch) return 'Please enter a valid email address, for example name@example.com.';
+    if (v.rangeUnderflow || v.rangeOverflow || v.badInput || v.stepMismatch) return 'Please enter the budget as a number, for example 1500.';
     if (v.tooShort) return 'Please write at least a couple of sentences (20 characters or more).';
     return f.validationMessage;
   };
@@ -34,8 +36,21 @@ if (form && statusEl && done) {
     f.setAttribute('aria-describedby', [...ids, p.id].join(' '));
     return false;
   };
+  // Budget: choosing "Custom amount" reveals the number field and makes it required; without JavaScript it simply stays visible.
+  const budget = form.querySelector<HTMLSelectElement>('#f-budget');
+  const group = form.querySelector<HTMLElement>('#amount-group');
+  const amount = form.querySelector<HTMLInputElement>('#f-amount');
+  const syncBudget = () => {
+    const custom = budget?.value === 'Custom amount';
+    if (group) group.hidden = !custom;
+    if (amount) { amount.required = custom; if (!custom) { amount.value = ''; clear(amount); } }
+  };
+  budget?.addEventListener('change', syncBudget);
+  syncBudget();
   for (const f of fields) {
-    f.addEventListener('blur', () => { if (f.value || f.getAttribute('aria-invalid')) flag(f); });
+    // Skip the blur check when focus is moving to the Send button: the submit validates everything, and an error line appearing
+    // mid-click would push the button away from the pointer.
+    f.addEventListener('blur', (e) => { if ((e as FocusEvent).relatedTarget === button) return; if (f.value || f.getAttribute('aria-invalid')) flag(f); });
     f.addEventListener('input', () => { if (f.getAttribute('aria-invalid')) flag(f); });
   }
 

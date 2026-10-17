@@ -4,7 +4,7 @@ Status: **enabled** with the owner's Formspree endpoint (`https://formspree.io/f
 
 ## What it is
 
-A page at `/contact/` with a project-brief form: name, email, company (optional), what is needed (product and CGI rendering, VFX and compositing, CAD and engineering, something else), timeline and budget (both optional), a project description, links (optional) and a consent checkbox. Submissions go to the owner's inbox through [Formspree](https://formspree.io); no email address is published on the site. A hidden honeypot field (`_gotcha`) catches simple bots.
+A page at `/contact/` with a project-brief form: name, email, company (optional), what is needed (product and CGI rendering, VFX and compositing, CAD and engineering, something else), timeline and budget (both optional; budget can be a range or a custom amount entered as a number with a currency), a project description, an optional link (it must be a full https:// link) and a consent checkbox. Submissions go to the owner's inbox through [Formspree](https://formspree.io); no email address is published on the site. A hidden honeypot field (`_gotcha`) catches simple bots.
 
 The "Hire me" link appears in the header and footer, on the home page call to action, the end of the Aurelia case study and walkthrough, and the end of each project page.
 

@@ -63,13 +63,22 @@ const timelines = [
             </div>
           </div>
           <div class="field"><label for="f-budget">Budget <span class="opt">(optional)</span></label>
-            <select id="f-budget" name="budget">{budgets.map(([v, l]) => <option value={v ? l : ''}>{l}</option>)}</select>
+            <select id="f-budget" name="budget">{budgets.map(([v, l]) => <option value={v ? l : ''}>{l}</option>)}<option value="Custom amount">Custom amount: I will enter a number</option></select>
+          </div>
+          <div class="field amount" id="amount-group">
+            <p class="help" id="amount-help">Only if you chose a custom amount: enter your budget as a number.</p>
+            <div class="row amount-row">
+              <div class="field"><label for="f-amount">Amount</label><input id="f-amount" name="budget_amount" type="number" inputmode="decimal" min="1" max="100000000" step="any" placeholder="e.g. 1500" aria-describedby="amount-help" /></div>
+              <div class="field"><label for="f-currency">Currency</label>
+                <select id="f-currency" name="budget_currency">{['USD', 'EUR', 'GBP', 'EGP', 'AED', 'SAR'].map((c) => <option value={c}>{c}</option>)}</select>
+              </div>
+            </div>
           </div>
           <div class="field"><label for="f-message">About the project <span aria-hidden="true">*</span></label>
             <textarea id="f-message" name="message" rows="7" required minlength="20" maxlength="4000" aria-describedby="f-message-help"></textarea>
             <p id="f-message-help" class="help">What is it, who is it for, and what should the result look like? At least a couple of sentences.</p>
           </div>
-          <div class="field"><label for="f-links">Links <span class="opt">(optional)</span></label><input id="f-links" name="links" type="text" maxlength="400" placeholder="References, a brief, a folder" /></div>
+          <div class="field"><label for="f-links">Link <span class="opt">(optional)</span></label><input id="f-links" name="links" type="url" inputmode="url" maxlength="400" placeholder="https://" pattern="https?://[^\s]+" aria-describedby="f-links-help" /><p id="f-links-help" class="help">A reference, brief or folder. It must be a full link starting with https://</p></div>
           <div class="field hp" aria-hidden="true"><label for="f-hp">Leave this empty</label><input id="f-hp" name="_gotcha" type="text" tabindex="-1" autocomplete="off" /></div>
           <input type="hidden" name="_subject" value="New project brief from youssef.studio" />
           <div class="field consent">
