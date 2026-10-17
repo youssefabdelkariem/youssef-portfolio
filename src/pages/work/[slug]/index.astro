@@ -37,13 +37,30 @@ const frames = project.frames.map((f) => ({ ...f, pic: framePic(project.slug, f.
       <div class="reveal stack">
         <p class="notice"><strong>Early work.</strong> This is a learning-stage project, made while I was still building my skills. It is shown as a record of progress; <a href="/work/aurelia/">Aurelia</a> is the current level.</p>
         {project.cars && <p class="notice"><strong>Credit.</strong> The car models are from the Traffiq add-on.</p>}
+        {project.credit && <p class="notice"><strong>Credit.</strong> {project.credit}</p>}
       </div>
     </div>
   </section>
 
+  {project.video && (
+    <section class="section divided" aria-labelledby="clip-title">
+      <div class="wrap">
+        <h2 id="clip-title" class="reveal">The clip</h2>
+        <figure class="project-video reveal">
+          <video controls muted loop playsinline preload="none" poster={hero.src} width={hero.width} height={hero.height} aria-label={project.video.alt}>
+            <source src={`/media/projects/${project.slug}/clip.mp4`} type="video/mp4" />
+            <p>Your browser cannot play this clip. <a href={`/media/projects/${project.slug}/clip.mp4`}>Download it (MP4)</a>.</p>
+          </video>
+          <figcaption>{Math.round(project.video.duration)} seconds, silent. Use the controls to play or pause.</figcaption>
+        </figure>
+      </div>
+    </section>
+  )}
+
+  {!(project.video && frames.length === 1) && (
   <section class="section divided" aria-labelledby="frames-title">
     <div class="wrap">
-      <h2 id="frames-title" class="reveal">{frames.length === 1 ? 'The frame' : `The frames (${frames.length})`}</h2>
+      <h2 id="frames-title" class="reveal">{frames.length === 1 ? (project.video ? 'A still' : 'The frame') : `The frames (${frames.length})`}</h2>
       <div class="project-frames">
         {frames.map((f) => (
           <figure class="shot reveal" style={f.pic.width < 1200 ? `max-width:${f.pic.width}px` : undefined}>
@@ -57,6 +74,7 @@ const frames = project.frames.map((f) => ({ ...f, pic: framePic(project.slug, f.
       </div>
     </div>
   </section>
+  )}
 
   <section class="section divided" aria-label="More projects">
     <div class="wrap project-nav reveal">

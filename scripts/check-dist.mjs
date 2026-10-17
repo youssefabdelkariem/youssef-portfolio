@@ -4,7 +4,7 @@ import path from 'node:path';
 import zlib from 'node:zlib';
 
 const dist = path.resolve('dist');
-const routes = ['/', '/work/', '/work/aurelia/', '/work/aurelia/walkthrough/', '/engineering/', '/engineering/ibm-ai-racing/', '/about/', ...['golden-hour-departure','cedar-and-concrete','cobalt-charge','night-shift','crimson-corridor','earthlight','still-water'].map((s) => `/work/${s}/`)];
+const routes = ['/', '/work/', '/work/aurelia/', '/work/aurelia/walkthrough/', '/engineering/', '/engineering/ibm-ai-racing/', '/about/', ...['golden-hour-departure','cedar-and-concrete','cobalt-charge','night-shift','crimson-corridor','earthlight','still-water','iron-run','skyline-intruder'].map((s) => `/work/${s}/`)];
 // Outbound links the owner has verified (QA-11: plain links, nothing loaded from them).
 const outbound = new Set(['https://github.com/youssefabdelkariem/IBM-AI-Racing-League', 'https://youtu.be/lp-c8A3NIJI', 'https://www.artstation.com/stampvfx']);
 const filmCfg = JSON.parse(fs.readFileSync('src/data/aurelia-film.json', 'utf8'));

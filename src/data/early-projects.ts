@@ -19,6 +19,10 @@ export interface Project {
   facts: [string, string][];
   /** Flagged when the project uses third-party car models. */
   cars?: boolean;
+  /** A silent clip at /media/projects/<slug>/clip.mp4; the poster is the first entry of `frames`. */
+  video?: { duration: number; alt: string };
+  /** A plain-language credit line for third-party material in the shot. */
+  credit?: string;
 }
 
 export const artstation = 'https://www.artstation.com/stampvfx';
@@ -75,6 +79,17 @@ export const projects: Project[] = [
     frames: [{ id: 'final', label: 'Final render', alt: 'A small blue helicopter parked on a dark pad at night, lit from the front, with a grid of faint lit windows behind it.' }],
   },
   {
+    slug: 'iron-run', title: 'Iron Run', year: 2020,
+    summary: 'A steel sphere rolls down a long, worn corridor toward the camera.',
+    body: [
+      'A short animation with one moving object. The sphere starts as a speck at the far end of a narrow corridor with flaking painted walls and a wooden floor, and rolls forward until it fills the lower half of the frame.',
+      'It is the oldest project on the site, from 2020.',
+    ],
+    facts: [['Year', '2020'], ['Type', 'Personal learning project'], ['Format', '1280 x 720, 24 fps, 5 seconds, silent']],
+    video: { duration: 5.4, alt: 'A dark steel sphere rolls along a wooden-floored corridor with peeling painted walls, growing from a small dot in the distance to filling the frame.' },
+    frames: [{ id: 'poster', label: 'Still from the animation', alt: 'A dark steel sphere on a wooden floor in a narrow corridor with peeling green and orange walls, near the camera.' }],
+  },
+  {
     slug: 'crimson-corridor', title: 'Crimson Corridor',
     summary: 'A red sedan on a road between two rows of dark glass buildings.',
     body: [
@@ -101,6 +116,18 @@ export const projects: Project[] = [
       { id: 'two', label: 'Earth, larger', alt: 'The same view with the Earth larger and brighter in the porthole.' },
       { id: 'three', label: 'Stars only', alt: 'The same interior with the porthole showing only stars and a blue-white glow at the top of the frame.' },
     ],
+  },
+  {
+    slug: 'skyline-intruder', title: 'Skyline Intruder',
+    summary: 'A dark spaceship flies across aerial footage of a city and passes behind a tall tower.',
+    body: [
+      'A visual-effects shot: a spaceship is added to aerial footage and flies across the frame, disappearing behind a tower with a large billboard on its side. The sky is graded purple.',
+      'Because the ship goes behind the building, the real structure has to hide it before it comes out the other side.',
+    ],
+    facts: [['Type', 'Personal learning project'], ['Format', '1280 x 720, about 20 seconds, silent'], ['My part', 'The spaceship added to the footage']],
+    credit: 'The background footage and the billboard artwork belong to their respective owners; only the spaceship is added work.',
+    video: { duration: 19.8, alt: 'Aerial footage of a city at dusk with a purple sky; a dark winged spaceship flies across the frame and passes behind a tower covered by a large blue drinks advertisement.' },
+    frames: [{ id: 'poster', label: 'Still from the shot', alt: 'A dark spaceship with glowing orange engines flying beside a tall tower covered by a large blue advertisement, above a city under a purple sky.' }],
   },
   {
     slug: 'still-water', title: 'Still Water',

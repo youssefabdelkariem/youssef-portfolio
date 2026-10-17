@@ -17,7 +17,8 @@ spec = json.load(open(os.path.join(here, 'images.spec.json')))
 root = sys.argv[1]
 out = sys.argv[2] if len(sys.argv) > 2 else os.path.join(here, '..', '..', 'public', 'media', 'projects')
 WIDTHS = [960, 1440, 1920]
-manifest = {}
+mpath = os.path.join(out, 'manifest.json')
+manifest = json.load(open(mpath)) if os.path.exists(mpath) else {}
 
 for f in spec['frames']:
     src = os.path.join(root, f['src'])
@@ -41,4 +42,4 @@ for f in spec['frames']:
     manifest[f"{f['slug']}/{f['frame']}"] = entry
     print(f['slug'], f['frame'], [a['bytes'] // 1024 for a in entry['avif']], entry['jpg']['bytes'] // 1024)
 
-json.dump(manifest, open(os.path.join(out, 'manifest.json'), 'w'), indent=1)
+json.dump(manifest, open(mpath, 'w'), indent=1)

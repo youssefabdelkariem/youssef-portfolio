@@ -9,7 +9,7 @@ import { launchBrowser } from './lib/browser.mjs';
 const require = createRequire(import.meta.url);
 const axeSource = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
 
-const routes = process.env.YS_ROUTES ? process.env.YS_ROUTES.split(',') : ['/', '/work/', '/work/aurelia/', '/engineering/', '/engineering/ibm-ai-racing/', '/about/', ...['golden-hour-departure','cedar-and-concrete','cobalt-charge','night-shift','crimson-corridor','earthlight','still-water'].map((s) => `/work/${s}/`)];
+const routes = process.env.YS_ROUTES ? process.env.YS_ROUTES.split(',') : ['/', '/work/', '/work/aurelia/', '/engineering/', '/engineering/ibm-ai-racing/', '/about/', ...['golden-hour-departure','cedar-and-concrete','cobalt-charge','night-shift','crimson-corridor','earthlight','still-water','iron-run','skyline-intruder'].map((s) => `/work/${s}/`)];
 const widths = [320, 390, 768, 1024, 1440];
 const problems = [];
 const fail = (m) => problems.push(m);

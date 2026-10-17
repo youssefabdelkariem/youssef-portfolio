@@ -22,7 +22,7 @@ const allowed = [
 ];
 // Unfinished content: the walkthrough route and any film files are allowed only once the owner has approved them (M3 publication gates).
 if (filmCfg.film) allowed.push(/^media\/aurelia\/film\/[\w.-]+\.(mp4|webm|vtt)$/);
-allowed.push(/^media\/projects\/[a-z0-9-]+\/[\w.-]+\.(avif|jpg)$/);
+allowed.push(/^media\/projects\/[a-z0-9-]+\/[\w.-]+\.(avif|jpg|mp4)$/);
 if (walkthroughPublished) allowed.push(/^media\/walkthrough\/[\w.-]+\.(avif|mp4)$/);
 for (const f of files) if (!walkthroughPublished && /walkthrough/i.test(f)) fail(`unpublished walkthrough in the artifact: ${f}`);
 for (const f of files) if (!filmCfg.film && /(^|\/)film(\/|\.)/i.test(f)) fail(`film file in the artifact although no film is approved: ${f}`);
