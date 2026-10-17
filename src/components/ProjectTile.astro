@@ -1,0 +1,22 @@
+---
+// Card for an early-work project on the home page and the work index: first frame, title, year and one line.
+import { framePic, type Project } from '../data/early-projects';
+interface Props { project: Project; sizes?: string; eager?: boolean }
+const { project, sizes = '(min-width: 900px) 33vw, 100vw', eager = false } = Astro.props;
+const first = project.frames[0];
+const pic = framePic(project.slug, first.id, first.alt, sizes);
+---
+
+<article class="tile">
+  <figure class="tile-img">
+    <picture>
+      {pic.sources.map((s) => <source type={s.type} srcset={s.srcset} sizes={s.sizes} />)}
+      <img src={pic.src} alt={pic.alt} width={pic.width} height={pic.height} decoding="async" loading={eager ? 'eager' : 'lazy'} />
+    </picture>
+  </figure>
+  <div class="body">
+    <div class="meta"><span class="tag">{project.year ?? 'Learning project'}</span>{project.year && <span class="tag">Learning project</span>}</div>
+    <h3><a href={`/work/${project.slug}/`}>{project.title}</a></h3>
+    <p>{project.summary}</p>
+  </div>
+</article>

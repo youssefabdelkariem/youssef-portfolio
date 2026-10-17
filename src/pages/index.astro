@@ -4,6 +4,8 @@ import Plate from '../components/Plate.astro';
 import LapSparkline from '../components/LapSparkline.astro';
 import { site } from '../data/site';
 import { homeMedia } from '../data/home';
+import ProjectTile from '../components/ProjectTile.astro';
+import { projects } from '../data/early-projects';
 
 const { hero, aurelia } = homeMedia;
 const disciplines = [
@@ -61,6 +63,19 @@ import { published as walkthroughPublished } from '../data/walkthrough';
           <div><dt>Format</dt><dd>3840 x 2160, 24 fps</dd></div>
           <div><dt>Built with</dt><dd>Blender (Cycles), Nuke</dd></div>
         </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="section divided" aria-labelledby="earlier-title">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2 id="earlier-title">Earlier work</h2>
+        <a href="/work/#more">All nine projects</a>
+      </div>
+      <p class="lede reveal" style="margin-bottom:var(--s-6)">Personal projects from the learning stage: cars, an aircraft, a helicopter, a boat, a rolling steel ball and spaceships, each with its own page.</p>
+      <div class="tiles">
+        {projects.slice(0, 3).map((p) => <ProjectTile project={p} />)}
       </div>
     </div>
   </section>

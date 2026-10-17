@@ -1,0 +1,426 @@
+{
+ "golden-hour-departure/final": {
+  "width": 1920,
+  "height": 1080,
+  "avif": [
+   {
+    "width": 960,
+    "height": 540,
+    "bytes": 63004
+   },
+   {
+    "width": 1440,
+    "height": 810,
+    "bytes": 154464
+   },
+   {
+    "width": 1920,
+    "height": 1080,
+    "bytes": 310927
+   }
+  ],
+  "jpg": {
+   "width": 1440,
+   "height": 810,
+   "bytes": 261417
+  }
+ },
+ "golden-hour-departure/alt-grade": {
+  "width": 1920,
+  "height": 1080,
+  "avif": [
+   {
+    "width": 960,
+    "height": 540,
+    "bytes": 58939
+   },
+   {
+    "width": 1440,
+    "height": 810,
+    "bytes": 145436
+   },
+   {
+    "width": 1920,
+    "height": 1080,
+    "bytes": 293778
+   }
+  ],
+  "jpg": {
+   "width": 1440,
+   "height": 810,
+   "bytes": 249476
+  }
+ },
+ "golden-hour-departure/viewport": {
+  "width": 812,
+  "height": 461,
+  "avif": [
+   {
+    "width": 812,
+    "height": 461,
+    "bytes": 11905
+   }
+  ],
+  "jpg": {
+   "width": 812,
+   "height": 461,
+   "bytes": 32070
+  }
+ },
+ "cedar-and-concrete/grade-a": {
+  "width": 1920,
+  "height": 1080,
+  "avif": [
+   {
+    "width": 960,
+    "height": 540,
+    "bytes": 60462
+   },
+   {
+    "width": 1440,
+    "height": 810,
+    "bytes": 118386
+   },
+   {
+    "width": 1920,
+    "height": 1080,
+    "bytes": 202327
+   }
+  ],
+  "jpg": {
+   "width": 1440,
+   "height": 810,
+   "bytes": 223228
+  }
+ },
+ "cedar-and-concrete/grade-b": {
+  "width": 1920,
+  "height": 1080,
+  "avif": [
+   {
+    "width": 960,
+    "height": 540,
+    "bytes": 54282
+   },
+   {
+    "width": 1440,
+    "height": 810,
+    "bytes": 107365
+   },
+   {
+    "width": 1920,
+    "height": 1080,
+    "bytes": 187803
+   }
+  ],
+  "jpg": {
+   "width": 1440,
+   "height": 810,
+   "bytes": 216246
+  }
+ },
+ "cedar-and-concrete/clay": {
+  "width": 805,
+  "height": 452,
+  "avif": [
+   {
+    "width": 805,
+    "height": 452,
+    "bytes": 29524
+   }
+  ],
+  "jpg": {
+   "width": 805,
+   "height": 452,
+   "bytes": 53485
+  }
+ },
+ "cobalt-charge/final": {
+  "width": 1920,
+  "height": 1080,
+  "avif": [
+   {
+    "width": 960,
+    "height": 540,
+    "bytes": 41145
+   },
+   {
+    "width": 1440,
+    "height": 810,
+    "bytes": 70439
+   },
+   {
+    "width": 1920,
+    "height": 1080,
+    "bytes": 105053
+   }
+  ],
+  "jpg": {
+   "width": 1440,
+   "height": 810,
+   "bytes": 178280
+  }
+ },
+ "night-shift/final": {
+  "width": 1920,
+  "height": 1080,
+  "avif": [
+   {
+    "width": 960,
+    "height": 540,
+    "bytes": 10493
+   },
+   {
+    "width": 1440,
+    "height": 810,
+    "bytes": 27755
+   },
+   {
+    "width": 1920,
+    "height": 1080,
+    "bytes": 57550
+   }
+  ],
+  "jpg": {
+   "width": 1440,
+   "height": 810,
+   "bytes": 102553
+  }
+ },
+ "crimson-corridor/final": {
+  "width": 1920,
+  "height": 1080,
+  "avif": [
+   {
+    "width": 960,
+    "height": 540,
+    "bytes": 8124
+   },
+   {
+    "width": 1440,
+    "height": 810,
+    "bytes": 13710
+   },
+   {
+    "width": 1920,
+    "height": 1080,
+    "bytes": 20419
+   }
+  ],
+  "jpg": {
+   "width": 1440,
+   "height": 810,
+   "bytes": 72982
+  }
+ },
+ "crimson-corridor/lifted": {
+  "width": 1920,
+  "height": 1080,
+  "avif": [
+   {
+    "width": 960,
+    "height": 540,
+    "bytes": 14467
+   },
+   {
+    "width": 1440,
+    "height": 810,
+    "bytes": 24505
+   },
+   {
+    "width": 1920,
+    "height": 1080,
+    "bytes": 38032
+   }
+  ],
+  "jpg": {
+   "width": 1440,
+   "height": 810,
+   "bytes": 112404
+  }
+ },
+ "earthlight/one": {
+  "width": 1920,
+  "height": 1080,
+  "avif": [
+   {
+    "width": 960,
+    "height": 540,
+    "bytes": 13296
+   },
+   {
+    "width": 1440,
+    "height": 810,
+    "bytes": 23917
+   },
+   {
+    "width": 1920,
+    "height": 1080,
+    "bytes": 37804
+   }
+  ],
+  "jpg": {
+   "width": 1440,
+   "height": 810,
+   "bytes": 79136
+  }
+ },
+ "earthlight/two": {
+  "width": 1920,
+  "height": 1080,
+  "avif": [
+   {
+    "width": 960,
+    "height": 540,
+    "bytes": 21014
+   },
+   {
+    "width": 1440,
+    "height": 810,
+    "bytes": 38323
+   },
+   {
+    "width": 1920,
+    "height": 1080,
+    "bytes": 78641
+   }
+  ],
+  "jpg": {
+   "width": 1440,
+   "height": 810,
+   "bytes": 137851
+  }
+ },
+ "earthlight/three": {
+  "width": 1920,
+  "height": 1080,
+  "avif": [
+   {
+    "width": 960,
+    "height": 540,
+    "bytes": 24154
+   },
+   {
+    "width": 1440,
+    "height": 810,
+    "bytes": 44749
+   },
+   {
+    "width": 1920,
+    "height": 1080,
+    "bytes": 70167
+   }
+  ],
+  "jpg": {
+   "width": 1440,
+   "height": 810,
+   "bytes": 138122
+  }
+ },
+ "still-water/one": {
+  "width": 1920,
+  "height": 1080,
+  "avif": [
+   {
+    "width": 960,
+    "height": 540,
+    "bytes": 32942
+   },
+   {
+    "width": 1440,
+    "height": 810,
+    "bytes": 71967
+   },
+   {
+    "width": 1920,
+    "height": 1080,
+    "bytes": 136476
+   }
+  ],
+  "jpg": {
+   "width": 1440,
+   "height": 810,
+   "bytes": 160643
+  }
+ },
+ "still-water/two": {
+  "width": 1920,
+  "height": 1080,
+  "avif": [
+   {
+    "width": 960,
+    "height": 540,
+    "bytes": 27212
+   },
+   {
+    "width": 1440,
+    "height": 810,
+    "bytes": 58512
+   },
+   {
+    "width": 1920,
+    "height": 1080,
+    "bytes": 106413
+   }
+  ],
+  "jpg": {
+   "width": 1440,
+   "height": 810,
+   "bytes": 145085
+  }
+ },
+ "iron-run/poster": {
+  "width": 1280,
+  "height": 720,
+  "avif": [
+   {
+    "width": 960,
+    "height": 540,
+    "bytes": 15394
+   },
+   {
+    "width": 1280,
+    "height": 720,
+    "bytes": 21983
+   }
+  ],
+  "jpg": {
+   "width": 1280,
+   "height": 720,
+   "bytes": 85631
+  },
+  "video": {
+   "bytes": 551061,
+   "duration": 5.43,
+   "width": 1280,
+   "height": 720
+  }
+ },
+ "skyline-intruder/poster": {
+  "width": 1280,
+  "height": 720,
+  "avif": [
+   {
+    "width": 960,
+    "height": 540,
+    "bytes": 31519
+   },
+   {
+    "width": 1280,
+    "height": 720,
+    "bytes": 46506
+   }
+  ],
+  "jpg": {
+   "width": 1280,
+   "height": 720,
+   "bytes": 114495
+  },
+  "video": {
+   "bytes": 2523260,
+   "duration": 19.83,
+   "width": 1280,
+   "height": 720
+  }
+ }
+}
