@@ -1,6 +1,6 @@
 # Contact form: "Hire me"
 
-Status: built and tested, **dormant** until the owner supplies a Formspree endpoint. Owner approved the approach (a form posted to a form service) on 2026-10-17. Satisfies the owner-approved contact destination in [requirements](REQUIREMENTS.md) (FR-05b): the page is built only when a real destination exists, so the site never shows a form that cannot send.
+Status: **enabled** with the owner's Formspree endpoint (`https://formspree.io/f/mwlvydjd`, supplied 2026-10-17); real delivery has not been tested by the agent. Owner approved the approach (a form posted to a form service) on 2026-10-17. Satisfies the owner-approved contact destination in [requirements](REQUIREMENTS.md) (FR-05b): the page is built only when a real destination exists, so the site never shows a form that cannot send.
 
 ## What it is
 

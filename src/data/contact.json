@@ -1,6 +1,6 @@
 {
-  "endpoint": null,
-  "approvedBy": null,
-  "approvedOn": null,
-  "note": "Set endpoint to the owner's Formspree form URL (https://formspree.io/f/<id>), with approvedBy and approvedOn. Until then the contact page, the Hire me links and the sitemap entry are not built. See docs/CONTACT_FORM.md."
+  "endpoint": "https://formspree.io/f/mwlvydjd",
+  "approvedBy": "Youssef Abdelkarim",
+  "approvedOn": "2026-10-17",
+  "note": "The owner's Formspree form. Set endpoint back to null to switch the contact page, the Hire me links and the sitemap entry off. See docs/CONTACT_FORM.md."
 }
