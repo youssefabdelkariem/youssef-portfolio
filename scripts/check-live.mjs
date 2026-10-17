@@ -23,7 +23,7 @@ const robots = await fetch(base + '/robots.txt'); if (robots.status !== 200) fai
 const sm = await fetch(base + '/sitemap-0.xml'); const smText = await sm.text();
 if (sm.status !== 200 || !smText.includes('https://youssef.studio/engineering/ibm-ai-racing/')) fail('sitemap');
 if (smText.includes('/404')) fail('sitemap lists 404');
-{ const f = JSON.parse(fs.readFileSync('src/data/aurelia-film.json', 'utf8')).film; const t = await (await fetch(base + '/work/aurelia/')).text(); if (f && (!t.includes('Watch the film') || !t.includes(f.externalUrl) || /<iframe|youtube-nocookie\.com\/embed\//.test(t))) fail('Aurelia film section missing or a player loads before play'); if (!f && /Watch the film/.test(t)) fail('film section present although no film is configured'); }
+{ const f = JSON.parse(fs.readFileSync('src/data/aurelia-film.json', 'utf8')).film; const t = await (await fetch(base + '/work/aurelia/')).text(); if (f && (!t.includes('Watch the film') || !t.includes(f.externalUrl) || /<iframe|<video/.test(t))) fail('Aurelia film section missing or a player loads before play'); if (!f && /Watch the film/.test(t)) fail('film section present although no film is configured'); }
 for (const a of ['/favicon.svg', '/favicon.ico', '/icon-192.png', '/icon-512.png', '/apple-touch-icon.png', '/og-image.png', '/site.webmanifest']) { const r = await fetch(base + a); if (r.status !== 200) fail(`${a} status ${r.status}`); }
 for (const gone of ['/contact/', '/docs/', '/src/', '/README.md', '/AGENTS.md', '/CLAUDE.md', '/package.json', '/media/aurelia/manifest.json', '/work/aurelia/walkthrough/']) { const g = await fetch(base + gone); if (g.status !== 404) fail(`${gone} should not be served (status ${g.status})`); }
 if (base.startsWith('https://')) {
