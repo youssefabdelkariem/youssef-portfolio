@@ -23,7 +23,7 @@ import { published as walkthroughPublished } from '../../data/walkthrough';
   <div class="wrap page-title">
     <p class="eyebrow">VFX Portfolio</p>
     <h1>CGI and compositing</h1>
-    <p class="lede">Aurelia, a CGI smartphone commercial, with selected renders, a render-pass breakdown and the technical notes behind it.</p>
+    <p class="lede">Aurelia, a CGI smartphone commercial, with selected renders, a render-pass breakdown and the technical notes behind it. <a href="#more">Nine earlier projects</a> follow below.</p>
   </div>
 
   <section class="section" style="padding-top:0" aria-labelledby="featured-work">
@@ -46,6 +46,19 @@ import { published as walkthroughPublished } from '../../data/walkthrough';
     </div>
   </section>
 
+  <section class="section divided" id="more" aria-labelledby="more-title">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2 id="more-title">Earlier work</h2>
+        <p style="margin:0">Nine personal projects from the learning stage, each with its own page. They show where the work started; Aurelia shows where it is now.</p>
+      </div>
+      <div class="tiles">
+        {projects.map((p) => <ProjectTile project={p} />)}
+      </div>
+      <p class="slots-note">The full portfolio is on <a href={artstation} rel="noopener">ArtStation</a>.</p>
+    </div>
+  </section>
+
   <section class="section divided" style="padding-block:clamp(2.5rem,6vw,5rem)" aria-labelledby="inside-title">
     <div class="wrap">
       <div class="section-head reveal">
@@ -57,18 +70,6 @@ import { published as walkthroughPublished } from '../../data/walkthrough';
           <li><span class="n">{String(i + 1).padStart(2, '0')}</span><div><a href={`/work/aurelia/#${id}`}>{title}</a><p>{note}</p></div></li>
         ))}
       </ol>
-    </div>
-  </section>
-  <section class="section divided" id="more" aria-labelledby="more-title">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <h2 id="more-title">Earlier work</h2>
-        <p style="margin:0">Nine personal projects from the learning stage, each with its own page. They show where the work started; Aurelia shows where it is now.</p>
-      </div>
-      <div class="tiles">
-        {projects.map((p) => <ProjectTile project={p} />)}
-      </div>
-      <p class="slots-note">The full portfolio is on <a href={artstation} rel="noopener">ArtStation</a>.</p>
     </div>
   </section>
 </BaseLayout>
