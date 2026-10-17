@@ -14,6 +14,7 @@ const inside = [
   ['workflow', 'Rendering and compositing', 'From Cycles to the multilayer EXR, the composite and the display transform.'],
   ['tech', 'Technical details', 'Specifications read from the render metadata and project notes.'],
 ];
+import { published as walkthroughPublished } from '../../data/walkthrough';
 ---
 
 <BaseLayout title="VFX Portfolio" description="CGI, 3D rendering and compositing work, led by Aurelia, a CGI smartphone commercial.">
@@ -37,6 +38,7 @@ const inside = [
         </ul>
         <div class="actions" style="margin-top:1.5rem">
           <a class="btn" href="/work/aurelia/">View case study</a>
+          {walkthroughPublished && <a class="btn ghost" href="/work/aurelia/walkthrough/">View the full walkthrough</a>}
         </div>
       </div>
     </div>
