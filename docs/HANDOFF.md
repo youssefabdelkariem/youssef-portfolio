@@ -297,3 +297,9 @@ M1b is planned in [M1B_PLAN](M1B_PLAN.md) (not started): owner inputs, phases an
 - **Code:** `src/layouts/BaseLayout.astro` now fails the build if a brand asset is missing and emits unconditional absolute metadata; `scripts/check-branding.mjs` (`npm run test:branding`) validates decoded icon sizes, the manifest, every page head and that no branding source leaks. `scripts/branding/` holds the generators (not shipped).
 - **Verification:** `CI=1 npm run verify` passes including branding, artifact allowlist and reproducibility; Chrome-family and Firefox rehearsal checks pass; mobile and desktop screenshots reviewed. Not tested: Safari, iOS, Android, real social-platform unfurls.
 - **Still owner-gated:** production cutover, ADR acceptance, film, walkthrough, contact destination. Do not merge or push without the owner.
+
+## M4 production launch (2026-10-16 and 2026-10-17)
+
+- **Live:** https://youssef.studio, deployed from merge commit `4aa4abb` (PR 1) by Actions run 38982172740. Pages source is GitHub Actions (set by the owner; not readable without authentication, confirmed by the deployment having succeeded and the public site serving the new build). A `main protection` ruleset is active.
+- **Film:** published on 2026-10-17 as a poster-first YouTube player (see [AURELIA_PUBLICATION section 5](AURELIA_PUBLICATION.md)). This supersedes the "film is dormant" statements in the M3 sections above. `check-publication` now requires the approval fields; the walkthrough remains excluded and returns 404.
+- **Next for Codex:** review the follow-up PR for the film, the live results in [M4_PRODUCTION_LAUNCH](reviews/M4_PRODUCTION_LAUNCH.md), and decide ADR acceptance with the owner. Do not push to `main` directly: use pull requests.

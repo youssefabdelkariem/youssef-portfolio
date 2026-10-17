@@ -161,3 +161,14 @@ These were visible as "pending" notices on the site until 2026-10-16. They are t
 | `favicon.svg`, `favicon.ico`, `icon-192.png`, `icon-512.png`, `apple-touch-icon.png`, `og-image.png`, `site.webmanifest` | Committed in `public/`, shipped in the artifact | Original work for this site, generated from the approved master by `scripts/branding/make-assets.mjs`; uses only the site's own fonts and tagline; no third-party imagery | Owner approved Direction A on 2026-10-17; dot refinement adopted by the implementer on evidence (see DESIGN_SYSTEM) |
 
 Metadata: every page carries an SVG icon, ICO fallback, 192 icon, apple touch icon, manifest link, theme colour, absolute `https://youssef.studio` canonical (not on 404), Open Graph and Twitter `summary_large_image` tags with alt text. Branding previews and review images stay outside the repository.
+
+## M. Aurelia film published (2026-10-17)
+
+| Item | State | Provenance | Approval |
+| --- | --- | --- | --- |
+| Aurelia commercial, YouTube `L1CyCbc8rww` | Published on `/work/aurelia/` as a poster-first player | Owner's own finished film; public YouTube page checked on 2026-10-17 | Owner, 2026-10-17 (chat instruction with the link) |
+| `film-poster` derivative | Committed in `public/media/aurelia/` | Frame at 21.7 s of the owner's film, derived by `make-film-poster.mjs` | Same |
+| Film file on the site | None: not self-hosted | n/a | n/a |
+| Walkthrough | Still dormant | n/a | Not approved |
+
+Section K (dormant Aurelia content) is superseded for the film only.

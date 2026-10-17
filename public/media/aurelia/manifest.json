@@ -475,6 +475,54 @@
      "quality": 94
     }
    ]
+  },
+  {
+   "id": "film-poster",
+   "master": "Aurelia One Commercial.mp4 @ 21.7 s (finished film, 3840x2160)",
+   "master_sha256": "9837eff545cff40d26cc918fc562b8feffd0f5f7fb47a08d06426d5264075be7",
+   "crop": null,
+   "variants": [
+    {
+     "file": "film-poster-960.avif",
+     "format": "avif",
+     "width": 960,
+     "height": 540,
+     "bytes": 8386,
+     "quality": 70
+    },
+    {
+     "file": "film-poster-1440.avif",
+     "format": "avif",
+     "width": 1440,
+     "height": 810,
+     "bytes": 12906,
+     "quality": 70
+    },
+    {
+     "file": "film-poster-1920.avif",
+     "format": "avif",
+     "width": 1920,
+     "height": 1080,
+     "bytes": 17738,
+     "quality": 70
+    },
+    {
+     "file": "film-poster-960.jpg",
+     "format": "jpg",
+     "width": 960,
+     "height": 540,
+     "bytes": 18750,
+     "quality": 88
+    },
+    {
+     "file": "film-poster-1440.jpg",
+     "format": "jpg",
+     "width": 1440,
+     "height": 810,
+     "bytes": 32106,
+     "quality": 88
+    }
+   ]
   }
  ]
 }

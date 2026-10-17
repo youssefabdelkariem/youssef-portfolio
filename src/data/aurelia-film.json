@@ -1,3 +1,17 @@
 {
-  "film": null
+  "film": {
+    "title": "AURELIA ONE | 4K CGI Product Commercial",
+    "description": "AURELIA ONE is a fictional flagship smartphone brought to life through a fully CGI product commercial, created as a personal CG/VFX project over approximately 40 days.",
+    "accessibilityNote": "A 47-second title-led commercial; this description covers the picture only. It opens on a black card reading \"Best experienced in 4K\". Metal letters spelling AURELIA, with ONE beneath, are shown at an angle in soft, dark studio light. A card reads \"Engineered for detail\". The back of the phone follows in close view, with two camera lenses and the words \"Precision in every layer.\". A faint card reads \"Sculpted in titanium, introducing the world's first under-display camera\". The phone's bottom edge, with speaker holes and a USB-C port, and the corner of its screen are shown in close view. The front shows a lock screen reading 09:41 beside the words \"Powered by AEROS\". The film ends on the back of the phone beside the words \"AURELIA ONE. The future, refined.\".",
+    "duration": "PT47S",
+    "uploadDate": "2026-10-16",
+    "width": 3840,
+    "height": 2160,
+    "posterId": "film-poster",
+    "posterAlt": "The back of the fictional Aurelia One phone in close view, showing two camera lenses, beside the words \"Precision in every layer.\"",
+    "playback": { "kind": "youtube", "id": "L1CyCbc8rww" },
+    "externalUrl": "https://youtu.be/L1CyCbc8rww",
+    "approvedBy": "Youssef Abdelkarim",
+    "approvedOn": "2026-10-17"
+  }
 }

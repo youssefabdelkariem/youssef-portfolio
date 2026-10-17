@@ -108,3 +108,7 @@ Final cutover sequence (each step needs the owner; expected downtime: none to a 
 4. Switch the Pages source to GitHub Actions, keeping the custom domain and HTTPS. Never merge the Astro source while the source is still a branch.
 5. Open and review the release pull request, then merge with explicit authorisation; `pages.yml` verifies, deploys and smoke-tests (including the new brand assets and the 404 walkthrough).
 6. Verify live (`npm run test:live`, manual pass); on failure revert the merge commit or dispatch with the placeholder SHA.
+
+## 11. Launch record (2026-10-16)
+
+Pages source switched to GitHub Actions by the owner before the merge; the `main protection` ruleset (pull request, `verify`, no force-push or deletion, owner bypass) was activated; PR 1 merged with a merge commit (`4aa4abb`) on 2026-10-16 at 23:34 UTC; run 38982172740 (resolve, build, deploy, smoke) succeeded; `check-live` passed on the real domain. From now on every change reaches production through a pull request to `main`. Rollback is unchanged: revert the merge commit through a pull request, or dispatch "Deploy site" with the known-good SHA (`c882895`, the placeholder, is also on `rollback/placeholder`).

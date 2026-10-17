@@ -42,3 +42,13 @@ Publish (owner approval first):
 ## 4. Prove that drafts stay out until publication
 
 `npm run test:publication` (part of `verify`) fails if, while publication is off: the production `dist/` contains a walkthrough route, file, sitemap entry or any text mentioning it; `dist/` contains film markup, a player, an embed host, VideoObject metadata or film files while no film is configured; the preview build is not `noindex` or is linked from any page. `check-artifact` independently rejects walkthrough paths and film files in the publish artifact, and `check-live` expects `/work/aurelia/walkthrough/` to return 404 on the production site. `npm run test:film` exercises the component with synthetic fixtures that never reach the production build.
+
+## 5. Status: the film is published (2026-10-17)
+
+The owner approved publishing the finished commercial on 2026-10-17 and supplied the public YouTube watch page (`https://youtu.be/L1CyCbc8rww`, "AURELIA ONE | 4K CGI Product Commercial", public and not unlisted, 47 s, uploaded 2026-10-16). It uses the **youtube** playback kind: the poster is a local image and nothing reaches YouTube until the visitor presses play, when the privacy-enhanced `youtube-nocookie.com` embed is created.
+
+- **Poster:** `film-poster`, frame at 21.7 s of the finished film (read-only; the film file is not in the repository), made by `scripts/aurelia/film-frames.mjs` and `scripts/aurelia/make-film-poster.mjs` (AVIF 960, 1440, 1920 px and JPEG 960, 1440 px, 77 KB in total).
+- **Text alternative:** `accessibilityNote` describes the picture only (every card and shot). It does not describe the soundtrack because the audio was not reviewed; no transcript or captions were supplied and none are claimed. The embedded player offers whatever captions the YouTube video carries.
+- **Description:** the owner's own public description wording (fictional smartphone, fully CGI, personal project, about 40 days). The tool list from the YouTube description is not repeated on the site.
+- **Still dormant:** the walkthrough (section 3). Nothing about it is public.
+- **Check:** `node scripts/check-film-real.mjs [screenshotDir]` runs against the built `dist/`.
