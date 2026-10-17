@@ -1,0 +1,20 @@
+{
+  "note": "Source files are the owner's exported renders, kept outside the repository (C:/Users/youss/Documents/Projects/<folder>). Outputs go to public/media/projects/<slug>/<frame>-<width>.avif|jpg.",
+  "frames": [
+    { "slug": "golden-hour-departure", "frame": "final", "src": "Aircraft Render 2023/youssef-first.jpg" },
+    { "slug": "golden-hour-departure", "frame": "alt-grade", "src": "Aircraft Render 2023/youssef-fiftth.jpg" },
+    { "slug": "golden-hour-departure", "frame": "viewport", "src": "Aircraft Render 2023/youssef-fourth.jpg" },
+    { "slug": "cedar-and-concrete", "frame": "grade-a", "src": "Garage Render 2022/youssef-bkp.jpg" },
+    { "slug": "cedar-and-concrete", "frame": "grade-b", "src": "Garage Render 2022/youssef-cg.jpg" },
+    { "slug": "cedar-and-concrete", "frame": "clay", "src": "Garage Render 2022/youssef-clay2.jpg" },
+    { "slug": "cobalt-charge", "frame": "final", "src": "Audi Render 2021/youssef-hossam-render.jpg" },
+    { "slug": "night-shift", "frame": "final", "src": "Helicopter 2021/youssef-rndr-final.jpg" },
+    { "slug": "crimson-corridor", "frame": "final", "src": "Red BMW/youssef-finale.jpg" },
+    { "slug": "crimson-corridor", "frame": "lifted", "src": "Red BMW/youssef-render.jpg" },
+    { "slug": "earthlight", "frame": "one", "src": "Earth-Spaceship/youssef-hossam-entry-1.jpg" },
+    { "slug": "earthlight", "frame": "two", "src": "Earth-Spaceship/youssef-hossam-entry-2.jpg" },
+    { "slug": "earthlight", "frame": "three", "src": "Earth-Spaceship/youssef-hossam-entry-3.jpg" },
+    { "slug": "still-water", "frame": "one", "src": "Boat Render/youssef-asset.jpg" },
+    { "slug": "still-water", "frame": "two", "src": "Boat Render/youssef-asset (1).jpg" }
+  ]
+}

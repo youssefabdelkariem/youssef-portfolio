@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Plate from '../../../components/Plate.astro';
+import { artstation, bySlug, framePic, projects } from '../../../data/early-projects';
+
+export function getStaticPaths() {
+  return projects.map((p) => ({ params: { slug: p.slug } }));
+}
+const { slug } = Astro.params;
+const project = bySlug(slug as string);
+const i = projects.findIndex((p) => p.slug === project.slug);
+const prev = projects[(i + projects.length - 1) % projects.length];
+const next = projects[(i + 1) % projects.length];
+const hero = framePic(project.slug, project.frames[0].id, project.frames[0].alt, '100vw');
+const frames = project.frames.map((f) => ({ ...f, pic: framePic(project.slug, f.id, f.alt, '(min-width: 1200px) 1100px, 100vw') }));
+---
+
+<BaseLayout title={project.title} description={`${project.title}: ${project.summary} An early learning project from the VFX portfolio.`}>
+  <section class="hero case-top" aria-labelledby="proj-title">
+    <Plate label={project.title} priority pic={hero} />
+    <div class="hero-copy">
+      <p class="eyebrow"><a href="/work/#more">VFX Portfolio</a> / Earlier work{project.year ? ` / ${project.year}` : ''}</p>
+      <h1 id="proj-title">{project.title}</h1>
+      <p class="lede">{project.summary}</p>
+      <dl class="facts">
+        {project.facts.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
+      </dl>
+    </div>
+  </section>
+
+  <section class="section divided" aria-labelledby="about-proj">
+    <div class="wrap cols">
+      <div class="reveal">
+        <h2 id="about-proj">About this project</h2>
+        {project.body.map((t) => <p>{t}</p>)}
+      </div>
+      <div class="reveal stack">
+        <p class="notice"><strong>Early work.</strong> This is a learning-stage project, made while I was still building my skills. It is shown as a record of progress; <a href="/work/aurelia/">Aurelia</a> is the current level.</p>
+        {project.cars && <p class="notice"><strong>Credit.</strong> The car models are from the Traffiq add-on.</p>}
+      </div>
+    </div>
+  </section>
+
+  <section class="section divided" aria-labelledby="frames-title">
+    <div class="wrap">
+      <h2 id="frames-title" class="reveal">{frames.length === 1 ? 'The frame' : `The frames (${frames.length})`}</h2>
+      <div class="project-frames">
+        {frames.map((f) => (
+          <figure class="shot reveal" style={f.pic.width < 1200 ? `max-width:${f.pic.width}px` : undefined}>
+            <Plate label={f.label} pic={f.pic} ratio={`${f.pic.width} / ${f.pic.height}`} framed />
+            <figcaption>
+              <strong>{f.label}</strong>
+              <a href={f.pic.large}>Open larger image ({Math.round(f.pic.largeBytes / 1024)} KB)</a>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section divided" aria-label="More projects">
+    <div class="wrap project-nav reveal">
+      <a href={`/work/${prev.slug}/`} rel="prev"><span>Previous</span>{prev.title}</a>
+      <a href="/work/#more"><span>All projects</span>VFX Portfolio</a>
+      <a href={`/work/${next.slug}/`} rel="next"><span>Next</span>{next.title}</a>
+    </div>
+    <div class="wrap">
+      <p class="slots-note">More of my work is on <a href={artstation} rel="noopener">ArtStation</a>.</p>
+    </div>
+  </section>
+</BaseLayout>

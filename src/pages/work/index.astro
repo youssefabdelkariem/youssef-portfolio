@@ -2,6 +2,8 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Plate from '../../components/Plate.astro';
 import { picture } from '../../data/media';
+import ProjectTile from '../../components/ProjectTile.astro';
+import { artstation, projects } from '../../data/early-projects';
 
 const featuredPic = picture('phone', 'The back of the Aurelia One smartphone floating in a dark studio, showing two camera lenses and the engraved AURELIA ONE mark.', '(min-width: 900px) 58vw, 100vw');
 
@@ -55,6 +57,18 @@ import { published as walkthroughPublished } from '../../data/walkthrough';
           <li><span class="n">{String(i + 1).padStart(2, '0')}</span><div><a href={`/work/aurelia/#${id}`}>{title}</a><p>{note}</p></div></li>
         ))}
       </ol>
+    </div>
+  </section>
+  <section class="section divided" id="more" aria-labelledby="more-title">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2 id="more-title">Earlier work</h2>
+        <p style="margin:0">Seven personal projects from the learning stage, each with its own page. They show where the work started; Aurelia shows where it is now.</p>
+      </div>
+      <div class="tiles">
+        {projects.map((p) => <ProjectTile project={p} />)}
+      </div>
+      <p class="slots-note">The full portfolio is on <a href={artstation} rel="noopener">ArtStation</a>.</p>
     </div>
   </section>
 </BaseLayout>
