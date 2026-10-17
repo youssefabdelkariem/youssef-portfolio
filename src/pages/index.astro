@@ -11,17 +11,20 @@ const disciplines = [
   ['VFX and compositing', 'Shot breakdowns that show how frames were built'],
   ['Engineering and autonomy', 'Mechatronics and CAD foundations, and a documented autonomous-racing project'],
 ];
+import { published as walkthroughPublished } from '../data/walkthrough';
 ---
 
 <BaseLayout title={site.name} description={site.description} preloadItalic>
   <section class="hero" aria-labelledby="hero-title">
     <Plate label="Hero still" priority gate pic={hero} focal="52% 50%" />
+    {walkthroughPublished && <a class="btn hero-cta" href="/work/aurelia/walkthrough/">View the full walkthrough <span aria-hidden="true">&rarr;</span></a>}
     <div class="hero-copy">
       <p class="eyebrow">CGI &middot; 3D rendering &middot; VFX &middot; Engineering</p>
       <h1 id="hero-title"><span>Engineering precision.</span> <span><em>Cinematic imagination.</em></span></h1>
       <p class="lede">A portfolio of CGI, 3D rendering and VFX work, grounded in mechatronics engineering and CAD.</p>
       <div class="actions">
         <a class="btn" href="/work/aurelia/">View Aurelia</a>
+        {walkthroughPublished && <a class="btn ghost" href="/work/aurelia/walkthrough/">View the full walkthrough</a>}
         <a class="btn ghost" href="/work/">VFX Portfolio</a>
       </div>
     </div>
@@ -48,7 +51,10 @@ const disciplines = [
         </div>
         <div>
           <p>A CGI smartphone commercial and the flagship of this portfolio, with selected renders, a render-pass breakdown and the technical notes behind it.</p>
-          <a class="btn" href="/work/aurelia/">View case study</a>
+          <div class="actions">
+            <a class="btn" href="/work/aurelia/">View case study</a>
+            {walkthroughPublished && <a class="btn ghost" href="/work/aurelia/walkthrough/">View the full walkthrough</a>}
+          </div>
         </div>
         <dl>
           <div><dt>Type</dt><dd>CGI smartphone commercial</dd></div>

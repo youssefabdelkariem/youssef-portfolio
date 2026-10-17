@@ -49,8 +49,11 @@
 .plate.has-src:not([data-state='failed']) .streak, .plate.has-src:not([data-state='failed']) .tag-label { display: none; }
 .plate.has-src:not([data-state='failed'])::after { background: none; }
 
+/* walkthrough entry: sits over the top of the hero image so it is on the first screen */
+.hero-cta { position: absolute; z-index: 6; top: var(--s-5); left: var(--gutter); box-shadow: 0 6px 24px rgb(0 0 0 / .45); }
+@media (min-width: 1200px) { .hero-cta { left: max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter))); } }
 /* home: hero */
-.hero { padding-bottom: clamp(var(--s-7), 8vw, 7.5rem); }
+.hero { position: relative; padding-bottom: clamp(var(--s-7), 8vw, 7.5rem); }
 /* hero box is sized by CSS only (never by the image), so real media cannot shift layout; cover-crops with a focal point */
 .hero .plate { aspect-ratio: auto; height: max(clamp(24rem, 56svh, 42rem), 100vw / 3.4); }
 .hero-copy { max-width: var(--max); margin: clamp(var(--s-6), 5vw, var(--s-8)) auto 0; padding-inline: var(--gutter); }

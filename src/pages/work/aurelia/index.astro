@@ -55,21 +55,22 @@ const flow = [
 <BaseLayout title="Aurelia" description="Aurelia, a CGI smartphone commercial: selected renders, lighting and materials, a render-pass breakdown and the rendering and compositing workflow.">
   <section class="hero case-top" aria-labelledby="case-title">
     <Plate label="Aurelia hero still" priority gate pic={hero} focal="52% 50%" />
+    {walkthroughPublished && <a class="btn hero-cta" href="/work/aurelia/walkthrough/">View the full walkthrough <span aria-hidden="true">&rarr;</span></a>}
     <div class="hero-copy">
       <p class="eyebrow">VFX Portfolio / CGI</p>
       <h1 id="case-title">Aurelia</h1>
       <p class="lede">A CGI smartphone commercial for the Aurelia One. These pages show stills, a render-pass breakdown and technical notes taken from the production files.</p>
+      {(film || walkthroughPublished) && (
+        <div class="actions" style="margin-bottom: var(--s-5)">
+          {walkthroughPublished && <a class="btn" href="/work/aurelia/walkthrough/">View the full walkthrough</a>}
+          {film && <a class={walkthroughPublished ? 'btn ghost' : 'btn'} href="#film">Watch the film</a>}
+        </div>
+      )}
       <dl class="facts">
         <div><dt>Type</dt><dd>CGI smartphone commercial</dd></div>
         <div><dt>Format</dt><dd>3840 x 2160, 24 fps</dd></div>
         <div><dt>Built with</dt><dd>Blender (Cycles), Nuke</dd></div>
       </dl>
-      {(film || walkthroughPublished) && (
-        <div class="actions" style="margin-top: var(--s-5)">
-          {film && <a class="btn" href="#film">Watch the film</a>}
-          {walkthroughPublished && <a class={film ? 'btn ghost' : 'btn'} href="/work/aurelia/walkthrough/">Explore the process</a>}
-        </div>
-      )}
     </div>
   </section>
 
