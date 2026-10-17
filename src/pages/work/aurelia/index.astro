@@ -50,6 +50,7 @@ const flow = [
   ['Display transform', 'AgX Base from Blender\'s colour configuration converts scene-linear values for display: sRGB for the stills on this page, Rec.1886 for the video master.'],
   ['Master', 'Shot 002 is delivered as a ProRes 422 HQ master at 4K and 24 fps, with BT.709 tags.'],
 ];
+import { contact } from '../../../data/contact';
 ---
 
 <BaseLayout title="Aurelia" description="Aurelia, a CGI smartphone commercial: selected renders, lighting and materials, a render-pass breakdown and the rendering and compositing workflow.">
@@ -175,4 +176,14 @@ const flow = [
       </div>
     </div>
   </section>
+
+  {contact.enabled && (
+    <section class="section divided cta-band" aria-labelledby="hire-title">
+      <div class="wrap reveal">
+        <h2 id="hire-title">Have a project in mind?</h2>
+        <p>I take on CGI, product rendering, VFX and compositing, and CAD and engineering work.</p>
+        <div class="actions"><a class="btn" href="/contact/">Hire me</a></div>
+      </div>
+    </section>
+  )}
 </BaseLayout>

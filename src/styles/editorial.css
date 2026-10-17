@@ -239,3 +239,8 @@
 .project-video { margin: 0; max-width: 1100px; }
 .project-video video { width: 100%; height: auto; aspect-ratio: 16 / 9; background: #000; border: 1px solid var(--border-strong); border-radius: var(--r-2); }
 .project-video figcaption { padding-top: var(--s-3); color: var(--text-2); font-size: 0.875rem; }
+
+/* Hire me: the one call to action in the header (only built when the contact form is enabled) */
+.nav-links a.nav-cta { padding: 10px 16px; border: 1px solid var(--accent); border-radius: var(--r-1); color: var(--accent); background-image: none; }
+.nav-links a.nav-cta:hover, .nav-links a.nav-cta:focus-visible, .nav-links a.nav-cta[aria-current='page'] { background: var(--accent); color: var(--canvas); }
+.nav-menu li a[href='/contact/'] { color: var(--accent); }
