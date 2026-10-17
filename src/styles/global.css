@@ -10,6 +10,9 @@
  */
 @font-face { font-family: 'Instrument Serif'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/InstrumentSerif-Regular.woff2') format('woff2'); }
 @font-face { font-family: 'Instrument Serif'; font-style: italic; font-weight: 400; font-display: swap; src: url('/fonts/InstrumentSerif-Italic.woff2') format('woff2'); }
+/* Body face: Hanken Grotesk (SIL OFL 1.1), variable weight, Latin subset, self-hosted with its licence. font-display: optional with a preload
+   means no late swap and no layout shift; the system stack is the fallback on a very slow first load. */
+@font-face { font-family: 'Hanken Grotesk'; font-style: normal; font-weight: 100 900; font-display: optional; src: url('/fonts/HankenGrotesk-Variable.woff2') format('woff2'); }
 @font-face { font-family: 'Instrument Serif Fallback'; src: local('Palatino Linotype'), local('Palatino'), local('Book Antiqua'), local('Georgia'); size-adjust: 76%; ascent-override: 130%; descent-override: 41%; line-gap-override: 0%; }
 
 :root {
@@ -33,7 +36,7 @@
   --max: 1200px;
   --gutter: clamp(20px, 4vw, 56px);
   /* type (system stacks only; Q06 open) */
-  --font-body: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --font-display: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
   --font-headline: 'Instrument Serif', 'Instrument Serif Fallback', var(--font-display);
   --font-mono: ui-monospace, 'Cascadia Mono', 'SF Mono', Menlo, Consolas, monospace;

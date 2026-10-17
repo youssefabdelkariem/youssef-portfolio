@@ -57,7 +57,7 @@ if (b.status !== 0) { fail('the fixture build failed'); } else {
       await page.setRequestInterception(true);
       page.on('request', (r) => {
         if (r.url().startsWith('https://formspree.io/')) {
-          posts.push({ method: r.method(), url: r.url(), hasBody: Boolean(r.postData()), accept: r.headers().accept });
+          posts.push({ method: r.method(), url: r.url(), hasBody: Boolean(r.postData()), accept: r.headers().accept, body: r.postData() ?? '' });
           if (r.method() === 'OPTIONS') return r.respond({ status: 204, headers: { 'access-control-allow-origin': '*', 'access-control-allow-headers': '*', 'access-control-allow-methods': 'POST' } });
           return r.respond({ status: mode === 'ok' ? 200 : 500, contentType: 'application/json', headers: { 'access-control-allow-origin': '*' }, body: JSON.stringify({ ok: mode === 'ok' }) });
         }
@@ -92,6 +92,20 @@ if (b.status !== 0) { fail('the fixture build failed'); } else {
       await wait(300);
       if (!(await page.$eval('#f-email-err', (e) => e.textContent).catch(() => ''))) fail(`${tag}: no error for an invalid email`);
 
+      // link must be a real link; custom budget reveals a required number field
+      if (await page.$eval('#amount-group', (e) => !e.hidden)) fail(`${tag}: the amount field is visible before Custom amount is chosen`);
+      await page.type('#f-links', 'just some words');
+      await page.select('#f-budget', 'Custom amount');
+      if (await page.$eval('#amount-group', (e) => e.hidden)) fail(`${tag}: choosing Custom amount did not reveal the number field`);
+      await page.click('button[type="submit"]');
+      await wait(300);
+      if (!(await page.$eval('#f-links-err', (e) => e.textContent).catch(() => ''))) fail(`${tag}: plain text was accepted as a link`);
+      if (!(await page.$eval('#f-amount-err', (e) => e.textContent).catch(() => ''))) fail(`${tag}: an empty custom amount was accepted (errors: ${await page.$$eval('.err', (e) => e.map((x) => x.id))}; focus ${await page.evaluate(() => document.activeElement?.id)})`);
+      await page.$eval('#f-links', (e) => { e.value = ''; });
+      await page.type('#f-links', 'https://example.com/brief');
+      await page.type('#f-amount', '1500');
+      await page.select('#f-currency', 'EUR');
+
       // failure path keeps the form and the data
       await page.$eval('#f-email', (e) => { e.value = ''; });
       await page.type('#f-email', 'person@example.com');
@@ -108,6 +122,8 @@ if (b.status !== 0) { fail('the fixture build failed'); } else {
       const ok = await page.evaluate(() => ({ formHidden: document.querySelector('#brief').hidden, doneVisible: !document.querySelector('#brief-done').hidden, focus: document.activeElement?.id }));
       if (!ok.formHidden || !ok.doneVisible || ok.focus !== 'brief-done') fail(`${tag}: success path ${JSON.stringify(ok)}`);
       const sent = posts.filter((p) => p.method === 'POST');
+      const body = sent.at(-1)?.body ?? '';
+      if (!/budget_amount/.test(body) || !/1500/.test(body) || !/EUR/.test(body) || !/example\.com\/brief/.test(body)) fail(`${tag}: the submitted body lacks the link or the custom budget`);
       if (sent.length !== 2 || sent.some((p) => p.url !== endpoint || !p.hasBody || !/json/.test(p.accept ?? ''))) fail(`${tag}: unexpected requests ${JSON.stringify(sent)}`);
       for (const m of issues) fail(`${tag}: ${m}`);
       rows.push(`fixture ${tag}: validation, failure and success paths, axe ${ax.violations.length} violations, ${sent.length} POSTs`);

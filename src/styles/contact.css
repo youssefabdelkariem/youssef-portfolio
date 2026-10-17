@@ -25,3 +25,8 @@
 .done { max-width: 40rem; }
 .done:focus { outline: none; }
 @media (max-width: 860px) { .contact-grid { grid-template-columns: 1fr; } .row { grid-template-columns: 1fr; } }
+
+.field[hidden] { display: none; }
+.amount-row { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
+.field input[type='url'], .field input[type='number'] { width: 100%; min-height: 48px; padding: 0.7rem 0.9rem; font: 400 1rem/1.4 var(--font-body); color: var(--text); background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--r-1); }
+.field input[type='url']:focus-visible, .field input[type='number']:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-color: var(--accent); }
