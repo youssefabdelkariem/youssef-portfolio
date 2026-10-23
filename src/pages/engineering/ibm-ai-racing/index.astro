@@ -51,7 +51,7 @@ const n = lapVideo ? { source: '10', lessons: '11' } : { source: '09', lessons: 
           <li><span>Language</span><span>Python (3.9.13 in the validation runs), NumPy</span></li>
           <li><span>Circuit</span><span>Corkscrew, {best.lapLength} km, one lap from a standing start</span></li>
           <li><span>Car</span><span>Stock <span class="num">car1-ow1</span>, 100 L fuel, normal damage</span></li>
-          <li><span>Development</span><span>Developed and maintained by @youssefabdelkariem with AI-assisted engineering tools, as the repository README states</span></li>
+          <li><span>Development</span><span>Developed and maintained by @youssefabdelkariem with AI-assisted engineering tools</span></li>
           <li><span>Status</span><span>Locally validated on the author's machine. Not an official league time or ranking; the organisers have not verified it</span></li>
         </ul>
       </div>
@@ -309,14 +309,14 @@ const n = lapVideo ? { source: '10', lessons: '11' } : { source: '09', lessons: 
         <div>
           <span class="t-label">Public repository</span>
           <h3>youssefabdelkariem / IBM-AI-Racing-League</h3>
-          <p>The final P1 controller, its settings, racing-line data, technical documentation, validation tools, performance evidence, AI-tool disclosure and compliance notes are on the verified release branch <code>{repo.branch}</code>, read here at commit <code>{repo.commit}</code> on {repo.checked}.</p>
-          <a class="go" href={repo.releaseUrl} rel="noopener noreferrer" target="_blank">Open the P1 release on GitHub<span class="visually-hidden"> (opens in a new tab)</span></a>
+          <p>The final P1 controller, its settings, racing-line data, technical documentation, validation tools, performance evidence and compliance notes are in the repository's main branch, read here at commit <code>{repo.commit}</code> on {repo.checked}.</p>
+          <a class="go" href={repo.url} rel="noopener noreferrer" target="_blank">Open the repository on GitHub<span class="visually-hidden"> (opens in a new tab)</span></a>
         </div>
         <div>
           <span class="t-label">Disclosures</span>
           <h3>Credits and licence</h3>
           <p>The gym_torcs starter client is used unmodified (MIT, upstream credits in the repository). TORCS and the league's car and track belong to their owners and are not included. The repository states that no open-source licence has been chosen for the project's own code.</p>
-          <p>Documented tools: Python, TORCS, IBM Bob, Claude Code, OpenAI Codex and OBS Studio (screen recording). IBM Granite was not used to develop, tune or validate this controller. This page makes no claim of contest placement, award, endorsement or official IBM recognition.</p>
+          <p>Documented tools: Python, TORCS, IBM Bob, Claude Code, OpenAI Codex and OBS Studio (screen recording). This page makes no claim of contest placement, award, endorsement or official IBM recognition, and no claim that IBM Granite contributed to the controller.</p>
         </div>
       </div>
     </div>

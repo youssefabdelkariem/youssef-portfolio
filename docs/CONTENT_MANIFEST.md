@@ -178,6 +178,6 @@ Section K (dormant Aurelia content) is superseded for the film only.
 | Item | State | Evidence | Approval |
 | --- | --- | --- | --- |
 | 65.968 s P1 lap, phases 2A to 2D, validation figures | Published on `/engineering/ibm-ai-racing/` (after merge) | Release branch README, technical documentation and evidence folder; owner's brief | Owner brief, 2026-10-23 |
-| P1 speed telemetry (313 samples) | In `racing-speed-profile.json` | `evidence/lap_speed_profile.json` at commit `3a0c950` | Same |
+| P1 speed telemetry (313 samples) | In `racing-speed-profile.json` | `evidence/lap_speed_profile.json` at commit `e71b6fe` (main) | Same |
 | Final-lap video (YouTube export, 80 s) | Published as a poster-first player; YouTube `Yw5mtOl9pfQ`, unlisted | Owner's file and QC report; frame at 30 s as the poster | Owner, 2026-10-23 (link supplied in chat) |
 | Clean qualifying video (72.9 s) | Not published; local file only | `VIDEO_QC_REPORT.md` | Not requested |

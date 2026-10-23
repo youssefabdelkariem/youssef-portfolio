@@ -19,7 +19,7 @@ try {
 
   // ---- racing page content rules
   const race = await text('/engineering/ibm-ai-racing/');
-  for (const must of ['65.968', '66.262', '66.020', '145 candidates', '9.4', '84.2', '3,241', 'not an official ranking', 'IBM Granite was not used', '279.22', '67.064', 'AI-assisted', 'not a trained neural network', 'Native Windows only', 'not part of the final controller', 'makes no claim of contest placement']) if (!race.includes(must)) fail(`racing page missing "${must}"`);
+  for (const must of ['65.968', '66.262', '66.020', '145 candidates', '9.4', '84.2', '3,241', 'not an official ranking', 'no claim that IBM Granite contributed', '279.22', '67.064', 'AI-assisted', 'not a trained neural network', 'Native Windows only', 'not part of the final controller', 'makes no claim of contest placement']) if (!race.includes(must)) fail(`racing page missing "${must}"`);
   for (const bad of [/pending owner approval/i, /role wording/i, /provisional/i, /independent developer/i, /evidence checked/i, /predictive[^.]{0,80}\b(is active|enabled|used in the final)\b/i, /\bwinner\b/i, /\bwon\b/i, /first place/i, /\bchampion/i, /\bpodium\b/i, /officially (ranked|endorsed)/i, /\b65\.772\b/, /\b4:39\b(?!\.22)/]) if (bad.test(race)) fail(`racing page contains forbidden wording ${bad}`);
   const chart = await page.evaluate(() => ({ d: document.querySelector('.chart .trace')?.getAttribute('d') ?? '', rows: document.querySelectorAll('.rung').length, runs: document.querySelectorAll('#runs-cap')[0]?.closest('table')?.querySelectorAll('tbody tr').length ?? 0, final: document.querySelectorAll('.rung.final').length }));
   const points = (chart.d.match(/[ML]/g) ?? []).length;
@@ -28,7 +28,7 @@ try {
   if (chart.runs !== 5) fail(`P1 run table rows ${chart.runs}, expected 5`);
   if (chart.final !== 1) fail(`expected exactly one final rung, found ${chart.final}`);
   const links = await page.evaluate(() => [...document.querySelectorAll('a[href^="http"]')].map((a) => [a.href, a.rel]));
-  const allowed = ['https://github.com/youssefabdelkariem/IBM-AI-Racing-League/tree/release/p1-65968', ...(videoCfg ? [videoCfg.externalUrl] : [])];
+  const allowed = ['https://github.com/youssefabdelkariem/IBM-AI-Racing-League', ...(videoCfg ? [videoCfg.externalUrl] : [])];
   if (links.length !== allowed.length || !allowed.every((u) => links.some(([h, rel]) => h === u && /noopener/.test(rel)))) fail(`outbound links unexpected: ${JSON.stringify(links)}`);
 
   // ---- nothing of the previous controller anywhere on the site: its lap time, commit or recording

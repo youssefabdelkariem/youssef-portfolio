@@ -13,15 +13,15 @@ Date: 2026-10-23. Branch: `feat/ibm-racing-final-results`. Scope: content and pr
 | Method text | Phases 2A to 2D, the F2 against P1 Corkscrew table, the single-corner decision |
 | Testing | P1 validation text and runs table; technical details (track position, sideslip, 446 m complex, replay identity) in a disclosure. The previous package's runs are removed |
 | Telemetry chart | Now the P1 lap; the Corkscrew window (2,301 to 2,493 m) is shaded |
-| Source | Links only to the verified branch `release/p1-65968`, pinned to commit `3a0c950` |
-| Credits | Python, TORCS, IBM Bob, Claude Code, OpenAI Codex, OBS Studio; IBM Granite stated as not used (the repository's own disclosure) |
+| Source | Links to the repository's `main` branch (P1 was merged there on 2026-10-23), pinned to commit `e71b6fe` |
+| Credits | Python, TORCS, IBM Bob, Claude Code, OpenAI Codex, OBS Studio; the page makes no claim about IBM Granite. The repository's AI-tool disclosure document was removed by the owner on 2026-10-23, so the tool credits rest on the owner's brief and the project history, not on that document |
 | Other pages | Engineering index and home page quote 65.968 s (locally validated) |
 | Previous controller | **Owner instruction 2026-10-23: nothing of the previous controller on the site.** No 66.284 s time, old commit, old recording or cover image remains in the built site; `check-racing` fails if `66.284`, `8658c1b`, the old video id or its cover appears anywhere in `dist/`. The three-stage progression replaces the four-stage one |
 | Video | The old recording section and its cover images are removed. The Demonstration section (and its entry in the contents list) appears only once the final-lap video is published (`LapVideo.astro`, `racing-video.json`) |
 
 ## Evidence for each public claim
 
-| Claim | Source (release branch `release/p1-65968`, commit `3a0c950`, read 2026-10-23, unless noted) |
+| Claim | Source (repository `main`, commit `e71b6fe`; text identical to release commit `3a0c950` except the removed disclosure, read 2026-10-23, unless noted) |
 | --- | --- |
 | 65.968 s, `01:05:96`, damage 0, 0 timeouts, locally validated, not official | README results table and note; `evidence/release_p1_65968/README.md` |
 | 66.262, 66.020, 65.968 progression | README "Results and progression" table; `docs/TECHNICAL.md` performance history |
@@ -33,7 +33,7 @@ Date: 2026-10-23. Branch: `feat/ibm-racing-final-results`. Scope: content and pr
 | 2D: 770 m study, no reliable gain | README; "65.966 s, 0.002 s" figures are from the owner's brief and are not in the published documents |
 | 5 repository runs; 6 package races (5 through the real entry point) plus 1 OBS graphics race; replay identity over 3,241 states; max trackPos 0.967; peak sideslip 13.6 degrees; 446 m complex 0.721 against 0.73 | README "Testing and validation"; `evidence/release_p1_65968/README.md` |
 | Stock files unchanged | Evidence README (nine stock files hash-checked before and after every race) |
-| Granite not used | `docs/AI_TOOL_DISCLOSURE.md` |
+| No Granite claim | Owner's brief: do not claim Granite contributed without evidence |
 
 Not claimed anywhere: a competition result, ranking, award, endorsement, rule compliance (the repository's own compliance notes list open questions) or any role for Granite.
 
