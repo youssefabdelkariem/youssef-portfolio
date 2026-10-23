@@ -7,11 +7,12 @@ import LapLadder from '../../../components/LapLadder.astro';
 import ProgressionChart from '../../../components/ProgressionChart.astro';
 import LapVideo from '../../../components/LapVideo.astro';
 import { lapVideo } from '../../../data/racing-video';
-import { repo, video, best, runs, p1Runs, optimisation, landmarks, speedStats, corkscrew } from '../../../data/racing';
+import { repo, best, p1Runs, optimisation, landmarks, speedStats, corkscrew } from '../../../data/racing';
 
 const fmtTime = (n: number) => n.toFixed(3);
 const fmt = (n: number) => n.toLocaleString('en-US');
 const first = 279.22;
+const n = lapVideo ? { source: '10', lessons: '11' } : { source: '09', lessons: '10' };
 ---
 
 <BaseLayout title="IBM AI Racing League / TORCS" description="An autonomous Python racing controller for TORCS: a locally validated 65.968-second Corkscrew lap with zero damage, with its method, tests and limits.">
@@ -177,18 +178,18 @@ const first = 279.22;
           <span class="when">14 Oct</span>
           <h3>Simulator-in-the-loop optimisation</h3>
           <p>Because TORCS is deterministic when the client answers every step on time, one real lap is an exact measurement. A CMA-ES search per corner window, over 10 variables (6 line offsets and 4 speed targets), ranked every candidate by the official lap time and rejected any with damage, a timeout or too much sideslip.</p>
-          <p class="res">66.906 s &rarr; 66.284 s</p>
+          <p class="res">66.906 s &rarr; 66.356 s</p>
         </div></li>
         <li><div>
           <span class="when">14 Oct &middot; packaging</span>
           <h3>Portable package and validation</h3>
-          <p>A single entry point through the unmodified starter client, checksums for every controller file, a one-command validation script, and a fresh-clone check outside the original project.</p>
+          <p>A single entry point through the unmodified starter client, checksums for every controller file and a one-command validation script.</p>
         </div></li>
         <li><div>
           <span class="when">Oct &middot; Claude Code</span>
-          <h3>Final optimisation: from 66.284 s to P1</h3>
-          <p>A performance audit found a finish-line braking error (phase 2A), a global parameter search tuned traction control, ABS, yaw filtering and the live grip assumption (2B), and a new racing line through the Corkscrew cut sliding (2C). A last study of the 770 m corner (2D) found no gain worth adopting, so P1 stayed final. Details in section 07.</p>
-          <p class="res">66.284 s &rarr; 66.262 s &rarr; 66.020 s &rarr; 65.968 s</p>
+          <h3>Final optimisation: P1</h3>
+          <p>Launch settings and a finish-line braking fix (phase 2A), a global parameter search over traction control, ABS, yaw filtering and the live grip assumption (2B), and a new racing line through the Corkscrew that cut sliding (2C). A last study of the 770 m corner (2D) found no gain worth adopting, so P1 stayed final. Details in section 07.</p>
+          <p class="res">66.356 s &rarr; 66.262 s &rarr; 66.020 s &rarr; 65.968 s</p>
         </div></li>
       </ol>
     </div>
@@ -203,15 +204,15 @@ const first = 279.22;
       </div>
       <LapLadder />
 
-      <h3 class="reveal" style="margin-top: var(--s-7)">The final phases: 66.284 s to {fmtTime(best.seconds)} s</h3>
+      <h3 class="reveal" style="margin-top: var(--s-7)">The final phases</h3>
       <div class="prose reveal">
-        <p>The final work started from the previously published controller (66.284 s). That figure is a stage in the history above, not the project's first baseline. In total the final phases took <strong>{(best.previous - best.seconds).toFixed(3)} s</strong> off the lap, about {(((best.previous - best.seconds) / best.previous) * 100).toFixed(2)}%.</p>
+        <p>The final simulator-in-the-loop work took the lap from 66.906 s to <strong>{fmtTime(best.seconds)} s</strong>, a gain of {(66.906 - best.seconds).toFixed(3)} s (about {(((66.906 - best.seconds) / 66.906) * 100).toFixed(1)}%). The three phases that produced the final controller are below.</p>
       </div>
       <ProgressionChart />
       <div class="phases">
         <div class="reveal prose">
-          <h4>Phase 2A: finish-line correction <span class="res-inline">66.284 &rarr; 66.262 s</span></h4>
-          <p>The controller braked unnecessarily near the finish line. Its speed look-ahead read the standing-start speed limit at the end of the lap plan. Clamping the look-ahead to the last plan sample fixed it.</p>
+          <h4>Phase 2A: launch settings and finish-line correction <span class="res-inline">66.356 &rarr; 66.262 s</span></h4>
+          <p>The standing-start clutch and traction allowance were tuned, and the controller no longer braked unnecessarily near the finish line. Its speed look-ahead read the standing-start speed limit at the end of the lap plan; clamping the look-ahead to the last plan sample fixed it.</p>
           <h4>Phase 2B: global parameter optimisation <span class="res-inline">66.262 &rarr; 66.020 s</span></h4>
           <p>A systematic search evaluated 145 candidates. The gains came from traction control, ABS activation, yaw filtering and the live speed limiter's grip assumption. The resulting controller, F2, spent about 0.55 s more of the lap at full throttle and 0.39 s less braking, because it intervened less where the car did not need it.</p>
         </div>
@@ -284,57 +285,31 @@ const first = 279.22;
               <li><strong>446 m complex.</strong> 0.721 against its 0.73 limit.</li>
               <li><strong>Constraints on every candidate.</strong> Complete lap, zero damage, zero timeouts, a sideslip cap and per-corner edge-clearance limits.</li>
             </ul>
-            <div class="table-wrap" role="region" aria-labelledby="runs-old-cap" tabindex="0">
-              <table>
-                <caption id="runs-old-cap">Runs of the previous 66.284 s package (kept as history)</caption>
-                <thead><tr><th scope="col">Run</th><th scope="col">Start order</th><th scope="col">Lap (s)</th><th scope="col">Damage</th><th scope="col">Timeouts</th><th scope="col">Counted</th></tr></thead>
-                <tbody>
-                  {runs.map((r) => <tr><th scope="row">{r.label}</th><td>{r.order}</td><td class="num">{fmtTime(r.seconds)}</td><td class="num">{r.damage}</td><td class="num">{r.timeouts}</td><td>{r.valid ? 'Yes' : 'No'}</td></tr>)}
-                </tbody>
-              </table>
-            </div>
           </details>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="tsection" aria-labelledby="demo">
-    <div class="wrap">
-      <p class="sec-label reveal"><span>09</span><span>Demonstration</span></p>
-      <h2 id="demo" class="reveal">Recorded laps</h2>
-      {lapVideo && <LapVideo video={lapVideo} />}
-      <h3 class="reveal" style="margin-top: var(--s-7)">Earlier recording: the previous 66.284 s controller</h3>
-      <div class="linkcard reveal">
-        <div class="videocard">
-          <a class="thumb" href={video.url} rel="noopener noreferrer" target="_blank">
-            <img src="/media/racing/video-cover-960.jpg" srcset="/media/racing/video-cover-640.jpg 640w, /media/racing/video-cover-960.jpg 960w" sizes="(min-width: 900px) 560px, 100vw" width="960" height="540" loading="lazy" decoding="async" alt="Cover image of the demonstration video: a stylised black racing car on a track, with the text 66.284 s, TORCS AI, Autonomous Qualifying Lap." />
-            <span class="play" aria-hidden="true"></span>
-            <span class="visually-hidden">Watch the demonstration on YouTube (opens in a new tab): {video.title}</span>
-          </a>
-          <p class="t-label">Video on YouTube &middot; about 1 min 28 s</p>
-          <h3>{video.title}</h3>
-          <p>The author's recorded footage of the previous controller (66.284 s) driving the lap, kept as part of the history. The thumbnail is stored on this site and links out; no player is embedded and nothing is loaded from YouTube until you follow the link.</p>
-        </div>
-        <div>
-          <span class="t-label">Evidence note</span>
-          <h3>What the cover image is and is not</h3>
-          <p>The cover image is stylised artwork, not race footage. Only its headline time, 66.284 s, is checked here against the result files; the sector times, speed read-out and track map drawn on it are not verified by the evidence on this page.</p>
-          <p>The repository holds the official result files for the validated runs but no race footage. The footage itself was not checked frame by frame against them.</p>
-        </div>
+  {lapVideo && (
+    <section class="tsection" aria-labelledby="demo">
+      <div class="wrap">
+        <p class="sec-label reveal"><span>09</span><span>Demonstration</span></p>
+        <h2 id="demo" class="reveal">Final demonstration</h2>
+        <LapVideo video={lapVideo} />
       </div>
-    </div>
-  </section>
+    </section>
+  )}
 
   <section class="tsection" aria-labelledby="source">
     <div class="wrap">
-      <p class="sec-label reveal"><span>10</span><span>Source</span></p>
+      <p class="sec-label reveal"><span>{n.source}</span><span>Source</span></p>
       <h2 id="source" class="reveal">Source code and evidence</h2>
       <div class="linkcard reveal">
         <div>
           <span class="t-label">Public repository</span>
           <h3>youssefabdelkariem / IBM-AI-Racing-League</h3>
-          <p>The final P1 controller, its settings, racing-line data, technical documentation, validation tools, performance evidence, AI-tool disclosure and compliance notes are on the verified release branch <code>{repo.branch}</code>, read here at commit <code>{repo.commit}</code> on {repo.checked}. The repository's default branch still holds the earlier controller until the release is merged.</p>
+          <p>The final P1 controller, its settings, racing-line data, technical documentation, validation tools, performance evidence, AI-tool disclosure and compliance notes are on the verified release branch <code>{repo.branch}</code>, read here at commit <code>{repo.commit}</code> on {repo.checked}.</p>
           <a class="go" href={repo.releaseUrl} rel="noopener noreferrer" target="_blank">Open the P1 release on GitHub<span class="visually-hidden"> (opens in a new tab)</span></a>
         </div>
         <div>
@@ -350,7 +325,7 @@ const first = 279.22;
   <section class="tsection" aria-labelledby="lessons">
     <div class="wrap split">
       <div class="lead reveal">
-        <p class="sec-label"><span>11</span><span>Takeaways</span></p>
+        <p class="sec-label"><span>{n.lessons}</span><span>Takeaways</span></p>
         <h2 id="lessons">Lessons from the lap</h2>
       </div>
       <ul class="ticks plain reveal">

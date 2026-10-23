@@ -31,7 +31,7 @@ export interface LapVideo {
 const fixture: LapVideo = {
   title: 'Final lap (fixture)', description: 'Synthetic fixture used by the component test.', accessibilityNote: 'Synthetic fixture: no real video.',
   youtubeId: 'FIXTUREID01', externalUrl: 'https://youtu.be/FIXTUREID01', duration: 'PT1M20S', uploadDate: '2000-01-01',
-  posterBase: 'video-cover', posterAlt: 'Fixture poster', approvedBy: 'fixture', approvedOn: '2000-01-01',
+  posterBase: 'lap-poster-fixture', posterAlt: 'Fixture poster', approvedBy: 'fixture', approvedOn: '2000-01-01',
 };
 
 function load(): LapVideo | null {

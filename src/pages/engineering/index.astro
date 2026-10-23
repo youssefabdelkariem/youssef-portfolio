@@ -49,7 +49,7 @@ const fmtTime = (n: number) => n.toFixed(3);
       <div class="lead reveal">
         <p class="sec-label"><span>02</span><span>Inside the case study</span></p>
         <h2 id="inside">What the case study covers</h2>
-        <p class="lede" style="font-size: 1rem">Eleven sections, from the challenge to the lessons, with measured telemetry, architecture, test runs and a link to the source.</p>
+        <p class="lede" style="font-size: 1rem">{caseContents.length === 11 ? 'Eleven' : 'Ten'} sections, from the challenge to the lessons, with measured telemetry, architecture, test runs and a link to the source.</p>
       </div>
       <ol class="contents reveal">
         {caseContents.map(([id, label], i) => (
