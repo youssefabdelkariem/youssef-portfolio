@@ -1,3 +1,15 @@
 {
-  "video": null
+  "video": {
+    "title": "IBM AI Racing League | 65.968s Autonomous Racing Lap | TORCS",
+    "description": "The final P1 controller driving one standing-start lap of the Corkscrew circuit in TORCS: 65.968 s with zero damage. A single recording of the race, with a title card before the start and a credit card after the results.",
+    "accessibilityNote": "An 80-second recording with no audio track; this description covers the picture only. It opens on the starting grid with the word Ready and a title card reading \"IBM AI Racing League, Final AI Controller, 65.968 s\" and below it \"TORCS, Corkscrew, 1 lap from a standing start, damage 0\". A blue single-seater race car with the IBM name is then followed from behind through the whole Corkscrew circuit, with a track map, timer and damage panel, and speed and rpm gauges on screen. It ends on the TORCS Race Results screen: Corkscrew, one lap, total and best time 01:05:96, top speed 293, damages 0, followed by a card reading \"Youssef Studio, youssef.studio\".",
+    "youtubeId": "Yw5mtOl9pfQ",
+    "externalUrl": "https://youtu.be/Yw5mtOl9pfQ",
+    "duration": "PT1M20S",
+    "uploadDate": "2026-10-23",
+    "posterBase": "lap-poster",
+    "posterAlt": "The blue IBM race car on the Corkscrew circuit in TORCS at 256 km/h, with the speed and rpm gauges, track map and timer on screen.",
+    "approvedBy": "Youssef Abdelkarim",
+    "approvedOn": "2026-10-23"
+  }
 }

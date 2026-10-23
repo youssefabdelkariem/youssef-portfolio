@@ -6,6 +6,7 @@ import path from 'node:path';
 import { serve } from './lib/serve.mjs';
 import { launchBrowser } from './lib/browser.mjs';
 
+const videoCfg = JSON.parse(fs.readFileSync('src/data/racing-video.json', 'utf8')).video;
 const problems = [];
 const fail = (m) => problems.push(m);
 const profile = JSON.parse(fs.readFileSync('src/data/racing-speed-profile.json', 'utf8'));
@@ -27,8 +28,8 @@ try {
   if (chart.runs !== 5) fail(`P1 run table rows ${chart.runs}, expected 5`);
   if (chart.final !== 1) fail(`expected exactly one final rung, found ${chart.final}`);
   const links = await page.evaluate(() => [...document.querySelectorAll('a[href^="http"]')].map((a) => [a.href, a.rel]));
-  const allowed = ['https://github.com/youssefabdelkariem/IBM-AI-Racing-League/tree/release/p1-65968'];
-  if (links.length !== 1 || !allowed.every((u) => links.some(([h, rel]) => h === u && /noopener/.test(rel)))) fail(`outbound links unexpected: ${JSON.stringify(links)}`);
+  const allowed = ['https://github.com/youssefabdelkariem/IBM-AI-Racing-League/tree/release/p1-65968', ...(videoCfg ? [videoCfg.externalUrl] : [])];
+  if (links.length !== allowed.length || !allowed.every((u) => links.some(([h, rel]) => h === u && /noopener/.test(rel)))) fail(`outbound links unexpected: ${JSON.stringify(links)}`);
 
   // ---- nothing of the previous controller anywhere on the site: its lap time, commit or recording
   const stale = [];
@@ -43,8 +44,16 @@ try {
   if (prog.pts !== 3 || prog.vals.join() !== '66.262,66.020,65.968') fail(`progression chart unexpected: ${JSON.stringify(prog)}`);
   if (!prog.zoomNote) fail('progression chart must say its axis does not start at zero');
   if (prog.table !== 9) fail(`optimisation table rows ${prog.table}, expected 9`);
-  const dormant = await page.evaluate(() => ({ lap: !!document.querySelector('.lapvideo, .lap-stage'), nocookie: /youtube-nocookie|VideoObject/.test(document.documentElement.innerHTML), ifr: !!document.querySelector('iframe') }));
-  if (dormant.lap || dormant.nocookie || dormant.ifr) fail(`final-video markup present although no video is approved: ${JSON.stringify(dormant)}`);
+  await page.evaluate(() => document.querySelector('.lap-stage')?.scrollIntoView());
+  await new Promise((r) => setTimeout(r, 1000));
+  const lapState = await page.evaluate(() => ({ lap: !!document.querySelector('.lapvideo .lap-stage'), nocookie: /youtube-nocookie\.com\/embed/.test(document.querySelector('.lap-stage')?.getAttribute('data-lap') ?? ''), ifr: !!document.querySelector('iframe'), poster: document.querySelector('.lap-stage img')?.complete && document.querySelector('.lap-stage img')?.naturalWidth > 0, h: document.querySelector('#lap-title')?.textContent ?? '', facts: document.querySelector('.lap-facts')?.textContent ?? '' }));
+  if (!videoCfg) { if (lapState.lap || lapState.ifr || /youtube-nocookie|VideoObject/.test(await page.content())) fail(`final-video markup present although no video is approved: ${JSON.stringify(lapState)}`); }
+  else {
+    if (!lapState.lap || !lapState.nocookie) fail(`final-lap video missing: ${JSON.stringify(lapState)}`);
+    if (lapState.ifr) fail('a player (iframe) exists before play');
+    if (!lapState.poster) fail('final-lap poster did not load');
+    if (!lapState.h.includes('65.968') || !lapState.facts.includes('01:05:96')) fail(`final-lap video text unexpected: ${lapState.h} / ${lapState.facts}`);
+  }
 
   // ---- ladder: bars scale with time; the final lap is the shortest stock-car bar
   const widths = await page.evaluate(() => [...document.querySelectorAll('.rung')].map((r) => [parseFloat(r.querySelector('.sec').textContent.replace(/[^0-9.]/g, '')), parseFloat(r.querySelector('.bar i').style.getPropertyValue('--w'))]));
@@ -80,7 +89,8 @@ try {
   if (idx.features !== 1) fail(`engineering page should have exactly one featured project, found ${idx.features}`);
   if (idx.entries) fail('engineering page still has gallery entries');
   if (!idx.spark) fail('engineering page lost the telemetry trace');
-  if (idx.contents.length !== 10) fail(`case-study contents links ${idx.contents.length}, expected 10 (no demonstration section until the final video is published)`);
+  const expectedSections = videoCfg ? 11 : 10; // the demonstration section exists only once the final video is published
+  if (idx.contents.length !== expectedSections) fail(`case-study contents links ${idx.contents.length}, expected ${expectedSections}`);
   // every contents link must resolve to a heading id on the case-study page
   await page.goto(base + '/engineering/ibm-ai-racing/', { waitUntil: 'networkidle0' });
   for (const href of idx.contents) { const id = href.split('#')[1]; if (!(await page.$(`#${id}`))) fail(`contents link ${href} has no target`); }
