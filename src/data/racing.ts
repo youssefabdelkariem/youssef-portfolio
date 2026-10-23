@@ -10,11 +10,9 @@ import profile from './racing-speed-profile.json';
 
 export const repo = {
   url: 'https://github.com/youssefabdelkariem/IBM-AI-Racing-League',
-  /** The verified P1 release branch. */
-  releaseUrl: 'https://github.com/youssefabdelkariem/IBM-AI-Racing-League/tree/release/p1-65968',
-  branch: 'release/p1-65968',
-  commit: '3a0c950',
-  commitFull: '3a0c950a0f4d944ebf884b52f36ba287358cfcf8',
+  /** The repository's default branch (it holds the final P1 controller since 2026-10-23). */
+  commit: 'e71b6fe',
+  commitFull: 'e71b6fee7e448291a30c75e8e1d0e2fe89531d4d',
   checked: '2026-10-23',
 };
 
