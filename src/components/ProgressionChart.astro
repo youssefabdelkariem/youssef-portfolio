@@ -1,6 +1,6 @@
 ---
 /**
- * The final phases as a focused chart: 66.284 -> 66.262 -> 66.020 -> 65.968 s. The differences are fractions of a second, so the
+ * The final phases as a focused chart: 66.262 -> 66.020 -> 65.968 s. The differences are fractions of a second, so the
  * time axis is deliberately zoomed (65.90 to 66.30 s) and says so on the chart; the full-scale view is the development ladder above.
  * Drawn at build time from src/data/racing.ts. Static SVG, no JavaScript.
  */
@@ -15,16 +15,15 @@ const pts = progression.map((p, i) => [x(i), y(p.seconds)] as const);
 const line = pts.map(([px, py], i) => `${i ? 'L' : 'M'}${px.toFixed(1)} ${py.toFixed(1)}`).join('');
 const ticks = [65.9, 66.0, 66.1, 66.2, 66.3];
 const delta = (i: number) => (progression[i].seconds - progression[i - 1].seconds).toFixed(3);
-const total = (best.previous - best.seconds).toFixed(3);
-const pct = (((best.previous - best.seconds) / best.previous) * 100).toFixed(2);
-const desc = progression.map((p) => `${p.short === 'Previous' ? 'the previous controller' : 'phase ' + p.short} ${p.seconds.toFixed(3)} seconds`).join(', then ');
+const total = (progression[0].seconds - best.seconds).toFixed(3);
+const desc = progression.map((p) => `phase ${p.short} ${p.seconds.toFixed(3)} seconds`).join(', then ');
 ---
 
 <figure class="chart reveal prog">
   <div class="chart-scroll" role="region" aria-label="Lap time by final phase chart, scrolls sideways on narrow screens" tabindex="0">
     <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby="prog-title prog-desc">
       <title id="prog-title">Lap time after each final optimisation phase</title>
-      <desc id="prog-desc">Lap time in seconds falls from {desc}. The total improvement is {total} seconds, about {pct} percent. The time axis runs from 65.9 to 66.3 seconds, not from zero. The table below lists the same values.</desc>
+      <desc id="prog-desc">Lap time in seconds after each phase: {desc}. From phase 2A to phase 2C the lap falls by {total} seconds. The time axis runs from 65.9 to 66.3 seconds, not from zero. The table below lists the same values.</desc>
       {ticks.map((v) => <g>
         <line class="grid" x1={m.l} x2={W - m.r} y1={y(v)} y2={y(v)} />
         <text x={m.l - 8} y={y(v) + 4} text-anchor="end">{v.toFixed(1)}</text>
@@ -36,14 +35,14 @@ const desc = progression.map((p) => `${p.short === 'Previous' ? 'the previous co
         <circle class="mark" cx={px} cy={py} r="6" />
         <text class="val" x={px} y={py - 14} text-anchor="middle">{progression[i].seconds.toFixed(3)}</text>
         {i > 0 && <text x={(pts[i - 1][0] + px) / 2} y={(pts[i - 1][1] + py) / 2 - 12} text-anchor="middle">{delta(i)}</text>}
-        <text x={px} y={H - m.b + 22} text-anchor="middle">{progression[i].short === 'Previous' ? 'Previous' : `Phase ${progression[i].short}`}</text>
+        <text x={px} y={H - m.b + 22} text-anchor="middle">{`Phase ${progression[i].short}`}</text>
       </g>)}
       <text x={(m.l + W - m.r) / 2} y={H - 8} text-anchor="middle">Final optimisation phases (axis zoomed: starts at 65.9 s, not zero)</text>
       <text x="14" y={(m.t + H - m.b) / 2} text-anchor="middle" transform={`rotate(-90 14 ${(m.t + H - m.b) / 2})`}>Lap time (s)</text>
     </svg>
   </div>
   <figcaption>
-    <strong>Measured.</strong> Official local TORCS lap times, stock car, one lap, zero damage. Total improvement from the previously published controller: <strong>{total} s</strong> (about {pct}%).
+    <strong>Measured.</strong> Official local TORCS lap times, stock car, one lap, zero damage. From phase 2A to phase 2C the lap fell by <strong>{total} s</strong>.
     The axis is zoomed so that fractions of a second are visible; on the full-scale ladder above they are barely a pixel.
   </figcaption>
 </figure>

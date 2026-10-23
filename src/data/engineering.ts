@@ -4,19 +4,24 @@
  */
 
 /** Sections of the racing case study, in page order; ids match the headings on the case-study page. */
-export const caseContents = [
+import { lapVideo } from './racing-video';
+
+const allContents = [
   ['overview', 'Overview and challenge'],
   ['env', 'Simulator and development setup'],
   ['arch', 'Controller architecture'],
   ['steer', 'Steering and path following'],
   ['speed', 'Speed control, braking and the measured lap'],
-  ['iter', 'Seven stages of development'],
+  ['iter', 'Eight stages of development'],
   ['perf', 'Lap-time progression'],
   ['test', 'Testing and reliability'],
   ['demo', 'Final demonstration'],
   ['source', 'Source code and evidence'],
   ['lessons', 'Lessons from the lap'],
 ] as const;
+
+/** Sections of the racing case study. The final-demonstration section exists only once the final lap video is published. */
+export const caseContents = allContents.filter(([id]) => id !== 'demo' || lapVideo);
 
 export const demonstrates = [
   { name: 'Programming and automation', note: 'A real-time Python controller, a one-command validation script and checksummed run tooling, in a public repository.' },

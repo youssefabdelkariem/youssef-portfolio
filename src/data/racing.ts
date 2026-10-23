@@ -1,7 +1,7 @@
 /**
  * IBM AI Racing League / TORCS case study: verified facts and their evidence.
  *
- * The figures up to 66.284 s were read from the owner's project files on 2026-10-16 (docs/reviews/M1B_ENGINEERING_RACING.md);
+ * The development-stage figures were read from the owner's project files on 2026-10-16 (docs/reviews/M1B_ENGINEERING_RACING.md);
  * the P1 results (65.968 s) and the final optimisation phases were read from the release branch and the owner's brief on
  * 2026-10-23 (docs/reviews/RACING_FINAL_RESULTS.md has the claim-by-claim evidence table). Nothing is estimated or generated.
  * The public repository is pinned to a commit so the page can be re-checked against what was read.
@@ -10,7 +10,7 @@ import profile from './racing-speed-profile.json';
 
 export const repo = {
   url: 'https://github.com/youssefabdelkariem/IBM-AI-Racing-League',
-  /** The verified P1 release branch. `main` still holds the previous controller until the owner merges it (checked 2026-10-23). */
+  /** The verified P1 release branch. */
   releaseUrl: 'https://github.com/youssefabdelkariem/IBM-AI-Racing-League/tree/release/p1-65968',
   branch: 'release/p1-65968',
   commit: '3a0c950',
@@ -18,28 +18,19 @@ export const repo = {
   checked: '2026-10-23',
 };
 
-/** The earlier recorded run: the previous 66.284 s controller. The title is quoted from the platform's own metadata for this URL. */
-export const video = {
-  url: 'https://youtu.be/lp-c8A3NIJI',
-  title: 'IBM AI Racing League | Autonomous AI Racing — 66.284s Qualifying Lap (TORCS)',
-};
-
 export const best = {
   seconds: 65.968,
-  /** The previously published controller, from which the final phases are measured. */
-  previous: 66.284,
   lapLength: 3.608, // km, from the simulator log of the validated runs
   damage: 0,
   timeouts: 0,
   hz: 50,
 };
 
-/** Final phases, measured from the previously published 66.284 s controller. Source: release README results table and the owner's brief. */
+/** The final phases, with the lap time reached after each. Source: release README results table and the owner's brief. */
 export const progression = [
-  { id: 'prev', label: 'Previous published controller', short: 'Previous', seconds: 66.284, note: 'Starting point for the final phases (not the project baseline)' },
-  { id: '2a', label: 'Phase 2A: finish-line fix', short: '2A', seconds: 66.262, note: 'The speed look-ahead no longer reads the standing-start cap at the end of the lap' },
-  { id: '2b', label: 'Phase 2B: global parameter optimisation', short: '2B', seconds: 66.02, note: 'Traction control, ABS, yaw filtering and the live grip assumption (controller F2)' },
-  { id: '2c', label: 'Phase 2C: Corkscrew racing line (P1)', short: '2C', seconds: 65.968, note: 'A straighter line through the left-right direction change at 2,301 to 2,493 m' },
+  { id: '2a', short: '2A', label: 'Phase 2A: launch settings and finish-line fix', seconds: 66.262, note: 'Standing-start launch settings, and the speed look-ahead no longer reads the standing-start cap at the end of the lap' },
+  { id: '2b', short: '2B', label: 'Phase 2B: global parameter optimisation', seconds: 66.02, note: 'Traction control, ABS, yaw filtering and the live grip assumption (controller F2)' },
+  { id: '2c', short: '2C', label: 'Phase 2C: Corkscrew racing line (P1)', seconds: 65.968, note: 'A straighter line through the left-right direction change at 2,301 to 2,493 m' },
 ] as const;
 
 /** Corkscrew window, F2 against final P1 (release README and technical documentation). */
@@ -82,8 +73,7 @@ export const ladder: Milestone[] = [
   { seconds: 66.906, label: 'Minimum-time line, first corner complex', detail: 'Two identical official runs. Start of the simulator-in-the-loop series.', when: '14 Oct', setup: 'stock', evidence: 'local-xml' },
   { seconds: 66.526, label: 'Corner windows at 770 m and 1,042 m', detail: 'Per-window search, ranked by official lap time (66.686 s after the 770 m window).', when: '14 Oct', setup: 'stock', evidence: 'repo-readme' },
   { seconds: 66.356, label: '330–680 m complex', detail: 'Line and speed nodes searched together, after the 2,700 m window (66.506 s).', when: '14 Oct', setup: 'stock', evidence: 'repo-readme' },
-  { seconds: 66.284, label: 'Launch settings: previous release', detail: 'Clutch and traction allowance on the standing start. Five consecutive native runs, all 66.284 s with zero damage and zero timeouts. This was the previously published controller.', when: '14 Oct', setup: 'stock', evidence: 'repo-xml' },
-  { seconds: 66.262, label: 'Finish-line fix', detail: 'The controller braked near the finish line because its speed look-ahead read the standing-start speed limit; the look-ahead is now clamped to the last plan sample.', when: 'Oct', setup: 'stock', evidence: 'repo-readme' },
+  { seconds: 66.262, label: 'Launch settings and finish-line fix', detail: 'Clutch and traction allowance on the standing start, then a fix for braking near the finish line: the speed look-ahead read the standing-start speed limit at the end of the lap and is now clamped to the last plan sample.', when: 'Oct', setup: 'stock', evidence: 'repo-readme' },
   { seconds: 66.02, label: 'Traction control and ABS tuning', detail: 'A search over 145 candidates; looser traction control and earlier ABS release gave about 0.55 s more full throttle and 0.39 s less braking per lap.', when: 'Oct', setup: 'stock', evidence: 'repo-readme' },
   { seconds: 65.968, label: 'Corkscrew racing line: P1, final', detail: 'A straighter line through the left-right direction change at 2,301 to 2,493 m. Final package: six races at 65.968 s, and five more through the repository, all with zero damage and zero timeouts.', when: 'Oct', setup: 'stock', evidence: 'repo-xml', final: true },
 ];
@@ -93,18 +83,6 @@ export interface Run { id: string; label: string; order: string; seconds: number
 /** The five runs of the P1 release folder, published in the repository (evidence/release_p1_65968). */
 export const p1Runs: Run[] = [1, 2, 3, 4, 5].map((n) => ({ id: `repo_run${n}`, label: `Repository run ${n}`, order: 'repository validation script', seconds: 65.968, damage: 0, timeouts: 0, valid: true }));
 
-/** The five native validation runs and the three fresh-clone runs of the previous 66.284 s package. */
-export const runs: Run[] = [
-  { id: 'native_run1', label: 'Native run 1', order: 'client first', seconds: 66.284, damage: 0, timeouts: 0, valid: true },
-  { id: 'native_run2', label: 'Native run 2', order: 'client first', seconds: 66.284, damage: 0, timeouts: 0, valid: true },
-  { id: 'native_run3', label: 'Native run 3', order: 'TORCS first', seconds: 66.284, damage: 0, timeouts: 0, valid: true },
-  { id: 'native_run4_state_diag', label: 'Native run 4', order: 'TORCS first', seconds: 66.284, damage: 0, timeouts: 0, valid: true, note: 'Also records the first server state: standing, 100.0 L fuel.' },
-  { id: 'native_run5_final', label: 'Native run 5', order: 'TORCS first, final files', seconds: 66.284, damage: 0, timeouts: 0, valid: true },
-  { id: 'fresh_clone_test', label: 'Fresh clone, attempt 1', order: 'copy outside the project', seconds: 67.058, damage: 0, timeouts: 1, valid: false, note: 'One server timeout while the PC was busy. Not counted as a reproduction.' },
-  { id: 'fresh_clone_test2', label: 'Fresh clone, attempt 2', order: 'copy outside the project', seconds: 66.284, damage: 0, timeouts: 0, valid: true },
-  { id: 'fresh_clone_test3', label: 'Fresh clone, attempt 3', order: 'copy outside the project', seconds: 66.284, damage: 0, timeouts: 0, valid: true },
-];
-
 /** Final optimisation series on the stock car, as tabulated in the repository README. Cumulative, one real TORCS lap per candidate. */
 export const optimisation = [
   { step: 'Starting point for this series', seconds: 66.906 },
@@ -113,8 +91,7 @@ export const optimisation = [
   { step: '1,042 m corner window', seconds: 66.526 },
   { step: '2,700 m corner window', seconds: 66.506 },
   { step: '330–680 m complex (line and speed nodes)', seconds: 66.356 },
-  { step: 'Launch settings (clutch, traction allowance)', seconds: 66.284 },
-  { step: 'Finish-line fix (phase 2A)', seconds: 66.262 },
+  { step: 'Launch settings and finish-line fix (phase 2A)', seconds: 66.262 },
   { step: 'Global parameter optimisation (phase 2B)', seconds: 66.02 },
   { step: 'Corkscrew racing line (phase 2C, P1)', seconds: 65.968 },
 ];

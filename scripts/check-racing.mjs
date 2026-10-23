@@ -18,25 +18,31 @@ try {
 
   // ---- racing page content rules
   const race = await text('/engineering/ibm-ai-racing/');
-  for (const must of ['65.968', '66.284', '66.262', '66.020', '145 candidates', '9.4', '84.2', '3,241', 'not an official ranking', 'IBM Granite was not used', 'the previously published controller', '279.22', '67.064', 'AI-assisted', 'not a trained neural network', 'Native Windows only', 'not part of the final controller', 'stylised artwork, not race footage', 'makes no claim of contest placement']) if (!race.includes(must)) fail(`racing page missing "${must}"`);
+  for (const must of ['65.968', '66.262', '66.020', '145 candidates', '9.4', '84.2', '3,241', 'not an official ranking', 'IBM Granite was not used', '279.22', '67.064', 'AI-assisted', 'not a trained neural network', 'Native Windows only', 'not part of the final controller', 'makes no claim of contest placement']) if (!race.includes(must)) fail(`racing page missing "${must}"`);
   for (const bad of [/pending owner approval/i, /role wording/i, /provisional/i, /independent developer/i, /evidence checked/i, /predictive[^.]{0,80}\b(is active|enabled|used in the final)\b/i, /\bwinner\b/i, /\bwon\b/i, /first place/i, /\bchampion/i, /\bpodium\b/i, /officially (ranked|endorsed)/i, /\b65\.772\b/, /\b4:39\b(?!\.22)/]) if (bad.test(race)) fail(`racing page contains forbidden wording ${bad}`);
   const chart = await page.evaluate(() => ({ d: document.querySelector('.chart .trace')?.getAttribute('d') ?? '', rows: document.querySelectorAll('.rung').length, runs: document.querySelectorAll('#runs-cap')[0]?.closest('table')?.querySelectorAll('tbody tr').length ?? 0, final: document.querySelectorAll('.rung.final').length }));
   const points = (chart.d.match(/[ML]/g) ?? []).length;
   if (points !== profile.distance_m.length) fail(`chart has ${points} points, data has ${profile.distance_m.length}`);
-  if (chart.rows !== 16) fail(`ladder rows ${chart.rows}, expected 16`);
+  if (chart.rows !== 15) fail(`ladder rows ${chart.rows}, expected 15`);
   if (chart.runs !== 5) fail(`P1 run table rows ${chart.runs}, expected 5`);
   if (chart.final !== 1) fail(`expected exactly one final rung, found ${chart.final}`);
   const links = await page.evaluate(() => [...document.querySelectorAll('a[href^="http"]')].map((a) => [a.href, a.rel]));
-  const thumb = await page.evaluate(() => { const i = document.querySelector('.thumb img'); return i ? { src: i.getAttribute('src'), lazy: i.loading, alt: i.alt.length, anchors: document.querySelectorAll('a[href="https://youtu.be/lp-c8A3NIJI"]').length } : null; });
-  if (!thumb || !thumb.src.startsWith('/media/racing/') || thumb.lazy !== 'lazy' || thumb.alt < 20 || thumb.anchors !== 1) fail(`video thumbnail treatment unexpected: ${JSON.stringify(thumb)}`);
-  const allowed = ['https://github.com/youssefabdelkariem/IBM-AI-Racing-League/tree/release/p1-65968', 'https://youtu.be/lp-c8A3NIJI'];
-  if (links.length !== 2 || !allowed.every((u) => links.some(([h, rel]) => h === u && /noopener/.test(rel)))) fail(`outbound links unexpected: ${JSON.stringify(links)}`);
+  const allowed = ['https://github.com/youssefabdelkariem/IBM-AI-Racing-League/tree/release/p1-65968'];
+  if (links.length !== 1 || !allowed.every((u) => links.some(([h, rel]) => h === u && /noopener/.test(rel)))) fail(`outbound links unexpected: ${JSON.stringify(links)}`);
+
+  // ---- nothing of the previous controller anywhere on the site: its lap time, commit or recording
+  const stale = [];
+  for (const f of fs.readdirSync('dist', { recursive: true }).map(String).filter((x) => /\.(html|xml|txt|json|js|css|webmanifest)$/.test(x))) {
+    const t = fs.readFileSync(path.join('dist', f), 'utf8');
+    if (/66\.284|8658c1b|lp-c8A3NIJI|video-cover/.test(t)) stale.push(f);
+  }
+  if (stale.length) fail(`references to the previous controller (66.284 s, old commit or recording) in: ${stale.join(', ')}`);
 
   // ---- final progression chart: four points with the verified values; the dormant final video leaves no trace
   const prog = await page.evaluate(() => ({ pts: (document.querySelector('.prog .trace')?.getAttribute('d').match(/[ML]/g) ?? []).length, vals: [...document.querySelectorAll('.prog text.val')].map((t) => t.textContent), zoomNote: /starts at 65\.9 s/.test(document.querySelector('.prog')?.textContent ?? ''), table: [...document.querySelectorAll('#opt-cap')][0]?.closest('table')?.querySelectorAll('tbody tr').length }));
-  if (prog.pts !== 4 || prog.vals.join() !== '66.284,66.262,66.020,65.968') fail(`progression chart unexpected: ${JSON.stringify(prog)}`);
+  if (prog.pts !== 3 || prog.vals.join() !== '66.262,66.020,65.968') fail(`progression chart unexpected: ${JSON.stringify(prog)}`);
   if (!prog.zoomNote) fail('progression chart must say its axis does not start at zero');
-  if (prog.table !== 10) fail(`optimisation table rows ${prog.table}, expected 10`);
+  if (prog.table !== 9) fail(`optimisation table rows ${prog.table}, expected 9`);
   const dormant = await page.evaluate(() => ({ lap: !!document.querySelector('.lapvideo, .lap-stage'), nocookie: /youtube-nocookie|VideoObject/.test(document.documentElement.innerHTML), ifr: !!document.querySelector('iframe') }));
   if (dormant.lap || dormant.nocookie || dormant.ifr) fail(`final-video markup present although no video is approved: ${JSON.stringify(dormant)}`);
 
@@ -74,7 +80,7 @@ try {
   if (idx.features !== 1) fail(`engineering page should have exactly one featured project, found ${idx.features}`);
   if (idx.entries) fail('engineering page still has gallery entries');
   if (!idx.spark) fail('engineering page lost the telemetry trace');
-  if (idx.contents.length !== 11) fail(`case-study contents links ${idx.contents.length}, expected 11`);
+  if (idx.contents.length !== 10) fail(`case-study contents links ${idx.contents.length}, expected 10 (no demonstration section until the final video is published)`);
   // every contents link must resolve to a heading id on the case-study page
   await page.goto(base + '/engineering/ibm-ai-racing/', { waitUntil: 'networkidle0' });
   for (const href of idx.contents) { const id = href.split('#')[1]; if (!(await page.$(`#${id}`))) fail(`contents link ${href} has no target`); }
