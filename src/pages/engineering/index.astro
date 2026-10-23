@@ -8,7 +8,7 @@ import { caseContents, demonstrates, verifiedTools } from '../../data/engineerin
 const fmtTime = (n: number) => n.toFixed(3);
 ---
 
-<BaseLayout title="Engineering" description="Engineering work with evidence: the IBM AI Racing League / TORCS autonomous racing controller and its validated 66.284-second lap.">
+<BaseLayout title="Engineering" description="Engineering work with evidence: the IBM AI Racing League / TORCS autonomous racing controller and its locally validated 65.968-second lap.">
   <section class="eng-hero" aria-labelledby="eng-title">
     <div class="grid-lines" aria-hidden="true"></div>
     <div class="wrap">
@@ -30,14 +30,14 @@ const fmtTime = (n: number) => n.toFixed(3);
         <div class="solo-copy">
           <p class="t-eyebrow" style="margin-bottom: 0">Autonomous systems &middot; Simulation &middot; Programming</p>
           <h2 id="featured"><a href="/engineering/ibm-ai-racing/">IBM AI Racing League / TORCS controller</a></h2>
-          <p>A Python controller that drives a TORCS race car around the Corkscrew circuit with no human input. It plans a racing line and a speed profile from the track geometry, follows them with feedback, and was tuned against the simulator&rsquo;s own lap time, from a first completed lap of 279.22 s to a validated {fmtTime(best.seconds)} s.</p>
+          <p>A Python controller that drives a TORCS race car around the Corkscrew circuit with no human input. It plans a racing line and a speed profile from the track geometry, follows them with feedback, and was tuned against the simulator&rsquo;s own lap time, from a first completed lap of 279.22 s to a locally validated {fmtTime(best.seconds)} s with the final controller, P1.</p>
           <p class="more">Read the case study &rarr;</p>
         </div>
         <dl class="keyfigs">
           <div><dt>Best lap</dt><dd>{fmtTime(best.seconds)}<small>s, validated</small></dd></div>
           <div><dt>Damage</dt><dd>0<small>every counted run</small></dd></div>
-          <div><dt>Native runs</dt><dd>5/5<small>identical result</small></dd></div>
-          <div><dt>Source</dt><dd>Public<small>repo commit {repo.commit}</small></dd></div>
+          <div><dt>Repository runs</dt><dd>5/5<small>identical result</small></dd></div>
+          <div><dt>Source</dt><dd>Public<small>release branch, commit {repo.commit}</small></dd></div>
         </dl>
         <div class="solo-trace"><LapSparkline /></div>
       </article>
