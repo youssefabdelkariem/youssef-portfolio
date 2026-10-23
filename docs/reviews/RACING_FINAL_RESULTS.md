@@ -37,16 +37,15 @@ Date: 2026-10-23. Branch: `feat/ibm-racing-final-results`. Scope: content and pr
 
 Not claimed anywhere: a competition result, ranking, award, endorsement, rule compliance (the repository's own compliance notes list open questions) or any role for Granite.
 
-## Final-lap video: status and how to publish
+## Final-lap video: published (2026-10-23)
 
-The two exports exist only on the owner's machine (`C:\Users\youss\Videos\IBM_AI_Racing_League_Final\`, about 300 MB each, 1920 x 1080, 60 fps, no audio; the upload notes say "Not uploaded"). They are too large for the site, and no public URL exists, so **no video link or player is published**. The integration is ready and dormant:
+The owner uploaded the YouTube export and supplied the link, `https://youtu.be/Yw5mtOl9pfQ` ("IBM AI Racing League | 65.968s Autonomous Racing Lap | TORCS", 80 s, uploaded 2026-10-23). It is **unlisted** on YouTube (not private; the embed is allowed and plays), so it is reachable through the site and by link but does not appear in YouTube search. Change the visibility on YouTube if public discovery is wanted.
 
-1. Upload `IBM_AI_Racing_League_P1_65968_YouTube.mp4` to YouTube (title and description are in the owner's `YOUTUBE_UPLOAD_DETAILS.md`; the checklist there says to start as Unlisted, check it, then publish).
-2. Create the poster: `node scripts/racing/make-lap-poster.mjs <video.mp4> <seconds>` (a mid-lap frame or the results screen; writes `public/media/racing/lap-poster-960|1280.avif|jpg`).
-3. Fill `src/data/racing-video.json`: title, description, `accessibilityNote` (describe the picture; do not describe audio, there is none), `youtubeId`, `externalUrl`, `duration`, `uploadDate`, `posterBase: "lap-poster"`, `posterAlt`, `approvedBy`, `approvedOn`.
-4. `npm run verify` and a pull request. Nothing reaches YouTube before the visitor presses play, and the build refuses an incomplete entry.
-
-The video's title cards show no team or university name; the repository's compliance notes mention rule R4 for competition use. That is the owner's decision and is not stated on the website.
+- **Presentation:** poster-first, click-to-play. The poster is a mid-lap frame (30 s) of the owner's file, made with `scripts/racing/make-lap-poster.mjs` (AVIF and JPEG, 960 and 1280 px, 66 to 105 KB). Nothing is requested from YouTube until the visitor presses play, when the privacy-enhanced `youtube-nocookie.com` player is created.
+- **Text alternative:** describes the picture only (the file has no audio track); no transcript or captions exist and none are claimed.
+- **Description:** from the owner's upload text (single recording, title card before the start, credit card after the results).
+- **Config:** `src/data/racing-video.json`; the build refuses an incomplete entry. The video files themselves (about 300 MB) are not in the repository.
+- The old 66.284 s recording and its cover-image note were removed in the previous update and are not coming back.
 
 ## Checks
 
