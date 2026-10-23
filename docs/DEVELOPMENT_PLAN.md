@@ -109,3 +109,7 @@ Direction A is approved and integrated on `feat/m3-launch-readiness` (local comm
 ## M4 production launch and film publication (2026-10-17)
 
 The site went live at https://youssef.studio on 2026-10-16 (pull request 1, merge commit `4aa4abb`, Actions run 38982172740). On the owner's instruction of 2026-10-17 the finished Aurelia commercial is published as a poster-first YouTube player on a follow-up branch (`feat/aurelia-film-publication`). Report: [M4_PRODUCTION_LAUNCH](reviews/M4_PRODUCTION_LAUNCH.md). The walkthrough stays dormant.
+
+## IBM racing case study: final results (2026-10-23)
+
+The racing case study is updated to the final validated controller P1 (65.968 s, zero damage) on `feat/ibm-racing-final-results`; the final-lap video is prepared but dormant until it has a public URL. Report: [RACING_FINAL_RESULTS](reviews/RACING_FINAL_RESULTS.md).

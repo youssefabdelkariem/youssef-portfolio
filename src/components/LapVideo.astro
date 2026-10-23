@@ -1,0 +1,83 @@
+---
+/**
+ * Poster-first presentation of the final validated lap. Nothing is requested from any third party until the visitor presses play:
+ * the poster is a local image, the privacy-enhanced YouTube player is created on click, and without JavaScript the external watch
+ * link is the way to play. Only rendered when src/data/racing-video.json holds an approved video. CSS is inline so that a dormant
+ * video leaves no trace in the page.
+ */
+import type { LapVideo } from '../data/racing-video';
+import { best } from '../data/racing';
+
+interface Props { video: LapVideo }
+const { video } = Astro.props;
+const b = video.posterBase;
+const embed = `https://www.youtube-nocookie.com/embed/${video.youtubeId}?autoplay=1&rel=0&playsinline=1`;
+const ld = {
+  '@context': 'https://schema.org', '@type': 'VideoObject', name: video.title, description: video.description, duration: video.duration,
+  uploadDate: video.uploadDate, thumbnailUrl: new URL(`/media/racing/${b}-1280.jpg`, Astro.site).href, embedUrl: video.externalUrl,
+};
+const data = { embed, title: video.title };
+---
+
+<div class="lapvideo">
+  <h3 id="lap-title">Final validated lap: {best.seconds.toFixed(3)} s</h3>
+  <div class="lap-stage" data-lap={JSON.stringify(data)}>
+    <picture>
+      <source type="image/avif" srcset={`/media/racing/${b}-960.avif 960w, /media/racing/${b}-1280.avif 1280w`} sizes="(min-width: 1100px) 1000px, 100vw" />
+      <img src={`/media/racing/${b}-1280.jpg`} srcset={`/media/racing/${b}-960.jpg 960w, /media/racing/${b}-1280.jpg 1280w`} sizes="(min-width: 1100px) 1000px, 100vw" alt={video.posterAlt} width="1280" height="720" loading="lazy" decoding="async" />
+    </picture>
+    <button type="button" class="lap-play" hidden aria-label={`Play the video: ${video.title}`}><span aria-hidden="true"></span></button>
+  </div>
+  <dl class="lap-facts">
+    <div><dt>Simulator</dt><dd>TORCS, Corkscrew</dd></div>
+    <div><dt>Start</dt><dd>Standing start</dd></div>
+    <div><dt>Damage</dt><dd>0</dd></div>
+    <div><dt>Recording</dt><dd>Full lap</dd></div>
+    <div><dt>Final recorded time</dt><dd class="num">01:05:96</dd></div>
+  </dl>
+  <p class="lap-meta">{video.description}</p>
+  <p class="lap-links"><a href={video.externalUrl} rel="noopener noreferrer" target="_blank">Watch on YouTube<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+  <details class="lap-alt">
+    <summary>Text description of the video</summary>
+    <p>{video.accessibilityNote}</p>
+  </details>
+  <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+</div>
+
+<style is:inline>
+.lapvideo { max-width: 1000px; display: grid; gap: var(--s-4); margin-top: var(--s-7); }
+.lapvideo h3 { margin: 0; }
+.lap-stage { position: relative; aspect-ratio: 16 / 9; background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--r-2); overflow: hidden; }
+.lap-stage img, .lap-stage .lap-player { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; object-fit: cover; background: #000; }
+.lap-play { position: absolute; left: 50%; top: 50%; width: 5rem; height: 5rem; margin: -2.5rem 0 0 -2.5rem; border-radius: 50%; border: 2px solid var(--text); background: rgb(11 10 9 / .72); cursor: pointer; transition: background-color 200ms var(--ease); }
+.lap-play[hidden] { display: none; }
+.lap-play:hover, .lap-play:focus-visible { background: var(--accent); }
+.lap-play span { position: absolute; left: 1.95rem; top: 1.45rem; border-style: solid; border-width: 1.05rem 0 1.05rem 1.6rem; border-color: transparent transparent transparent var(--text); }
+.lap-play:hover span, .lap-play:focus-visible span { border-left-color: var(--canvas); }
+.lap-facts { margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: var(--s-3) var(--s-5); }
+.lap-facts dt { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-2); }
+.lap-facts dd { margin: 0.25rem 0 0; }
+.lap-meta { margin: 0; color: var(--text-2); max-width: 70ch; }
+.lap-links { margin: 0; font-size: 0.9375rem; }
+.lap-links a { display: inline-flex; align-items: center; min-height: 44px; }
+.lap-alt summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; color: var(--text-2); font-size: 0.9375rem; }
+.lap-alt p { margin: var(--s-2) 0 0; color: var(--text-2); max-width: 70ch; font-size: 0.9688rem; }
+@media (prefers-reduced-motion: reduce) { .lap-play { transition: none; } }
+</style>
+
+<script is:inline>
+  (function () {
+    var stage = document.querySelector('.lap-stage[data-lap]');
+    if (!stage) return;
+    var d = JSON.parse(stage.getAttribute('data-lap'));
+    var btn = stage.querySelector('.lap-play');
+    btn.hidden = false;
+    btn.addEventListener('click', function () {
+      var el = document.createElement('iframe');
+      el.src = d.embed; el.title = d.title; el.allow = 'autoplay; fullscreen; picture-in-picture'; el.allowFullscreen = true; el.referrerPolicy = 'strict-origin-when-cross-origin';
+      el.className = 'lap-player';
+      stage.replaceChildren(el);
+      el.focus();
+    });
+  })();
+</script>

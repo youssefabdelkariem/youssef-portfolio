@@ -254,3 +254,13 @@
 @media (max-width: 860px) {
   .race-lines { opacity: .4; }
 }
+
+/* ---- racing: final phases, technical disclosure ---- */
+.phases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-6); margin: var(--s-6) 0; }
+.phases h4 { margin: 0 0 var(--s-2); font-size: 1.0625rem; }
+.phases h4 + p { margin-bottom: var(--s-5); }
+.res-inline { display: block; margin-top: var(--s-1); font: 500 0.8125rem/1.3 var(--font-mono); color: var(--text-2); }
+@media (max-width: 760px) { .phases { grid-template-columns: 1fr; gap: 0; } }
+details.tech { margin-top: var(--s-5); }
+details.tech summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; color: var(--text-2); font-size: 0.9375rem; }
+details.tech[open] summary { margin-bottom: var(--s-3); }

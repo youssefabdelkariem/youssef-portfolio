@@ -172,3 +172,11 @@ Metadata: every page carries an SVG icon, ICO fallback, 192 icon, apple touch ic
 | Walkthrough | Still dormant | n/a | Not approved |
 
 Section K (dormant Aurelia content) is superseded for the film only.
+
+## N. IBM racing final results (2026-10-23)
+
+| Item | State | Evidence | Approval |
+| --- | --- | --- | --- |
+| 65.968 s P1 lap, phases 2A to 2D, validation figures | Published on `/engineering/ibm-ai-racing/` (after merge) | Release branch README, technical documentation and evidence folder; owner's brief | Owner brief, 2026-10-23 |
+| P1 speed telemetry (313 samples) | In `racing-speed-profile.json` | `evidence/lap_speed_profile.json` at commit `3a0c950` | Same |
+| Final-lap videos (clean 72.9 s, YouTube 79.9 s) | Not published: local files, not uploaded | `VIDEO_QC_REPORT.md` | Needs the upload and the public URL |

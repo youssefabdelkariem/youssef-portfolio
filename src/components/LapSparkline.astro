@@ -18,5 +18,5 @@ const area = `${line}L${x(lap.distance[lap.distance.length - 1]).toFixed(1)} ${y
     <path class="area" d={area} />
     <path class="trace" d={line} />
   </svg>
-  <figcaption>{label} &middot; {best.seconds} s lap, 314 recorded samples</figcaption>
+  <figcaption>{label} &middot; {best.seconds} s lap, {lap.distance.length} recorded samples</figcaption>
 </figure>

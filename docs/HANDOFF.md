@@ -303,3 +303,10 @@ M1b is planned in [M1B_PLAN](M1B_PLAN.md) (not started): owner inputs, phases an
 - **Live:** https://youssef.studio, deployed from merge commit `4aa4abb` (PR 1) by Actions run 38982172740. Pages source is GitHub Actions (set by the owner; not readable without authentication, confirmed by the deployment having succeeded and the public site serving the new build). A `main protection` ruleset is active.
 - **Film:** published on 2026-10-17 as a poster-first YouTube player (see [AURELIA_PUBLICATION section 5](AURELIA_PUBLICATION.md)). This supersedes the "film is dormant" statements in the M3 sections above. `check-publication` now requires the approval fields; the walkthrough remains excluded and returns 404.
 - **Next for Codex:** review the follow-up PR for the film, the live results in [M4_PRODUCTION_LAUNCH](reviews/M4_PRODUCTION_LAUNCH.md), and decide ADR acceptance with the owner. Do not push to `main` directly: use pull requests.
+
+## IBM racing final results, P1 (2026-10-23)
+
+- **Branch:** `feat/ibm-racing-final-results` (from `main` at `76d1be6`). Evidence table, publication steps and open points: [RACING_FINAL_RESULTS](reviews/RACING_FINAL_RESULTS.md).
+- **Headline now 65.968 s**, locally validated, not an official ranking. 66.284 s is shown as the previously published controller, not as the project baseline. Telemetry chart, ladder, progression chart, validation and source links are updated; P1 code is linked on `release/p1-65968` (commit `3a0c950`), because the repository's `main` does not contain it yet. If it is merged later, change `repo.releaseUrl` in `src/data/racing.ts` and the allowlist in `scripts/check-dist.mjs`.
+- **Final-lap video is dormant:** `src/data/racing-video.json` is `{ "video": null }`. The MP4 exports are local only and not uploaded. Steps to publish are in the review document.
+- **Open points for the owner:** the "145 candidates" and "65.966 s, 0.002 s" figures come from the brief and are not in the repository's published documents; the upload and rule R4 (team and university names on competition videos).
