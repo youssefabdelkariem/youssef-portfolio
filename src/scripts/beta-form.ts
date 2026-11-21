@@ -1,14 +1,15 @@
 // FrameSentry beta application form enhancement.
 // Without JavaScript, the form posts directly to the configured endpoint.
 // With JavaScript, it validates fields inline and submits via fetch with in-page confirmation.
+export {};
 
-const form = document.querySelector<HTMLFormElement>('#beta-form');
-const statusEl = document.querySelector<HTMLElement>('#beta-status');
-const done = document.querySelector<HTMLElement>('#beta-done');
+const betaForm = document.querySelector<HTMLFormElement>('#beta-form');
+const betaStatusEl = document.querySelector<HTMLElement>('#beta-status');
+const betaDone = document.querySelector<HTMLElement>('#beta-done');
 
-if (form && statusEl && done) {
-  const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
-  const fields = [...form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('input:not([type="hidden"]), select, textarea')]
+if (betaForm && betaStatusEl && betaDone) {
+  const button = betaForm.querySelector<HTMLButtonElement>('button[type="submit"]');
+  const fields = [...betaForm.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('input:not([type="hidden"]), select, textarea')]
     .filter((f) => f.name !== '_gotcha');
 
   const messageFor = (f: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement): string => {
@@ -55,12 +56,12 @@ if (form && statusEl && done) {
     });
   }
 
-  form.addEventListener('submit', async (ev) => {
+  betaForm.addEventListener('submit', async (ev) => {
     ev.preventDefault();
-    statusEl.textContent = '';
+    betaStatusEl.textContent = '';
     const bad = fields.filter((f) => !flag(f));
     if (bad.length) {
-      statusEl.textContent = `Please fix ${bad.length === 1 ? 'one field' : `${bad.length} fields`} and submit again.`;
+      betaStatusEl.textContent = `Please fix ${bad.length === 1 ? 'one field' : `${bad.length} fields`} and submit again.`;
       bad[0].focus();
       return;
     }
@@ -69,17 +70,17 @@ if (form && statusEl && done) {
       button.textContent = 'Submitting...';
     }
     try {
-      const res = await fetch(form.action, {
+      const res = await fetch(betaForm.action, {
         method: 'POST',
-        body: new FormData(form),
+        body: new FormData(betaForm),
         headers: { Accept: 'application/json' },
       });
       if (!res.ok) throw new Error(String(res.status));
-      form.hidden = true;
-      done.hidden = false;
-      done.focus();
+      betaForm.hidden = true;
+      betaDone.hidden = false;
+      betaDone.focus();
     } catch {
-      statusEl.textContent = 'Sorry, your application could not be submitted. Please check your connection and try again.';
+      betaStatusEl.textContent = 'Sorry, your application could not be submitted. Please check your connection and try again.';
       if (button) {
         button.disabled = false;
         button.textContent = 'Apply for Beta';
