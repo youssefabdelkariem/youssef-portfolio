@@ -1,8 +1,8 @@
 {
   "beta": {
     "enabled": true,
-    "mode": "manual-approval",
-    "endpoint": "https://formspree.io/f/xvgvppar"
+    "mode": "auto-send",
+    "endpoint": "https://framesentry-beta.yousseffilmcreator66.workers.dev/"
   },
   "checkout": {
     "enabled": false,

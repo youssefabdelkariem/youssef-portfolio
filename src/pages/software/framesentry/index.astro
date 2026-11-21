@@ -257,7 +257,7 @@ const checkoutReady = release.checkout.enabled && !!release.checkout.checkoutUrl
             <div class="field consent">
               <label class="check">
                 <input id="b-consent" name="consent" type="checkbox" value="yes" required />
-                <span>I agree that this beta application is sent to Youssef Studio through Formspree and used only to review and coordinate FrameSentry beta access. <span aria-hidden="true">*</span></span>
+                <span>{autoSend ? 'I agree that this beta application is sent to Youssef Studio to email me FrameSentry beta access.' : 'I agree that this beta application is sent to Youssef Studio and used only to review and coordinate FrameSentry beta access.'} <span aria-hidden="true">*</span></span>
               </label>
             </div>
             <div class="actions">
