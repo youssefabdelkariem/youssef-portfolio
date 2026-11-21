@@ -1,0 +1,13 @@
+{
+  "beta": {
+    "enabled": true,
+    "mode": "manual-approval",
+    "endpoint": "https://formspree.io/f/xvgvppar"
+  },
+  "checkout": {
+    "enabled": false,
+    "provider": "lemonsqueezy",
+    "checkoutUrl": null,
+    "ctaLabel": "Pre-order via Lemon Squeezy"
+  }
+}

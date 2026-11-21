@@ -13,6 +13,7 @@ export const nav = [
   { href: '/', label: 'Home' },
   { href: '/work/', label: 'VFX Portfolio' },
   { href: '/engineering/', label: 'Engineering' },
+  { href: '/software/', label: 'Software' },
   { href: '/about/', label: 'About' },
   ...(contact.enabled ? [{ href: '/contact/', label: 'Hire me' }] : []),
 ];

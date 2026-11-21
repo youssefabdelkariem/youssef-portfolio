@@ -1,11 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/software.css';
 import Plate from '../components/Plate.astro';
 import LapSparkline from '../components/LapSparkline.astro';
 import { site } from '../data/site';
 import { homeMedia } from '../data/home';
 import ProjectTile from '../components/ProjectTile.astro';
 import { projects } from '../data/early-projects';
+import { framesentry } from '../data/framesentry';
 
 const { hero, aurelia } = homeMedia;
 const disciplines = [
@@ -95,6 +97,35 @@ import { contact } from '../data/contact';
       <div class="reveal">
         <LapSparkline />
       </div>
+    </div>
+  </section>
+
+  <section class="section divided" aria-labelledby="software-title">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2 id="software-title">Featured Software</h2>
+        <a href="/software/">Software</a>
+      </div>
+      <article class="sw-feature-card reveal">
+        <div>
+          <div class="sw-brand-lockup">
+            <img class="sw-icon" src={framesentry.assets.icon} alt="" width="44" height="44" />
+            <span class="sw-badge">Beta Open &middot; Pre-orders Preparing</span>
+          </div>
+          <p class="eyebrow" style="margin-bottom: var(--s-2)">{framesentry.category}</p>
+          <h3>{framesentry.name}</h3>
+          <p>{framesentry.headline} {framesentry.supporting}</p>
+          <p style="font-size:0.9375rem">Apply for the current beta release or explore the inspection workflow ahead of pre-orders.</p>
+          <div class="actions" style="margin-top:var(--s-5)">
+            <a class="btn" href="/software/framesentry/#beta">Apply for Beta</a>
+            <a class="btn ghost" href="/software/framesentry/">Explore FrameSentry</a>
+            {contact.enabled && <a class="btn ghost" href="/contact/">Contact</a>}
+          </div>
+        </div>
+        <figure class="sw-feature-media" style="margin:0">
+          <img src={framesentry.assets.banner} alt={framesentry.assets.bannerAlt} width="2172" height="724" />
+        </figure>
+      </article>
     </div>
   </section>
 

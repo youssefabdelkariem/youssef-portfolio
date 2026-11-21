@@ -5,7 +5,7 @@ import path from 'node:path';
 import { serve } from './lib/serve.mjs';
 import { launchBrowser } from './lib/browser.mjs';
 
-const routes = ['/', '/work/', '/work/aurelia/', '/engineering/', '/engineering/ibm-ai-racing/', '/about/', '/does-not-exist/'];
+const routes = ['/', '/work/', '/work/aurelia/', '/engineering/', '/engineering/ibm-ai-racing/', '/software/', '/software/framesentry/', '/about/', '/does-not-exist/'];
 const problems = [];
 const fail = (m) => problems.push(m);
 const { server, port } = await serve(path.resolve('dist'));
