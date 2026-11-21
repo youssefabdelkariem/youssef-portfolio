@@ -1,8 +1,13 @@
 ---
 import '../../../styles/software.css';
+import '../../../styles/contact.css';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { framesentry } from '../../../data/framesentry';
 import { contact } from '../../../data/contact';
+import release from '../../../data/framesentry-release.json';
+
+const autoSend = release.beta.mode === 'auto-send';
+const checkoutReady = release.checkout.enabled && !!release.checkout.checkoutUrl;
 ---
 
 <BaseLayout
@@ -21,7 +26,12 @@ import { contact } from '../../../data/contact';
         <h1 id="fs-title">{framesentry.headline}</h1>
         <p class="lede">{framesentry.supporting}</p>
         <div class="actions">
-          <a class="btn" href="#purchase">Coming Soon</a>
+          {checkoutReady ? (
+            <a class="btn" href={release.checkout.checkoutUrl!} rel="noopener">{release.checkout.ctaLabel}</a>
+          ) : (
+            <a class="btn" href="#beta">Apply for Beta</a>
+          )}
+          <a class="btn ghost" href="#purchase">Coming Soon</a>
           {contact.enabled && <a class="btn ghost" href="/contact/">Contact for Early Access</a>}
         </div>
       </div>
@@ -176,18 +186,115 @@ import { contact } from '../../../data/contact';
     </div>
   </section>
 
-  <!-- 7. Future purchasing section -->
+  <!-- 7. Beta testing application -->
+  {release.beta.enabled && (
+    <section class="sw-section" id="beta" aria-labelledby="beta-title">
+      <div class="wrap contact-grid">
+        <aside class="contact-side reveal" aria-label="Beta testing details">
+          <p class="sw-sec-label"><span>06</span><span>Beta testing</span></p>
+          <h2 id="beta-title">Apply for the FrameSentry beta.</h2>
+          <p>
+            {autoSend
+              ? 'Beta access is currently set to instant delivery. Submit your setup to receive the current beta build download link by email.'
+              : 'Beta builds are distributed in controlled waves. Applications are reviewed manually before download links and checksums are emailed.'}
+          </p>
+          <ul class="chips" style="margin-top:var(--s-4)">
+            <li>{autoSend ? 'Mode: Instant email delivery' : 'Mode: Manual approval'}</li>
+            <li>Windows x64 &amp; Linux x86-64 (dev)</li>
+            <li>Blender 4.5.15 LTS &amp; 5.2.x</li>
+          </ul>
+        </aside>
+
+        <div class="reveal">
+          <form id="beta-form" class="brief" method="post" action={release.beta.endpoint} novalidate>
+            <p class="req-note">Fields marked <span aria-hidden="true">*</span><span class="sr">with an asterisk</span> are required.</p>
+            <div class="row">
+              <div class="field">
+                <label for="b-name">Name <span aria-hidden="true">*</span></label>
+                <input id="b-name" name="name" type="text" autocomplete="name" required maxlength="120" />
+              </div>
+              <div class="field">
+                <label for="b-email">Email <span aria-hidden="true">*</span></label>
+                <input id="b-email" name="email" type="email" autocomplete="email" required maxlength="200" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="field">
+                <label for="b-os">Operating System <span aria-hidden="true">*</span></label>
+                <select id="b-os" name="operating_system" required>
+                  <option value="">Choose one</option>
+                  <option value="Windows x64">Windows x64</option>
+                  <option value="Linux x86-64">Linux x86-64</option>
+                  <option value="macOS (qualification pending)">macOS (qualification pending)</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="b-blender">Primary Blender Version <span aria-hidden="true">*</span></label>
+                <select id="b-blender" name="blender_version" required>
+                  <option value="">Choose one</option>
+                  <option value="Blender 4.5.15 LTS">Blender 4.5.15 LTS</option>
+                  <option value="Blender 5.2.x">Blender 5.2.x</option>
+                  <option value="Blender 5.3.x">Blender 5.3.x</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label for="b-studio">Studio or Role <span class="opt">(optional)</span></label>
+              <input id="b-studio" name="studio" type="text" autocomplete="organization" maxlength="160" />
+            </div>
+            <div class="field">
+              <label for="b-workflow">Render workflow &amp; sequence formats <span aria-hidden="true">*</span></label>
+              <textarea id="b-workflow" name="workflow" rows="5" required minlength="15" maxlength="3000" aria-describedby="b-workflow-help"></textarea>
+              <p id="b-workflow-help" class="help">Tell us what formats you render (EXR, PNG, TIFF, JPEG), typical frame counts, and what issues you want to catch.</p>
+            </div>
+            <div class="field hp" aria-hidden="true">
+              <label for="b-hp">Leave this empty</label>
+              <input id="b-hp" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
+            </div>
+            <input type="hidden" name="_subject" value="FrameSentry Beta Application — youssef.studio" />
+            <input type="hidden" name="beta_delivery_mode" value={release.beta.mode} />
+            <div class="field consent">
+              <label class="check">
+                <input id="b-consent" name="consent" type="checkbox" value="yes" required />
+                <span>I agree that this beta application is sent to Youssef Studio through Formspree and used only to review and coordinate FrameSentry beta access. <span aria-hidden="true">*</span></span>
+              </label>
+            </div>
+            <div class="actions">
+              <button class="btn" type="submit">Apply for Beta</button>
+            </div>
+            <p id="beta-status" class="status" role="status" aria-live="polite"></p>
+          </form>
+          <div id="beta-done" class="done notice" tabindex="-1" hidden>
+            <h3>{autoSend ? 'Application received — check your inbox.' : 'Beta application received.'}</h3>
+            <p>
+              {autoSend
+                ? 'Your beta download link and setup notes are on the way to the email address you provided.'
+                : 'Thank you for applying. Your setup details are queued for manual review, and approved testers receive the beta build and checksums by email.'}
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- 8. Future purchasing section (Lemon Squeezy ready) -->
   <section class="sw-section" id="purchase" aria-labelledby="purchase-title">
     <div class="wrap">
-      <p class="sw-sec-label reveal"><span>06</span><span>Availability &amp; licensing</span></p>
-      <h2 id="purchase-title" class="reveal">Prepared for direct release.</h2>
+      <p class="sw-sec-label reveal"><span>07</span><span>Pre-orders &amp; licensing</span></p>
+      <h2 id="purchase-title" class="reveal">Prepared for Lemon Squeezy pre-orders &amp; direct release.</h2>
       <div class="sw-purchase reveal">
         <div>
-          <span class="sw-badge">{framesentry.purchasing.status}</span>
-          <h3>Direct licensing opens after v1.0 qualification.</h3>
+          <span class="sw-badge">{checkoutReady ? 'Pre-orders Open' : framesentry.purchasing.status}</span>
+          <h3>{checkoutReady ? 'Pre-order FrameSentry 1.0.' : 'Pre-orders opening soon via Lemon Squeezy.'}</h3>
           <p>{framesentry.purchasing.summary}</p>
           <div class="actions" style="margin-top:var(--s-5)">
-            {contact.enabled && <a class="btn" href="/contact/">Contact for Early Access</a>}
+            {checkoutReady ? (
+              <a class="btn" href={release.checkout.checkoutUrl!} rel="noopener">{release.checkout.ctaLabel}</a>
+            ) : (
+              <a class="btn" href="#beta">Apply for Beta</a>
+            )}
+            {contact.enabled && <a class="btn ghost" href="/contact/">Contact for Early Access</a>}
             <a class="btn ghost" href="/software/">All Software</a>
           </div>
         </div>
@@ -197,17 +304,19 @@ import { contact } from '../../../data/contact';
             {framesentry.purchasing.deliverables.map((d) => <li>{d}</li>)}
           </ul>
           <p style="margin:0; font-size:0.875rem; color:var(--text-2)">
-            No live checkout or pricing is published until M5–M7 qualification and licensing review are complete.
+            {checkoutReady
+              ? 'Checkout and licence delivery are handled securely via Lemon Squeezy.'
+              : 'Checkout is configured for Lemon Squeezy and will go live once pre-orders open and pricing is finalized.'}
           </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 8. Frequently asked questions -->
+  <!-- 9. Frequently asked questions -->
   <section class="sw-section" id="faq" aria-labelledby="faq-title">
     <div class="wrap">
-      <p class="sw-sec-label reveal"><span>07</span><span>Frequently asked questions</span></p>
+      <p class="sw-sec-label reveal"><span>08</span><span>Frequently asked questions</span></p>
       <h2 id="faq-title" class="reveal">Common questions</h2>
       <div class="sw-faq reveal">
         {framesentry.faqs.map((item) => (
@@ -219,4 +328,8 @@ import { contact } from '../../../data/contact';
       </div>
     </div>
   </section>
+
+  <script>
+    import '../../../scripts/beta-form';
+  </script>
 </BaseLayout>
