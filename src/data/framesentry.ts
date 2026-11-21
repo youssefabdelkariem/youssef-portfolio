@@ -11,6 +11,8 @@ export interface GallerySlot {
   step: string;
   title: string;
   area: string;
+  image: string;
+  alt: string;
   caption: string;
 }
 
@@ -113,30 +115,43 @@ export const framesentry = {
       step: '01',
       title: 'Output Tab & Sequence Discovery',
       area: 'Render Output Properties',
-      caption: 'Capture slot prepared for the Blender Output panel showing “Check Scene Output” and one-click detected sequence selection.',
+      image: '/media/software/framesentry/ui-discovery.png',
+      alt: 'FrameSentry Output Properties panel in Blender 4.5.15 LTS showing auto-detected EXR sequence frames 176-223, check presets, and Check Scene Output button.',
+      caption: 'Auto-detects the active scene’s EXR sequence (frames 176–223) and engine readiness inside Blender’s Render Output panel.',
     },
     {
       id: 'findings-browser',
       step: '02',
-      title: 'Findings Browser & Filtering',
+      title: 'Findings Browser & Coverage Summary',
       area: 'Quality Control Panel',
-      caption: 'Capture slot prepared for the paginated Findings Browser filtering Errors vs. Warnings with certainty labels and wrapped explanations.',
+      image: '/media/software/framesentry/ui-findings.png',
+      alt: 'FrameSentry Quality Control sidebar showing 48 of 48 frames examined, 1 error, 4 warnings, coverage summary, and frame 188 missing frame finding.',
+      caption: 'Reports 48 of 48 frames examined with explicit coverage details, severity/certainty filters, and missing-frame error 188.',
     },
     {
       id: 'gpu-preview',
       step: '03',
       title: 'GPU Proxy Findings Preview',
       area: 'Image Editor Sidebar',
-      caption: 'Capture slot prepared for the isolated engine-generated GPU proxy texture preview inside Blender’s Image Editor.',
+      image: '/media/software/framesentry/ui-gpu-preview.png',
+      alt: 'FrameSentry live GPU proxy preview in Blender Image Editor displaying Aurelia render frame 214 flagged for a +2.00 EV brightness discontinuity.',
+      caption: 'Previews flagged frame 214 (+2.00 EV brightness discontinuity) via an isolated engine-generated GPU proxy texture.',
     },
     {
       id: 'copy-frames',
       step: '04',
       title: 'Actionable Frame List Export',
       area: 'Re-Render Preparation',
-      caption: 'Capture slot prepared for “Copy Frames” and “Copy Filtered Frames” producing deduplicated frame lists for re-rendering.',
+      image: '/media/software/framesentry/ui-copy-frames.png',
+      alt: 'FrameSentry Quality Control sidebar showing Copy Filtered Frames exporting deduplicated frame list 188,202,214 to the clipboard.',
+      caption: 'Copies the deduplicated affected frame list (188,202,214) directly to the clipboard for targeted re-rendering.',
     },
   ] satisfies GallerySlot[],
+  demo: {
+    video: '/media/software/framesentry/demo.mp4',
+    poster: '/media/software/framesentry/ui-gpu-preview.png',
+    caption: 'Aurelia EXR sequence (frames 176–223) scanned in Blender 4.5.15 LTS on Windows OpenGL: sequence discovery, out-of-process OpenImageIO scan, defect inspection, and clipboard export.',
+  },
   compatibility: {
     milestoneNote:
       'FrameSentry M4 (Quality Control UI) is owner-closed with conditions, and M5 (Reporting & Standalone CLI) is currently active. Version 1.0 release compatibility qualification remains incomplete, and FrameSentry is not yet released or fully qualified.',

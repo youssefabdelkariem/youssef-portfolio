@@ -93,16 +93,14 @@ import { contact } from '../../../data/contact';
       <p class="sw-sec-label reveal"><span>03</span><span>FrameSentry interface gallery</span></p>
       <h2 id="gallery-title" class="reveal">Built for Blender’s Output and Image Editor workflow.</h2>
       <p class="lede reveal" style="margin-bottom:var(--s-6)">
-        Interface screenshots are added only from verified builds. The four panels below mark the M4 UI surfaces prepared for capture.
+        Captured directly from the M4 development build running in Blender 4.5.15 LTS (Windows OpenGL) on a 48-frame Aurelia EXR sequence.
       </p>
       <div class="sw-gallery reveal">
         {framesentry.gallerySlots.map((slot) => (
           <figure class="sw-slot">
-            <div class="sw-slot-frame">
-              <span class="sw-slot-step">Surface {slot.step}</span>
-              <span class="sw-slot-area">{slot.area}</span>
-            </div>
+            <img class="sw-slot-img" src={slot.image} alt={slot.alt} width="1920" height="1080" loading="lazy" />
             <figcaption>
+              <span class="sw-slot-step">{slot.step} &middot; {slot.area}</span>
               <strong>{slot.title}</strong>
               <span>{slot.caption}</span>
             </figcaption>
@@ -118,15 +116,20 @@ import { contact } from '../../../data/contact';
       <p class="sw-sec-label reveal"><span>04</span><span>Real-world demonstration</span></p>
       <h2 id="demo-title" class="reveal">End-to-end sequence inspection walkthrough.</h2>
       <div class="sw-demo-box reveal">
-        <div class="sw-demo-stage">
-          <img src={framesentry.assets.icon} alt="" width="52" height="52" />
-          <p>
-            Demonstration recording area prepared for a real Blender sequence scan: detecting missing and truncated frames, inspecting a GPU proxy preview, and copying affected frame numbers for re-render.
-          </p>
-        </div>
+        <video
+          class="sw-demo-video"
+          controls
+          playsinline
+          preload="none"
+          poster={framesentry.demo.poster}
+          width="1920"
+          height="1080"
+        >
+          <source src={framesentry.demo.video} type="video/mp4" />
+        </video>
         <div class="sw-demo-bar">
-          <span>Workflow: Check Scene Output &rarr; Findings Browser &rarr; Copy Frames</span>
-          <span>Recording pending M5 qualification</span>
+          <span>{framesentry.demo.caption}</span>
+          <span>1080p &middot; 46 s &middot; Blender 4.5.15 LTS</span>
         </div>
       </div>
     </div>
