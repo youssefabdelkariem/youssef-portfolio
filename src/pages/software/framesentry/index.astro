@@ -53,7 +53,7 @@ const checkoutReady = release.checkout.enabled && !!release.checkout.checkoutUrl
           </div>
           <div>
             <dt>Release status</dt>
-            <dd>M4 closed w/ conditions; v1.0 in qualification</dd>
+            <dd>Beta open · v1.0 in qualification</dd>
           </div>
         </dl>
       </figure>
@@ -103,7 +103,7 @@ const checkoutReady = release.checkout.enabled && !!release.checkout.checkoutUrl
       <p class="sw-sec-label reveal"><span>03</span><span>FrameSentry interface gallery</span></p>
       <h2 id="gallery-title" class="reveal">Built for Blender’s Output and Image Editor workflow.</h2>
       <p class="lede reveal" style="margin-bottom:var(--s-6)">
-        Captured directly from the M4 development build running in Blender 4.5.15 LTS (Windows OpenGL) on a 48-frame Aurelia EXR sequence.
+        Captured in Blender 4.5.15 LTS (Windows OpenGL) inspecting a 48-frame Aurelia EXR sequence.
       </p>
       <div class="sw-gallery reveal">
         {framesentry.gallerySlots.map((slot) => (
@@ -195,13 +195,13 @@ const checkoutReady = release.checkout.enabled && !!release.checkout.checkoutUrl
           <h2 id="beta-title">Apply for the FrameSentry beta.</h2>
           <p>
             {autoSend
-              ? 'Beta access is currently set to instant delivery. Submit your setup to receive the current beta build download link by email.'
-              : 'Beta builds are distributed in controlled waves. Applications are reviewed manually before download links and checksums are emailed.'}
+              ? 'Apply below to receive the current FrameSentry beta build and setup notes by email.'
+              : 'FrameSentry is in beta. Submit your setup below to request access.'}
           </p>
           <ul class="chips" style="margin-top:var(--s-4)">
-            <li>{autoSend ? 'Mode: Instant email delivery' : 'Mode: Manual approval'}</li>
-            <li>Windows x64 &amp; Linux x86-64 (dev)</li>
+            <li>Windows x64</li>
             <li>Blender 4.5.15 LTS &amp; 5.2.x</li>
+            <li>Offline &amp; Read-Only</li>
           </ul>
         </aside>
 
@@ -278,15 +278,15 @@ const checkoutReady = release.checkout.enabled && !!release.checkout.checkoutUrl
     </section>
   )}
 
-  <!-- 8. Future purchasing section (Lemon Squeezy ready) -->
+  <!-- 8. Future purchasing section -->
   <section class="sw-section" id="purchase" aria-labelledby="purchase-title">
     <div class="wrap">
       <p class="sw-sec-label reveal"><span>07</span><span>Pre-orders &amp; licensing</span></p>
-      <h2 id="purchase-title" class="reveal">Prepared for Lemon Squeezy pre-orders &amp; direct release.</h2>
+      <h2 id="purchase-title" class="reveal">Pre-orders &amp; direct licensing.</h2>
       <div class="sw-purchase reveal">
         <div>
           <span class="sw-badge">{checkoutReady ? 'Pre-orders Open' : framesentry.purchasing.status}</span>
-          <h3>{checkoutReady ? 'Pre-order FrameSentry 1.0.' : 'Pre-orders opening soon via Lemon Squeezy.'}</h3>
+          <h3>{checkoutReady ? 'Pre-order FrameSentry 1.0.' : 'Pre-orders opening soon.'}</h3>
           <p>{framesentry.purchasing.summary}</p>
           <div class="actions" style="margin-top:var(--s-5)">
             {checkoutReady ? (
@@ -299,14 +299,14 @@ const checkoutReady = release.checkout.enabled && !!release.checkout.checkoutUrl
           </div>
         </div>
         <div class="sw-purchase-box">
-          <p class="eyebrow" style="margin:0">Planned 1.0 deliverables</p>
+          <p class="eyebrow" style="margin:0">Included in 1.0</p>
           <ul class="sw-purchase-list">
             {framesentry.purchasing.deliverables.map((d) => <li>{d}</li>)}
           </ul>
           <p style="margin:0; font-size:0.875rem; color:var(--text-2)">
             {checkoutReady
-              ? 'Checkout and licence delivery are handled securely via Lemon Squeezy.'
-              : 'Checkout is configured for Lemon Squeezy and will go live once pre-orders open and pricing is finalized.'}
+              ? 'Direct checkout and licence delivery.'
+              : 'Pricing and direct checkout will be published here once pre-orders open.'}
           </p>
         </div>
       </div>
