@@ -37,7 +37,7 @@ const checkoutReady = release.checkout.enabled && !!release.checkout.checkoutUrl
       </div>
 
       <figure class="sw-banner-card">
-        <img src={framesentry.assets.banner} alt={framesentry.assets.bannerAlt} width="2172" height="724" />
+        <img src={framesentry.assets.banner} alt={framesentry.assets.bannerAlt} width="1440" height="480" decoding="async" />
         <dl class="sw-banner-meta">
           <div>
             <dt>Architecture</dt>
@@ -108,7 +108,7 @@ const checkoutReady = release.checkout.enabled && !!release.checkout.checkoutUrl
       <div class="sw-gallery reveal">
         {framesentry.gallerySlots.map((slot) => (
           <figure class="sw-slot">
-            <img class="sw-slot-img" src={slot.image} alt={slot.alt} width="1920" height="1080" loading="lazy" />
+            <img class="sw-slot-img" src={slot.image} alt={slot.alt} width="1440" height="810" loading="lazy" decoding="async" />
             <figcaption>
               <span class="sw-slot-step">{slot.step} &middot; {slot.area}</span>
               <strong>{slot.title}</strong>
@@ -257,7 +257,7 @@ const checkoutReady = release.checkout.enabled && !!release.checkout.checkoutUrl
             <div class="field consent">
               <label class="check">
                 <input id="b-consent" name="consent" type="checkbox" value="yes" required />
-                <span>I agree that this beta application is sent to Youssef Studio through Formspree and used only to review and coordinate FrameSentry beta access. <span aria-hidden="true">*</span></span>
+                <span>{autoSend ? 'I agree that this beta application is sent to Youssef Studio to email me FrameSentry beta access.' : 'I agree that this beta application is sent to Youssef Studio and used only to review and coordinate FrameSentry beta access.'} <span aria-hidden="true">*</span></span>
               </label>
             </div>
             <div class="actions">
