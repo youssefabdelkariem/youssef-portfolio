@@ -34,7 +34,7 @@ export const framesentry = {
   headline: 'Catch render problems before they reach delivery.',
   supporting:
     'FrameSentry helps Blender artists and studios inspect rendered sequences, identify potential problems and review actionable findings before compositing or delivery.',
-  statusLabel: 'In development · Coming Soon',
+  statusLabel: 'Beta Open · Coming Soon',
   assets: {
     icon: '/media/software/framesentry/icon.webp',
     iconAlt: 'FrameSentry emblem: a stylized purple ribbon F inside four corner viewfinder brackets.',
@@ -86,7 +86,7 @@ export const framesentry = {
     },
     {
       id: 'blender-ui',
-      tag: 'M4 Closed with Conditions',
+      tag: 'In-Blender UI',
       title: 'In-Blender Quality Control Workflow',
       summary: 'Integrated into Blender’s Render Output properties and Image Editor sidebar for fast, non-blocking review.',
       items: [
@@ -99,13 +99,13 @@ export const framesentry = {
     },
     {
       id: 'architecture',
-      tag: 'M5 Active Milestone',
+      tag: 'Offline-First',
       title: 'Offline Architecture, Reports & CLI',
       summary: 'Two-component design separating the Blender adapter extension from the standalone FrameSentry Engine.',
       items: [
         'Offline-first: zero network requests, no telemetry, no user accounts, and no online licence checks',
         'Strictly read-only against source render directories; never overwrites existing files',
-        'In active M5 development: self-contained HTML reports, versioned JSON Schema 1.0 output, and standalone CLI for render farms',
+        'Built for standalone HTML reports, structured JSON output, and command-line pipeline integration',
       ],
     },
   ] satisfies InspectionWorkflow[],
@@ -154,7 +154,7 @@ export const framesentry = {
   },
   compatibility: {
     milestoneNote:
-      'FrameSentry M4 (Quality Control UI) is owner-closed with conditions, and M5 (Reporting & Standalone CLI) is currently active. Version 1.0 release compatibility qualification remains incomplete, and FrameSentry is not yet released or fully qualified.',
+      'FrameSentry is currently in beta. Version 1.0 release compatibility qualification is still in progress, and FrameSentry 1.0 is not yet released or fully qualified.',
     gpuGateNote:
       'Full GPU Findings Preview must qualify across all three targeted Blender versions and graphics backends before those configurations are described as supported.',
     formats: ['OpenEXR (single-part & multi-part/multilayer)', 'PNG (8/16-bit)', 'TIFF (8/16/32-bit)', 'JPEG (baseline & progressive)'],
@@ -163,26 +163,26 @@ export const framesentry = {
         version: 'Blender 4.5.15 LTS',
         tier: 'Target Tier 1',
         status: 'Qualification in progress',
-        notes: 'Windows OpenGL verified in M4-T02B/M4-T03 hands-on acceptance; Vulkan and Linux/macOS targets remain in qualification.',
+        notes: 'Windows OpenGL verified in beta testing; Vulkan and Linux/macOS targets remain in qualification.',
       },
       {
         version: 'Blender 5.2.x',
         tier: 'Target Tier 1',
         status: 'Qualification in progress',
-        notes: 'Targeted LTS line. Windows OpenGL GPU preview qualification and native 5.2.2 autosave timeout resolution are active in M5/M6.',
+        notes: 'Targeted LTS line. Windows OpenGL GPU preview qualification and compatibility checks are in progress.',
       },
       {
         version: 'Blender 5.3.x',
         tier: 'Target Tier 2',
         status: 'Qualification in progress',
-        notes: 'Targeted non-LTS release. Full GPU Findings Preview qualification is required across backends before support is claimed.',
+        notes: 'Targeted release. Full GPU Findings Preview qualification is required across backends before support is claimed.',
       },
     ] satisfies CompatibilityRow[],
   },
   purchasing: {
     status: 'Coming Soon',
     summary:
-      'FrameSentry is being prepared for future direct licensing once M5–M7 qualification, packaging, and legal review are complete. Pricing, seat licensing, and direct checkout are not yet live.',
+      'Pre-orders are opening soon, with full version 1.0 direct licensing following final compatibility qualification. Pricing and checkout are not live yet.',
     deliverables: [
       'FrameSentry for Blender (adapter extension)',
       'FrameSentry Engine (standalone analysis application & CLI)',
@@ -193,7 +193,7 @@ export const framesentry = {
     {
       question: 'When will FrameSentry 1.0 be released?',
       answer:
-        'A public release date is not set yet. Milestone 4 (Quality Control UI) is closed with conditions, Milestone 5 (Reporting & Standalone CLI) is active, and Milestone 6–7 compatibility qualification, beta testing, and commercial packaging must pass before version 1.0 launches.',
+        'A public release date is not set yet. FrameSentry is currently in beta while reporting, packaging, and full compatibility qualification are completed ahead of version 1.0.',
     },
     {
       question: 'Which Blender versions are targeted?',
