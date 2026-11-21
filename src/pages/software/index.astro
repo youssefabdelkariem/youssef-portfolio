@@ -1,0 +1,68 @@
+---
+import '../../styles/software.css';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { framesentry } from '../../data/framesentry';
+import { contact } from '../../data/contact';
+---
+
+<BaseLayout
+  title="Software"
+  description="Blender software and production tooling by Youssef Studio, featuring FrameSentry for automated render sequence quality control."
+>
+  <section class="page-title" aria-labelledby="sw-index-title">
+    <div class="wrap">
+      <p class="eyebrow">Software</p>
+      <h1 id="sw-index-title">Production tooling for Blender</h1>
+      <p class="lede">
+        Focused desktop and in-Blender utilities built with the same verification discipline as the engineering work: deterministic, offline-first, and honest about what is qualified.
+      </p>
+    </div>
+  </section>
+
+  <section class="sw-section" style="padding-top:0; border-top:0" aria-labelledby="fs-card-title">
+    <div class="wrap">
+      <article class="sw-feature-card reveal">
+        <div>
+          <div class="sw-brand-lockup">
+            <img class="sw-icon" src={framesentry.assets.icon} alt="" width="44" height="44" />
+            <span class="sw-badge">{framesentry.statusLabel}</span>
+          </div>
+          <p class="eyebrow" style="margin-bottom: var(--s-2)">{framesentry.category}</p>
+          <h2 id="fs-card-title">{framesentry.name}</h2>
+          <p>{framesentry.headline} {framesentry.supporting}</p>
+          <p style="font-size:0.9375rem">
+            Target Blender versions: 4.5.15 LTS, 5.2.x, and 5.3.x. Milestone 4 UI is owner-closed with conditions; version 1.0 release compatibility qualification remains in progress.
+          </p>
+          <div class="actions" style="margin-top:var(--s-5)">
+            <a class="btn" href="/software/framesentry/">Explore FrameSentry</a>
+            {contact.enabled && <a class="btn ghost" href="/contact/">Contact for Early Access</a>}
+          </div>
+        </div>
+        <figure class="sw-feature-media" style="margin:0">
+          <img src={framesentry.assets.banner} alt={framesentry.assets.bannerAlt} width="2172" height="724" />
+        </figure>
+      </article>
+    </div>
+  </section>
+
+  <section class="sw-section" aria-labelledby="sw-principles-title">
+    <div class="wrap">
+      <p class="sw-sec-label reveal"><span>01</span><span>Engineering standards</span></p>
+      <h2 id="sw-principles-title" class="reveal">How software is built here</h2>
+      <ul class="sw-points reveal">
+        <li>
+          <h3>Offline &amp; Private</h3>
+          <p>Zero telemetry, no accounts, no network requests, and no online licence checks inside the tool.</p>
+        </li>
+        <li>
+          <h3>Read-Only Safety</h3>
+          <p>Inspection tools never modify rendered frames, overwrite reports, or parse untrusted renders inside Blender’s main process.</p>
+        </li>
+        <li>
+          <h3>Qualified Releases Only</h3>
+          <p>Compatibility claims are tied directly to completed milestone gates and tested Blender version/backend matrices.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

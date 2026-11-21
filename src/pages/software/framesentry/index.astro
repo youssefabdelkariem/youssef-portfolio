@@ -1,0 +1,219 @@
+---
+import '../../../styles/software.css';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { framesentry } from '../../../data/framesentry';
+import { contact } from '../../../data/contact';
+---
+
+<BaseLayout
+  title="FrameSentry — Render Sequence QC for Blender"
+  description="FrameSentry helps Blender artists and studios inspect rendered sequences, catch missing or corrupt frames, and review findings before compositing or delivery."
+>
+  <!-- 1. Hero and product identity -->
+  <section class="sw-hero" aria-labelledby="fs-title">
+    <div class="wrap sw-hero-grid">
+      <div>
+        <div class="sw-brand-lockup">
+          <img class="sw-icon" src={framesentry.assets.icon} alt={framesentry.assets.iconAlt} width="44" height="44" />
+          <span class="sw-badge">{framesentry.statusLabel}</span>
+        </div>
+        <p class="eyebrow">{framesentry.category}</p>
+        <h1 id="fs-title">{framesentry.headline}</h1>
+        <p class="lede">{framesentry.supporting}</p>
+        <div class="actions">
+          <a class="btn" href="#purchase">Coming Soon</a>
+          {contact.enabled && <a class="btn ghost" href="/contact/">Contact for Early Access</a>}
+        </div>
+      </div>
+
+      <figure class="sw-banner-card">
+        <img src={framesentry.assets.banner} alt={framesentry.assets.bannerAlt} width="2172" height="724" />
+        <dl class="sw-banner-meta">
+          <div>
+            <dt>Architecture</dt>
+            <dd>Blender Adapter + Isolated Engine</dd>
+          </div>
+          <div>
+            <dt>Target Blender</dt>
+            <dd>4.5.15 LTS, 5.2.x, 5.3.x</dd>
+          </div>
+          <div>
+            <dt>Operation</dt>
+            <dd>Offline-first, strictly read-only</dd>
+          </div>
+          <div>
+            <dt>Release status</dt>
+            <dd>M4 closed w/ conditions; v1.0 in qualification</dd>
+          </div>
+        </dl>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 2. Why render-sequence QC matters -->
+  <section class="sw-section" id="why-qc" aria-labelledby="why-title">
+    <div class="wrap">
+      <p class="sw-sec-label reveal"><span>01</span><span>Why render-sequence QC matters</span></p>
+      <h2 id="why-title" class="reveal">Catch silent frame defects before delivery.</h2>
+      <p class="lede reveal">{framesentry.whyMatters.lead}</p>
+      <ul class="sw-points reveal">
+        {framesentry.whyMatters.points.map((pt) => (
+          <li>
+            <h3>{pt.title}</h3>
+            <p>{pt.detail}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 3. Features and supported inspection workflows -->
+  <section class="sw-section" id="workflows" aria-labelledby="workflows-title">
+    <div class="wrap">
+      <p class="sw-sec-label reveal"><span>02</span><span>Features &amp; inspection workflows</span></p>
+      <h2 id="workflows-title" class="reveal">Verified structural facts and heuristic visual checks.</h2>
+      <div class="sw-workflows reveal">
+        {framesentry.workflows.map((wf) => (
+          <article class="sw-card">
+            <span class="sw-tag">{wf.tag}</span>
+            <h3>{wf.title}</h3>
+            <p>{wf.summary}</p>
+            <ul>
+              {wf.items.map((item) => <li>{item}</li>)}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. FrameSentry interface gallery -->
+  <section class="sw-section" id="gallery" aria-labelledby="gallery-title">
+    <div class="wrap">
+      <p class="sw-sec-label reveal"><span>03</span><span>FrameSentry interface gallery</span></p>
+      <h2 id="gallery-title" class="reveal">Built for Blender’s Output and Image Editor workflow.</h2>
+      <p class="lede reveal" style="margin-bottom:var(--s-6)">
+        Interface screenshots are added only from verified builds. The four panels below mark the M4 UI surfaces prepared for capture.
+      </p>
+      <div class="sw-gallery reveal">
+        {framesentry.gallerySlots.map((slot) => (
+          <figure class="sw-slot">
+            <div class="sw-slot-frame">
+              <span class="sw-slot-step">Surface {slot.step}</span>
+              <span class="sw-slot-area">{slot.area}</span>
+            </div>
+            <figcaption>
+              <strong>{slot.title}</strong>
+              <span>{slot.caption}</span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Real-world demonstration area -->
+  <section class="sw-section" id="demo" aria-labelledby="demo-title">
+    <div class="wrap">
+      <p class="sw-sec-label reveal"><span>04</span><span>Real-world demonstration</span></p>
+      <h2 id="demo-title" class="reveal">End-to-end sequence inspection walkthrough.</h2>
+      <div class="sw-demo-box reveal">
+        <div class="sw-demo-stage">
+          <img src={framesentry.assets.icon} alt="" width="52" height="52" />
+          <p>
+            Demonstration recording area prepared for a real Blender sequence scan: detecting missing and truncated frames, inspecting a GPU proxy preview, and copying affected frame numbers for re-render.
+          </p>
+        </div>
+        <div class="sw-demo-bar">
+          <span>Workflow: Check Scene Output &rarr; Findings Browser &rarr; Copy Frames</span>
+          <span>Recording pending M5 qualification</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Blender compatibility and release status -->
+  <section class="sw-section" id="compatibility" aria-labelledby="compat-title">
+    <div class="wrap">
+      <p class="sw-sec-label reveal"><span>05</span><span>Blender compatibility &amp; release status</span></p>
+      <h2 id="compat-title" class="reveal">Targeted versions and qualification gates.</h2>
+      <div class="sw-callout reveal">
+        <p><strong>Release status:</strong> {framesentry.compatibility.milestoneNote}</p>
+        <p><strong>GPU Findings Preview gate:</strong> {framesentry.compatibility.gpuGateNote}</p>
+      </div>
+      <div class="table-wrap reveal" role="region" aria-labelledby="compat-cap" tabindex="0">
+        <table>
+          <caption id="compat-cap">Targeted Blender versions and current qualification status</caption>
+          <thead>
+            <tr>
+              <th scope="col">Blender Version</th>
+              <th scope="col">Target Tier</th>
+              <th scope="col">Qualification Status</th>
+              <th scope="col">Scope &amp; Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            {framesentry.compatibility.matrix.map((row) => (
+              <tr>
+                <th scope="row" class="mono">{row.version}</th>
+                <td>{row.tier}</td>
+                <td>{row.status}</td>
+                <td>{row.notes}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div style="margin-top:var(--s-6)" class="reveal">
+        <p class="eyebrow" style="margin-bottom:var(--s-3)">Target input formats</p>
+        <ul class="chips">
+          {framesentry.compatibility.formats.map((fmt) => <li>{fmt}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Future purchasing section -->
+  <section class="sw-section" id="purchase" aria-labelledby="purchase-title">
+    <div class="wrap">
+      <p class="sw-sec-label reveal"><span>06</span><span>Availability &amp; licensing</span></p>
+      <h2 id="purchase-title" class="reveal">Prepared for direct release.</h2>
+      <div class="sw-purchase reveal">
+        <div>
+          <span class="sw-badge">{framesentry.purchasing.status}</span>
+          <h3>Direct licensing opens after v1.0 qualification.</h3>
+          <p>{framesentry.purchasing.summary}</p>
+          <div class="actions" style="margin-top:var(--s-5)">
+            {contact.enabled && <a class="btn" href="/contact/">Contact for Early Access</a>}
+            <a class="btn ghost" href="/software/">All Software</a>
+          </div>
+        </div>
+        <div class="sw-purchase-box">
+          <p class="eyebrow" style="margin:0">Planned 1.0 deliverables</p>
+          <ul class="sw-purchase-list">
+            {framesentry.purchasing.deliverables.map((d) => <li>{d}</li>)}
+          </ul>
+          <p style="margin:0; font-size:0.875rem; color:var(--text-2)">
+            No live checkout or pricing is published until M5–M7 qualification and licensing review are complete.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Frequently asked questions -->
+  <section class="sw-section" id="faq" aria-labelledby="faq-title">
+    <div class="wrap">
+      <p class="sw-sec-label reveal"><span>07</span><span>Frequently asked questions</span></p>
+      <h2 id="faq-title" class="reveal">Common questions</h2>
+      <div class="sw-faq reveal">
+        {framesentry.faqs.map((item) => (
+          <details>
+            <summary>{item.question}</summary>
+            <p>{item.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

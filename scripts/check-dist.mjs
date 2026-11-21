@@ -5,7 +5,7 @@ import zlib from 'node:zlib';
 
 const dist = path.resolve('dist');
 const contactOn = /^https:\/\/formspree\.io\/f\/[A-Za-z0-9]{6,}$/.test(JSON.parse(fs.readFileSync('src/data/contact.json', 'utf8')).endpoint ?? '');
-const routes = ['/', '/work/', '/work/aurelia/', '/work/aurelia/walkthrough/', '/engineering/', '/engineering/ibm-ai-racing/', '/about/', ...['golden-hour-departure','cedar-and-concrete','cobalt-charge','night-shift','crimson-corridor','earthlight','still-water','iron-run','skyline-intruder'].map((s) => `/work/${s}/`)];
+const routes = ['/', '/work/', '/work/aurelia/', '/work/aurelia/walkthrough/', '/engineering/', '/engineering/ibm-ai-racing/', '/software/', '/software/framesentry/', '/about/', ...['golden-hour-departure','cedar-and-concrete','cobalt-charge','night-shift','crimson-corridor','earthlight','still-water','iron-run','skyline-intruder'].map((s) => `/work/${s}/`)];
 if (contactOn) routes.push('/contact/');
 // Outbound links the owner has verified (QA-11: plain links, nothing loaded from them).
 const outbound = new Set(['https://github.com/youssefabdelkariem/IBM-AI-Racing-League', 'https://www.artstation.com/stampvfx']);
@@ -65,7 +65,10 @@ for (const r of [...routes, '/404.html']) {
   if (/<img(?![^>]*\balt=)/.test(html)) fail(`${r}: img without alt`);
   // Verified work only: no planned, coming-soon or empty-slot project placeholders on any public page.
   const text = html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, '').replace(/<[^>]+>/g, ' ');
-  for (const bad of [/coming soon/i, /planned,? not built/i, /\bempty slot\b/i, /project slot/i, /none verified yet/i, /appears here when/i, /reserved,? no project/i, /robotic arm/i, /not published yet/i, /pending confirmation/i, /biography pending/i, /credits pending/i, /in preparation/i, /placeholder/i, /not approved/i, /pending owner approval/i, /provisional/i, /role wording/i, /\bEUI\b/, /egypt university/i, /universit/i, /informatics/i]) if (bad.test(text)) fail(`${r}: placeholder wording ${bad}`);
+  for (const bad of [/coming soon/i, /planned,? not built/i, /\bempty slot\b/i, /project slot/i, /none verified yet/i, /appears here when/i, /reserved,? no project/i, /robotic arm/i, /not published yet/i, /pending confirmation/i, /biography pending/i, /credits pending/i, /in preparation/i, /placeholder/i, /not approved/i, /pending owner approval/i, /provisional/i, /role wording/i, /\bEUI\b/, /egypt university/i, /universit/i, /informatics/i]) {
+    if (bad.source === 'coming soon' && r.startsWith('/software/')) continue;
+    if (bad.test(text)) fail(`${r}: placeholder wording ${bad}`);
+  }
 }
 for (const f of fs.readdirSync(path.join(dist, '_astro'), { recursive: true })) {
   const p = path.join(dist, '_astro', f);

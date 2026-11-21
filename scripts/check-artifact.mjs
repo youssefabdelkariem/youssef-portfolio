@@ -23,12 +23,13 @@ const allowed = [
 // Unfinished content: the walkthrough route and any film files are allowed only once the owner has approved them (M3 publication gates).
 if (filmCfg.film) allowed.push(/^media\/aurelia\/film\/[\w.-]+\.(mp4|webm|vtt)$/);
 allowed.push(/^media\/projects\/[a-z0-9-]+\/[\w.-]+\.(avif|jpg|mp4)$/);
+allowed.push(/^media\/software\/framesentry\/[\w.-]+\.(png|avif|jpg|webp|svg)$/);
 if (walkthroughPublished) allowed.push(/^media\/walkthrough\/[\w.-]+\.(avif|mp4)$/);
 for (const f of files) if (!walkthroughPublished && /walkthrough/i.test(f)) fail(`unpublished walkthrough in the artifact: ${f}`);
 for (const f of files) if (!filmCfg.film && /(^|\/)film(\/|\.)/i.test(f)) fail(`film file in the artifact although no film is approved: ${f}`);
 for (const f of files) if (!allowed.some((re) => re.test(f))) fail(`not on the allowlist: ${f}`);
 for (const f of files) if (/\.(md|map|json|py|mjs|ts|exr|blend|nk|psd|zip|env)$/i.test(f) || /(^|\/)(\.git|node_modules|docs|src|scripts|AGENTS|CLAUDE|README)/i.test(f)) fail(`forbidden path in artifact: ${f}`);
-for (const need of [...(rehearsal ? [] : ['CNAME', 'sitemap-index.xml', 'sitemap-0.xml']), 'index.html', '404.html', 'robots.txt', 'favicon.svg', 'favicon.ico', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png', 'og-image.png', 'site.webmanifest', 'work/index.html', 'work/aurelia/index.html', 'engineering/index.html', 'engineering/ibm-ai-racing/index.html', 'about/index.html']) if (!files.includes(need)) fail(`required file missing: ${need}`);
+for (const need of [...(rehearsal ? [] : ['CNAME', 'sitemap-index.xml', 'sitemap-0.xml']), 'index.html', '404.html', 'robots.txt', 'favicon.svg', 'favicon.ico', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png', 'og-image.png', 'site.webmanifest', 'work/index.html', 'work/aurelia/index.html', 'engineering/index.html', 'engineering/ibm-ai-racing/index.html', 'software/index.html', 'software/framesentry/index.html', 'about/index.html']) if (!files.includes(need)) fail(`required file missing: ${need}`);
 if (rehearsal && files.includes('CNAME')) fail('a rehearsal artifact must not contain CNAME');
 if (fs.existsSync(path.join(dist, 'CNAME')) && fs.readFileSync(path.join(dist, 'CNAME'), 'utf8').trim() !== 'youssef.studio') fail('CNAME content is not youssef.studio');
 const contactCfg = JSON.parse(fs.readFileSync('src/data/contact.json', 'utf8'));
