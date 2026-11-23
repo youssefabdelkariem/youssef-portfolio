@@ -1,13 +1,8 @@
 {
-  "beta": {
-    "enabled": true,
-    "mode": "auto-send",
-    "endpoint": "https://framesentry-beta.yousseffilmcreator66.workers.dev/"
-  },
   "checkout": {
-    "enabled": false,
-    "provider": "lemonsqueezy",
-    "checkoutUrl": null,
-    "ctaLabel": "Pre-order via Lemon Squeezy"
+    "enabled": true,
+    "provider": "gumroad",
+    "checkoutUrl": "https://yousseffhossam.gumroad.com/l/framesentry",
+    "ctaLabel": "Get FrameSentry on Gumroad"
   }
 }

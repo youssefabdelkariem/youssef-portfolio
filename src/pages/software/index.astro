@@ -3,6 +3,7 @@ import '../../styles/software.css';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { framesentry } from '../../data/framesentry';
 import { contact } from '../../data/contact';
+import release from '../../data/framesentry-release.json';
 ---
 
 <BaseLayout
@@ -31,11 +32,12 @@ import { contact } from '../../data/contact';
           <h2 id="fs-card-title">{framesentry.name}</h2>
           <p>{framesentry.headline} {framesentry.supporting}</p>
           <p style="font-size:0.9375rem">
-            Target Blender versions: 4.5.15 LTS, 5.2.x, and 5.3.x. Currently in beta while version 1.0 compatibility qualification is completed.
+            Target Blender versions: 4.5.15 LTS, 5.2.x, and 5.3.x. Available now on Gumroad.
           </p>
           <div class="actions" style="margin-top:var(--s-5)">
-            <a class="btn" href="/software/framesentry/">Explore FrameSentry</a>
-            {contact.enabled && <a class="btn ghost" href="/contact/">Contact for Early Access</a>}
+            <a class="btn" href={release.checkout.checkoutUrl} rel="noopener">{release.checkout.ctaLabel}</a>
+            <a class="btn ghost" href="/software/framesentry/">Explore FrameSentry</a>
+            {contact.enabled && <a class="btn ghost" href="/contact/">Contact</a>}
           </div>
         </div>
         <figure class="sw-feature-media" style="margin:0">

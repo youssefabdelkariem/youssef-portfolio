@@ -34,7 +34,7 @@ export const framesentry = {
   headline: 'Catch render problems before they reach delivery.',
   supporting:
     'FrameSentry helps Blender artists and studios inspect rendered sequences, identify potential problems and review actionable findings before compositing or delivery.',
-  statusLabel: 'Beta Open · Coming Soon',
+  statusLabel: 'Available on Gumroad',
   assets: {
     icon: '/media/software/framesentry/icon.webp',
     iconAlt: 'FrameSentry emblem: a stylized purple ribbon F inside four corner viewfinder brackets.',
@@ -154,7 +154,7 @@ export const framesentry = {
   },
   compatibility: {
     milestoneNote:
-      'FrameSentry is currently in beta. Version 1.0 release compatibility qualification is still in progress, and FrameSentry 1.0 is not yet released or fully qualified.',
+      'FrameSentry is available now on Gumroad. Full multi-version GPU Findings Preview qualification across all targeted Blender versions and graphics backends remains in progress.',
     gpuGateNote:
       'Full GPU Findings Preview must qualify across all three targeted Blender versions and graphics backends before those configurations are described as supported.',
     formats: ['OpenEXR (single-part & multi-part/multilayer)', 'PNG (8/16-bit)', 'TIFF (8/16/32-bit)', 'JPEG (baseline & progressive)'],
@@ -163,7 +163,7 @@ export const framesentry = {
         version: 'Blender 4.5.15 LTS',
         tier: 'Target Tier 1',
         status: 'Qualification in progress',
-        notes: 'Windows OpenGL verified in beta testing; Vulkan and Linux/macOS targets remain in qualification.',
+        notes: 'Windows OpenGL verified; Vulkan and Linux/macOS targets remain in qualification.',
       },
       {
         version: 'Blender 5.2.x',
@@ -180,9 +180,9 @@ export const framesentry = {
     ] satisfies CompatibilityRow[],
   },
   purchasing: {
-    status: 'Coming Soon',
+    status: 'Available on Gumroad',
     summary:
-      'Pre-orders are opening soon, with full version 1.0 direct licensing following final compatibility qualification. Pricing and checkout are not live yet.',
+      'Get FrameSentry directly on Gumroad, including the Blender adapter extension and standalone analysis engine.',
     deliverables: [
       'FrameSentry for Blender (adapter extension)',
       'FrameSentry Engine (standalone analysis application & CLI)',
@@ -191,9 +191,9 @@ export const framesentry = {
   },
   faqs: [
     {
-      question: 'When will FrameSentry 1.0 be released?',
+      question: 'Is FrameSentry available now?',
       answer:
-        'A public release date is not set yet. FrameSentry is currently in beta while reporting, packaging, and full compatibility qualification are completed ahead of version 1.0.',
+        'Yes. FrameSentry is available on Gumroad, while full GPU Findings Preview qualification across Blender 4.5.15 LTS, 5.2.x, and 5.3.x continues.',
     },
     {
       question: 'Which Blender versions are targeted?',
@@ -216,9 +216,9 @@ export const framesentry = {
         'FrameSentry targets image sequences in OpenEXR (single-part and multi-part/multilayer), PNG, TIFF, and JPEG. Video containers such as MP4 or MOV are intentionally excluded from MVP.',
     },
     {
-      question: 'How can I request early access or studio testing?',
+      question: 'How can I get FrameSentry or request studio support?',
       answer:
-        'Use the Youssef Studio contact page to share your studio workflow, Blender version, and operating system. Early access and beta participation are coordinated directly by email.',
+        'You can get FrameSentry directly on Gumroad, or use the Youssef Studio contact page to share your studio workflow, Blender version, and operating system.',
     },
   ] satisfies FaqItem[],
 };
