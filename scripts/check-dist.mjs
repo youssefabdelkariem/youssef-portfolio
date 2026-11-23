@@ -13,6 +13,8 @@ const filmCfg = JSON.parse(fs.readFileSync('src/data/aurelia-film.json', 'utf8')
 if (filmCfg.film?.externalUrl) outbound.add(filmCfg.film.externalUrl);
 const racingVideoCfg = JSON.parse(fs.readFileSync('src/data/racing-video.json', 'utf8'));
 if (racingVideoCfg.video?.externalUrl) outbound.add(racingVideoCfg.video.externalUrl);
+const fsReleaseCfg = JSON.parse(fs.readFileSync('src/data/framesentry-release.json', 'utf8'));
+if (fsReleaseCfg.checkout?.checkoutUrl) outbound.add(fsReleaseCfg.checkout.checkoutUrl);
 const problems = [];
 const fail = (m) => problems.push(m);
 const fileFor = (r) => path.join(dist, r.endsWith('/') ? r + 'index.html' : r);

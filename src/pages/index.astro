@@ -8,6 +8,7 @@ import { homeMedia } from '../data/home';
 import ProjectTile from '../components/ProjectTile.astro';
 import { projects } from '../data/early-projects';
 import { framesentry } from '../data/framesentry';
+import release from '../data/framesentry-release.json';
 
 const { hero, aurelia } = homeMedia;
 const disciplines = [
@@ -110,14 +111,13 @@ import { contact } from '../data/contact';
         <div>
           <div class="sw-brand-lockup">
             <img class="sw-icon" src={framesentry.assets.icon} alt="" width="44" height="44" />
-            <span class="sw-badge">Beta Open &middot; Pre-orders Preparing</span>
+            <span class="sw-badge">{framesentry.statusLabel}</span>
           </div>
           <p class="eyebrow" style="margin-bottom: var(--s-2)">{framesentry.category}</p>
           <h3>{framesentry.name}</h3>
           <p>{framesentry.headline} {framesentry.supporting}</p>
-          <p style="font-size:0.9375rem">Apply for the beta release or explore the inspection workflow ahead of pre-orders.</p>
           <div class="actions" style="margin-top:var(--s-5)">
-            <a class="btn" href="/software/framesentry/#beta">Apply for Beta</a>
+            <a class="btn" href={release.checkout.checkoutUrl} rel="noopener">{release.checkout.ctaLabel}</a>
             <a class="btn ghost" href="/software/framesentry/">Explore FrameSentry</a>
             {contact.enabled && <a class="btn ghost" href="/contact/">Contact</a>}
           </div>
