@@ -147,6 +147,28 @@ export const framesentry = {
       caption: 'Copies the deduplicated affected frame list (188,202,214) directly to the clipboard for targeted re-rendering.',
     },
   ] satisfies GallerySlot[],
+  videos: [
+    {
+      id: 'launch-film',
+      youtubeId: 'qYa5wDu3O-I',
+      externalUrl: 'https://youtu.be/qYa5wDu3O-I',
+      badge: 'Overview · Launch Film',
+      title: 'FrameSentry 1.0 — The Frame You Missed',
+      description: 'Why a single missing, black, or blown-out frame in a finished sequence costs hours — and how FrameSentry catches it before delivery.',
+      poster: '/media/software/framesentry/video-trailer.jpg',
+      posterAlt: 'FrameSentry 1.0 overview poster: One bad frame? Check the whole sequence. Blender Render Quality Control.',
+    },
+    {
+      id: 'walkthrough',
+      youtubeId: '6TILpXao_40',
+      externalUrl: 'https://youtu.be/6TILpXao_40',
+      badge: 'Real Blender Demo',
+      title: 'Find, Inspect & Re-render Bad Frames in Blender',
+      description: 'Full real-world walkthrough scanning a 48-frame Aurelia EXR sequence in Blender: surfacing 5 findings across 3 affected frames and copying the re-render list.',
+      poster: '/media/software/framesentry/video-walkthrough.jpg',
+      posterAlt: 'FrameSentry 1.0 real Blender demo poster showing 5 findings across 48 examined frames and Copy Frames button.',
+    },
+  ],
   demo: {
     video: '/media/software/framesentry/demo.mp4',
     poster: '/media/software/framesentry/ui-gpu-preview.webp',
@@ -216,9 +238,9 @@ export const framesentry = {
         'FrameSentry targets image sequences in OpenEXR (single-part and multi-part/multilayer), PNG, TIFF, and JPEG. Video containers such as MP4 or MOV are intentionally excluded from MVP.',
     },
     {
-      question: 'How can I get FrameSentry or request studio support?',
+      question: 'Where can I download FrameSentry?',
       answer:
-        'You can get FrameSentry directly on Gumroad, or use the Youssef Studio contact page to share your studio workflow, Blender version, and operating system.',
+        'FrameSentry is available directly on Gumroad, including the Blender adapter extension and the standalone analysis engine.',
     },
   ] satisfies FaqItem[],
 };

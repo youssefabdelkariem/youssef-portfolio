@@ -1,0 +1,334 @@
+---
+/**
+ * FrameSentryScanner: precision editorial product animation illustrating how FrameSentry
+ * scans a 48-frame EXR sequence (frames 176–223) out-of-process, flags real structural and
+ * visual defects (188 missing, 202 black frame, 214 +2.00 EV jump), and outputs a deduplicated
+ * frame list (188,202,214) for re-rendering.
+ *
+ * Accessibility & QA:
+ * - Zero running animations under `prefers-reduced-motion: reduce` (renders completed 48/48 state).
+ * - Fully readable without JavaScript.
+ * - No #ff5a36 inside inline SVG (uses FrameSentry palette).
+ */
+
+const startFrame = 176;
+const count = 48;
+const frames = Array.from({ length: count }, (_, i) => {
+  const num = startFrame + i;
+  let status: 'ok' | 'error' | 'warn' = 'ok';
+  let label = 'VERIFIED_OK';
+  if (num === 188) {
+    status = 'error';
+    label = 'MISSING';
+  } else if (num === 202) {
+    status = 'warn';
+    label = 'BLACK';
+  } else if (num === 214) {
+    status = 'warn';
+    label = '+2.00 EV';
+  }
+  return { i, num, status, label };
+});
+
+// Deterministic luminance curve (48 points across viewBox 0..480 x 0..96)
+const pts = frames
+  .map((f) => {
+    const x = +(f.i * (480 / (count - 1))).toFixed(1);
+    let y = 50 + Math.sin(f.i * 0.22) * 5 + Math.cos(f.i * 0.09) * 3;
+    if (f.num === 188) y = 88; // missing gap
+    if (f.num === 202) y = 90; // black frame drop
+    if (f.num === 214) y = 12; // +2.00 EV spike
+    return `${x},${y.toFixed(1)}`;
+  })
+  .join(' ');
+---
+
+<div class="fs-sim" data-fs-sim>
+  <div class="fs-sim-head">
+    <div class="fs-sim-title">
+      <span class="fs-dot" aria-hidden="true"></span>
+      <span class="mono">framesentry-engine &middot; out-of-process scan</span>
+    </div>
+    <div class="fs-sim-controls">
+      <span class="mono fs-sim-counter" data-fs-counter>48 / 48 frames</span>
+      <button type="button" class="fs-ctrl-btn" data-fs-toggle hidden aria-pressed="false">Pause</button>
+      <button type="button" class="fs-ctrl-btn" data-fs-replay hidden>Replay</button>
+    </div>
+  </div>
+
+  <div class="fs-sim-body">
+    <div class="fs-sim-left">
+      <div class="fs-strip-meta">
+        <span class="mono">Sequence: aurelia_####.exr (176–223)</span>
+        <span class="mono fs-live-frame" data-fs-frame>Frame 223 &middot; Finished</span>
+      </div>
+
+      <!-- 48-frame filmstrip with precision scanhead -->
+      <div class="fs-strip-wrap">
+        <div class="fs-strip" role="list" aria-label="48-frame EXR sequence timeline">
+          {frames.map((f) => (
+            <div
+              class:list={['fs-cell', `is-${f.status}`, 'is-scanned']}
+              data-fs-cell={f.i}
+              data-frame={f.num}
+              data-status={f.status}
+              role="listitem"
+              title={`Frame ${f.num}: ${f.label}`}
+            />
+          ))}
+        </div>
+        <div class="fs-scanhead" data-fs-head aria-hidden="true"></div>
+      </div>
+
+      <!-- Calibrated luminance trace (SVG, no #ff5a36) -->
+      <div class="fs-wave-wrap">
+        <div class="fs-strip-meta">
+          <span class="mono">Decoded Luminance (Median / MAD Window)</span>
+          <span class="mono">Read-Only &middot; OpenImageIO</span>
+        </div>
+        <svg class="fs-wave" viewBox="0 0 480 96" preserveAspectRatio="none" role="img" aria-label="Sequence luminance trace showing drop at frame 202 and +2.00 EV spike at frame 214">
+          <line x1="0" y1="24" x2="480" y2="24" stroke="#2e2924" stroke-dasharray="3 4" />
+          <line x1="0" y1="50" x2="480" y2="50" stroke="#2e2924" />
+          <line x1="0" y1="76" x2="480" y2="76" stroke="#2e2924" stroke-dasharray="3 4" />
+          <polyline class="fs-wave-bg" points={pts} fill="none" stroke="#3a342e" stroke-width="1.5" />
+          <polyline class="fs-wave-fg" data-fs-wave points={pts} fill="none" stroke="#a78bfa" stroke-width="2" stroke-linejoin="round" />
+          <!-- Defect markers: 188 (i=12 -> x=122.6), 202 (i=26 -> x=265.5), 214 (i=38 -> x=388.1) -->
+          <circle class="fs-mk is-error" data-fs-mk="188" cx="122.6" cy="88" r="4.5" fill="#f87171" />
+          <circle class="fs-mk is-warn" data-fs-mk="202" cx="265.5" cy="90" r="4.5" fill="#e3d29a" />
+          <circle class="fs-mk is-warn" data-fs-mk="214" cx="388.1" cy="12" r="4.5" fill="#e3d29a" />
+        </svg>
+      </div>
+
+      <!-- Architecture pipeline readout -->
+      <ol class="fs-pipe" aria-label="FrameSentry execution pipeline">
+        <li data-fs-stage="0" class="is-active">
+          <span class="mono">01</span>
+          <strong>Blender Adapter</strong>
+          <span>Reads scene range &amp; launches scan</span>
+        </li>
+        <li data-fs-stage="1" class="is-active">
+          <span class="mono">02</span>
+          <strong>Isolated Worker</strong>
+          <span>Census + pixel stats out-of-process</span>
+        </li>
+        <li data-fs-stage="2" class="is-active">
+          <span class="mono">03</span>
+          <strong>Actionable QC</strong>
+          <span>GPU proxy preview &amp; copy frame list</span>
+        </li>
+      </ol>
+    </div>
+
+    <div class="fs-sim-right">
+      <div class="fs-findings-head">
+        <span class="mono">Findings</span>
+        <span class="mono fs-counts" data-fs-counts>1 error &middot; 4 warnings</span>
+      </div>
+
+      <div class="fs-findings-list">
+        <button type="button" class="fs-finding is-error is-visible" data-fs-finding="188" data-jump="12">
+          <span class="fs-f-top">
+            <span class="mono fs-f-frame">Frame 188</span>
+            <span class="fs-f-sev is-error">Error &middot; Verified</span>
+          </span>
+          <strong class="mono">structural.missing_frame</strong>
+          <span>Expected EXR file absent from sequence range 176–223.</span>
+        </button>
+
+        <button type="button" class="fs-finding is-warn is-visible" data-fs-finding="202" data-jump="26">
+          <span class="fs-f-top">
+            <span class="mono fs-f-frame">Frame 202</span>
+            <span class="fs-f-sev is-warn">Warning &middot; Heuristic</span>
+          </span>
+          <strong class="mono">visual.black_frame</strong>
+          <span>Mean luminance dropped to 0.000 against lit neighbours.</span>
+        </button>
+
+        <button type="button" class="fs-finding is-warn is-visible" data-fs-finding="214" data-jump="38">
+          <span class="fs-f-top">
+            <span class="mono fs-f-frame">Frame 214</span>
+            <span class="fs-f-sev is-warn">Warning &middot; Heuristic</span>
+          </span>
+          <strong class="mono">visual.brightness_discontinuity</strong>
+          <span>+2.00 EV exposure spike outside local median/MAD window.</span>
+        </button>
+      </div>
+
+      <div class="fs-clipboard is-ready" data-fs-clip>
+        <span class="mono fs-clip-label">Copy Filtered Frames</span>
+        <code class="mono fs-clip-val" data-fs-clip-val>188,202,214</code>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-fs-sim]');
+  if (root) {
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const cells = [...root.querySelectorAll<HTMLElement>('[data-fs-cell]')];
+    const head = root.querySelector<HTMLElement>('[data-fs-head]');
+    const counter = root.querySelector<HTMLElement>('[data-fs-counter]');
+    const frameEl = root.querySelector<HTMLElement>('[data-fs-frame]');
+    const countsEl = root.querySelector<HTMLElement>('[data-fs-counts]');
+    const clipBox = root.querySelector<HTMLElement>('[data-fs-clip]');
+    const clipVal = root.querySelector<HTMLElement>('[data-fs-clip-val]');
+    const wave = root.querySelector<SVGPolylineElement>('[data-fs-wave]');
+    const stages = [...root.querySelectorAll<HTMLElement>('[data-fs-stage]')];
+    const findings = [...root.querySelectorAll<HTMLButtonElement>('[data-fs-finding]')];
+    const markers = [...root.querySelectorAll<SVGCircleElement>('[data-fs-mk]')];
+    const toggleBtn = root.querySelector<HTMLButtonElement>('[data-fs-toggle]');
+    const replayBtn = root.querySelector<HTMLButtonElement>('[data-fs-replay]');
+
+    const total = cells.length;
+    const startFrame = 176;
+    const waveLen = wave ? wave.getTotalLength() : 0;
+    if (wave && waveLen) {
+      wave.style.strokeDasharray = `${waveLen}`;
+    }
+
+    let idx = total - 1;
+    let playing = !reduced;
+    let timer: number | undefined;
+    let inView = false;
+
+    const render = (step: number) => {
+      const done = step >= total - 1;
+      const fNum = startFrame + step;
+
+      cells.forEach((c, i) => {
+        c.classList.toggle('is-scanned', i <= step);
+        c.classList.toggle('is-current', i === step && !done);
+      });
+
+      if (head) {
+        const pct = ((step + 0.5) / total) * 100;
+        head.style.left = `${pct}%`;
+        head.classList.toggle('is-done', done);
+      }
+
+      if (wave && waveLen) {
+        const frac = (step + 1) / total;
+        wave.style.strokeDashoffset = `${waveLen * (1 - frac)}`;
+      }
+
+      if (counter) counter.textContent = `${step + 1} / ${total} frames`;
+      if (frameEl) {
+        if (done) frameEl.textContent = 'Frame 223 · Finished';
+        else if (fNum === 188) frameEl.textContent = 'Frame 188 · Error: Missing frame';
+        else if (fNum === 202) frameEl.textContent = 'Frame 202 · Warning: Black frame';
+        else if (fNum === 214) frameEl.textContent = 'Frame 214 · Warning: +2.00 EV jump';
+        else frameEl.textContent = `Frame ${fNum} · Scanning`;
+      }
+
+      let errs = 0;
+      let warns = 0;
+      const foundList: number[] = [];
+      if (fNum >= 188) { errs += 1; foundList.push(188); }
+      if (fNum >= 202) { warns += 3; foundList.push(202); }
+      if (fNum >= 214) { warns += 1; foundList.push(214); }
+
+      if (countsEl) {
+        countsEl.textContent = `${errs} ${errs === 1 ? 'error' : 'errors'} · ${warns} ${warns === 1 ? 'warning' : 'warnings'}`;
+      }
+
+      findings.forEach((btn) => {
+        const target = Number(btn.dataset.fsFinding);
+        const shown = fNum >= target;
+        btn.classList.toggle('is-visible', shown);
+        btn.classList.toggle('is-active', fNum === target);
+      });
+
+      markers.forEach((mk) => {
+        const target = Number(mk.dataset.fsMk);
+        mk.style.opacity = fNum >= target ? '1' : '0';
+      });
+
+      stages.forEach((st, i) => {
+        if (i === 0) st.classList.toggle('is-active', step >= 0);
+        if (i === 1) st.classList.toggle('is-active', step >= 1 && !done);
+        if (i === 2) st.classList.toggle('is-active', done || foundList.length > 0);
+      });
+
+      if (clipBox && clipVal) {
+        clipBox.classList.toggle('is-ready', done);
+        clipVal.textContent = foundList.length ? foundList.join(',') : '—';
+      }
+    };
+
+    const scheduleNext = () => {
+      if (!playing || !inView || reduced) return;
+      const fNum = startFrame + idx;
+      let delay = 85;
+      if (fNum === 188 || fNum === 202 || fNum === 214) delay = 950;
+      else if (idx >= total - 1) delay = 3200;
+
+      timer = window.setTimeout(() => {
+        idx = idx >= total - 1 ? 0 : idx + 1;
+        render(idx);
+        scheduleNext();
+      }, delay);
+    };
+
+    const stop = () => {
+      if (timer) window.clearTimeout(timer);
+      timer = undefined;
+    };
+
+    if (!reduced) {
+      if (toggleBtn) toggleBtn.hidden = false;
+      if (replayBtn) replayBtn.hidden = false;
+
+      toggleBtn?.addEventListener('click', () => {
+        playing = !playing;
+        toggleBtn.textContent = playing ? 'Pause' : 'Play';
+        toggleBtn.setAttribute('aria-pressed', String(!playing));
+        stop();
+        if (playing) scheduleNext();
+      });
+
+      replayBtn?.addEventListener('click', () => {
+        stop();
+        idx = 0;
+        playing = true;
+        if (toggleBtn) {
+          toggleBtn.textContent = 'Pause';
+          toggleBtn.setAttribute('aria-pressed', 'false');
+        }
+        render(idx);
+        scheduleNext();
+      });
+    }
+
+    findings.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        stop();
+        playing = false;
+        if (toggleBtn) {
+          toggleBtn.textContent = 'Play';
+          toggleBtn.setAttribute('aria-pressed', 'true');
+        }
+        idx = Number(btn.dataset.jump ?? total - 1);
+        render(idx);
+      });
+    });
+
+    if (!reduced && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          inView = entries[0]?.isIntersecting ?? false;
+          stop();
+          if (inView && playing) {
+            if (idx >= total - 1) idx = 0;
+            render(idx);
+            scheduleNext();
+          }
+        },
+        { threshold: 0.25 }
+      );
+      io.observe(root);
+    } else {
+      render(total - 1);
+    }
+  }
+</script>

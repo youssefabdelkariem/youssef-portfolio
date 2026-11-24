@@ -1,0 +1,82 @@
+---
+/**
+ * Poster-first YouTube video showcase for FrameSentry.
+ * Zero external requests until the visitor clicks Play (loads youtube-nocookie.com on demand).
+ * Without JavaScript, the plain Watch on YouTube links work directly.
+ */
+export interface ProductVideo {
+  id: string;
+  youtubeId: string;
+  externalUrl: string;
+  badge: string;
+  title: string;
+  description: string;
+  poster: string;
+  posterAlt: string;
+}
+
+interface Props {
+  videos: ProductVideo[];
+}
+
+const { videos } = Astro.props;
+---
+
+<div class="fs-videos">
+  {videos.map((v) => {
+    const embed = `https://www.youtube-nocookie.com/embed/${v.youtubeId}?autoplay=1&rel=0&playsinline=1`;
+    const payload = JSON.stringify({ embed, title: v.title });
+    return (
+      <article class="fs-video-card">
+        <div class="fs-video-stage" data-fs-video={payload}>
+          <img
+            src={v.poster}
+            alt={v.posterAlt}
+            width="1280"
+            height="720"
+            loading="lazy"
+            decoding="async"
+          />
+          <button
+            type="button"
+            class="fs-video-play"
+            hidden
+            aria-label={`Play video: ${v.title}`}
+          >
+            <span aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="fs-video-body">
+          <span class="fs-video-badge mono">{v.badge}</span>
+          <h3>{v.title}</h3>
+          <p>{v.description}</p>
+          <a class="fs-video-link" href={v.externalUrl} rel="noopener noreferrer" target="_blank">
+            Watch on YouTube<span class="visually-hidden"> (opens in a new tab)</span>
+          </a>
+        </div>
+      </article>
+    );
+  })}
+</div>
+
+<script is:inline>
+  (function () {
+    document.querySelectorAll('.fs-video-stage[data-fs-video]').forEach(function (stage) {
+      var d = JSON.parse(stage.getAttribute('data-fs-video'));
+      var btn = stage.querySelector('.fs-video-play');
+      if (!btn) return;
+      btn.hidden = false;
+      btn.addEventListener('click', function () {
+        var el = document.createElement('iframe');
+        el.src = d.embed;
+        el.title = d.title;
+        el.allow = 'autoplay; fullscreen; picture-in-picture';
+        el.allowFullscreen = true;
+        el.referrerPolicy = 'strict-origin-when-cross-origin';
+        el.className = 'fs-video-frame';
+        stage.replaceChildren(el);
+        el.focus();
+      });
+    });
+  })();
+</script>
