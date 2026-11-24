@@ -16,7 +16,7 @@ const area = `${line}L${x(lap.distance[lap.distance.length - 1]).toFixed(1)} ${y
   <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`${label}: speed rises and falls through the corners over one ${best.lapLength} kilometre lap, peaking near 294 kilometres per hour.`}>
     <line class="base" x1={pad} x2={W - pad} y1={y(0)} y2={y(0)} />
     <path class="area" d={area} />
-    <path class="trace" d={line} />
+    <path class="trace" d={line} pathLength="100" />
   </svg>
   <figcaption>{label} &middot; {best.seconds} s lap, {lap.distance.length} recorded samples</figcaption>
 </figure>

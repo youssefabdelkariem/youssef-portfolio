@@ -2,7 +2,6 @@
 import '../../styles/software.css';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { framesentry } from '../../data/framesentry';
-import { contact } from '../../data/contact';
 import release from '../../data/framesentry-release.json';
 ---
 
@@ -37,7 +36,6 @@ import release from '../../data/framesentry-release.json';
           <div class="actions" style="margin-top:var(--s-5)">
             <a class="btn" href={release.checkout.checkoutUrl} rel="noopener">{release.checkout.ctaLabel}</a>
             <a class="btn ghost" href="/software/framesentry/">Explore FrameSentry</a>
-            {contact.enabled && <a class="btn ghost" href="/contact/">Contact</a>}
           </div>
         </div>
         <figure class="sw-feature-media" style="margin:0">

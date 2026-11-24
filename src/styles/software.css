@@ -484,6 +484,10 @@
 }
 
 /* ---- interactive sequence inspector (FrameSentryScanner) ---- */
+.home-fs-scanner {
+  margin-top: var(--s-5);
+}
+
 .fs-sim {
   border: 1px solid var(--border-strong);
   border-radius: var(--r-2);
