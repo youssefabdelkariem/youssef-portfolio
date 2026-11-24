@@ -8,7 +8,7 @@ const contactOn = /^https:\/\/formspree\.io\/f\/[A-Za-z0-9]{6,}$/.test(JSON.pars
 const routes = ['/', '/work/', '/work/aurelia/', '/work/aurelia/walkthrough/', '/engineering/', '/engineering/ibm-ai-racing/', '/software/', '/software/framesentry/', '/about/', ...['golden-hour-departure','cedar-and-concrete','cobalt-charge','night-shift','crimson-corridor','earthlight','still-water','iron-run','skyline-intruder'].map((s) => `/work/${s}/`)];
 if (contactOn) routes.push('/contact/');
 // Outbound links the owner has verified (QA-11: plain links, nothing loaded from them).
-const outbound = new Set(['https://github.com/youssefabdelkariem/IBM-AI-Racing-League', 'https://www.artstation.com/stampvfx']);
+const outbound = new Set(['https://github.com/youssefabdelkariem/IBM-AI-Racing-League', 'https://www.artstation.com/stampvfx', 'https://youtu.be/6TILpXao_40', 'https://youtu.be/qYa5wDu3O-I']);
 const filmCfg = JSON.parse(fs.readFileSync('src/data/aurelia-film.json', 'utf8'));
 if (filmCfg.film?.externalUrl) outbound.add(filmCfg.film.externalUrl);
 const racingVideoCfg = JSON.parse(fs.readFileSync('src/data/racing-video.json', 'utf8'));

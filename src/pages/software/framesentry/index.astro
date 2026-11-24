@@ -1,8 +1,9 @@
 ---
 import '../../../styles/software.css';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import FrameSentryScanner from '../../../components/FrameSentryScanner.astro';
+import FrameSentryVideos from '../../../components/FrameSentryVideos.astro';
 import { framesentry } from '../../../data/framesentry';
-import { contact } from '../../../data/contact';
 import release from '../../../data/framesentry-release.json';
 
 const checkoutReady = release.checkout.enabled && !!release.checkout.checkoutUrl;
@@ -27,8 +28,8 @@ const checkoutReady = release.checkout.enabled && !!release.checkout.checkoutUrl
           {checkoutReady && (
             <a class="btn" href={release.checkout.checkoutUrl!} rel="noopener">{release.checkout.ctaLabel}</a>
           )}
-          <a class="btn ghost" href="#workflows">Inspection Workflows</a>
-          {contact.enabled && <a class="btn ghost" href="/contact/">Contact</a>}
+          <a class="btn ghost" href="#how-it-works">See How It Works</a>
+          <a class="btn ghost" href="#demo">Watch Demos</a>
         </div>
       </div>
 
@@ -56,10 +57,24 @@ const checkoutReady = release.checkout.enabled && !!release.checkout.checkoutUrl
     </div>
   </section>
 
-  <!-- 2. Why render-sequence QC matters -->
+  <!-- 2. Interactive animated explainer: how FrameSentry inspects a sequence -->
+  <section class="sw-section" id="how-it-works" aria-labelledby="how-title">
+    <div class="wrap">
+      <p class="sw-sec-label reveal"><span>01</span><span>How FrameSentry works</span></p>
+      <h2 id="how-title" class="reveal">Every frame decoded out-of-process. Every defect pinpointed.</h2>
+      <p class="lede reveal" style="margin-bottom:var(--s-6)">
+        Watch how FrameSentry scans a 48-frame EXR sequence without freezing Blender — separating deterministic structural errors from heuristic visual anomalies, then outputting the exact frames to re-render. Click any finding to jump directly to that frame.
+      </p>
+      <div class="reveal">
+        <FrameSentryScanner />
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Why render-sequence QC matters -->
   <section class="sw-section" id="why-qc" aria-labelledby="why-title">
     <div class="wrap">
-      <p class="sw-sec-label reveal"><span>01</span><span>Why render-sequence QC matters</span></p>
+      <p class="sw-sec-label reveal"><span>02</span><span>Why render-sequence QC matters</span></p>
       <h2 id="why-title" class="reveal">Catch silent frame defects before delivery.</h2>
       <p class="lede reveal">{framesentry.whyMatters.lead}</p>
       <ul class="sw-points reveal">
@@ -73,10 +88,10 @@ const checkoutReady = release.checkout.enabled && !!release.checkout.checkoutUrl
     </div>
   </section>
 
-  <!-- 3. Features and supported inspection workflows -->
+  <!-- 4. Features and supported inspection workflows -->
   <section class="sw-section" id="workflows" aria-labelledby="workflows-title">
     <div class="wrap">
-      <p class="sw-sec-label reveal"><span>02</span><span>Features &amp; inspection workflows</span></p>
+      <p class="sw-sec-label reveal"><span>03</span><span>Features &amp; inspection workflows</span></p>
       <h2 id="workflows-title" class="reveal">Verified structural facts and heuristic visual checks.</h2>
       <div class="sw-workflows reveal">
         {framesentry.workflows.map((wf) => (
@@ -93,10 +108,24 @@ const checkoutReady = release.checkout.enabled && !!release.checkout.checkoutUrl
     </div>
   </section>
 
-  <!-- 4. FrameSentry interface gallery -->
+  <!-- 5. Real-world video demonstrations -->
+  <section class="sw-section" id="demo" aria-labelledby="demo-title">
+    <div class="wrap">
+      <p class="sw-sec-label reveal"><span>04</span><span>Real-world demonstrations</span></p>
+      <h2 id="demo-title" class="reveal">See FrameSentry running inside Blender.</h2>
+      <p class="lede reveal" style="margin-bottom:var(--s-6)">
+        The overview film and a real-world Blender walkthrough inspecting an Aurelia EXR render sequence from discovery to re-render list export.
+      </p>
+      <div class="reveal">
+        <FrameSentryVideos videos={framesentry.videos} />
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. FrameSentry interface gallery -->
   <section class="sw-section" id="gallery" aria-labelledby="gallery-title">
     <div class="wrap">
-      <p class="sw-sec-label reveal"><span>03</span><span>FrameSentry interface gallery</span></p>
+      <p class="sw-sec-label reveal"><span>05</span><span>FrameSentry interface gallery</span></p>
       <h2 id="gallery-title" class="reveal">Built for Blender’s Output and Image Editor workflow.</h2>
       <p class="lede reveal" style="margin-bottom:var(--s-6)">
         Captured in Blender 4.5.15 LTS (Windows OpenGL) inspecting a 48-frame Aurelia EXR sequence.
@@ -116,35 +145,10 @@ const checkoutReady = release.checkout.enabled && !!release.checkout.checkoutUrl
     </div>
   </section>
 
-  <!-- 5. Real-world demonstration area -->
-  <section class="sw-section" id="demo" aria-labelledby="demo-title">
-    <div class="wrap">
-      <p class="sw-sec-label reveal"><span>04</span><span>Real-world demonstration</span></p>
-      <h2 id="demo-title" class="reveal">End-to-end sequence inspection walkthrough.</h2>
-      <div class="sw-demo-box reveal">
-        <video
-          class="sw-demo-video"
-          controls
-          playsinline
-          preload="none"
-          poster={framesentry.demo.poster}
-          width="1920"
-          height="1080"
-        >
-          <source src={framesentry.demo.video} type="video/mp4" />
-        </video>
-        <div class="sw-demo-bar">
-          <span>{framesentry.demo.caption}</span>
-          <span>1080p &middot; 46 s &middot; Blender 4.5.15 LTS</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 6. Blender compatibility and release status -->
+  <!-- 7. Blender compatibility and release status -->
   <section class="sw-section" id="compatibility" aria-labelledby="compat-title">
     <div class="wrap">
-      <p class="sw-sec-label reveal"><span>05</span><span>Blender compatibility &amp; release status</span></p>
+      <p class="sw-sec-label reveal"><span>06</span><span>Blender compatibility &amp; release status</span></p>
       <h2 id="compat-title" class="reveal">Targeted versions and qualification gates.</h2>
       <div class="sw-callout reveal">
         <p><strong>Release status:</strong> {framesentry.compatibility.milestoneNote}</p>
@@ -182,10 +186,10 @@ const checkoutReady = release.checkout.enabled && !!release.checkout.checkoutUrl
     </div>
   </section>
 
-  <!-- 7. Purchasing section -->
+  <!-- 8. Purchasing section -->
   <section class="sw-section" id="purchase" aria-labelledby="purchase-title">
     <div class="wrap">
-      <p class="sw-sec-label reveal"><span>06</span><span>Availability &amp; licensing</span></p>
+      <p class="sw-sec-label reveal"><span>07</span><span>Availability &amp; licensing</span></p>
       <h2 id="purchase-title" class="reveal">Get FrameSentry on Gumroad.</h2>
       <div class="sw-purchase reveal">
         <div>
@@ -196,7 +200,6 @@ const checkoutReady = release.checkout.enabled && !!release.checkout.checkoutUrl
             {checkoutReady && (
               <a class="btn" href={release.checkout.checkoutUrl!} rel="noopener">{release.checkout.ctaLabel}</a>
             )}
-            {contact.enabled && <a class="btn ghost" href="/contact/">Contact</a>}
             <a class="btn ghost" href="/software/">All Software</a>
           </div>
         </div>
@@ -213,10 +216,10 @@ const checkoutReady = release.checkout.enabled && !!release.checkout.checkoutUrl
     </div>
   </section>
 
-  <!-- 8. Frequently asked questions -->
+  <!-- 9. Frequently asked questions -->
   <section class="sw-section" id="faq" aria-labelledby="faq-title">
     <div class="wrap">
-      <p class="sw-sec-label reveal"><span>07</span><span>Frequently asked questions</span></p>
+      <p class="sw-sec-label reveal"><span>08</span><span>Frequently asked questions</span></p>
       <h2 id="faq-title" class="reveal">Common questions</h2>
       <div class="sw-faq reveal">
         {framesentry.faqs.map((item) => (
