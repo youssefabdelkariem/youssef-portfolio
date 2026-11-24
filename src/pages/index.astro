@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import '../styles/software.css';
 import Plate from '../components/Plate.astro';
 import LapSparkline from '../components/LapSparkline.astro';
+import FrameSentryScanner from '../components/FrameSentryScanner.astro';
 import { site } from '../data/site';
 import { homeMedia } from '../data/home';
 import ProjectTile from '../components/ProjectTile.astro';
@@ -12,9 +13,9 @@ import release from '../data/framesentry-release.json';
 
 const { hero, aurelia } = homeMedia;
 const disciplines = [
-  ['CGI and 3D rendering', 'Product visualization and cinematic imagery'],
-  ['VFX and compositing', 'Shot breakdowns that show how frames were built'],
-  ['Engineering and autonomy', 'Mechatronics and CAD foundations, and a documented autonomous-racing project'],
+  ['Blender software & tooling', 'FrameSentry: offline-first render sequence quality control'],
+  ['CGI, 3D rendering & VFX', 'Product visualization, cinematic imagery and shot breakdowns'],
+  ['Engineering and autonomy', 'Mechatronics, CAD foundations and an autonomous-racing controller'],
 ];
 import { published as walkthroughPublished } from '../data/walkthrough';
 import { contact } from '../data/contact';
@@ -29,7 +30,8 @@ import { contact } from '../data/contact';
       <h1 id="hero-title"><span>Engineering precision.</span> <span><em>Cinematic imagination.</em></span></h1>
       <p class="lede">A portfolio of CGI, 3D rendering and VFX work, grounded in mechatronics engineering and CAD.</p>
       <div class="actions">
-        <a class="btn" href="/work/aurelia/">View Aurelia</a>
+        <a class="btn" href="/software/framesentry/">FrameSentry 1.0</a>
+        <a class="btn ghost" href="/work/aurelia/">View Aurelia</a>
         {walkthroughPublished && <a class="btn ghost" href="/work/aurelia/walkthrough/">View the full walkthrough</a>}
         <a class="btn ghost" href="/work/">VFX Portfolio</a>
       </div>
@@ -37,7 +39,7 @@ import { contact } from '../data/contact';
   </section>
 
   <section class="section divided" aria-labelledby="intro-title">
-    <div class="wrap intro reveal">
+    <div class="wrap intro reveal stagger-children">
       <h2 id="intro-title">Cinematic images, built with engineering discipline.</h2>
       <ul>
         {disciplines.map(([name, note]) => <li><strong>{name}</strong><span>{note}</span></li>)}
@@ -45,12 +47,42 @@ import { contact } from '../data/contact';
     </div>
   </section>
 
+  <section class="section divided home-fs" aria-labelledby="software-title">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2 id="software-title">Featured Software</h2>
+        <a href="/software/framesentry/">Full product page</a>
+      </div>
+      <article class="sw-feature-card reveal">
+        <div>
+          <div class="sw-brand-lockup">
+            <img class="sw-icon" src={framesentry.assets.icon} alt="" width="44" height="44" />
+            <span class="sw-badge">{framesentry.statusLabel}</span>
+          </div>
+          <p class="eyebrow" style="margin-bottom: var(--s-2)">{framesentry.category}</p>
+          <h3>{framesentry.name}</h3>
+          <p>{framesentry.headline} {framesentry.supporting}</p>
+          <div class="actions" style="margin-top:var(--s-5)">
+            <a class="btn" href={release.checkout.checkoutUrl} rel="noopener">{release.checkout.ctaLabel}</a>
+            <a class="btn ghost" href="/software/framesentry/">Explore FrameSentry</a>
+          </div>
+        </div>
+        <figure class="sw-feature-media" style="margin:0">
+          <img src={framesentry.assets.banner} alt={framesentry.assets.bannerAlt} width="1440" height="480" loading="lazy" decoding="async" />
+        </figure>
+      </article>
+      <div class="home-fs-scanner reveal">
+        <FrameSentryScanner />
+      </div>
+    </div>
+  </section>
+
   <section class="section divided" aria-labelledby="featured-title">
     <div class="wrap">
-      <div class="reveal">
+      <div class="reveal cinema-reveal">
         <Plate label="Aurelia" framed ratio="16 / 9" pic={aurelia} />
       </div>
-      <div class="featured-body reveal">
+      <div class="featured-body reveal stagger-dl">
         <div>
           <p class="eyebrow">Featured project</p>
           <h2 id="featured-title">Aurelia</h2>
@@ -78,7 +110,7 @@ import { contact } from '../data/contact';
         <a href="/work/#more">All nine projects</a>
       </div>
       <p class="lede reveal" style="margin-bottom:var(--s-6)">Personal projects from the learning stage: cars, an aircraft, a helicopter, a boat, a rolling steel ball and spaceships, each with its own page.</p>
-      <div class="tiles">
+      <div class="tiles reveal stagger-tiles">
         {projects.slice(0, 3).map((p) => <ProjectTile project={p} />)}
       </div>
     </div>
@@ -86,7 +118,7 @@ import { contact } from '../data/contact';
 
   <section class="section tech" aria-labelledby="eng-title">
     <div class="wrap tech-grid">
-      <div class="reveal">
+      <div class="reveal stagger-idx">
         <p class="eyebrow">Engineering</p>
         <h2 id="eng-title">Engineering and autonomous racing</h2>
         <p class="lede">The IBM AI Racing League / TORCS controller: a locally validated 65.968-second lap, measured telemetry and a full technical case study.</p>
@@ -95,49 +127,22 @@ import { contact } from '../data/contact';
           <li><span class="n">02</span><a href="/engineering/ibm-ai-racing/">IBM AI Racing League / TORCS</a><span class="d">Autonomous racing &middot; locally validated 65.968 s lap</span></li>
         </ol>
       </div>
-      <div class="reveal">
+      <div class="reveal spark-reveal">
         <LapSparkline />
       </div>
-    </div>
-  </section>
-
-  <section class="section divided" aria-labelledby="software-title">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <h2 id="software-title">Featured Software</h2>
-        <a href="/software/">Software</a>
-      </div>
-      <article class="sw-feature-card reveal">
-        <div>
-          <div class="sw-brand-lockup">
-            <img class="sw-icon" src={framesentry.assets.icon} alt="" width="44" height="44" />
-            <span class="sw-badge">{framesentry.statusLabel}</span>
-          </div>
-          <p class="eyebrow" style="margin-bottom: var(--s-2)">{framesentry.category}</p>
-          <h3>{framesentry.name}</h3>
-          <p>{framesentry.headline} {framesentry.supporting}</p>
-          <div class="actions" style="margin-top:var(--s-5)">
-            <a class="btn" href={release.checkout.checkoutUrl} rel="noopener">{release.checkout.ctaLabel}</a>
-            <a class="btn ghost" href="/software/framesentry/">Explore FrameSentry</a>
-            {contact.enabled && <a class="btn ghost" href="/contact/">Contact</a>}
-          </div>
-        </div>
-        <figure class="sw-feature-media" style="margin:0">
-          <img src={framesentry.assets.banner} alt={framesentry.assets.bannerAlt} width="1440" height="480" loading="lazy" decoding="async" />
-        </figure>
-      </article>
     </div>
   </section>
 
   <section class="section cta-band" aria-labelledby="cta-title">
     <div class="wrap reveal">
       <h2 id="cta-title">See the work in full.</h2>
-      <p>Two projects, each documented with its evidence.</p>
+      <p>Software, cinematic CGI and documented engineering.</p>
       <div class="actions">
-        <a class="btn" href="/work/aurelia/">Aurelia</a>
+        <a class="btn" href="/software/framesentry/">FrameSentry</a>
+        <a class="btn ghost" href="/work/aurelia/">Aurelia</a>
         <a class="btn ghost" href="/engineering/ibm-ai-racing/">IBM AI Racing</a>
         <a class="btn ghost" href="/about/">About</a>
-        {contact.enabled && <a class="btn" href="/contact/">Hire me</a>}
+        {contact.enabled && <a class="btn ghost" href="/contact/">Hire me</a>}
       </div>
     </div>
   </section>

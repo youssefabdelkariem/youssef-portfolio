@@ -53,6 +53,43 @@ h1, h2 { font-feature-settings: 'kern', 'liga', 'dlig'; }
   @keyframes vt-out { to { opacity: 0; } }
   @keyframes vt-in { from { opacity: 0; } }
 
+  /* homepage editorial motion: cinema aperture reveal, calibrated staggers, telemetry trace draw */
+  .home-fs-scanner { margin-top: var(--s-5); }
+
+  .js .cinema-reveal .plate { clip-path: inset(8% 0 8% 0); transition: clip-path 900ms var(--ease); }
+  .js .cinema-reveal .plate img { transform: scale(1.06); transition: transform 1100ms var(--ease); }
+  .js .cinema-reveal.in .plate { clip-path: inset(0 0 0 0); }
+  .js .cinema-reveal.in .plate img { transform: scale(1); }
+
+  .js .stagger-children li,
+  .js .stagger-dl dl > div,
+  .js .stagger-tiles > .tile,
+  .js .stagger-idx .idx > li {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 550ms var(--ease), transform 600ms var(--ease), border-color 250ms var(--ease), box-shadow 350ms var(--ease);
+  }
+  .js .stagger-children.in li,
+  .js .stagger-dl.in dl > div,
+  .js .stagger-tiles.in > .tile,
+  .js .stagger-idx.in .idx > li {
+    opacity: 1;
+    transform: none;
+  }
+  .js .stagger-children.in li:nth-child(2),
+  .js .stagger-dl.in dl > div:nth-child(2),
+  .js .stagger-tiles.in > .tile:nth-child(2),
+  .js .stagger-idx.in .idx > li:nth-child(2) { transition-delay: 110ms; }
+  .js .stagger-children.in li:nth-child(3),
+  .js .stagger-dl.in dl > div:nth-child(3),
+  .js .stagger-tiles.in > .tile:nth-child(3) { transition-delay: 220ms; }
+
+  /* IBM AI Racing telemetry speed curve draws smoothly left-to-right on scroll reveal */
+  .js .spark-reveal .spark .trace { stroke-dasharray: 100; stroke-dashoffset: 100; transition: stroke-dashoffset 1350ms var(--ease) 140ms; }
+  .js .spark-reveal .spark .area { opacity: 0; transition: opacity 750ms var(--ease) 550ms; }
+  .js .spark-reveal.in .spark .trace { stroke-dashoffset: 0; }
+  .js .spark-reveal.in .spark .area { opacity: 1; }
+
   /* film grain: a fixed, very faint texture that jitters in steps; off on phones and touch screens */
   @media (hover: hover) and (min-width: 900px) {
     @keyframes grain { 0% { transform: translate(0, 0); } 20% { transform: translate(-3%, 2%); } 40% { transform: translate(2%, -4%); } 60% { transform: translate(-4%, -2%); } 80% { transform: translate(3%, 3%); } 100% { transform: translate(0, 0); } }
