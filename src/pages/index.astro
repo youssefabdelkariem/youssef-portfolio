@@ -4,16 +4,18 @@ import '../styles/software.css';
 import Plate from '../components/Plate.astro';
 import LapSparkline from '../components/LapSparkline.astro';
 import FrameSentryScanner from '../components/FrameSentryScanner.astro';
+import GlintPipeline from '../components/GlintPipeline.astro';
 import { site } from '../data/site';
 import { homeMedia } from '../data/home';
 import ProjectTile from '../components/ProjectTile.astro';
 import { projects } from '../data/early-projects';
 import { framesentry } from '../data/framesentry';
+import { glint } from '../data/glint';
 import release from '../data/framesentry-release.json';
 
 const { hero, aurelia } = homeMedia;
 const disciplines = [
-  ['Blender software & tooling', 'FrameSentry: offline-first render sequence quality control'],
+  ['Blender software & AI tooling', 'Glint 1.0 (local AI commercial studio) and FrameSentry (offline EXR quality control)'],
   ['CGI, 3D rendering & VFX', 'Product visualization, cinematic imagery and shot breakdowns'],
   ['Engineering and autonomy', 'Mechatronics, CAD foundations and an autonomous-racing controller'],
 ];
@@ -30,9 +32,8 @@ import { contact } from '../data/contact';
       <h1 id="hero-title"><span>Engineering precision.</span> <span><em>Cinematic imagination.</em></span></h1>
       <p class="lede">A portfolio of CGI, 3D rendering and VFX work, grounded in mechatronics engineering and CAD.</p>
       <div class="actions">
-        <a class="btn" href="/software/framesentry/">FrameSentry 1.0</a>
-        <a class="btn ghost" href="/work/aurelia/">View Aurelia</a>
-        {walkthroughPublished && <a class="btn ghost" href="/work/aurelia/walkthrough/">View the full walkthrough</a>}
+        <a class="btn" href="/work/aurelia/">View Aurelia</a>
+        <a class="btn ghost" href="/software/">Software &amp; Tools</a>
         <a class="btn ghost" href="/work/">VFX Portfolio</a>
       </div>
     </div>
@@ -51,8 +52,33 @@ import { contact } from '../data/contact';
     <div class="wrap">
       <div class="section-head reveal">
         <h2 id="software-title">Featured Software</h2>
-        <a href="/software/framesentry/">Full product page</a>
+        <a href="/software/">All Blender tools</a>
       </div>
+
+      <article class="sw-feature-card reveal" style="margin-bottom: var(--s-6)">
+        <div>
+          <div class="sw-brand-lockup">
+            <span class="glint-badge">{glint.statusLabel}</span>
+          </div>
+          <p class="eyebrow" style="margin-bottom: var(--s-2)">{glint.category}</p>
+          <h3>{glint.name}</h3>
+          <p>{glint.headline} {glint.supporting}</p>
+          <div class="actions" style="margin-top:var(--s-5)">
+            <a class="btn" href={glint.gumroadUrl} target="_blank" rel="noopener noreferrer">{glint.gumroadCta}</a>
+            <a class="btn ghost" href="/software/glint/">Explore Glint 1.0</a>
+          </div>
+        </div>
+        <figure class="sw-feature-media" style="margin:0">
+          <a class="sw-yt-trigger" href={glint.youtubeUrl} target="_blank" rel="noopener noreferrer" aria-label={`Watch ${glint.youtubeTitle} on YouTube`}>
+            <img src={glint.youtubePoster} alt={glint.youtubeTitle} width="1280" height="720" loading="lazy" decoding="async" />
+            <span class="sw-yt-play" aria-hidden="true"></span>
+          </a>
+        </figure>
+      </article>
+      <div class="home-fs-scanner reveal" style="margin-bottom: var(--s-7)">
+        <GlintPipeline />
+      </div>
+
       <article class="sw-feature-card reveal">
         <div>
           <div class="sw-brand-lockup">
@@ -138,11 +164,9 @@ import { contact } from '../data/contact';
       <h2 id="cta-title">See the work in full.</h2>
       <p>Software, cinematic CGI and documented engineering.</p>
       <div class="actions">
-        <a class="btn" href="/software/framesentry/">FrameSentry</a>
+        {contact.enabled ? <a class="btn" href="/contact/">Hire me</a> : <a class="btn" href="/software/">Software &amp; Tools</a>}
         <a class="btn ghost" href="/work/aurelia/">Aurelia</a>
         <a class="btn ghost" href="/engineering/ibm-ai-racing/">IBM AI Racing</a>
-        <a class="btn ghost" href="/about/">About</a>
-        {contact.enabled && <a class="btn ghost" href="/contact/">Hire me</a>}
       </div>
     </div>
   </section>

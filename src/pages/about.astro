@@ -1,19 +1,21 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { contact } from '../data/contact';
 
 // Discipline areas are the owner's stated scope (PROJECT_VISION). Mechatronics and CAD are areas of study and skill, not completed projects.
 const areas = [
+  { name: 'Blender software & AI tooling', items: ['Glint 1.0 (Local AI commercial studio)', 'FrameSentry (EXR & sequence QC)'] },
   { name: 'CGI and VFX', items: ['3D rendering', 'Product visualization', 'Compositing', 'Shot breakdowns'] },
   { name: 'Engineering: areas of study and skill', items: ['Mechatronics', 'CAD'] },
-  { name: 'Autonomy and software', items: ['Autonomous racing controller for TORCS'] },
+  { name: 'Autonomy and control', items: ['Autonomous racing controller for TORCS'] },
 ];
 ---
 
-<BaseLayout title="About" description="About Youssef Studio: CGI, VFX and engineering work, with a flagship CGI commercial and an autonomous racing controller case study.">
+<BaseLayout title="About" description="About Youssef Studio: CGI, VFX, Blender tooling and engineering work, featuring Glint 1.0, FrameSentry, Aurelia and an autonomous racing controller.">
   <div class="wrap page-title">
     <p class="eyebrow">About</p>
     <h1>Where cinema meets engineering</h1>
-    <p class="lede">Youssef Studio connects cinematic CGI and VFX with mechatronics and CAD engineering work.</p>
+    <p class="lede">Youssef Studio connects cinematic CGI and VFX with Blender production tooling, mechatronics, and CAD engineering.</p>
   </div>
 
   <section class="section" style="padding-top:0" aria-labelledby="areas">
@@ -29,11 +31,18 @@ const areas = [
       </div>
       <div>
         <h2 id="work">Documented work</h2>
-        <p>Two projects are presented in full, each with its evidence.</p>
+        <p>Software tools, a flagship CGI commercial, and an autonomous racing case study—each presented with its evidence.</p>
         <ul class="chips">
+          <li><a href="/software/glint/">Glint 1.0: Local AI commercial studio</a></li>
+          <li><a href="/software/framesentry/">FrameSentry: Render sequence QC</a></li>
           <li><a href="/work/aurelia/">Aurelia: CGI smartphone commercial</a></li>
           <li><a href="/engineering/ibm-ai-racing/">IBM AI Racing League: autonomous racing controller</a></li>
         </ul>
+        {contact.enabled && (
+          <div class="actions" style="margin-top:var(--s-6)">
+            <a class="btn" href="/contact/">Hire me</a>
+          </div>
+        )}
       </div>
     </div>
   </section>

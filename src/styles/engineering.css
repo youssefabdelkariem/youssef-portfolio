@@ -93,7 +93,7 @@
 
 /* ---- racing case study: hero ---- */
 .race-hero { position: relative; isolation: isolate; overflow: hidden; padding-block: clamp(var(--s-7), 11vw, 8rem) clamp(var(--s-6), 6vw, var(--s-8)); }
-.race-hero h1 { font-size: clamp(2.5rem, 8vw, 6.25rem); line-height: 0.98; max-width: 16ch; margin-bottom: var(--s-5); }
+.race-hero h1 { font-size: clamp(2.25rem, 6.2vw, 4.75rem); line-height: 1.02; max-width: 18ch; margin-bottom: var(--s-5); }
 .race-hero h1 em { color: var(--accent); font-style: italic; }
 .race-hero .lede { margin-bottom: var(--s-6); }
 .race-lines { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; color: var(--border-strong); opacity: .9; }
@@ -108,16 +108,16 @@
 
 /* ---- racing: architecture diagram (HTML, responsive) ---- */
 .arch { display: grid; gap: var(--s-5); margin: var(--s-6) 0 0; }
-.arch .lane { border: 1px solid var(--border-strong); border-radius: var(--r-2); background: var(--surface); padding: var(--s-4) var(--s-5) var(--s-5); }
+.arch .lane { border: 1px solid var(--border-strong); border-radius: var(--r-2); background: var(--surface); padding: var(--s-4) var(--s-5) var(--s-5); overflow: hidden; }
 .arch .lane > .t-label { display: block; margin-bottom: var(--s-4); color: var(--signal); }
-.arch ol { list-style: none; margin: 0; padding: 0; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: var(--s-5); counter-reset: node; }
-.arch ol > li { position: relative; counter-increment: node; border: 1px solid var(--border-strong); border-radius: var(--r-1); background: var(--canvas); padding: var(--s-3) var(--s-4); font-size: 0.9062rem; line-height: 1.45; color: var(--text-2); min-width: 0; }
+.arch ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(11.5rem, 1fr)); gap: var(--s-4); counter-reset: node; }
+.arch ol > li { position: relative; counter-increment: node; border: 1px solid var(--border-strong); border-radius: var(--r-1); background: var(--canvas); padding: var(--s-3) var(--s-4); font-size: 0.9062rem; line-height: 1.45; color: var(--text-2); min-width: 0; overflow-wrap: anywhere; }
 .arch ol > li strong { display: block; font: 500 0.8125rem/1.3 var(--font-mono); color: var(--text); margin-bottom: 2px; overflow-wrap: anywhere; }
 .arch ol > li::before { content: counter(node, decimal-leading-zero); display: block; font: 500 0.6875rem/1 var(--font-mono); color: var(--signal); margin-bottom: var(--s-2); }
-.arch ol > li:not(:last-child)::after { content: ''; position: absolute; top: 50%; left: 100%; width: var(--s-5); height: 1px; background: var(--border-strong); }
+.arch ol > li:not(:last-child)::after { content: ''; position: absolute; top: 50%; left: 100%; width: var(--s-4); height: 1px; background: var(--border-strong); }
 .arch ol > li.store { border-style: dashed; }
 .arch .after-loop { margin-top: var(--s-4); }
-.arch-note { margin: var(--s-3) 0 0; font: 500 0.6875rem/1.5 var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-2); }
+.arch-note { margin: var(--s-3) 0 0; font: 400 0.8125rem/1.5 var(--font-mono); color: var(--text-2); max-width: 68ch; }
 .loop { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: var(--s-4); align-items: stretch; }
 .loop > div { border: 1px solid var(--border-strong); border-radius: var(--r-1); background: var(--canvas); padding: var(--s-4); }
 .loop .loop-h { margin: 0 0 var(--s-2); font: 500 0.8125rem/1.3 var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--text); }
@@ -130,7 +130,7 @@
 .chart-scroll { overflow-x: auto; border: 1px solid var(--border-strong); border-radius: var(--r-2); background: var(--surface); }
 .chart-scroll:focus-visible { outline-offset: 0; }
 .chart svg { min-width: 40rem; width: 100%; height: auto; }
-.chart text { font: 500 11px var(--font-mono); fill: var(--text-2); }
+.chart text { font: 500 12px var(--font-mono); fill: var(--text-2); }
 .chart .axis { stroke: var(--border-strong); stroke-width: 1; }
 .chart .grid { stroke: var(--border); stroke-width: 1; fill: none; }
 .chart .band { fill: rgb(122 110 94 / .22); }
@@ -139,7 +139,7 @@
 .chart .trace { fill: none; stroke: var(--signal); stroke-width: 1.75; stroke-linejoin: round; }
 .chart .mark { fill: var(--canvas); stroke: var(--signal); stroke-width: 1.5; }
 .chart .mark-t { fill: var(--text); }
-.chart figcaption { font-size: 0.875rem; color: var(--text-2); max-width: 75ch; }
+.chart figcaption { font-size: 0.875rem; color: var(--text-2); max-width: 68ch; }
 .lm { margin-top: var(--s-5); }
 
 /* ---- racing: development ladder ---- */
@@ -244,6 +244,12 @@
   .js .ladder.reveal.in .rung:nth-child(11) .bar i { transition-delay: 600ms; }
   .js .ladder.reveal.in .rung:nth-child(12) .bar i { transition-delay: 660ms; }
   .js .ladder.reveal.in .rung:nth-child(13) .bar i { transition-delay: 720ms; }
+  .js .reveal .arch ol > li { opacity: 0; transform: translateY(10px); transition: opacity 420ms var(--ease), transform 460ms var(--ease); }
+  .js .reveal.in .arch ol > li { opacity: 1; transform: none; }
+  .js .reveal.in .arch ol > li:nth-child(2) { transition-delay: 90ms; }
+  .js .reveal.in .arch ol > li:nth-child(3) { transition-delay: 180ms; }
+  .js .reveal.in .arch ol > li:nth-child(4) { transition-delay: 270ms; }
+  .js .reveal.in .arch ol > li:nth-child(5) { transition-delay: 360ms; }
   @keyframes draw { to { stroke-dashoffset: 0; } }
   @keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
 }
@@ -261,6 +267,6 @@
 .phases h4 + p { margin-bottom: var(--s-5); }
 .res-inline { display: block; margin-top: var(--s-1); font: 500 0.8125rem/1.3 var(--font-mono); color: var(--text-2); }
 @media (max-width: 760px) { .phases { grid-template-columns: 1fr; gap: 0; } }
-details.tech { margin-top: var(--s-5); }
+details.tech { margin-top: var(--s-5); padding: var(--s-3) var(--s-4); border: 1px solid var(--border-strong); border-radius: var(--r-2); background: var(--surface); }
 details.tech summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; color: var(--text-2); font-size: 0.9375rem; }
 details.tech[open] summary { margin-bottom: var(--s-3); }

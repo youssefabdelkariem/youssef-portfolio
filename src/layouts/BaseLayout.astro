@@ -92,7 +92,14 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
             });
           });
         }
-        // Mobile menu: Escape closes it and returns focus to the Menu button.
+        // Mobile menu: Escape closes it and returns focus to the Menu button; toggle updates label.
+        var navMenu = document.querySelector('.nav-menu');
+        if (navMenu) {
+          var navSummary = navMenu.querySelector('summary');
+          navMenu.addEventListener('toggle', function () {
+            if (navSummary) navSummary.textContent = navMenu.hasAttribute('open') ? 'Close' : 'Menu';
+          });
+        }
         document.addEventListener('keydown', function (e) {
           if (e.key !== 'Escape') return;
           var m = document.querySelector('.nav-menu[open]');
