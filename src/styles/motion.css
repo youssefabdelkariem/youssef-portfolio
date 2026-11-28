@@ -90,6 +90,18 @@ h1, h2 { font-feature-settings: 'kern', 'liga', 'dlig'; }
   .js .spark-reveal.in .spark .trace { stroke-dashoffset: 0; }
   .js .spark-reveal.in .spark .area { opacity: 1; }
 
+  /* Glint 1.0 Bezier camera arc subtle pulse on active stage */
+  .glint-sim[data-stage='2'] .glint-cam-path,
+  .glint-sim[data-stage='3'] .glint-cam-path {
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 900ms var(--ease);
+  }
+  .glint-sim[data-stage='0'] .glint-cam-path,
+  .glint-sim[data-stage='1'] .glint-cam-path {
+    stroke-dashoffset: 24;
+    transition: stroke-dashoffset 600ms var(--ease);
+  }
+
   /* film grain: a fixed, very faint texture that jitters in steps; off on phones and touch screens */
   @media (hover: hover) and (min-width: 900px) {
     @keyframes grain { 0% { transform: translate(0, 0); } 20% { transform: translate(-3%, 2%); } 40% { transform: translate(2%, -4%); } 60% { transform: translate(-4%, -2%); } 80% { transform: translate(3%, 3%); } 100% { transform: translate(0, 0); } }

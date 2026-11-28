@@ -71,7 +71,7 @@ if (form && statusEl && done) {
       done.hidden = false;
       done.focus();
     } catch {
-      statusEl.textContent = 'Sorry, the brief could not be sent. Please check your connection and try again.';
+      statusEl.textContent = 'Sorry, the brief could not be sent. Please check your connection or disable strict ad-blockers for Formspree, then try again.';
       if (button) { button.disabled = false; button.textContent = 'Send the brief'; }
     }
   });

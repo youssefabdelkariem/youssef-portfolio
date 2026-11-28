@@ -2,12 +2,13 @@
 import '../../styles/software.css';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { framesentry } from '../../data/framesentry';
+import { glint } from '../../data/glint';
 import release from '../../data/framesentry-release.json';
 ---
 
 <BaseLayout
   title="Software"
-  description="Blender software and production tooling by Youssef Studio, featuring FrameSentry for automated render sequence quality control."
+  description="Blender software and production tooling by Youssef Studio, featuring Glint 1.0 and FrameSentry."
 >
   <section class="page-title" aria-labelledby="sw-index-title">
     <div class="wrap">
@@ -19,9 +20,30 @@ import release from '../../data/framesentry-release.json';
     </div>
   </section>
 
-  <section class="sw-section" style="padding-top:0; border-top:0" aria-labelledby="fs-card-title">
-    <div class="wrap">
+  <section class="sw-section" style="padding-top:0; border-top:0" aria-labelledby="glint-card-title">
+    <div class="wrap" style="display:grid; gap:var(--s-6)">
       <article class="sw-feature-card reveal">
+        <div>
+          <div class="sw-brand-lockup">
+            <span class="glint-badge">{glint.statusLabel}</span>
+          </div>
+          <p class="eyebrow" style="margin-bottom: var(--s-2)">{glint.category}</p>
+          <h2 id="glint-card-title">{glint.name}</h2>
+          <p>{glint.headline} {glint.supporting}</p>
+          <p style="font-size:0.9375rem">
+            Blender 4.5 LTS, 5.2 LTS, and 5.3. Available now on Gumroad.
+          </p>
+          <div class="actions" style="margin-top:var(--s-5)">
+            <a class="btn" href={glint.gumroadUrl} target="_blank" rel="noopener noreferrer">{glint.gumroadCta}</a>
+            <a class="btn ghost" href="/software/glint/">Explore Glint 1.0</a>
+          </div>
+        </div>
+        <figure class="sw-feature-media" style="margin:0">
+          <img src={glint.youtubePoster} alt={glint.youtubeTitle} width="1280" height="720" decoding="async" />
+        </figure>
+      </article>
+
+      <article class="sw-feature-card reveal" aria-labelledby="fs-card-title">
         <div>
           <div class="sw-brand-lockup">
             <img class="sw-icon" src={framesentry.assets.icon} alt="" width="44" height="44" />
@@ -31,7 +53,7 @@ import release from '../../data/framesentry-release.json';
           <h2 id="fs-card-title">{framesentry.name}</h2>
           <p>{framesentry.headline} {framesentry.supporting}</p>
           <p style="font-size:0.9375rem">
-            Target Blender versions: 4.5.15 LTS, 5.2.x, and 5.3.x. Available now on Gumroad.
+            Verified today on Blender 4.5.15 LTS (Windows OpenGL); 5.2.x and 5.3.x in qualification. Available now on Gumroad.
           </p>
           <div class="actions" style="margin-top:var(--s-5)">
             <a class="btn" href={release.checkout.checkoutUrl} rel="noopener">{release.checkout.ctaLabel}</a>

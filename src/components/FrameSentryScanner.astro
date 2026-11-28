@@ -60,7 +60,7 @@ const pts = frames
     <div class="fs-sim-left">
       <div class="fs-strip-meta">
         <span class="mono">Sequence: aurelia_####.exr (176–223)</span>
-        <span class="mono fs-live-frame" data-fs-frame>Frame 223 &middot; Finished</span>
+        <span class="mono fs-live-frame" data-fs-frame aria-live="polite">Frame 223 &middot; Finished</span>
       </div>
 
       <!-- 48-frame filmstrip with precision scanhead -->
@@ -154,10 +154,10 @@ const pts = frames
         </button>
       </div>
 
-      <div class="fs-clipboard is-ready" data-fs-clip>
-        <span class="mono fs-clip-label">Copy Filtered Frames</span>
+      <button type="button" class="fs-clipboard is-ready" data-fs-clip style="width:100%;min-height:44px;cursor:pointer;text-align:left;background:var(--canvas);font:inherit;color:inherit">
+        <span class="mono fs-clip-label" data-fs-clip-label>Copy Filtered Frames</span>
         <code class="mono fs-clip-val" data-fs-clip-val>188,202,214</code>
-      </div>
+      </button>
     </div>
   </div>
 </div>
@@ -171,7 +171,8 @@ const pts = frames
     const counter = root.querySelector<HTMLElement>('[data-fs-counter]');
     const frameEl = root.querySelector<HTMLElement>('[data-fs-frame]');
     const countsEl = root.querySelector<HTMLElement>('[data-fs-counts]');
-    const clipBox = root.querySelector<HTMLElement>('[data-fs-clip]');
+    const clipBox = root.querySelector<HTMLButtonElement>('[data-fs-clip]');
+    const clipLabel = root.querySelector<HTMLElement>('[data-fs-clip-label]');
     const clipVal = root.querySelector<HTMLElement>('[data-fs-clip-val]');
     const wave = root.querySelector<SVGPolylineElement>('[data-fs-wave]');
     const stages = [...root.querySelectorAll<HTMLElement>('[data-fs-stage]')];
@@ -311,6 +312,22 @@ const pts = frames
         idx = Number(btn.dataset.jump ?? total - 1);
         render(idx);
       });
+    });
+
+    clipBox?.addEventListener('click', async () => {
+      const val = clipVal?.textContent?.trim();
+      if (!val || val === '—') return;
+      try {
+        await navigator.clipboard?.writeText(val);
+        if (clipLabel) {
+          clipLabel.textContent = 'Copied to Clipboard';
+          window.setTimeout(() => { clipLabel.textContent = 'Copy Filtered Frames'; }, 1800);
+        }
+      } catch {
+        if (clipLabel) {
+          clipLabel.textContent = `Frames: ${val}`;
+        }
+      }
     });
 
     if (!reduced && 'IntersectionObserver' in window) {

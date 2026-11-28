@@ -1,0 +1,186 @@
+---
+import '../../../styles/software.css';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import GlintPipeline from '../../../components/GlintPipeline.astro';
+import { glint } from '../../../data/glint';
+---
+
+<BaseLayout
+  title={glint.name}
+  description="Glint 1.0 — 1-Click Local AI Commercial Studio for Blender. Turn any 3D product or vehicle into an editable, multi-shot commercial rig in ~35 seconds."
+>
+  <section class="sw-hero" aria-labelledby="glint-title">
+    <div class="wrap sw-hero-grid">
+      <div>
+        <div class="sw-brand-lockup">
+          <span class="glint-badge">{glint.statusLabel}</span>
+        </div>
+        <p class="eyebrow">{glint.category}</p>
+        <h1 id="glint-title">{glint.name}</h1>
+        <p class="lede">{glint.headline} {glint.supporting}</p>
+        <div class="actions">
+          <a class="btn" href={glint.gumroadUrl} target="_blank" rel="noopener noreferrer">{glint.gumroadCta}</a>
+          <a class="btn ghost" href="#demo">Watch 30s Demo</a>
+          <a class="btn ghost" href="#pipeline">How It Works</a>
+        </div>
+      </div>
+
+      <figure class="sw-banner-card">
+        <a class="sw-yt-trigger" href={glint.youtubeUrl} rel="noopener noreferrer" data-yt-embed={glint.youtubeId} aria-label={`Play ${glint.youtubeTitle}`}>
+          <img
+            src={glint.youtubePoster}
+            alt="Glint 1.0 demo thumbnail: I Trained a Local AI to Direct Blender Commercials in 30 Seconds"
+            width="1280"
+            height="720"
+            loading="eager"
+            decoding="async"
+          />
+          <span class="sw-yt-play" aria-hidden="true"></span>
+        </a>
+        <dl class="sw-banner-meta">
+          <div>
+            <dt>AI Director</dt>
+            <dd class="mono">glint3d/glint-director</dd>
+          </div>
+          <div>
+            <dt>Price</dt>
+            <dd class="mono">$18 one-time · No API keys</dd>
+          </div>
+        </dl>
+      </figure>
+    </div>
+  </section>
+
+  <section class="sw-section" id="pipeline" aria-labelledby="pipeline-title">
+    <div class="wrap">
+      <p class="sw-sec-label reveal"><span>01</span><span>Interactive ~35s pipeline</span></p>
+      <h2 id="pipeline-title" class="reveal">From raw mesh to editable multi-shot rig.</h2>
+      <p class="lede reveal" style="margin-bottom: var(--s-6)">
+        Step through how Glint scans your scene, plans shots locally via Ollama, and builds animated strip softboxes and Bezier camera rigs.
+      </p>
+      <div class="reveal">
+        <GlintPipeline />
+      </div>
+    </div>
+  </section>
+
+  <section class="sw-section" id="demo" aria-labelledby="demo-title">
+    <div class="wrap">
+      <p class="sw-sec-label reveal"><span>02</span><span>30-second commercial demo</span></p>
+      <h2 id="demo-title" class="reveal">Watch Glint 1.0 direct a Blender commercial.</h2>
+      <div class="sw-video-grid reveal" style="grid-template-columns: minmax(0, 1fr); max-width: 960px;">
+        <article class="sw-video-card">
+          <div class="sw-video-frame" data-yt-slot>
+            <a
+              class="sw-yt-trigger"
+              href={glint.youtubeUrl}
+              rel="noopener noreferrer"
+              data-yt-embed={glint.youtubeId}
+              aria-label={`Play ${glint.youtubeTitle}`}
+            >
+              <img
+                src={glint.youtubePoster}
+                alt={glint.youtubeTitle}
+                width="1280"
+                height="720"
+                loading="lazy"
+                decoding="async"
+              />
+              <span class="sw-yt-play" aria-hidden="true"></span>
+            </a>
+          </div>
+          <div class="sw-video-meta">
+            <span class="sw-badge">YouTube · 30s Walkthrough</span>
+            <h3>{glint.youtubeTitle}</h3>
+            <p>Shows 1-click local AI directing, animated Glint Pass strip softboxes, Bezier camera trajectories, and live studio controls inside Blender.</p>
+            <a class="sw-video-ext" href={glint.youtubeUrl} target="_blank" rel="noopener noreferrer">Open on YouTube</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sw-section" id="features" aria-labelledby="features-title">
+    <div class="wrap">
+      <p class="sw-sec-label reveal"><span>03</span><span>What is included</span></p>
+      <h2 id="features-title" class="reveal">Built for real Blender production, not flat AI video.</h2>
+      <div class="sw-grid reveal">
+        {glint.features.map((feat) => (
+          <article class="sw-card">
+            <h3>{feat.title}</h3>
+            <p>{feat.summary}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sw-section" id="setup" aria-labelledby="setup-title">
+    <div class="wrap">
+      <p class="sw-sec-label reveal"><span>04</span><span>2-minute setup &amp; requirements</span></p>
+      <h2 id="setup-title" class="reveal">Local-first installation.</h2>
+      <ol class="steps reveal">
+        {glint.setup.map((item) => (
+          <li>
+            <div>
+              <h3>{item.title}</h3>
+              <p>{item.detail}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      <div class="table-wrap reveal" style="margin-top:var(--s-6)">
+        <table class="kv">
+          <caption class="visually-hidden">Glint 1.0 system requirements and licensing</caption>
+          <tbody>
+            {glint.requirements.map(([k, v]) => (
+              <tr>
+                <th scope="row">{k}</th>
+                <td>{v}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="sw-section" id="purchase" aria-labelledby="glint-buy-title">
+    <div class="wrap">
+      <p class="sw-sec-label reveal"><span>05</span><span>Availability</span></p>
+      <h2 id="glint-buy-title" class="reveal">Get Glint 1.0 on Gumroad.</h2>
+      <div class="sw-purchase reveal">
+        <div>
+          <span class="glint-badge">{glint.statusLabel}</span>
+          <h3>{glint.priceLabel}</h3>
+          <p>Includes the Blender extension (4.5 LTS, 5.2 LTS, 5.3), 7 instant offline studio presets, and 1-click download for the local Glint AI model.</p>
+          <div class="actions">
+            <a class="btn" href={glint.gumroadUrl} target="_blank" rel="noopener noreferrer">{glint.gumroadCta}</a>
+            <a class="btn ghost" href="/software/">All Software</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  document.querySelectorAll<HTMLAnchorElement>('[data-yt-embed]').forEach((trigger) => {
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      const id = trigger.dataset.ytEmbed;
+      if (!id) return;
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+      iframe.title = trigger.getAttribute('aria-label') ?? 'Glint 1.0 demo video';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.style.width = '100%';
+      iframe.style.aspectRatio = '16 / 9';
+      iframe.style.border = '0';
+      iframe.style.display = 'block';
+      trigger.replaceWith(iframe);
+    });
+  });
+</script>

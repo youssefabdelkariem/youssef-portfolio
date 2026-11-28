@@ -174,7 +174,11 @@
 .vw-tabs legend { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 .vw-tabs label { min-height: 44px; display: inline-flex; align-items: center; padding: 0.55rem 1rem; border: 1px solid var(--border-strong); border-radius: var(--r-1); font: 600 0.75rem/1.2 var(--font-body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-2); cursor: pointer; transition: color 160ms var(--ease), background-color 160ms var(--ease), border-color 160ms var(--ease); }
 .vw-tabs label:hover { color: var(--text); border-color: var(--accent); }
-.vw-radio:focus-visible ~ .vw-tabs label { outline: 2px solid var(--focus); outline-offset: 2px; }
+.vw-radio[id$='-comp']:focus-visible ~ .vw-tabs label[for$='-comp'],
+.vw-radio[id$='-noisy']:focus-visible ~ .vw-tabs label[for$='-noisy'],
+.vw-radio[id$='-glossy']:focus-visible ~ .vw-tabs label[for$='-glossy'],
+.vw-radio[id$='-transmission']:focus-visible ~ .vw-tabs label[for$='-transmission'],
+.vw-radio[id$='-normal']:focus-visible ~ .vw-tabs label[for$='-normal'] { outline: 2px solid var(--focus); outline-offset: 2px; }
 .vw-panel { display: none; }
 .vw-panel p { margin: var(--s-3) 0 0; color: var(--text-2); font-size: 0.9688rem; max-width: 70ch; }
 .vw-radio[id$='-comp']:checked ~ .vw-panels .vw-comp { display: block; }
